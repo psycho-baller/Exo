@@ -48,3 +48,6 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# my shit
+.vscode/diff
