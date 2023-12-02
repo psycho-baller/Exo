@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "push": "drizzle-kit push:mysql",
+    "drop": "drizzle-kit drop",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
   },
@@ -23,6 +24,7 @@
     "@acme/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.6",
+    "mysql2": "^3.6.5",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
     "typescript": "^5.2.2"
