@@ -1,10 +1,16 @@
 import { authRouter } from "./router/auth";
-import { postRouter } from "./router/post";
+import { friendRouter } from "./router/friend";
+import { questionRouter } from "./router/question";
+import { tagRouter } from "./router/tag";
+import { userRouter } from "./router/user";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
-  post: postRouter,
+  user: userRouter,
+  friend: friendRouter,
+  question: questionRouter,
+  tag: tagRouter,
 });
 
 // export type definition of API
