@@ -7,8 +7,8 @@ import { FlashList } from "@shopify/flash-list";
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
 
-function PostCard(props: {
-  post: RouterOutputs["post"]["all"][number];
+function QuestionCard(props: {
+  question: RouterOutputs["question"]["all"][number];
   onDelete: () => void;
 }) {
   return (
@@ -17,15 +17,17 @@ function PostCard(props: {
         <Link
           asChild
           href={{
-            pathname: "/post/[id]",
-            params: { id: props.post.id },
+            pathname: "/question/[id]",
+            params: { id: props.question.id.toString() },
           }}
         >
           <Pressable>
             <Text className="text-xl font-semibold text-pink-400">
-              {props.post.title}
+              {props.question.text}
             </Text>
-            <Text className="mt-2 text-white">{props.post.content}</Text>
+            <Text className="mt-2 text-white">
+              {props.question.createdDatetime.toString()}
+            </Text>
           </Pressable>
         </Link>
       </View>
@@ -36,17 +38,17 @@ function PostCard(props: {
   );
 }
 
-function CreatePost() {
+function CreateQuestion() {
   const utils = api.useContext();
 
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
 
-  const { mutate, error } = api.post.create.useMutation({
+  const { mutate, error } = api.question.create.useMutation({
     async onSuccess() {
       setTitle("");
       setContent("");
-      await utils.post.all.invalidate();
+      await utils.question.all.invalidate();
     },
   });
 
@@ -80,16 +82,16 @@ function CreatePost() {
         className="rounded bg-pink-400 p-2"
         onPress={() => {
           mutate({
-            title,
-            content,
+            createdByUserId: 0,
+            text: content,
           });
         }}
       >
-        <Text className="font-semibold text-white">Publish post</Text>
+        <Text className="font-semibold text-white">Publish question</Text>
       </Pressable>
       {error?.data?.code === "UNAUTHORIZED" && (
         <Text className="mt-2 text-red-500">
-          You need to be logged in to create a post
+          You need to be logged in to create a question
         </Text>
       )}
     </View>
@@ -99,10 +101,10 @@ function CreatePost() {
 const Index = () => {
   const utils = api.useContext();
 
-  const postQuery = api.post.all.useQuery();
+  const questionQuery = api.question.all.useQuery();
 
-  const deletePostMutation = api.post.delete.useMutation({
-    onSettled: () => utils.post.all.invalidate(),
+  const deleteQuestionMutation = api.question.delete.useMutation({
+    onSettled: () => utils.question.all.invalidate(),
   });
 
   return (
@@ -115,30 +117,30 @@ const Index = () => {
         </Text>
 
         <Button
-          onPress={() => void utils.post.all.invalidate()}
-          title="Refresh posts"
+          onPress={() => void utils.question.all.invalidate()}
+          title="Refresh questions"
           color={"#f472b6"}
         />
 
         <View className="py-2">
           <Text className="font-semibold italic text-white">
-            Press on a post
+            Press on a question
           </Text>
         </View>
 
         <FlashList
-          data={postQuery.data}
+          data={questionQuery.data}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View className="h-2" />}
           renderItem={(p) => (
-            <PostCard
-              post={p.item}
-              onDelete={() => deletePostMutation.mutate(p.item.id)}
+            <QuestionCard
+              question={p.item}
+              onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
             />
           )}
         />
 
-        <CreatePost />
+        <CreateQuestion />
       </View>
     </SafeAreaView>
   );
