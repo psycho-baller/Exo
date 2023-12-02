@@ -1,27 +1,58 @@
-import type { AdapterAccount } from "@auth/core/adapters";
-import { relations, sql } from "drizzle-orm";
-import {
-  index,
-  int,
-  primaryKey,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/mysql-core";
+import { datetime, int, serial, text, varchar } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
 
+// User
 export const users = mySqlTable("user", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("emailVerified", {
-    mode: "date",
-    fsp: 3,
-  }).default(sql`CURRENT_TIMESTAMP(3)`),
+  id: serial("id").primaryKey(),
+  firstName: varchar("first_name", { length: 30 }).notNull(),
+  lastName: varchar("last_name", { length: 30 }),
+  email: varchar("email", { length: 30 }).notNull().unique(),
+  username: varchar("username", { length: 30 }).notNull().unique(),
+  // emailVerified: timestamp("emailVerified", {
+  //   mode: "date",
+  //   fsp: 3,
+  // }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
 });
 
+// Question
+export const questions = mySqlTable("question", {
+  id: serial("id").primaryKey(),
+  createdByUserId: int("created_by_user_id").references(() => users.id),
+  text: text("text").notNull(),
+  createdDatetime: datetime("created_datetime"),
+});
+
+// Tag
+export const tags = mySqlTable("tag", {
+  id: serial("id").primaryKey(),
+  createdByUserId: int("created_by_user_id").references(() => users.id),
+  tagName: varchar("email", { length: 30 }).notNull(),
+});
+
+// Friend
+export const friends = mySqlTable("friend", {
+  id: serial("id").primaryKey(),
+  createdByUserId: int("created_by_user_id").references(() => users.id),
+  friendUserId: int("friend_user_id").references(() => users.id),
+  name: text("name").notNull(),
+  createdDatetime: datetime("created_datetime"),
+});
+
+// QuestionTag
+export const questionTags = mySqlTable("question_tag", {
+  questionId: int("question_id").references(() => questions.id),
+  tagId: int("tag_id").references(() => tags.id),
+});
+
+// QuestionFriend
+export const questionFriends = mySqlTable("question_friend", {
+  questionId: int("question_id").references(() => questions.id),
+  friendId: int("friend_id").references(() => friends.id),
+});
+
+/*
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
 }));
@@ -82,3 +113,4 @@ export const verificationTokens = mySqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
 );
+*/
