@@ -90,19 +90,12 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  */
 
 /**
- * This is how you create new routers and subrouters in your tRPC API
- * @see https://trpc.io/docs/router
- */
-export const createTRPCRouter = t.router;
-
-/**
  * Public (unauthed) procedure
  *
  * This is the base piece you use to build new queries and mutations on your
  * tRPC API. It does not guarantee that a user querying is authorized, but you
  * can still access user session data if they are logged in
  */
-export const publicProcedure = t.procedure;
 
 /**
  * Reusable middleware that enforces users are logged in before running the
@@ -129,4 +122,10 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure; //.use(enforceUserIsAuthed);
+export const publicProcedure = t.procedure;
+/**
+ * This is how you create new routers and subrouters in your tRPC API
+ * @see https://trpc.io/docs/router
+ */
+export const createTRPCRouter = t.router;
