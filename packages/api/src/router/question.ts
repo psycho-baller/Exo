@@ -26,6 +26,7 @@ export const questionRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
+      console.log("input", input);
       return ctx.db.insert(questions).values(input);
     }),
 

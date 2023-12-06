@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Constants from "expo-constants";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
-import superjson from "superjson";
 
 import type { AppRouter } from "@acme/api";
+import { transformer } from "@acme/api/transformer";
+import { kindeClient } from "@acme/app/utils/kindeClient";
 
 /**
  * A set of typesafe hooks for consuming your API.
@@ -45,16 +46,36 @@ const getBaseUrl = () => {
  */
 
 export function TRPCProvider(props: { children: React.ReactNode }) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  // const authTokenRef = useRef<string>("");
+
+  // useEffect(() => {
+  //   async function getAuthToken() {
+  //     const { access_token } = await kindeClient.getToken();
+  //     authTokenRef.current = access_token;
+  //   }
+
+  //   void getAuthToken();
+  // }, []);
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
   const [trpcClient] = React.useState(() =>
     api.createClient({
-      transformer: superjson,
+      transformer,
       links: [
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Map<string, string>();
             headers.set("x-trpc-source", "expo-react");
+            // headers.set("Authorization", `Bearer ${authTokenRef.current}`);
             return Object.fromEntries(headers);
           },
         }),

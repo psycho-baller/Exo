@@ -82,7 +82,7 @@ function CreateQuestion() {
         className="rounded bg-pink-400 p-2"
         onPress={() => {
           mutate({
-            createdByUserId: 0,
+            createdByUserId: 1,
             text: content,
           });
         }}

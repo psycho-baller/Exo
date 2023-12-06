@@ -36,3 +36,18 @@ export const {
     }),
   },
 });
+
+// const issuer = process.env.KINDE_ISSUER_URL || ''
+
+// try {
+//   const verifier = JwtRsaVerifier.create({
+//     audience: null,
+//     issuer,
+//     jwksUri: `${issuer}/.well-known/jwks.json`,
+//   })
+
+//   // authHeader = Bearer <token>
+//   const token = authHeader && authHeader.split(" ")[1];
+//   const payload = await verifier.verify(token);
+
+//   const kindeUserId = payload.sub

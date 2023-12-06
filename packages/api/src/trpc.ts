@@ -52,6 +52,8 @@ export const createTRPCContext = async (opts: {
   req?: Request;
   auth: Session | null;
 }) => {
+  // const issuer = process.env.KINDE_ISSUER_URL ?? "";
+
   const session = opts.auth ?? (await auth());
   const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
 
