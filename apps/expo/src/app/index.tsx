@@ -4,8 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 
-import { api } from "~/utils/api";
-import type { RouterOutputs } from "~/utils/api";
+import { api } from "@acme/app/utils/trpc";
+import type { RouterOutputs } from "@acme/app/utils/trpc";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
