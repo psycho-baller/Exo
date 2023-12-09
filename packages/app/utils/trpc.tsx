@@ -11,6 +11,7 @@ import type {ReactNode} from "react";
 /**
  * A set of typesafe hooks for consuming your API.
  */
+// @ts-ignore
 export const api = createTRPCReact<AppRouter>();
 export { type RouterInputs, type RouterOutputs } from "@acme/api";
 
@@ -51,6 +52,7 @@ export function TRPCProvider(props: { children: ReactNode }) {
     api.createClient({
       transformer: superjson,
       links: [
+        // @ts-ignore
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
