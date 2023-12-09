@@ -1,31 +1,36 @@
 {
   "name": "@acme/ui",
-  "version": "0.0.1",
-  "sideEffects": [
-    "*.css"
-  ],
   "private": true,
-  "types": "./types/index",
-  "main": "src/index.tsx",
-  "module:jsx": "src",
-  "files": [
-    "types",
-    "dist"
-  ],
-  "scripts": {
-    "build": "tamagui-build",
-    "watch": "tamagui-build --watch"
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
   },
-  "dependencies": {
-    "@tamagui/animations-react-native": "latest",
-    "@tamagui/font-inter": "latest",
-    "@tamagui/react-native-media-driver": "latest",
-    "@tamagui/shorthands": "latest",
-    "@tamagui/themes": "latest",
-    "@tamagui/toast": "latest",
-    "tamagui": "latest"
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@tamagui/build": "latest"
-  }
+    "@acme/eslint-config": "workspace:^0.2.0",
+    "@acme/prettier-config": "workspace:^0.1.0",
+    "@acme/tsconfig": "workspace:^0.1.0",
+    "eslint": "^8.53.0",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/react"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
 }

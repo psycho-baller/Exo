@@ -1,11 +1,8 @@
 {
-  "extends": "../../tsconfig.base",
-  "include": [
-    "src"
-  ],
+  "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
-    "composite": true,
-    "jsx": "react-jsx"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "references": []
+  "include": ["*.ts", "src"],
+  "exclude": ["node_modules"]
 }

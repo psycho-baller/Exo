@@ -1,11 +1,14 @@
 {
   "version": "0.0.0",
   "name": "@acme/app",
-  "main": "index.ts",
   "private": true,
-  "sideEffects": [
-    "*.css"
-  ],
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@acme/ui": "workspace:*",
     "@tamagui/animations-react-native": "latest",
@@ -26,7 +29,20 @@
   },
   "devDependencies": {
     "@acme/api": "workspace:*",
+    "@acme/eslint-config": "workspace:^0.2.0",
+    "@acme/prettier-config": "workspace:^0.1.0",
+    "@acme/tsconfig": "workspace:*",
     "@types/react": "^18.2.37",
-    "@types/react-native": "^0.71.3"
-  }
+    "@types/react-native": "^0.71.3",
+    "eslint": "^8.53.0",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/react"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
 }
