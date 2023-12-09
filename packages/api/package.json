@@ -14,8 +14,8 @@
   "dependencies": {
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
-    "@trpc/client": "next",
-    "@trpc/server": "next",
+    "@trpc/client": "latest",
+    "@trpc/server": "latest",
     "superjson": "2.2.0",
     "zod": "^3.22.2"
   },
