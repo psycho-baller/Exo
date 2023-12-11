@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@acme/api": "workspace:^0.1.0",
+    "@acme/app": "workspace:*",
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
     "@t3-oss/env-nextjs": "^0.7.1",
@@ -27,6 +28,7 @@
     "next": "^14.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-native-web": "^0.19.9",
     "superjson": "2.2.0",
     "zod": "^3.22.2"
   },
@@ -42,7 +44,9 @@
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
     "tailwindcss": "3.3.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "react-native": "0.72.7",
+    "webpack": "latest"
   },
   "eslintConfig": {
     "root": true,

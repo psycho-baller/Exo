@@ -8,7 +8,7 @@ import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import superjson from "superjson";
 
 import { env } from "~/env.mjs";
-import { api } from "~/utils/api";
+import { api } from "@acme/app/utils/trpc";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url

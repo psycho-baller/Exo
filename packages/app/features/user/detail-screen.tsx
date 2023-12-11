@@ -1,8 +1,9 @@
+"use client";
 import { Button, Paragraph, YStack } from '@acme/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
 import React from 'react'
 import { createParam } from 'solito'
-import { useLink } from 'solito/link'
+import { useLink } from 'solito/navigation'
 
 const { useParam } = createParam<{ id: string }>()
 
