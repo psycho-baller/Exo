@@ -1,56 +1,73 @@
+/** @type {import('next').NextConfig} */
 // Importing env files here to validate on build
-import "./src/env.mjs";
-import "@acme/auth/env.mjs";
-import webpackPkg from 'webpack';
-const { DefinePlugin } = webpackPkg;
+import './src/env.mjs'
+import '@acme/auth/env.mjs'
+import { withTamagui } from '@tamagui/next-plugin'
+import { join } from 'path'
 
-
-/** @type {import("next").NextConfig} */
-export const reactStrictMode = true;
-export const transpilePackages = ["@acme/api", "@acme/auth", "@acme/db", "@acme/app",
-  'solito',
-  'react-native',
-  'expo-linking',
-  'expo-constants',
-  'expo-modules-core',
-  '@shopify/flash-list'
-];
-export function webpack(config, options) {
-  // Mix in aliases
-  if (!config.resolve) {
-    config.resolve = {};
-  }
-
-  config.resolve.alias = {
-    ...(config.resolve.alias || {}),
-    // Alias direct react-native imports to react-native-web
-    'react-native$': 'react-native-web',
-    // Alias internal react-native modules to react-native-web
-    'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter$': 'react-native-web/dist/vendor/react-native/NativeEventEmitter/RCTDeviceEventEmitter',
-    'react-native/Libraries/vendor/emitter/EventEmitter$': 'react-native-web/dist/vendor/react-native/emitter/EventEmitter',
-    'react-native/Libraries/EventEmitter/NativeEventEmitter$': 'react-native-web/dist/vendor/react-native/NativeEventEmitter',
-  };
-
-  config.resolve.extensions = [
-    '.web.js',
-    '.web.jsx',
-    '.web.ts',
-    '.web.tsx',
-    ...(config.resolve?.extensions ?? []),
-  ];
-
-  if (!config.plugins) {
-    config.plugins = [];
-  }
-
-  // Expose __DEV__ from Metro.
-  config.plugins.push(
-    new DefinePlugin({
-      __DEV__: JSON.stringify(process.env.NODE_ENV !== 'production'),
-    })
-  );
-
-  return config;
+const boolVals = {
+  true: true,
+  false: false,
 }
-export const eslint = { ignoreDuringBuilds: true };
-export const typescript = { ignoreBuildErrors: true };
+
+const disableExtraction =
+  boolVals[process.env.DISABLE_EXTRACTION] ?? process.env.NODE_ENV === 'development'
+
+const plugins = [
+  withTamagui({
+    config: './tamagui.config.ts',
+    components: ['tamagui', '@acme/ui'],
+    appDir: true,
+    importsWhitelist: ['constants.js', 'colors.js'],
+    outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
+    logTimings: true,
+    disableExtraction,
+    // experiment - reduced bundle size react-native-web
+    useReactNativeWebLite: false,
+    shouldExtract: (path) => {
+      if (path.includes(join('packages', 'app'))) {
+        return true
+      }
+    },
+    excludeReactNativeWebExports: ['Switch', 'ProgressBar', 'Picker', 'CheckBox', 'Touchable'],
+  }),
+]
+// See the "excludeReactNativeWebExports" setting in next.config.js, which omits these
+// from the bundle: Switch, ProgressBar Picker, CheckBox, Touchable. To save more,
+// you can add ones you don't need like: AnimatedFlatList, FlatList, SectionList,
+// VirtualizedList, VirtualizedSectionList.
+
+export default () => {
+  /** @type {import('next').NextConfig} */
+  let config = {
+    typescript: {
+      ignoreBuildErrors: true,
+    },
+    modularizeImports: {
+      '@tamagui/lucide-icons': {
+        transform: `@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}`,
+        skipDefaultConversion: true,
+      },
+    },
+    transpilePackages: [
+      'solito',
+      'react-native-web',
+      'expo-linking',
+      'expo-constants',
+      'expo-modules-core',
+      '@shopify/flash-list',
+    ],
+    experimental: {
+      scrollRestoration: true,
+    },
+  }
+
+  for (const plugin of plugins) {
+    config = {
+      ...config,
+      ...plugin(config),
+    }
+  }
+
+  return config
+}

@@ -3,6 +3,9 @@
   "name": "@acme/app",
   "private": true,
   "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",

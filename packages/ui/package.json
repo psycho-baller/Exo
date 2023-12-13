@@ -1,9 +1,19 @@
 {
   "name": "@acme/ui",
-  "private": true,
   "version": "0.1.0",
+  "sideEffects": [
+    "*.css"
+  ],
+  "private": true,
+  "types": "./types/index",
+  "main": "src/index.tsx",
+  "module:jsx": "src",
+  "files": [
+    "types",
+    "dist"
+  ],
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.tsx"
   },
   "typesVersions": {
     "*": {

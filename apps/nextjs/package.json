@@ -17,7 +17,10 @@
     "@acme/app": "workspace:*",
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
+    "@acme/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.7.1",
+    "@tamagui/config": "latest",
+    "@tamagui/next-theme": "latest",
     "@tanstack/react-query": "^5.8.7",
     "@tanstack/react-query-devtools": "^5.8.7",
     "@tanstack/react-query-next-experimental": "5.8.7",
@@ -30,6 +33,7 @@
     "react-dom": "18.2.0",
     "react-native-web": "^0.19.9",
     "superjson": "2.2.0",
+    "tamagui": "^1.79.11",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -37,16 +41,15 @@
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tailwind-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
+    "@tamagui/next-plugin": "latest",
     "@types/node": "^18.18.13",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.53.0",
     "prettier": "^3.1.0",
-    "tailwindcss": "3.3.5",
-    "typescript": "^5.2.2",
     "react-native": "0.72.7",
-    "webpack": "latest"
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "root": true,

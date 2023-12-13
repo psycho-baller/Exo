@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "~/styles/globals.css";
-
 import { headers } from "next/headers";
 
-import { TRPCReactProvider } from "./providers";
+import { TRPCReactProvider } from "./TRPCProviders";
+import { TamaguiProvider } from "./TamaguiProvider";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -40,7 +39,9 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
+          <TamaguiProvider>
           {props.children}
+          </TamaguiProvider>
         </TRPCReactProvider>
       </body>
     </html>
