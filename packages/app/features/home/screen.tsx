@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
   header: {
     flexGrow: 1,
   },
-  subTitle: {
-    marginTop: 8,
-    fontSize: 14,
-    color: "white",
-  },
   deleteButton: {
     fontSize: 14,
     color: "white",

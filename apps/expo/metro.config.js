@@ -23,4 +23,7 @@ if (config.resolver) {
   config.resolver.disableHierarchicalLookup = true;
 }
 
+config.transformer = { ...config.transformer, unstable_allowRequireContext: true }
+config.transformer.minifierPath = require.resolve('metro-minify-terser')
+
 module.exports = config;

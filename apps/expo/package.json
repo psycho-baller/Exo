@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",
-    "@expo/metro-config": "^0.10.7",
+    "@acme/ui": "workspace:*",
     "@shopify/flash-list": "1.4.3",
     "@tanstack/react-query": "^5.8.7",
     "@trpc/client": "next",
@@ -28,7 +28,6 @@
     "expo-router": "2.0.12",
     "expo-splash-screen": "~0.22.0",
     "expo-status-bar": "~1.7.1",
-    "nativewind": "^4.0.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.7",
@@ -48,11 +47,15 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/runtime": "^7.23.2",
     "@expo/config-plugins": "^7.2.5",
+    "@expo/metro-config": "^0.10.7",
+    "@tamagui/babel-plugin": "latest",
     "@types/babel__core": "^7.20.4",
     "@types/react": "^18.2.37",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^8.53.0",
+    "metro-minify-terser": "^0.80.1",
     "prettier": "^3.1.0",
-    "tailwindcss": "3.3.5",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {

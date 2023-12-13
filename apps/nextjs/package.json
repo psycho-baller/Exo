@@ -17,7 +17,6 @@
     "@acme/app": "workspace:*",
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
-    "@acme/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tamagui/config": "latest",
     "@tamagui/next-theme": "latest",
@@ -39,7 +38,6 @@
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tailwind-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
     "@tamagui/next-plugin": "latest",
     "@types/node": "^18.18.13",

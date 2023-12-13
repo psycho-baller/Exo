@@ -38,7 +38,6 @@ const plugins = [
 // VirtualizedList, VirtualizedSectionList.
 
 export default () => {
-  /** @type {import('next').NextConfig} */
   let config = {
     typescript: {
       ignoreBuildErrors: true,
