@@ -1,7 +1,6 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import "../styles.css";
 import { Provider } from "@acme/app/provider";
 
 // This is the main layout of the app
@@ -14,13 +13,13 @@ const RootLayout = () => {
         It also allows you to configure your screens 
       */}
       <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f472b6",
-          },
-        }}
+        // screenOptions={{
+        //   headerStyle: {
+            
+        //   },
+        // }}
       />
-      <StatusBar />
+      {/* <StatusBar /> */}
     </Provider>
   );
 };

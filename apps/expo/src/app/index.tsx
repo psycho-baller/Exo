@@ -1,2 +1,15 @@
-import Index from "@acme/app/features/home/screen";
-export default Index;
+import HomeScreen from "@acme/app/features/home/screen";
+import { Stack } from 'expo-router'
+
+export default function Screen() {
+  return (
+    <>
+      <Stack.Screen
+        options={{
+          title: 'Home',
+        }}
+      />
+      <HomeScreen />
+    </>
+  )
+}

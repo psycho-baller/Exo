@@ -38,13 +38,14 @@
     "@tamagui/shorthands": "latest",
     "@tamagui/themes": "latest",
     "@tamagui/toast": "latest",
+    "expo-font": "^11.6.0",
     "tamagui": "latest"
   },
   "devDependencies": {
-    "@tamagui/build": "latest",
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
+    "@tamagui/build": "latest",
     "eslint": "^8.53.0",
     "typescript": "^5.2.2"
   },

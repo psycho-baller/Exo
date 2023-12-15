@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button,StyleSheet, Pressable, Text, TextInput, View } from "react-native";
+import { Button,StyleSheet, Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
@@ -8,6 +8,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { api } from "../../utils/trpc";
 import type { RouterOutputs } from "../../utils/trpc";
+import { YStack, H1, Paragraph, Separator, Anchor, Text } from "tamagui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -189,12 +190,32 @@ const Index = () => {
   });
 
   return (
-    <View style={styles.fullContainer}>
-        {/* Changes page title visible on the header */}
-        <Text style={styles.title}>
-          Create <Text style={{color: '#f472b6'}}>T3</Text> Turbo
+    <YStack f={1} jc="center" ai="center" p="$4" space>
+          {/* Changes page title visible on the header */}
+      <YStack space="$4" maw={600}>
+        <H1 ta="center">Welcome to Tamagui.</H1>
+        <Text ta="center">
+          Here's a basic starter to show navigating from one screen to another. This screen uses the
+          same code on Next.js and React Native
         </Text>
 
+        <Separator />
+        <Text ta="center">
+          Made by{' '}
+          <Anchor href="https://twitter.com/natebirdman" target="_blank">
+            @natebirdman
+          </Anchor>
+          ,{' '}
+          <Anchor
+            // color="$color12"
+            href="https://github.com/tamagui/tamagui"
+            target="_blank"
+            rel="noreferrer"
+          >
+            give it a ⭐️
+          </Anchor>
+        </Text>
+      </YStack>
         <Button
           onPress={() => void utils.question.all.invalidate()}
           title="Refresh questions"
@@ -207,7 +228,7 @@ const Index = () => {
           </Text>
         </View>
 
-        <FlashList
+        {/* <FlashList
           data={questionQuery.data}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -217,10 +238,11 @@ const Index = () => {
               onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
             />
           )}
-        />
+        /> */}
 
         <CreateQuestion />
-      </View>
+    </YStack>
+
   );
 };
 

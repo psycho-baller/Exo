@@ -1,15 +1,17 @@
 import type { TamaguiProviderProps} from '@acme/ui';
-import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui'
+import { CustomToast, Page, TamaguiProvider, ToastProvider } from '@acme/ui'
 import { useColorScheme } from 'react-native'
 
 import { ToastViewport } from './ToastViewport'
 import { TRPCProvider } from './TRPCProvider'
 
 import config from '../tamagui.config'
-import React from 'react'
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
+  // if (!loadFonts()) {
+  //   return null
+  // }
   return (
     <TamaguiProvider
       config={config}
@@ -28,10 +30,11 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
         }
       >
         <TRPCProvider>
-          {children}
+          {/* {children} */}
+          <Page>{children}</Page>
         </TRPCProvider>
-         <CustomToast />
-         <ToastViewport />
+        <CustomToast />
+        <ToastViewport />
        </ToastProvider>
      </TamaguiProvider>
   )
