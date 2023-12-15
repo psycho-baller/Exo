@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { Button,StyleSheet, Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,6 +8,7 @@ import { FlashList } from "@shopify/flash-list";
 import { api } from "../../utils/trpc";
 import type { RouterOutputs } from "../../utils/trpc";
 import { YStack, H1, Paragraph, Separator, Anchor, Text } from "tamagui";
+import { Page, type PageProps } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -190,8 +190,7 @@ const Index = () => {
   });
 
   return (
-    <YStack f={1} jc="center" ai="center" p="$4" space>
-          {/* Changes page title visible on the header */}
+    <Page f={1} jc="center" ai="center" p="$4" space>
       <YStack space="$4" maw={600}>
         <H1 ta="center">Welcome to Tamagui.</H1>
         <Text ta="center">
@@ -241,7 +240,7 @@ const Index = () => {
         /> */}
 
         <CreateQuestion />
-    </YStack>
+    </Page>
 
   );
 };

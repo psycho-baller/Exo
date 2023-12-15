@@ -10,7 +10,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "Bundler",
@@ -20,6 +19,9 @@
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true
+  },
+  "typeAcquisition": {
+    "enable": true
   },
   "exclude": [
     "node_modules",

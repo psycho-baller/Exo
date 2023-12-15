@@ -5,4 +5,3 @@ declare module 'tamagui' {
     }
 }
 export default config;
-//# sourceMappingURL=global.d.ts.map

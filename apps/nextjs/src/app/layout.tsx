@@ -5,7 +5,6 @@ import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "./TRPCProviders";
 import { TamaguiProvider } from "./TamaguiProvider";
-
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -40,7 +39,7 @@ export default function Layout(props: { children: React.ReactNode }) {
       <body className={["font-sans", fontSans.variable].join(" ")}>
         <TRPCReactProvider headers={headers()}>
           <TamaguiProvider>
-          {props.children}
+            {props.children}
           </TamaguiProvider>
         </TRPCReactProvider>
       </body>

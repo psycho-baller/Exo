@@ -60,20 +60,20 @@ export const config = createTamagui({
     body: bodyFont,
     heading: headingFont,
   },
+  tokens,
   themes: {
     ...themes,
-    // dark: {
-    //   ...themes.dark,
-    //   background: '#111',
-    //   color: '#fff',
-    // },
-    // light: {
-    //   ...themes.light,
-    //   background: '#fff',
-    //   color: '#111',
-    // },
+    dark: {
+      // ...themes.dark,
+      background: '#111',
+      color: '#fff',
+    },
+    light: {
+      // ...themes.light,
+      background: '#fff',
+      color: '#111',
+    },
   },
-  tokens,
   media: createMedia({
     xs: { maxWidth: 660 },
     sm: { maxWidth: 800 },
