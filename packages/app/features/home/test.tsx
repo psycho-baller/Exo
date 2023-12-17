@@ -1,5 +1,3 @@
-// Import necessary components from React Native
-"use client";
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 

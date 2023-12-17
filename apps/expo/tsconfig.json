@@ -12,7 +12,7 @@
     "src",
     "*.ts",
     "index.tsx",
-    // "*.js",
+    "*.js",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],
