@@ -69,6 +69,9 @@ export const createTRPCContext = async (opts: {
  * transformer
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
+  // isServer: true,
+  // // OTHER SOLUTION MIGHT BE TO USE THE FOLLOWING:
+  // allowOutsideOfServer: true,
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {

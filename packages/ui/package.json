@@ -39,7 +39,7 @@
     "@tamagui/themes": "latest",
     "@tamagui/toast": "latest",
     "expo-font": "^11.6.0",
-    "tamagui": "latest"
+    "tamagui": "1.79.11"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",

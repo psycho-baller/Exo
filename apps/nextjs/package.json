@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm with-env next build",
-    "clean": "git clean -xdf .next .turbo node_modules",
+    "clean": "git clean -xdf .next .turbo node_modules .tamagui",
     "dev": "pnpm with-env next dev",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@acme/api": "workspace:^0.1.0",
+    "@acme/ui": "workspace:*",
     "@acme/app": "workspace:*",
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
@@ -32,7 +33,7 @@
     "react-dom": "18.2.0",
     "react-native-web": "^0.19.9",
     "superjson": "2.2.0",
-    "tamagui": "latest",
+    "tamagui": "1.79.11",
     "zod": "^3.22.2"
   },
   "devDependencies": {

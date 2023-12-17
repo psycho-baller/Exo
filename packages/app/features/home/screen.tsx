@@ -5,8 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
 
-import { api } from "../../utils/trpc";
-import type { RouterOutputs } from "../../utils/trpc";
+import { api } from "@acme/api/utils/trpc"
+import type { RouterOutputs } from "@acme/api";
 import { YStack, H1, Paragraph, Separator, Anchor, Text } from "tamagui";
 import { Page, type PageProps } from "@acme/ui";
 
@@ -222,12 +222,12 @@ const Index = () => {
         />
 
         <View style={{paddingVertical: 8}}>
-          <Text style={styles.subTitle}>
+          <Text>
             Press on a question
           </Text>
         </View>
 
-        {/* <FlashList
+        <FlashList
           data={questionQuery.data}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -237,7 +237,7 @@ const Index = () => {
               onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
             />
           )}
-        /> */}
+        />
 
         <CreateQuestion />
     </Page>

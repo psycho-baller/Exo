@@ -3,6 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
   },
-  "include": ["."],
+  "include": [".", "../api/utils"],
   "exclude": ["node_modules"]
 }

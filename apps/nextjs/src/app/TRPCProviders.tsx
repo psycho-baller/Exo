@@ -2,49 +2,30 @@
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
-import superjson from "superjson";
-
-import { env } from "~/env.mjs";
-import { api } from "@acme/app/utils/trpc";
-
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (env.VERCEL_URL) return env.VERCEL_URL; // SSR should use vercel url
-
-  return `http://localhost:${env.PORT}`; // dev SSR should use localhost
-};
+import { createTRPCReact } from "@trpc/react-query";
+import SuperJSON from "superjson";
+import { api } from "@acme/api/utils/trpc.web";
 
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
-  headers?: Headers;
+  headersPromise: Promise<Headers>;
 }) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 5 * 1000,
-          },
-        },
-      }),
-  );
+  const [queryClient] = useState(() => new QueryClient());
 
   const [trpcClient] = useState(() =>
     api.createClient({
-      transformer: superjson,
+      transformer: SuperJSON,
       links: [
         loggerLink({
-          enabled: (opts) =>
+          enabled: (op) =>
             process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
+            (op.direction === "down" && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          url: `${getBaseUrl()}/api/trpc`,
-          headers() {
-            const headers = new Map(props.headers);
+          url: getBaseUrl() + "/api/trpc",
+          async headers() {
+            const headers = new Map(await props.headersPromise);
             headers.set("x-trpc-source", "nextjs-react");
             return Object.fromEntries(headers);
           },
@@ -54,13 +35,16 @@ export function TRPCReactProvider(props: {
   );
 
   return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration transformer={superjson}>
-          {props.children}
-        </ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </api.Provider>
+    <QueryClientProvider client={queryClient}>
+      <api.Provider client={trpcClient} queryClient={queryClient}>
+        {props.children}
+      </api.Provider>
+    </QueryClientProvider>
   );
+}
+
+function getBaseUrl() {
+  if (typeof window !== "undefined") return window.location.origin;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`;
 }
