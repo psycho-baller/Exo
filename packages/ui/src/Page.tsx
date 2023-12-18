@@ -2,7 +2,8 @@ import { type GetProps,styled, YStack } from 'tamagui'
 
 export const Page = styled(YStack, {
   name: 'Page',
-  flex: 1,
+  // flex: 1,
+  fullscreen: true,
 })
 
 export type PageProps = GetProps<typeof Page>

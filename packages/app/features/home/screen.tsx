@@ -1,5 +1,5 @@
 import React from "react";
-import { Button,StyleSheet, Pressable, TextInput } from "react-native";
+import { StyleSheet, Pressable, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
@@ -7,45 +7,36 @@ import { FlashList } from "@shopify/flash-list";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { YStack, H1, Paragraph, Separator, Anchor, Text, Page, type PageProps, View } from "@acme/ui";
+import { Text, Page, type PageProps, View, FloatingFooter, Card, Button } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
   onDelete: () => void;
 }) {
   return (
-    <View
-      style={styles.mainContainer}
-    >
-      <View
-        style={styles.header}
-      >
+    <Card p={16}>
+      <Card.Header>
         <Link
           href={`/question/${props.question.id.toString()}`}
         >
           <Pressable>
+            <Text>
+              {props.question.text}
+            </Text>
             <Text
-              children={props.question.text}
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "green",
-              }}
-            />
-            <Text
-              style={styles.subTitle}
+              // style={styles.subTitle}
             >
               {props.question.createdDatetime.toString()}
             </Text>
           </Pressable>
         </Link>
-      </View>
+      </Card.Header>
+      <Card.Footer>
       <Pressable onPress={props.onDelete}>
-        <Text
-          style={styles.deleteButton}
-        >Delete</Text>
+        <Text>Delete</Text>
       </Pressable>
-    </View>
+      </Card.Footer>
+    </Card>
   );
 }
 
@@ -188,8 +179,8 @@ const Index = () => {
   });
 
   return (
-    <Page f={1} jc="center" ai="center" p="$4" space>
-      <YStack space="$4" maw={600}>
+    <Page ai="center" >
+      {/* <YStack space="$4" maw={600}>
         <H1 ta="center">Welcome to Tamagui.</H1>
         <Text ta="center">
           Here's a basic starter to show navigating from one screen to another. This screen uses the
@@ -197,47 +188,31 @@ const Index = () => {
         </Text>
 
         <Separator />
-        <Text ta="center">
-          Made by{' '}
-          <Anchor href="https://twitter.com/natebirdman" target="_blank">
-            @natebirdman
-          </Anchor>
-          ,{' '}
-          <Anchor
-            // color="$color12"
-            href="https://github.com/tamagui/tamagui"
-            target="_blank"
-            rel="noreferrer"
-          >
-            give it a ⭐️
-          </Anchor>
-        </Text>
       </YStack>
-        {/* <Button
+        <Button
           onPress={() => void utils.question.all.invalidate()}
-          title="Refresh questions"
           color={"#f472b6"}
-        /> */}
-
-        {/* <View style={{paddingVertical: 8}}> */}
-          <Text>
-            Press on a question
-          </Text>
-        {/* </View> */}
-
+        >Refresh questions</Button> */}
+        {/* <View w={width} h={height} > */}
         <FlashList
           data={questionQuery.data}
           estimatedItemSize={20}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          // ItemSeparatorComponent={() => <Separator />}
           renderItem={(p) => (
             <QuestionCard
               question={p.item}
               onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
             />
+            // <Text>{p.item.text}</Text>
           )}
         />
+        {/* </View> */}
 
-        <CreateQuestion />
+        {/* <CreateQuestion /> */}
+        <FloatingFooter>
+          <Text>Footer</Text>
+          <Text>Footer</Text>
+        </FloatingFooter>
     </Page>
 
   );
