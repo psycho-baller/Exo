@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Pressable, TextInput } from "react-native";
+import { StyleSheet, Pressable, TextInput,Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
@@ -7,7 +7,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, type PageProps, View, FloatingFooter, Card, Button } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -168,8 +168,25 @@ function CreateQuestion() {
   );
 }
 
+const AddQuestion = () => {
+  return (
+    <Link href="/question/create">
+      <Pressable
+        style={{
+          backgroundColor: '#f472b6',
+          borderRadius: 4,
+          padding: 8,
+        }}
+      >
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>+</Text>
+      </Pressable>
+    </Link>
+  );
+}
+
 const Index = () => {
   const utils = api.useContext();
+  // const { width, height } = Dimensions.get('window');
 
   const questionQuery = api.question.all.useQuery();
   console.log(questionQuery);
@@ -179,7 +196,7 @@ const Index = () => {
   });
 
   return (
-    <Page ai="center" >
+    <Page >
       {/* <YStack space="$4" maw={600}>
         <H1 ta="center">Welcome to Tamagui.</H1>
         <Text ta="center">
@@ -193,11 +210,11 @@ const Index = () => {
           onPress={() => void utils.question.all.invalidate()}
           color={"#f472b6"}
         >Refresh questions</Button> */}
-        {/* <View w={width} h={height} > */}
+        {/* <View w={width} > */}
         <FlashList
           data={questionQuery.data}
           estimatedItemSize={20}
-          // ItemSeparatorComponent={() => <Separator />}
+          ItemSeparatorComponent={() => <Separator />}
           renderItem={(p) => (
             <QuestionCard
               question={p.item}
@@ -209,9 +226,13 @@ const Index = () => {
         {/* </View> */}
 
         {/* <CreateQuestion /> */}
-        <FloatingFooter>
-          <Text>Footer</Text>
-          <Text>Footer</Text>
+        {/* blur background */}
+        <FloatingFooter blurIntensity={70} >
+            <Text>Footer</Text>
+            <Text>Footer</Text>
+            <AddQuestion />
+            <Text>Footer</Text>
+            <Text>Footer</Text>
         </FloatingFooter>
     </Page>
 
