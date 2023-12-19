@@ -1,6 +1,7 @@
-import { Footer, View, XStack } from "tamagui";
+import { Footer, View, XStack, Button } from "tamagui";
 import type { GetProps } from "tamagui"
 import { BlurView } from 'expo-blur';
+import { Children } from "react";
 
 interface Props extends GetProps<typeof View> {
   stackProps?: GetProps<typeof XStack>
@@ -13,7 +14,12 @@ export const FloatingFooter = (props: Props) => {
     <Footer position="absolute" l={20} r={20} b={20} zIndex={1} {...rest}>
       <BlurView intensity={blurIntensity} style={{borderRadius:999, padding: 10, overflow:"hidden"}} >
         <XStack space jc="space-evenly" px={0} ai="center" {...stackProps}>
-          {children}
+          {Children.map(children, (child) => (
+            <Button unstyled cursor="pointer">{child}</Button>
+          ))}
+          {/* {(children as any[]).map((child) => (
+            <Button unstyled cursor="pointer">{child}</Button>
+          ))} */}
         </XStack>
       </BlurView>
     </Footer>
