@@ -8,7 +8,7 @@ import { Plus, Search, Home, UserCircle, Settings } from "@tamagui/lucide-icons"
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -169,7 +169,7 @@ function CreateQuestion() {
   );
 }
 
-const AddQuestion = () => {
+const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useContext();
 
   const [title, setTitle] = useState("");
@@ -182,14 +182,31 @@ const AddQuestion = () => {
       await utils.question.all.invalidate();
     },
   });
+
   return (
-    <Plus />
+    <Sheet
+        open={open}
+        onOpenChange={setOpen}
+        zIndex={50}
+      >
+        {/* <Sheet.Overlay
+          animation="lazy"
+          enterStyle={{ opacity: 0 }}
+          exitStyle={{ opacity: 0 }}
+        /> */}
+        <Sheet.Handle />
+        <Sheet.Frame padding="$4" justifyContent="center" alignItems="center" space="$5">
+          <Button size="$6" circular onPress={() => setOpen(false)} />
+          <Input width={200} />
+        </Sheet.Frame>
+      </Sheet>
   );
 }
 
 const Index = () => {
   const utils = api.useContext();
   // const { width, height } = Dimensions.get('window');
+  const [open, setOpen] = useState(false)
 
   const questionQuery = api.question.all.useQuery();
   console.log(questionQuery);
@@ -197,6 +214,12 @@ const Index = () => {
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: () => utils.question.all.invalidate(),
   });
+
+  function handlePlusClick(){
+    console.log("handlePlusClick");
+    setOpen(true);
+    console.log(open);
+  }
 
   return (
     <Page >
@@ -233,12 +256,12 @@ const Index = () => {
         <FloatingFooter blurIntensity={70} >
           <Home />
           <UserCircle />
-          <AddQuestion />
+          <Plus onPress={handlePlusClick} />
           <Search />
           <Settings />
         </FloatingFooter>
+        <AddQuestion open={open} setOpen={setOpen} />
     </Page>
-
   );
 };
 
