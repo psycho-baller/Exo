@@ -1,9 +1,10 @@
-import React from "react";
+import { useState } from "react";
 import { StyleSheet, Pressable, TextInput,Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
+import { Plus, Search, Home, UserCircle, Settings } from "@tamagui/lucide-icons";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
@@ -111,8 +112,8 @@ const styles = StyleSheet.create({
 function CreateQuestion() {
   const utils = api.useContext();
 
-  const [title, setTitle] = React.useState("");
-  const [content, setContent] = React.useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const { mutate, error } = api.question.create.useMutation({
     async onSuccess() {
@@ -169,18 +170,20 @@ function CreateQuestion() {
 }
 
 const AddQuestion = () => {
+  const utils = api.useContext();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const { mutate, error } = api.question.create.useMutation({
+    async onSuccess() {
+      setTitle("");
+      setContent("");
+      await utils.question.all.invalidate();
+    },
+  });
   return (
-    <Link href="/question/create">
-      <Pressable
-        style={{
-          backgroundColor: '#f472b6',
-          borderRadius: 4,
-          padding: 8,
-        }}
-      >
-        <Text style={{ color: 'white', fontWeight: 'bold' }}>+</Text>
-      </Pressable>
-    </Link>
+    <Plus />
   );
 }
 
@@ -228,11 +231,11 @@ const Index = () => {
         {/* <CreateQuestion /> */}
         {/* blur background */}
         <FloatingFooter blurIntensity={70} >
-            <Text>Footer</Text>
-            <Text>Footer</Text>
-            <AddQuestion />
-            <Text>Footer</Text>
-            <Text>Footer</Text>
+          <Home />
+          <UserCircle />
+          <AddQuestion />
+          <Search />
+          <Settings />
         </FloatingFooter>
     </Page>
 
