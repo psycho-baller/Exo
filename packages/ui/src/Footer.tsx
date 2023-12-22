@@ -14,18 +14,7 @@ export const FloatingFooter = (props: Props) => {
     <Footer position="absolute" l={20} r={20} b={20} zIndex={1} {...rest}>
       <BlurView intensity={blurIntensity} style={{borderRadius:999, padding: 10, overflow:"hidden"}} >
         <XStack space jc="space-evenly" px={0} ai="center" {...stackProps}>
-          {Children.map(children, (child) => (
-            <Button
-              unstyled
-              cursor="pointer"
-              {...child.props}
-            >
-              {child}
-            </Button>
-          ))}
-          {/* {(children as any[]).map((child) => (
-            <Button unstyled cursor="pointer">{child}</Button>
-          ))} */}
+          {children}
         </XStack>
       </BlurView>
     </Footer>

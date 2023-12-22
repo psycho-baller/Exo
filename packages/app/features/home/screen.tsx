@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Pressable, TextInput,Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
@@ -172,34 +172,60 @@ function CreateQuestion() {
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useContext();
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [question, setQuestion] = useState("");
+  // const [content, setContent] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { mutate, error } = api.question.create.useMutation({
     async onSuccess() {
-      setTitle("");
-      setContent("");
+      setQuestion("");
+      // setContent("");
       await utils.question.all.invalidate();
     },
   });
+
+  function addQuestion(){
+    mutate({
+      createdByUserId: 0,
+      text: question,
+    });
+    setOpen(false);
+  }
 
   return (
     <Sheet
         open={open}
         onOpenChange={setOpen}
         zIndex={50}
-      >
-        {/* <Sheet.Overlay
-          animation="lazy"
-          enterStyle={{ opacity: 0 }}
-          exitStyle={{ opacity: 0 }}
-        /> */}
-        <Sheet.Handle />
-        <Sheet.Frame padding="$4" justifyContent="center" alignItems="center" space="$5">
-          <Button size="$6" circular onPress={() => setOpen(false)} />
-          <Input width={200} />
-        </Sheet.Frame>
-      </Sheet>
+    >
+      {/* <Sheet.Overlay
+        animation="lazy"
+        enterStyle={{ opacity: 0 }}
+        exitStyle={{ opacity: 0 }}
+      /> */}
+      <Sheet.Handle />
+      <Sheet.Frame padding="$4" justifyContent="center" alignItems="center" space="$5">
+        <Input width={200} style={mounted ? {
+          
+          transform: [
+            {
+              translateY: 0,
+            },
+          ],
+        } : {
+          transform: [
+            {
+              translateY: 100,
+            },
+          ],
+        }} placeholder="Title" value={question} onChangeText={setQuestion} />
+        <Button size="$4"  onPress={addQuestion} />
+      </Sheet.Frame>
+    </Sheet>
   );
 }
 
@@ -216,9 +242,7 @@ const Index = () => {
   });
 
   function handlePlusClick(){
-    console.log("handlePlusClick");
     setOpen(true);
-    console.log(open);
   }
 
   return (
@@ -256,7 +280,7 @@ const Index = () => {
         <FloatingFooter blurIntensity={70} >
           <Home />
           <UserCircle />
-          <Plus onPress={handlePlusClick} />
+          <Button unstyled onPress={handlePlusClick}><Plus /></Button>
           <Search />
           <Settings />
         </FloatingFooter>
