@@ -4,11 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
-import { Plus, Search, Home, UserCircle, Settings } from "@tamagui/lucide-icons";
+import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -198,7 +198,8 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 
   return (
     <Sheet
-        open={open}
+        open//={open}
+        modal
         onOpenChange={setOpen}
         zIndex={50}
     >
@@ -208,9 +209,12 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
         exitStyle={{ opacity: 0 }}
       /> */}
       <Sheet.Handle />
-      <Sheet.Frame padding="$4" justifyContent="center" alignItems="center" space="$5">
-        <Input width={200} style={mounted ? {
-          
+      <Sheet.Frame padding="$4">
+        <XStack justifyContent="space-between">
+          <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="question">QUESTION</Label>
+          <Button unstyled onPress={() => setOpen(false)}><X /></Button>
+        </XStack>
+        <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} style={mounted ? {
           transform: [
             {
               translateY: 0,
@@ -222,8 +226,18 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
               translateY: 100,
             },
           ],
-        }} placeholder="Title" value={question} onChangeText={setQuestion} />
-        <Button size="$4"  onPress={addQuestion} />
+        }} placeholder="Add Question" value={question} onChangeText={setQuestion} />
+        <XStack justifyContent="space-between" >
+          <XStack>
+            <Text>
+              stuff
+            </Text>
+
+          </XStack>
+          <Button unstyled onPress={addQuestion}>
+            <CheckCircle2 />
+          </Button>
+        </XStack>
       </Sheet.Frame>
     </Sheet>
   );
