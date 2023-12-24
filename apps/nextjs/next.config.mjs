@@ -55,6 +55,7 @@ export default () => {
       'expo-constants',
       'expo-modules-core',
       '@shopify/flash-list',
+      // 'react-native-element-dropdown'
     ],
     experimental: {
       scrollRestoration: true,

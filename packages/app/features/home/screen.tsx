@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
 import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
+import { Dropdown } from 'react-native-element-dropdown';
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
@@ -169,6 +170,117 @@ function CreateQuestion() {
   );
 }
 
+const FriendDropdown = (createFriendMutation: any) => {
+  const ADD_FRIEND = 'Add friend'
+  const [value, setValue] = useState<string>("");
+  const [isFocus, setIsFocus] = useState(false);
+
+  const [data,setData] = useState([
+    { label: ADD_FRIEND, value: '+'},
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' }
+  ]);
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: 'white',
+      padding: 16,
+    },
+    dropdown: {
+      height: 50,
+      borderColor: 'gray',
+      borderWidth: 0.5,
+      borderRadius: 8,
+      paddingHorizontal: 8,
+    },
+    icon: {
+      marginRight: 5,
+    },
+    label: {
+      position: 'absolute',
+      backgroundColor: 'white',
+      left: 22,
+      top: 8,
+      zIndex: 999,
+      paddingHorizontal: 8,
+      fontSize: 14,
+    },
+    placeholderStyle: {
+      fontSize: 16,
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 16,
+    },
+  });
+
+  const handleDropdownChange = (item: typeof data[0]) => {
+    const value = item.value
+    if (value === '+') {
+      setData([
+        ...data,
+        { label: value, value: value },
+      ]);
+    }
+    setValue(value);
+    setIsFocus(false);
+
+    createFriendMutation(value)
+  }
+
+  return(
+    <View style={styles.container}>
+      {/* {renderLabel()} */}
+      <Dropdown
+        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={data}
+        search
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder={!isFocus ? 'Select or add a friend' : ''}
+        searchPlaceholder="Search or add a friend"
+        value={value}
+        inverted={false}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={handleDropdownChange}
+        // renderInputSearch={(onSearch: (text:string) => void) => (
+        // )}
+        searchQuery={(keyword: string, labelValue: string) => (
+          labelValue.includes(keyword) || labelValue === ADD_FRIEND
+        )}
+        // renderLeftIcon={() => (
+          // <AntDesign
+          //   style={styles.icon}
+          //   color={isFocus ? 'blue' : 'black'}
+          //   name="Safety"
+          //   size={20}
+          // />
+        // )}
+      />
+    </View>
+  );
+};
+
+
 const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selectedFriend, setSelectedFriend}: {currentFriend: string, setCurrentFriend: (friend: string) => void, selectedFriend: string | null, setSelectedFriend: (friend: string | null) => void}) => {
   // const {currentFriend: friend, setCurrentFriend: setFriend} = props;
   const utils = api.useContext();
@@ -186,6 +298,7 @@ const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selected
     <YStack>
       <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
       <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friend} onChangeText={setFriend} />
+      <FriendDropdown createFriendMutation={mutate} />
     </YStack>
   );
 }
