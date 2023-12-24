@@ -22,7 +22,7 @@ export const friendRouter = createTRPCRouter({
     .input(
       z.object({
         createdByUserId: z.number(),
-        friendUserId: z.number(),
+        friendUserId: z.number().optional(),
         name: z.string().min(1),
       }),
     )

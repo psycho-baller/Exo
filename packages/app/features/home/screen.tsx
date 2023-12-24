@@ -8,7 +8,7 @@ import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tama
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack } from "@acme/ui";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -169,39 +169,78 @@ function CreateQuestion() {
   );
 }
 
+const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selectedFriend, setSelectedFriend}: {currentFriend: string, setCurrentFriend: (friend: string) => void, selectedFriend: string | null, setSelectedFriend: (friend: string | null) => void}) => {
+  // const {currentFriend: friend, setCurrentFriend: setFriend} = props;
+  const utils = api.useContext();
+
+  const { mutate, error } = api.friend.create.useMutation({
+    async onSuccess() {
+      setFriend("");
+      await utils.friend.all.invalidate();
+
+      setSelectedFriend(friend);
+    },
+  });
+
+  return (
+    <YStack>
+      <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
+      <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friend} onChangeText={setFriend} />
+    </YStack>
+  );
+}
+
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useContext();
 
-  const [question, setQuestion] = useState("");
-  // const [content, setContent] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const createQuestionFriendsMutation = api.questionFriend.create.useMutation({
+    async onSuccess() {
+      await utils.friend.all.invalidate();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+      setSelectedFriend(friend);
+    },
+  });
+
+  const [question, setQuestion] = useState("");
+  const [friend, setFriend] = useState("");
+  const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const { mutate, error } = api.question.create.useMutation({
     async onSuccess() {
       setQuestion("");
+      setOpen(false);
       // setContent("");
       await utils.question.all.invalidate();
+
+      // add friend relationship with question if friend is not empty
+      if (selectedFriend !== null) {
+        setFriend("");
+        createQuestionFriendsMutation.mutate({
+          questionId: 0,
+          friendId: 0,
+        });
+      }
     },
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function addQuestion(){
     mutate({
       createdByUserId: 0,
       text: question,
     });
-    setOpen(false);
   }
 
   return (
     <Sheet
-        open//={open}
-        modal
-        onOpenChange={setOpen}
-        zIndex={50}
+      open={open}
+      modal
+      onOpenChange={setOpen}
+      zIndex={50}
     >
       {/* <Sheet.Overlay
         animation="lazy"
@@ -226,8 +265,9 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
               translateY: 100,
             },
           ],
-        }} placeholder="Add Question" value={question} onChangeText={setQuestion} />
-        <XStack justifyContent="space-between" >
+        }} autoFocus={open} placeholder="Add Question" value={question} onChangeText={setQuestion}  />
+        <AddFriend currentFriend={friend} setCurrentFriend={setFriend} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} />
+        <XStack justifyContent="space-between">
           <XStack>
             <Text>
               stuff
@@ -270,35 +310,35 @@ const Index = () => {
 
         <Separator />
       </YStack>
-        <Button
-          onPress={() => void utils.question.all.invalidate()}
-          color={"#f472b6"}
-        >Refresh questions</Button> */}
-        {/* <View w={width} > */}
-        <FlashList
-          data={questionQuery.data}
-          estimatedItemSize={20}
-          ItemSeparatorComponent={() => <Separator />}
-          renderItem={(p) => (
-            <QuestionCard
-              question={p.item}
-              onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
-            />
-            // <Text>{p.item.text}</Text>
-          )}
-        />
-        {/* </View> */}
+      <Button
+        onPress={() => void utils.question.all.invalidate()}
+        color={"#f472b6"}
+      >Refresh questions</Button> */}
+      {/* <View w={width} > */}
+      <FlashList
+        data={questionQuery.data}
+        estimatedItemSize={20}
+        ItemSeparatorComponent={() => <Separator />}
+        renderItem={(p) => (
+          <QuestionCard
+            question={p.item}
+            onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
+          />
+          // <Text>{p.item.text}</Text>
+        )}
+      />
+      {/* </View> */}
 
-        {/* <CreateQuestion /> */}
-        {/* blur background */}
-        <FloatingFooter blurIntensity={70} >
-          <Home />
-          <UserCircle />
-          <Button unstyled onPress={handlePlusClick}><Plus /></Button>
-          <Search />
-          <Settings />
-        </FloatingFooter>
-        <AddQuestion open={open} setOpen={setOpen} />
+      {/* <CreateQuestion /> */}
+      {/* blur background */}
+      <FloatingFooter blurIntensity={70} >
+        <Home />
+        <UserCircle />
+        <Button unstyled onPress={handlePlusClick}><Plus /></Button>
+        <Search />
+        <Settings />
+      </FloatingFooter>
+      <AddQuestion open={open} setOpen={setOpen} />
     </Page>
   );
 };
