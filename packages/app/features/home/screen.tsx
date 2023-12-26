@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 });
 
 function CreateQuestion() {
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -283,7 +283,7 @@ const FriendDropdown = (createFriendMutation: any) => {
 
 const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selectedFriend, setSelectedFriend}: {currentFriend: string, setCurrentFriend: (friend: string) => void, selectedFriend: string | null, setSelectedFriend: (friend: string | null) => void}) => {
   // const {currentFriend: friend, setCurrentFriend: setFriend} = props;
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
   const { mutate, error } = api.friend.create.useMutation({
     async onSuccess() {
@@ -304,7 +304,7 @@ const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selected
 }
 
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
-  const utils = api.useContext();
+  const utils = api.useUtils();
 
   const createQuestionFriendsMutation = api.questionFriend.create.useMutation({
     async onSuccess() {
@@ -397,7 +397,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 }
 
 const Index = () => {
-  const utils = api.useContext();
+  const utils = api.useUtils();
   // const { width, height } = Dimensions.get('window');
   const [open, setOpen] = useState(false)
 

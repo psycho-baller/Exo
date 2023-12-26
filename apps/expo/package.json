@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "expo start",
+    "dev": "expo start --ios",
     "clean": "git clean -xdf .expo .turbo node_modules .tamagui",
     "dev:android": "expo start --android",
     "dev:ios": "expo start --ios",
