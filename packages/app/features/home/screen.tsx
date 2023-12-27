@@ -10,6 +10,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
 import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack } from "@acme/ui";
+import { useFriendsStore } from "../../stores/addQuestion";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
@@ -170,11 +171,11 @@ function CreateQuestion() {
   );
 }
 
-const FriendDropdown = (createFriendMutation: any) => {
+const FriendDropdown = () => {
+  const utils = api.useUtils();
   const ADD_FRIEND = 'Add friend'
   const [value, setValue] = useState<string>("");
   const [isFocus, setIsFocus] = useState(false);
-
   const [data,setData] = useState([
     { label: ADD_FRIEND, value: '+'},
     { label: 'Item 1', value: '1' },
@@ -186,6 +187,16 @@ const FriendDropdown = (createFriendMutation: any) => {
     { label: 'Item 7', value: '7' },
     { label: 'Item 8', value: '8' }
   ]);
+  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+
+  const createFriendMutation = api.friend.create.useMutation({
+    async onSuccess() {
+      setFriendSearch("");
+      await utils.friend.all.invalidate();
+
+      setSelectedFriend(friendSearch);
+    },
+  });
 
   const styles = StyleSheet.create({
     container: {
@@ -232,13 +243,17 @@ const FriendDropdown = (createFriendMutation: any) => {
     if (value === '+') {
       setData([
         ...data,
-        { label: value, value: value },
+        { label: friendSearch, value: friendSearch },
       ]);
     }
     setValue(value);
     setIsFocus(false);
 
-    createFriendMutation(value)
+    createFriendMutation.mutate({
+      createdByUserId: 1,
+      name: value,
+      friendUserId: 0,
+    })
   }
 
   return(
@@ -281,24 +296,14 @@ const FriendDropdown = (createFriendMutation: any) => {
 };
 
 
-const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selectedFriend, setSelectedFriend}: {currentFriend: string, setCurrentFriend: (friend: string) => void, selectedFriend: string | null, setSelectedFriend: (friend: string | null) => void}) => {
-  // const {currentFriend: friend, setCurrentFriend: setFriend} = props;
-  const utils = api.useUtils();
-
-  const { mutate, error } = api.friend.create.useMutation({
-    async onSuccess() {
-      setFriend("");
-      await utils.friend.all.invalidate();
-
-      setSelectedFriend(friend);
-    },
-  });
+const AddFriend = () => {
+  const [friendSearch, setFriendSearch] = useFriendsStore((state) => [state.friendSearch, state.setFriendSearch]);
 
   return (
     <YStack>
       <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
-      <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friend} onChangeText={setFriend} />
-      <FriendDropdown createFriendMutation={mutate} />
+      <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} onChangeText={setFriendSearch} />
+      <FriendDropdown />
     </YStack>
   );
 }
@@ -306,17 +311,17 @@ const AddFriend = ({currentFriend: friend, setCurrentFriend: setFriend, selected
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useUtils();
 
+  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+
   const createQuestionFriendsMutation = api.questionFriend.create.useMutation({
     async onSuccess() {
       await utils.friend.all.invalidate();
 
-      setSelectedFriend(friend);
+      setSelectedFriend(friendSearch);
     },
   });
 
   const [question, setQuestion] = useState("");
-  const [friend, setFriend] = useState("");
-  const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   const { mutate, error } = api.question.create.useMutation({
@@ -328,7 +333,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 
       // add friend relationship with question if friend is not empty
       if (selectedFriend !== null) {
-        setFriend("");
+        setFriendSearch("");
         createQuestionFriendsMutation.mutate({
           questionId: 0,
           friendId: 0,
@@ -379,7 +384,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
             },
           ],
         }} autoFocus={open} placeholder="Add Question" value={question} onChangeText={setQuestion}  />
-        <AddFriend currentFriend={friend} setCurrentFriend={setFriend} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} />
+        <AddFriend />
         <XStack justifyContent="space-between">
           <XStack>
             <Text>
