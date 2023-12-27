@@ -4,12 +4,14 @@ import { createWithEqualityFn } from "zustand/traditional";
 
 export type FriendsState = {
   friendSearch: string;
-  selectedFriend: string | null;
+  selectedFriends: string[];
 };
 
 export type FriendsActions = {
   setFriendSearch: (search: string) => void;
-  setSelectedFriend: (friend: string) => void;
+  setSelectedFriends: (friends: string[]) => void;
+  toggleSelectedFriend: (friend: string) => void;
+
 };
 
 export const useFriendsStore = createWithEqualityFn<
@@ -19,8 +21,17 @@ export const useFriendsStore = createWithEqualityFn<
     (set, get) => ({
       friendSearch: "",
       setFriendSearch: (search) => set({ friendSearch: search }),
-      selectedFriend: null,
-      setSelectedFriend: (friend) => set({ selectedFriend: friend }),
+      selectedFriends: [],
+      setSelectedFriends: (friends) => set({ selectedFriends: friends }),
+      toggleSelectedFriend: (friend) => {
+        const friends = get().selectedFriends;
+        if (friends.includes(friend)) { 
+          const newFriends = friends.filter((f) => f !== friend);
+          set({ selectedFriends: newFriends });
+        } else {
+          set({ selectedFriends: [...friends, friend] });
+        }
+      }
     }),
     {
       name: "friends",

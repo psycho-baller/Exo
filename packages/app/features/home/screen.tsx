@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
 import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
-import { Dropdown } from 'react-native-element-dropdown';
+import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
@@ -176,7 +176,7 @@ const FriendDropdown = () => {
   const ADD_FRIEND = 'Add friend'
   const [value, setValue] = useState<string>("");
   const [isFocus, setIsFocus] = useState(false);
-  const [data,setData] = useState([
+  const [friendsList,setFriendsList] = useState([
     { label: ADD_FRIEND, value: '+'},
     { label: 'Item 1', value: '1' },
     { label: 'Item 2', value: '2' },
@@ -187,14 +187,14 @@ const FriendDropdown = () => {
     { label: 'Item 7', value: '7' },
     { label: 'Item 8', value: '8' }
   ]);
-  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+  const [selectedFriends, setSelectedFriends, toggleSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriends, state.setSelectedFriends, state.toggleSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
   const createFriendMutation = api.friend.create.useMutation({
     async onSuccess() {
       setFriendSearch("");
       await utils.friend.all.invalidate();
 
-      setSelectedFriend(friendSearch);
+      toggleSelectedFriend(friendSearch);
     },
   });
 
@@ -238,41 +238,48 @@ const FriendDropdown = () => {
     },
   });
 
-  const handleDropdownChange = (item: typeof data[0]) => {
-    const value = item.value
-    if (value === '+') {
-      setData([
-        ...data,
-        { label: friendSearch, value: friendSearch },
-      ]);
+  const handleDropdownChange = (items: string[]) => {
+    // check if one of the items is the add friend option
+    const addFriendItem = items.find((item) => item === '+');
+    if (addFriendItem) {
+      createFriendMutation.mutate({
+        createdByUserId: 1,
+        name: addFriendItem,
+        friendUserId: 0,
+      })
+    } else {
+      setSelectedFriends(items);
     }
-    setValue(value);
+      
+    // const value = item.value
+    // if (value === '+') {
+    //   setFriendsList([
+    //     ...friendsList,
+    //     { label: friendSearch, value: friendSearch },
+    //   ]);
+    // }
+    // setValue(value);
     setIsFocus(false);
 
-    createFriendMutation.mutate({
-      createdByUserId: 1,
-      name: value,
-      friendUserId: 0,
-    })
   }
 
   return(
     <View style={styles.container}>
       {/* {renderLabel()} */}
-      <Dropdown
+      <MultiSelect
         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={data}
+        data={friendsList}
         search
         maxHeight={300}
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? 'Select or add a friend' : ''}
         searchPlaceholder="Search or add a friend"
-        value={value}
+        value={selectedFriends}
         inverted={false}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
@@ -311,13 +318,13 @@ const AddFriend = () => {
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useUtils();
 
-  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+  const [selectedFriends, toggleSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriends, state.toggleSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
   const createQuestionFriendsMutation = api.questionFriend.create.useMutation({
     async onSuccess() {
       await utils.friend.all.invalidate();
 
-      setSelectedFriend(friendSearch);
+      toggleSelectedFriend(friendSearch);
     },
   });
 
@@ -332,7 +339,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
       await utils.question.all.invalidate();
 
       // add friend relationship with question if friend is not empty
-      if (selectedFriend !== null) {
+      if (selectedFriends !== null) {
         setFriendSearch("");
         createQuestionFriendsMutation.mutate({
           questionId: 0,
