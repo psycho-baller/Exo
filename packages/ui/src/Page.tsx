@@ -4,6 +4,7 @@ export const Page = styled(YStack, {
   name: 'Page',
   // flex: 1,
   fullscreen: true,
+  backgroundColor: '#111',
 })
 
 export type PageProps = GetProps<typeof Page>

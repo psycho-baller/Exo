@@ -9,37 +9,39 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack, Checkbox } from "@acme/ui";
 import { useFriendsStore } from "../../stores/addQuestion";
+import { formatDate } from "../../lib/utils";
 
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
   onDelete: () => void;
 }) {
+  const { question, onDelete } = props;
+  const friend = api.questionFriend.getFriendByQuestionId.useQuery({
+    questionId: question.id,
+  });
   return (
-    <Card p={16}>
-      <Card.Header>
-        <Link
-          href={`/question/${props.question.id.toString()}`}
-        >
-          <Pressable>
-            <Text>
-              {props.question.text}
-            </Text>
-            <Text
-              // style={styles.subTitle}
-            >
-              {props.question.createdDatetime.toString()}
-            </Text>
-          </Pressable>
-        </Link>
-      </Card.Header>
-      <Card.Footer>
-      <Pressable onPress={props.onDelete}>
-        <Text>Delete</Text>
-      </Pressable>
-      </Card.Footer>
-    </Card>
+    <Link href={`/question/${question.id.toString()}`}>
+      <XStack p={"$4"} justifyContent="space-between">
+        <XStack  gap={"$3"}>
+          <Checkbox onPress={onDelete} />
+          <Text fontSize={16} fontWeight="bold">
+            {question.text}
+          </Text>
+        </XStack>
+        <YStack>
+          <Text
+            // style={styles.subTitle}
+          >
+            {formatDate(question.createdDatetime)}
+          </Text>
+          {/* tags */}
+          {/* friend */}
+          
+        </YStack>
+      </XStack>
+    </Link>
   );
 }
 
