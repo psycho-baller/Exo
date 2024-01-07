@@ -28,10 +28,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
           ]
         }
       >
-        {/* <TRPCProvider> */}
-          {children}
-          {/* <Page>{children}</Page> */}
-        {/* </TRPCProvider> */}
+        {children}
         <CustomToast />
         <ToastViewport />
        </ToastProvider>
