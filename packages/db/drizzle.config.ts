@@ -11,6 +11,7 @@ if (!process.env.DATABASE_URL) {
 
 export default {
   schema: "./schema",
+  out: "./drizzle",
   driver: "mysql2",
   dbCredentials: {
     uri: process.env.DATABASE_URL,

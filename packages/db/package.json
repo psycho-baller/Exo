@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "push": "drizzle-kit push:mysql",
+    "generate": "drizzle-kit generate:mysql",
     "drop": "drizzle-kit drop",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"

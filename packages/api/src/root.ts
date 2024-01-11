@@ -1,7 +1,6 @@
 import { authRouter } from "./router/auth";
 import { friendRouter } from "./router/friend";
 import { questionRouter } from "./router/question";
-import { questionFriendRouter } from "./router/questionFriends";
 import { tagRouter } from "./router/tag";
 import { userRouter } from "./router/user";
 
@@ -12,7 +11,6 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   friend: friendRouter,
   question: questionRouter,
-  questionFriend: questionFriendRouter,
   tag: tagRouter,
 });
 

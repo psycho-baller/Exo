@@ -23,6 +23,7 @@ export const questionRouter = createTRPCRouter({
       z.object({
         createdByUserId: z.number(),
         text: z.string().min(1),
+        friendId: z.number().optional(),
       }),
     )
     .mutation(({ ctx, input }) => {

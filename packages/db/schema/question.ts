@@ -8,6 +8,7 @@ import { friends, users } from "./user";
 export const questions = mySqlTable("question", {
   id: serial("id").primaryKey(),
   createdByUserId: int("created_by_user_id").notNull(),
+  friendId: int("friend_id"),
   text: text("text").notNull(),
   createdDatetime: timestamp("created_datetime")
     .default(sql`CURRENT_TIMESTAMP`)
@@ -18,7 +19,7 @@ export const questions = mySqlTable("question", {
 export const tags = mySqlTable("tag", {
   id: serial("id").primaryKey(),
   createdByUserId: int("created_by_user_id").notNull(),
-  tagName: varchar("email", { length: 30 }).notNull(),
+  name: varchar("name", { length: 30 }).notNull(),
 });
 
 // QuestionTag
@@ -27,14 +28,13 @@ export const questionTags = mySqlTable("question_tag", {
   tagId: int("tag_id"),
 });
 
-// QuestionFriend
-export const questionFriends = mySqlTable("question_friend", {
-  questionId: int("question_id"),
-  friendId: int("friend_id"),
-});
 export const questionsRelations = relations(questions, ({ one, many }) => ({
   questionTags: many(questionTags),
-  questionFriends: many(questionFriends),
+  friend: one(friends, {
+    relationName: "Friend of the question",
+    fields: [questions.friendId],
+    references: [friends.id],
+  }),
   createdByUser: one(users, {
     relationName: "Id of user who created question",
     fields: [questions.createdByUserId],
@@ -64,18 +64,3 @@ export const questionTagsRelations = relations(questionTags, ({ one }) => ({
   }),
 }));
 
-export const questionFriendsRelations = relations(
-  questionFriends,
-  ({ one }) => ({
-    question: one(questions, {
-      relationName: "Id of question",
-      fields: [questionFriends.questionId],
-      references: [questions.id],
-    }),
-    friend: one(friends, {
-      relationName: "Id of friend",
-      fields: [questionFriends.friendId],
-      references: [friends.id],
-    }),
-  }),
-);

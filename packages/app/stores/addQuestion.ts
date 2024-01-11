@@ -4,12 +4,12 @@ import { createWithEqualityFn } from "zustand/traditional";
 
 export type FriendsState = {
   friendSearch: string;
-  selectedFriend: string | null;
+  selectedFriend: { name: string; id: number } | null;
 };
 
 export type FriendsActions = {
   setFriendSearch: (search: string) => void;
-  setSelectedFriend: (friend: string) => void;
+  setSelectedFriend: (friend: { name: string; id: number }) => void;
 };
 
 export const useFriendsStore = createWithEqualityFn<

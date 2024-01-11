@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import { int, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
-import { questionFriends, questions, tags } from "./question";
+import { questions, tags } from "./question";
 
 // User
 export const users = mySqlTable("user", {
@@ -29,6 +29,22 @@ export const friends = mySqlTable("friend", {
     .notNull(),
 });
 
+// Group
+export const groups = mySqlTable("group", {
+  id: serial("id").primaryKey(),
+  createdByUserId: int("created_by_user_id").notNull(),
+  name: text("name").notNull(),
+  createdDatetime: timestamp("created_datetime")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
+// QuestionFriend
+export const friendGroups = mySqlTable("friend_group", {
+  groupId: int("group_id"),
+  friendId: int("friend_id"),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   friends: many(friends, { relationName: "Id of user who created friend" }),
@@ -39,17 +55,32 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export const friendsRelations = relations(friends, ({ one, many }) => ({
+  friendGroups: many(friendGroups),
   user: one(users, {
     relationName: "Id of user who created friend",
     fields: [friends.createdByUserId],
     references: [users.id],
   }),
-  friend: one(users, {
-    relationName: "Id of friend user (optional)",
-    fields: [friends.friendUserId],
+}));
+
+export const groupsRelations = relations(groups, ({ one, many }) => ({
+  friendGroups: many(friendGroups),
+  createdByUser: one(users, {
+    relationName: "Id of user who created group",
+    fields: [groups.createdByUserId],
     references: [users.id],
   }),
-  questions: many(questionFriends, {
+}));
+
+export const friendGroupsRelations = relations(friendGroups, ({ one }) => ({
+  friend: one(friends, {
     relationName: "Id of friend",
+    fields: [friendGroups.friendId],
+    references: [friends.id],
+  }),
+  group: one(groups, {
+    relationName: "Id of group",
+    fields: [friendGroups.groupId],
+    references: [groups.id],
   }),
 }));

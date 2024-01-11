@@ -13,14 +13,27 @@ import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input
 import { useFriendsStore } from "../../stores/addQuestion";
 import { formatDate } from "../../lib/utils";
 
+function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["all"][number] }) {
+  const { question } = props;
+  if (question.friendId === null) {
+    return null;
+  }
+  const {data: friend} = api.friend.byId.useQuery({
+    id: question.friendId,
+  });
+  return (
+    <Text>
+      {friend?.name}
+    </Text>
+  );
+}
+
 function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
   onDelete: () => void;
 }) {
   const { question, onDelete } = props;
-  const friend = api.questionFriend.getFriendByQuestionId.useQuery({
-    questionId: question.id,
-  });
+  
   return (
     <Link href={`/question/${question.id.toString()}`}>
       <XStack p={"$4"} justifyContent="space-between">
@@ -38,7 +51,7 @@ function QuestionCard(props: {
           </Text>
           {/* tags */}
           {/* friend */}
-          
+          <FriendOrGroupForQuestion question={question} />
         </YStack>
       </XStack>
     </Link>
@@ -157,7 +170,7 @@ function CreateQuestion() {
         style={styles.button}
         onPress={() => {
           mutate({
-            createdByUserId: 0,
+            createdByUserId: 1,
             text: content,
           });
         }}
@@ -192,11 +205,12 @@ const FriendDropdown = () => {
   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
   const createFriendMutation = api.friend.create.useMutation({
-    async onSuccess() {
-      setFriendSearch("");
+    async onSuccess(data) {
+      console.log("ball data: ",data.insertId);
       await utils.friend.all.invalidate();
-
-      setSelectedFriend(friendSearch);
+      
+      setSelectedFriend({name: friendSearch, id: Number(data.insertId)});
+      setFriendSearch("");
     },
   });
 
@@ -247,22 +261,22 @@ const FriendDropdown = () => {
         ...data,
         { label: friendSearch, value: friendSearch },
       ]);
+      createFriendMutation.mutate({
+        createdByUserId: 1,
+        name: friendSearch,
+        friendUserId: 0,
+      })
+      setValue(friendSearch);
+    } else {
+      setValue(value);
     }
-    setValue(value);
     setIsFocus(false);
-
-    createFriendMutation.mutate({
-      createdByUserId: 1,
-      name: value,
-      friendUserId: 0,
-    })
   }
 
   return(
-    <View style={styles.container}>
+    <View>
       {/* {renderLabel()} */}
       <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -279,8 +293,20 @@ const FriendDropdown = () => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={handleDropdownChange}
-        // renderInputSearch={(onSearch: (text:string) => void) => (
-        // )}
+        renderInputSearch={(onSearch: (text:string) => void) => {
+          function handleSearchChange(text: string) {
+            setFriendSearch(text);
+            onSearch(text);
+          }
+          return (
+            <Input
+              placeholder="Search or add a friend"
+              onChangeText={handleSearchChange}
+              value={friendSearch}
+              autoFocus={isFocus}
+            />
+          );
+        }}
         searchQuery={(keyword: string, labelValue: string) => (
           labelValue.includes(keyword) || labelValue === ADD_FRIEND
         )}
@@ -296,7 +322,6 @@ const FriendDropdown = () => {
     </View>
   );
 };
-
 
 const AddFriend = () => {
   const [friendSearch, setFriendSearch] = useFriendsStore((state) => [state.friendSearch, state.setFriendSearch]);
@@ -315,14 +340,6 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 
   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
-  const createQuestionFriendsMutation = api.questionFriend.create.useMutation({
-    async onSuccess() {
-      await utils.friend.all.invalidate();
-
-      setSelectedFriend(friendSearch);
-    },
-  });
-
   const [question, setQuestion] = useState("");
   const [mounted, setMounted] = useState(false);
 
@@ -334,13 +351,13 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
       await utils.question.all.invalidate();
 
       // add friend relationship with question if friend is not empty
-      if (selectedFriend !== null) {
-        setFriendSearch("");
-        createQuestionFriendsMutation.mutate({
-          questionId: 0,
-          friendId: 0,
-        });
-      }
+      // if (selectedFriend !== null) {
+      //   setFriendSearch("");
+      //   createQuestionFriendsMutation.mutate({
+      //     questionId: 0,
+      //     friendId: 0,
+      //   });
+      // }
     },
   });
 
@@ -350,7 +367,8 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 
   function addQuestion(){
     mutate({
-      createdByUserId: 0,
+      createdByUserId: 1,
+      friendId: selectedFriend?.id,
       text: question,
     });
   }
