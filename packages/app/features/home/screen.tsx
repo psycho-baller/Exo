@@ -9,7 +9,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack, Checkbox } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack, Checkbox, ErrorText } from "@acme/ui";
 import { useFriendsStore } from "../../stores/addQuestion";
 import { formatDate } from "../../lib/utils";
 
@@ -177,11 +177,7 @@ function CreateQuestion() {
       >
         <Text style={styles.buttonText}>Publish question</Text>
       </Pressable>
-      {error?.data?.code === "UNAUTHORIZED" && (
-        <Text style={styles.error}>
-          You need to be logged in to create a question
-        </Text>
-      )}
+      
     </View>
   );
 }
@@ -204,7 +200,7 @@ const FriendDropdown = () => {
   ]);
   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
-  const createFriendMutation = api.friend.create.useMutation({
+  const {mutate,error} = api.friend.create.useMutation({
     async onSuccess(data) {
       console.log("ball data: ",data.insertId);
       await utils.friend.all.invalidate();
@@ -261,7 +257,7 @@ const FriendDropdown = () => {
         ...data,
         { label: friendSearch, value: friendSearch },
       ]);
-      createFriendMutation.mutate({
+      mutate({
         createdByUserId: 1,
         name: friendSearch,
         friendUserId: 0,
@@ -319,6 +315,11 @@ const FriendDropdown = () => {
           // />
         // )}
       />
+      {error?.data?.code === "UNAUTHORIZED" && (
+        <Text ta="center" color={"$red8"}>
+          You need to be logged in to create a question
+        </Text>
+      )}
     </View>
   );
 };
@@ -335,6 +336,7 @@ const AddFriend = () => {
   );
 }
 
+
 const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
   const utils = api.useUtils();
 
@@ -347,17 +349,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
     async onSuccess() {
       setQuestion("");
       setOpen(false);
-      // setContent("");
       await utils.question.all.invalidate();
-
-      // add friend relationship with question if friend is not empty
-      // if (selectedFriend !== null) {
-      //   setFriendSearch("");
-      //   createQuestionFriendsMutation.mutate({
-      //     questionId: 0,
-      //     friendId: 0,
-      //   });
-      // }
     },
   });
 
@@ -416,6 +408,16 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
             <CheckCircle2 />
           </Button>
         </XStack>
+        {error?.data?.code === "UNAUTHORIZED" && (
+          <ErrorText ta="center">
+            You need to be logged in to create a question
+          </ErrorText>
+        )}
+        {error?.data?.zodError?.fieldErrors.text && (
+          <ErrorText ta="center">
+            {error.data.zodError.fieldErrors.text}
+          </ErrorText>
+        )}
       </Sheet.Frame>
     </Sheet>
   );
@@ -427,7 +429,6 @@ const Index = () => {
   const [open, setOpen] = useState(false)
 
   const questionQuery = api.question.all.useQuery();
-  console.log(questionQuery);
 
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: () => utils.question.all.invalidate(),
@@ -439,20 +440,6 @@ const Index = () => {
 
   return (
     <Page >
-      {/* <YStack space="$4" maw={600}>
-        <H1 ta="center">Welcome to Tamagui.</H1>
-        <Text ta="center">
-          Here's a basic starter to show navigating from one screen to another. This screen uses the
-          same code on Next.js and React Native
-        </Text>
-
-        <Separator />
-      </YStack>
-      <Button
-        onPress={() => void utils.question.all.invalidate()}
-        color={"#f472b6"}
-      >Refresh questions</Button> */}
-      {/* <View w={width} > */}
       <FlashList
         data={questionQuery.data}
         estimatedItemSize={20}
@@ -465,10 +452,8 @@ const Index = () => {
           // <Text>{p.item.text}</Text>
         )}
       />
-      {/* </View> */}
 
       {/* <CreateQuestion /> */}
-      {/* blur background */}
       <FloatingFooter blurIntensity={70} >
         <Home />
         <UserCircle />
