@@ -63,21 +63,15 @@ const FriendDropdown = () => {
   const ADD_FRIEND = 'Add friend'
   const [value, setValue] = useState<string>("");
   const [isFocus, setIsFocus] = useState(false);
-  const friends = api.friend.all.useQuery();
-  const friendData = friends?.data?.map((friend) => {
+  const friendsQuery = api.friend.all.useQuery();
+  const friendData = friendsQuery?.data?.map((friend) => {
     return {label: friend.name, value: friend.name}
   });
-  const [data,setData] = useState([
+  const [friends,setFriends] = useState([
     { label: ADD_FRIEND, value: '+'},
     ...friendData || [],
   ]);
   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
-
-  // useEffect(() => {
-  //   setData([
-  //     ...data,
-  //   ]);
-  // }, []);
 
   const {mutate,error} = api.friend.create.useMutation({
     async onSuccess(data) {
@@ -90,11 +84,11 @@ const FriendDropdown = () => {
   });
 
 
-  const handleDropdownChange = (item: typeof data[0]) => {
+  const handleDropdownChange = (item: typeof friends[0]) => {
     const value = item.value
     if (value === '+') {
-      setData([
-        ...data,
+      setFriends([
+        ...friends,
         { label: friendSearch, value: friendSearch },
       ]);
       mutate({
@@ -109,7 +103,7 @@ const FriendDropdown = () => {
     setIsFocus(false);
   }
 
-  if (friends.isLoading) {
+  if (friendsQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
 
@@ -121,7 +115,7 @@ const FriendDropdown = () => {
         // selectedTextStyle={styles.selectedTextStyle}
         // inputSearchStyle={styles.inputSearchStyle}
         // iconStyle={styles.iconStyle}
-        data={data}
+        data={friends}
         search
         maxHeight={300}
         labelField="label"
