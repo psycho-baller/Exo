@@ -58,147 +58,26 @@ function QuestionCard(props: {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 16,
-  },
-  mainContainer: {
-    display: "flex",
-    flexDirection: "row",
-    borderRadius: 8,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    padding: 16,
-  },
-  header: {
-    flexGrow: 1,
-  },
-  deleteButton: {
-    fontSize: 14,
-    color: "white",
-    textTransform: "uppercase",
-  },
-  input: {
-    marginBottom: 8,
-    borderRadius: 4,
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    padding: 8,
-    color: 'white',
-  },
-  errorText: {
-    marginBottom: 8,
-    color: 'red',
-  },
-  button: {
-    borderRadius: 4,
-    backgroundColor: 'pink',
-    padding: 8,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  error: {
-    marginTop: 8,
-    color: 'red',
-  },
-  // index
-  safeArea: {
-    backgroundColor: '#1F104A',
-  },
-  fullContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    paddingBottom: 8,
-    textAlign: 'center',
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  subTitle: {
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  separator: {
-    height: 8,
-  },
-});
-
-function CreateQuestion() {
-  const utils = api.useUtils();
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const { mutate, error } = api.question.create.useMutation({
-    async onSuccess() {
-      setTitle("");
-      setContent("");
-      await utils.question.all.invalidate();
-    },
-  });
-
-  return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="rgba(255, 255, 255, 0.5)"
-        value={title}
-        onChangeText={setTitle}
-        placeholder="Title"
-      />
-      {error?.data?.zodError?.fieldErrors.title && (
-        <Text style={styles.errorText}>
-          {error.data.zodError.fieldErrors.title}
-        </Text>
-      )}
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="rgba(255, 255, 255, 0.5)"
-        value={content}
-        onChangeText={setContent}
-        placeholder="Content"
-      />
-      {error?.data?.zodError?.fieldErrors.content && (
-        <Text style={styles.errorText}>
-          {error.data.zodError.fieldErrors.content}
-        </Text>
-      )}
-      <Pressable
-        style={styles.button}
-        onPress={() => {
-          mutate({
-            createdByUserId: 1,
-            text: content,
-          });
-        }}
-      >
-        <Text style={styles.buttonText}>Publish question</Text>
-      </Pressable>
-      
-    </View>
-  );
-}
-
 const FriendDropdown = () => {
   const utils = api.useUtils();
   const ADD_FRIEND = 'Add friend'
   const [value, setValue] = useState<string>("");
   const [isFocus, setIsFocus] = useState(false);
+  const friends = api.friend.all.useQuery();
+  const friendData = friends?.data?.map((friend) => {
+    return {label: friend.name, value: friend.name}
+  });
   const [data,setData] = useState([
     { label: ADD_FRIEND, value: '+'},
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' }
+    ...friendData || [],
   ]);
   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+
+  // useEffect(() => {
+  //   setData([
+  //     ...data,
+  //   ]);
+  // }, []);
 
   const {mutate,error} = api.friend.create.useMutation({
     async onSuccess(data) {
@@ -210,45 +89,6 @@ const FriendDropdown = () => {
     },
   });
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: 'white',
-      padding: 16,
-    },
-    dropdown: {
-      height: 50,
-      borderColor: 'gray',
-      borderWidth: 0.5,
-      borderRadius: 8,
-      paddingHorizontal: 8,
-    },
-    icon: {
-      marginRight: 5,
-    },
-    label: {
-      position: 'absolute',
-      backgroundColor: 'white',
-      left: 22,
-      top: 8,
-      zIndex: 999,
-      paddingHorizontal: 8,
-      fontSize: 14,
-    },
-    placeholderStyle: {
-      fontSize: 16,
-    },
-    selectedTextStyle: {
-      fontSize: 16,
-    },
-    iconStyle: {
-      width: 20,
-      height: 20,
-    },
-    inputSearchStyle: {
-      height: 40,
-      fontSize: 16,
-    },
-  });
 
   const handleDropdownChange = (item: typeof data[0]) => {
     const value = item.value
@@ -269,14 +109,18 @@ const FriendDropdown = () => {
     setIsFocus(false);
   }
 
+  if (friends.isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
   return(
     <View>
       {/* {renderLabel()} */}
       <Dropdown
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
+        // placeholderStyle={styles.placeholderStyle}
+        // selectedTextStyle={styles.selectedTextStyle}
+        // inputSearchStyle={styles.inputSearchStyle}
+        // iconStyle={styles.iconStyle}
         data={data}
         search
         maxHeight={300}
