@@ -1,16 +1,24 @@
 import type { TamaguiProviderProps} from '@acme/ui';
-import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui'
+import { CustomToast, TamaguiProvider, ToastProvider, loadFonts } from '@acme/ui'
 import { useColorScheme } from 'react-native'
 
 import { ToastViewport } from './ToastViewport'
 
 import config from '../tamagui.config'
+import { useEffect } from 'react';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
-  // if (!loadFonts()) {
-  //   return null
-  // }
+  const loaded = loadFonts()
+  useEffect(() => {
+    if (loaded) {
+      // can hide splash screen here
+    }
+  }, [loaded])
+
+  if (!loaded) {
+    return null;
+  }
   return (
     <TamaguiProvider
       config={config}
