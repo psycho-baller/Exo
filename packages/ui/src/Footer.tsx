@@ -12,7 +12,7 @@ export const FloatingFooter = (props: Props) => {
   const { children, stackProps, blurIntensity=0,...rest } = props;
   return (
     <Footer position="absolute" l={20} r={20} b={20} zIndex={1} {...rest}>
-      <BlurView intensity={blurIntensity} style={{borderRadius:999, padding: 10, overflow:"hidden"}} >
+      <BlurView intensity={blurIntensity} style={{borderRadius:999, padding: 12, overflow:"hidden"}} >
         <XStack space jc="space-evenly" px={0} ai="center" {...stackProps}>
           {children}
         </XStack>

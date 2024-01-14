@@ -35,15 +35,15 @@ function QuestionCard(props: {
   const { question, onDelete } = props;
   
   return (
-    <Link href={`/question/${question.id.toString()}`}>
-      <XStack p={"$4"} justifyContent="space-between">
-        <XStack  gap={"$3"}>
-          <Checkbox onPress={onDelete} />
+    <Link  href={`/question/${question.id.toString()}`}>
+      <XStack minHeight="$6" p={"$3"} ai="center" justifyContent="space-between">
+        <XStack gap={"$3"}>
+          <Checkbox borderColor="gray" onPress={onDelete} />
           <Text fontSize={16} fontWeight="bold">
             {question.text}
           </Text>
         </XStack>
-        <YStack>
+        <YStack gap="$1.5">
           <Text
             // style={styles.subTitle}
           >
@@ -82,7 +82,6 @@ const FriendDropdown = () => {
       setFriendSearch("");
     },
   });
-
 
   const handleDropdownChange = (item: typeof friends[0]) => {
     const value = item.value
@@ -293,11 +292,11 @@ const Index = () => {
 
       {/* <CreateQuestion /> */}
       <FloatingFooter blurIntensity={70} >
-        <Home />
-        <UserCircle />
-        <Button unstyled onPress={handlePlusClick}><Plus /></Button>
-        <Search />
-        <Settings />
+        <Home size={"$2"} />
+        <UserCircle size={"$2"} />
+        <Button unstyled onPress={handlePlusClick} icon={<Plus size={"$2"} />}/>
+        <Search size={"$2"} />
+        <Settings size={"$2"} />
       </FloatingFooter>
       <AddQuestion open={open} setOpen={setOpen} />
     </Page>
