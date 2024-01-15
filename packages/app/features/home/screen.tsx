@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
-import { StyleSheet, Pressable, TextInput,Dimensions } from "react-native";
+import { RefObject, useEffect, useRef, useState } from "react";
+import { StyleSheet, Pressable, TextInput,Dimensions, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
 import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
-import { Dropdown } from 'react-native-element-dropdown';
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Card, Button, Sheet, Input, Label, XStack, YStack, Checkbox, ErrorText } from "@acme/ui";
-import { useFriendsStore } from "../../stores/addQuestion";
+import { Text, Page, Separator, View, FloatingFooter, Button, Sheet, Input, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
+import { useAddFriendStore } from "../../stores/addQuestion";
 import { formatDate } from "../../lib/utils";
 
 function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["all"][number] }) {
@@ -57,127 +56,164 @@ function QuestionCard(props: {
     </Link>
   );
 }
+// const FriendDropdown = () => {
+//   const utils = api.useUtils();
+//   const ADD_FRIEND = 'Add friend'
+//   const [value, setValue] = useState<string>("");
+//   const [isFocus, setIsFocus] = useState(false);
+//   const friendsQuery = api.friend.all.useQuery();
+//   const friendData = friendsQuery?.data?.map((friend) => {
+//     return {label: friend.name, value: friend.name}
+//   });
+//   const [friends,setFriends] = useState([
+//     { label: ADD_FRIEND, value: '+'},
+//     ...friendData || [],
+//   ]);
+//   const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useAddFriendStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
 
-const FriendDropdown = () => {
-  const utils = api.useUtils();
-  const ADD_FRIEND = 'Add friend'
-  const [value, setValue] = useState<string>("");
-  const [isFocus, setIsFocus] = useState(false);
-  const friendsQuery = api.friend.all.useQuery();
-  const friendData = friendsQuery?.data?.map((friend) => {
-    return {label: friend.name, value: friend.name}
-  });
-  const [friends,setFriends] = useState([
-    { label: ADD_FRIEND, value: '+'},
-    ...friendData || [],
-  ]);
-  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
-
-  const {mutate,error} = api.friend.create.useMutation({
-    async onSuccess(data) {
-      console.log("ball data: ",data.insertId);
-      await utils.friend.all.invalidate();
+//   const {mutate,error} = api.friend.create.useMutation({
+//     async onSuccess(data) {
+//       await utils.friend.all.invalidate();
       
-      setSelectedFriend({name: friendSearch, id: Number(data.insertId)});
-      setFriendSearch("");
-    },
-  });
+//       setSelectedFriend({name: friendSearch, id: Number(data.insertId)});
+//       setFriendSearch("");
+//     },
+//   });
 
-  const handleDropdownChange = (item: typeof friends[0]) => {
-    const value = item.value
-    if (value === '+') {
-      setFriends([
-        ...friends,
-        { label: friendSearch, value: friendSearch },
-      ]);
-      mutate({
-        createdByUserId: 1,
-        name: friendSearch,
-        friendUserId: 0,
-      })
-      setValue(friendSearch);
-    } else {
-      setValue(value);
-    }
-    setIsFocus(false);
-  }
+//   const handleDropdownChange = (item: typeof friends[0]) => {
+//     const value = item.value
+//     if (value === '+') {
+//       setFriends([
+//         ...friends,
+//         { label: friendSearch, value: friendSearch },
+//       ]);
+//       mutate({
+//         createdByUserId: 1,
+//         name: friendSearch,
+//         friendUserId: 0,
+//       })
+//       setValue(friendSearch);
+//     } else {
+//       setValue(value);
+//     }
+//     setIsFocus(false);
+//   }
+
+//   if (friendsQuery.isLoading) {
+//     return <Text>Loading...</Text>;
+//   }
+
+//   return(
+//     <View>
+//       {/* {renderLabel()} */}
+//       <Dropdown
+//         // style={{
+//         //   width: 300,
+//         //   height: 50,
+//         //   borderWidth: 1,
+//         //   borderColor: 'black',
+//         //   borderRadius: 5,
+//         //   paddingLeft: 10,
+//         //   paddingRight: 10,
+//         //   backgroundColor: 'white',
+//         //   // color: 'black',
+//         //   marginBottom: 10,
+//         //   marginTop: 10,
+//         // }}
+//         placeholderStyle={{
+//           // color: 'black',
+//         }}
+//         selectedTextStyle={{
+//           display: 'none',
+//         }}
+//         inputSearchStyle={{
+//           display: 'none',
+//         }}
+//         iconStyle={{
+//           display: 'none',
+//         }}
+//         data={friends}
+//         search
+//         maxHeight={300}
+//         labelField="label"
+//         valueField="value"
+//         placeholder={!isFocus ? 'Select or add a friend' : ''}
+//         searchPlaceholder="Search or add a friend"
+//         value={value}
+//         inverted={false}
+//         onFocus={() => setIsFocus(true)}
+//         onBlur={() => setIsFocus(false)}
+//         onChange={handleDropdownChange}
+//         renderInputSearch={(onSearch: (text:string) => void) => {
+//           function handleSearchChange(text: string) {
+//             setFriendSearch(text);
+//             onSearch(text);
+//           }
+//           return (
+//             <Input
+//               placeholder="Search or add a friend"
+//               onChangeText={handleSearchChange}
+//               value={friendSearch}
+//               // autoFocus={isFocus}
+//             />
+//           );
+//         }}
+//         searchQuery={(keyword: string, labelValue: string) => (
+//           labelValue.includes(keyword) || labelValue === ADD_FRIEND
+//         )}
+//           // renderItem={}
+//         // renderLeftIcon={() => (
+//           // <AntDesign
+//           //   style={styles.icon}
+//           //   color={isFocus ? 'blue' : 'black'}
+//           //   name="Safety"
+//           //   size={20}
+//           // />
+//         // )}
+//       />
+//     </View>
+//   );
+// };
+
+const AddFriend = (props: YStackProps) => {
+  const [friendSearch, setFriendSearch, setSelectedFriend] = useAddFriendStore((state) => [state.friendSearch, state.setFriendSearch, state.setSelectedFriend]);
+  const friendsQuery = api.friend.all.useQuery();
 
   if (friendsQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
+  const friendData = friendsQuery?.data?.map((friend) => {
+    return {name: friend.name, id: friend.id}
+  }) || [];
 
-  return(
-    <View>
-      {/* {renderLabel()} */}
-      <Dropdown
-        // placeholderStyle={styles.placeholderStyle}
-        // selectedTextStyle={styles.selectedTextStyle}
-        // inputSearchStyle={styles.inputSearchStyle}
-        // iconStyle={styles.iconStyle}
-        data={friends}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder={!isFocus ? 'Select or add a friend' : ''}
-        searchPlaceholder="Search or add a friend"
-        value={value}
-        inverted={false}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={handleDropdownChange}
-        renderInputSearch={(onSearch: (text:string) => void) => {
-          function handleSearchChange(text: string) {
-            setFriendSearch(text);
-            onSearch(text);
-          }
-          return (
-            <Input
-              placeholder="Search or add a friend"
-              onChangeText={handleSearchChange}
-              value={friendSearch}
-              autoFocus={isFocus}
-            />
-          );
-        }}
-        searchQuery={(keyword: string, labelValue: string) => (
-          labelValue.includes(keyword) || labelValue === ADD_FRIEND
-        )}
-        // renderLeftIcon={() => (
-          // <AntDesign
-          //   style={styles.icon}
-          //   color={isFocus ? 'blue' : 'black'}
-          //   name="Safety"
-          //   size={20}
-          // />
-        // )}
-      />
-      {error?.data?.code === "UNAUTHORIZED" && (
-        <Text ta="center" color={"$red8"}>
-          You need to be logged in to create a question
-        </Text>
-      )}
-    </View>
-  );
-};
+  const filterFriendsFromSearch = (friends: {name: string, id: number}[], search: string) => {
+    return friends.filter((friend) => {
+      return friend.name.toLowerCase().includes(search.toLowerCase());
+    });
+  }
+  const onFriendSearch = (value: string) => {
+    // check if there is a friend with that name and set it as selected friend if there is
+    const friend = friendData.find((friend) => friend.name === value);
+    friend ? setSelectedFriend(friend) : setSelectedFriend(null);
+    console.log("friendz", friend);
+  }
 
-const AddFriend = () => {
-  const [friendSearch, setFriendSearch] = useFriendsStore((state) => [state.friendSearch, state.setFriendSearch]);
-
+  const keyExtractor = (item: {name: string, id: number}) => item.name;
+  
   return (
-    <YStack>
+    <YStack {...props}>
       <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
-      <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} onChangeText={setFriendSearch} />
-      <FriendDropdown />
+      {/* <Input ref={inputRef} onFocus={handleFriendInputFocus} onBlur={handleFriendInputBlur} */}
+      <AutocompleteInput data={friendData} width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} setValue={setFriendSearch} filter={filterFriendsFromSearch} onSearch={onFriendSearch} keyExtractor={keyExtractor} />
+      {/* <FriendDropdown dropdownRef={dropdownRef} /> */}
     </YStack>
   );
 }
 
-
-const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) => {
+const AddQuestion = () => {
   const utils = api.useUtils();
 
-  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch] = useFriendsStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch]);
+  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch, dropdownOpen, setDropdownOpen] = useAddFriendStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch, state.dropdownOpen, state.setDropdownOpen]);
 
   const [question, setQuestion] = useState("");
   const [mounted, setMounted] = useState(false);
@@ -185,7 +221,8 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
   const { mutate, error } = api.question.create.useMutation({
     async onSuccess() {
       setQuestion("");
-      setOpen(false);
+      setDropdownOpen(false);
+      setFriendSearch("");
       await utils.question.all.invalidate();
     },
   });
@@ -204,9 +241,9 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 
   return (
     <Sheet
-      open={open}
+      open={dropdownOpen}
       modal
-      onOpenChange={setOpen}
+      onOpenChange={setDropdownOpen}
       zIndex={50}
     >
       {/* <Sheet.Overlay
@@ -218,7 +255,7 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
       <Sheet.Frame padding="$4">
         <XStack justifyContent="space-between">
           <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="question">QUESTION</Label>
-          <Button unstyled onPress={() => setOpen(false)}><X /></Button>
+          <Button unstyled onPress={() => setDropdownOpen(false)}><X /></Button>
         </XStack>
         <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} style={mounted ? {
           transform: [
@@ -232,19 +269,19 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
               translateY: 100,
             },
           ],
-        }} autoFocus={open} placeholder="Add Question" value={question} onChangeText={setQuestion}  />
-        <AddFriend />
-        <XStack justifyContent="space-between">
-          <XStack>
-            <Text>
-              stuff
-            </Text>
-
-          </XStack>
-          <Button unstyled onPress={addQuestion}>
+        }} autoFocus={dropdownOpen} placeholder="Add Question" value={question} onChangeText={setQuestion}  />
+        <XStack>
+          <AddFriend flex={1} />
+          <Button jc="flex-end" unstyled onPress={addQuestion}>
             <CheckCircle2 />
           </Button>
         </XStack>
+        {/* <XStack justifyContent="space-between">
+          <XStack>
+
+          </XStack>
+          
+        </XStack> */}
         {error?.data?.code === "UNAUTHORIZED" && (
           <ErrorText ta="center">
             You need to be logged in to create a question
@@ -261,10 +298,9 @@ const AddQuestion = ({open, setOpen}: {open: boolean, setOpen: (open: boolean) =
 }
 
 const Index = () => {
+  const [setDropdownOpen] = useAddFriendStore((state) => [state.setDropdownOpen]);
   const utils = api.useUtils();
   // const { width, height } = Dimensions.get('window');
-  const [open, setOpen] = useState(false)
-
   const questionQuery = api.question.all.useQuery();
 
   const deleteQuestionMutation = api.question.delete.useMutation({
@@ -272,11 +308,11 @@ const Index = () => {
   });
 
   function handlePlusClick(){
-    setOpen(true);
+    setDropdownOpen(true);
   }
 
   return (
-    <Page >
+    <Page>
       <FlashList
         data={questionQuery.data}
         estimatedItemSize={20}
@@ -294,11 +330,11 @@ const Index = () => {
       <FloatingFooter blurIntensity={70} >
         <Home size={"$2"} />
         <UserCircle size={"$2"} />
-        <Button unstyled onPress={handlePlusClick} icon={<Plus size={"$2"} />}/>
+        <Button unstyled onPress={handlePlusClick} icon={<Plus size={"$2.5"} />}/>
         <Search size={"$2"} />
         <Settings size={"$2"} />
       </FloatingFooter>
-      <AddQuestion open={open} setOpen={setOpen} />
+      <AddQuestion />
     </Page>
   );
 };

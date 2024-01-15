@@ -5,14 +5,16 @@ import { createWithEqualityFn } from "zustand/traditional";
 export type FriendsState = {
   friendSearch: string;
   selectedFriend: { name: string; id: number } | null;
+  dropdownOpen: boolean;
 };
 
 export type FriendsActions = {
   setFriendSearch: (search: string) => void;
-  setSelectedFriend: (friend: { name: string; id: number }) => void;
+  setSelectedFriend: (friend: { name: string; id: number } | null) => void;
+  setDropdownOpen: (open: boolean) => void;
 };
 
-export const useFriendsStore = createWithEqualityFn<
+export const useAddFriendStore = createWithEqualityFn<
   FriendsState & FriendsActions
 >()(
   devtools(
@@ -21,6 +23,8 @@ export const useFriendsStore = createWithEqualityFn<
       setFriendSearch: (search) => set({ friendSearch: search }),
       selectedFriend: null,
       setSelectedFriend: (friend) => set({ selectedFriend: friend }),
+      dropdownOpen: false,
+      setDropdownOpen: (open) => set({ dropdownOpen: open }),
     }),
     {
       name: "friends",

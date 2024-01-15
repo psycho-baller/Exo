@@ -32,14 +32,15 @@
     "watch": "tamagui-build --watch"
   },
   "dependencies": {
+    "@shopify/flash-list": "1.4.3",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/font-inter": "latest",
     "@tamagui/react-native-media-driver": "latest",
     "@tamagui/shorthands": "latest",
     "@tamagui/themes": "latest",
     "@tamagui/toast": "latest",
-    "expo-font": "^11.6.0",
     "expo-blur": "~12.4.1",
+    "expo-font": "^11.6.0",
     "tamagui": "1.79.11"
   },
   "devDependencies": {

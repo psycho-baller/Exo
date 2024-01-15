@@ -495,6 +495,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@shopify/flash-list':
+        specifier: 1.4.3
+        version: 1.4.3(@babel/runtime@7.23.2)(react-native@0.72.6)(react@18.2.0)
       '@tamagui/animations-react-native':
         specifier: latest
         version: 1.79.9(react-native@0.72.6)(react@18.2.0)
@@ -4958,7 +4961,7 @@ packages:
       rimraf: 2.7.1
       sudo-prompt: 8.2.5
       tmp: 0.0.33
-      tslib: 2.5.0
+      tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6239,7 +6242,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.2
       react: 18.2.0
-      react-native: 0.72.6(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+      react-native: 0.72.6(@babel/core@7.23.5)(@babel/preset-env@7.23.5)(react@18.2.0)
       recyclerlistview: 4.2.0(react-native@0.72.6)(react@18.2.0)
       tslib: 2.4.0
     dev: false
@@ -6271,7 +6274,7 @@ packages:
   /@swc/helpers@0.5.2:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.2
 
   /@t3-oss/env-core@0.7.1(typescript@5.2.2)(zod@3.22.2):
     resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
@@ -8081,7 +8084,7 @@ packages:
       '@tanstack/query-core': 5.8.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-native: 0.72.6(@babel/core@7.23.5)(@babel/preset-env@7.23.5)(react@18.2.0)
+      react-native: 0.72.6(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
     dev: false
 
   /@tootallnate/quickjs-emscripten@0.23.0:
@@ -9076,7 +9079,7 @@ packages:
     resolution: {integrity: sha512-c27loCv9QkZinsa5ProX751khO9DJl/AcB5c2KNtA6NRvHKS0PgLfcftz72KVq504vB0Gku5s2kUZzDBvQWvHg==}
     engines: {node: '>=4'}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.2
 
   /astral-regex@1.0.0:
     resolution: {integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==}
@@ -12307,7 +12310,7 @@ packages:
       graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
       graphql: 15.8.0
-      tslib: 2.5.0
+      tslib: 2.6.2
     dev: false
 
   /graphql@15.8.0:
@@ -15746,7 +15749,7 @@ packages:
       react-native: '*'
     dependencies:
       react: 18.2.0
-      react-native: 0.72.6(@babel/core@7.23.5)(@babel/preset-env@7.23.5)(react@18.2.0)
+      react-native: 0.72.6(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
     dev: false
 
   /react-native-screens@3.22.1(react-native@0.72.6)(react@18.2.0):
@@ -16050,7 +16053,7 @@ packages:
       ast-types: 0.15.2
       esprima: 4.0.1
       source-map: 0.6.1
-      tslib: 2.5.0
+      tslib: 2.6.2
 
   /recyclerlistview@4.2.0(react-native@0.72.6)(react@18.2.0):
     resolution: {integrity: sha512-uuBCi0c+ggqHKwrzPX4Z/mJOzsBbjZEAwGGmlwpD/sD7raXixdAbdJ6BTcAmuWG50Cg4ru9p12M94Njwhr/27A==}
@@ -16061,7 +16064,7 @@ packages:
       lodash.debounce: 4.0.8
       prop-types: 15.8.1
       react: 18.2.0
-      react-native: 0.72.6(@babel/core@7.23.2)(@babel/preset-env@7.23.2)(react@18.2.0)
+      react-native: 0.72.6(@babel/core@7.23.5)(@babel/preset-env@7.23.5)(react@18.2.0)
       ts-object-utils: 0.0.5
     dev: false
 
@@ -17415,9 +17418,6 @@ packages:
   /tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: false
-
-  /tslib@2.5.0:
-    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
