@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
-import { Plus, Search, Home, UserCircle, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
+import { Plus, Search, Home, CircleUser, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
@@ -195,7 +195,6 @@ const AddFriend = (props: YStackProps) => {
     // check if there is a friend with that name and set it as selected friend if there is
     const friend = friendData.find((friend) => friend.name === value);
     friend ? setSelectedFriend(friend) : setSelectedFriend(null);
-    console.log("friendz", friend);
   }
 
   const keyExtractor = (item: {name: string, id: number}) => item.name;
@@ -329,7 +328,7 @@ const Index = () => {
       {/* <CreateQuestion /> */}
       <FloatingFooter blurIntensity={70} >
         <Home size={"$2"} />
-        <UserCircle size={"$2"} />
+        <CircleUser size={"$2"} />
         <Button unstyled onPress={handlePlusClick} icon={<Plus size={"$2.5"} />}/>
         <Search size={"$2"} />
         <Settings size={"$2"} />

@@ -23,14 +23,17 @@
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",
-    "@turbo/gen": "^1.10.16",
-    "prettier": "^3.1.0",
-    "turbo": "^1.10.16",
-    "typescript": "^5.3.2"
+    "@turbo/gen": "^1.11.3",
+    "prettier": "^3.2.4",
+    "turbo": "^1.11.3",
+    "typescript": "^5.3.3"
   },
   "pnpm": {
     "overrides": {
       "@auth/core": "0.18.0"
+    },
+    "patchedDependencies": {
+      "@react-native/assets-registry@0.72.0": "patches/@react-native__assets-registry@0.72.0.patch"
     }
   },
   "prettier": "@acme/prettier-config"
