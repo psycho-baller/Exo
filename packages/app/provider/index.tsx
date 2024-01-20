@@ -1,7 +1,7 @@
 import type { TamaguiProviderProps} from '@acme/ui';
-import { CustomToast, TamaguiProvider, ToastProvider, loadFonts } from '@acme/ui'
+import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui'
 import { useColorScheme } from 'react-native'
-
+import { loadFonts } from "../lib/loadFonts"
 import { ToastViewport } from './ToastViewport'
 
 import config from '../tamagui.config'
