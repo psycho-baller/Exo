@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
+  console.log('scheme', scheme)
   const loaded = loadFonts()
   useEffect(() => {
     if (loaded) {
@@ -23,7 +24,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
     <TamaguiProvider
       config={config}
       disableInjectCSS
-      defaultTheme={scheme === 'dark' ? 'dark' : 'dark'}
+      defaultTheme={scheme === 'dark' ? 'dark' : 'light'}
       {...rest}
     >
       <ToastProvider

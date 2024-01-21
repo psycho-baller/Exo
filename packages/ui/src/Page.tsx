@@ -4,13 +4,10 @@ export const Page = styled(YStack, {
   name: 'Page',
   // flex: 1,
   fullscreen: true,
-  backgroundColor: '#111',
-  style: {
-    color: '#fff',
-  },
+  backgroundColor: '$background',
+  // style: {
+  //   color: '#fff',
+  // },
 })
 
 export type PageProps = GetProps<typeof Page>
-// export type Page = withStaticProperties(Page, {
-//   Props: GetProps<typeof Page>
-// GetProps<typeof YStack>

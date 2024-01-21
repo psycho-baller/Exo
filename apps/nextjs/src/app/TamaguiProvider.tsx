@@ -48,7 +48,7 @@ export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => 
         setTheme(next as any)
       }}
     >
-      <TamaguiProviderOG config={config} themeClassNameOnRoot defaultTheme={"dark"}>
+      <TamaguiProviderOG config={config} themeClassNameOnRoot defaultTheme={theme}>
         {children}
       </TamaguiProviderOG>
     </NextThemeProvider>

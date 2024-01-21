@@ -1,6 +1,7 @@
 import { useState, type FC } from 'react';
 import { GetProps, Input, Button, Text, Separator, View, YStack } from 'tamagui';
 import { FlashList } from "@shopify/flash-list";
+import { UnstyledInput } from '.';
 
 
 interface Props<T> extends GetProps<typeof Input> {
@@ -42,7 +43,7 @@ export const AutocompleteInput: FC<Props<any>> = ({
 
  return (
    <View position='relative' w='100%'>
-     <Input
+     <UnstyledInput
       value={value}
       onChangeText={handleSearch}
       onFocus={() => {

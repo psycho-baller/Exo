@@ -54,7 +54,7 @@ export const config = createTamagui({
   defaultFont: 'body',
   defaultTheme: 'dark',
   animations: animations as any,
-  shouldAddPrefersColorThemes: true,
+  // shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,
   fonts: {
@@ -62,17 +62,23 @@ export const config = createTamagui({
     heading: headingFont,
   },
   tokens,
+  // themes,
   themes: {
-    ...themes,
+    // ...themes,
     dark: {
-      ...themes.dark,
+      // ...themes.dark,
       background: '#111',
+      secondaryBackground: '#555',
       color: '#fff',
+      secondaryColor: '#bbb',
+
     },
     light: {
-      ...themes.light,
+      // ...themes.light,
       background: '#fff',
+      secondaryBackground: '#bbb',
       color: '#111',
+      secondaryColor: '#555',
     },
   },
   media: createMedia({

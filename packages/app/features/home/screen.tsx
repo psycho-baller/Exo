@@ -1,5 +1,4 @@
 import { RefObject, useEffect, useRef, useState } from "react";
-import { StyleSheet, Pressable, TextInput,Dimensions, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
@@ -8,7 +7,7 @@ import { Plus, Search, Home, CircleUser, Settings, X, CheckCircle2 } from "@tama
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Button, Sheet, Input, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
+import { Text, Page, Separator, View, FloatingFooter, Button, Sheet, UnstyledInput, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
 import { useAddFriendStore } from "../../stores/addQuestion";
 import { formatDate } from "../../lib/utils";
 
@@ -20,9 +19,12 @@ function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["
   const {data: friend} = api.friend.byId.useQuery({
     id: question.friendId,
   });
+  if (!friend) {
+    return null;
+  }
   return (
     <Text>
-      {friend?.name}
+      {friend.name}
     </Text>
   );
 }
@@ -37,7 +39,7 @@ function QuestionCard(props: {
     <Link  href={`/question/${question.id.toString()}`}>
       <XStack minHeight="$6" p={"$3"} ai="center" justifyContent="space-between">
         <XStack gap={"$3"}>
-          <Checkbox borderColor="gray" onPress={onDelete} />
+          <Checkbox borderColor='$secondaryBackground' onPress={onDelete} />
           <Text fontSize={16} fontWeight="bold">
             {question.text}
           </Text>
@@ -202,8 +204,7 @@ const AddFriend = (props: YStackProps) => {
   return (
     <YStack {...props}>
       <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
-      {/* <Input ref={inputRef} onFocus={handleFriendInputFocus} onBlur={handleFriendInputBlur} */}
-      <AutocompleteInput data={friendData} width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} setValue={setFriendSearch} filter={filterFriendsFromSearch} onSearch={onFriendSearch} keyExtractor={keyExtractor} />
+      <AutocompleteInput placeholderTextColor='$secondaryColor' data={friendData} width={200} fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} setValue={setFriendSearch} filter={filterFriendsFromSearch} onSearch={onFriendSearch} keyExtractor={keyExtractor} />
       {/* <FriendDropdown dropdownRef={dropdownRef} /> */}
     </YStack>
   );
@@ -256,7 +257,7 @@ const AddQuestion = () => {
           <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="question">QUESTION</Label>
           <Button unstyled onPress={() => setDropdownOpen(false)}><X /></Button>
         </XStack>
-        <Input width={200} unstyled fontSize={"$8"} paddingVertical={"$2"} style={mounted ? {
+        <UnstyledInput width={200} placeholderTextColor='$secondaryColor' fontSize={"$8"} paddingVertical={"$2"} style={mounted ? {
           transform: [
             {
               translateY: 0,
