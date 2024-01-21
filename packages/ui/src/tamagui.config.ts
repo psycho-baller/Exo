@@ -62,11 +62,10 @@ export const config = createTamagui({
     heading: headingFont,
   },
   tokens,
-  // themes,
   themes: {
-    // ...themes,
+    ...themes,
     dark: {
-      // ...themes.dark,
+      ...themes.dark,
       background: '#111',
       secondaryBackground: '#555',
       color: '#fff',
@@ -74,7 +73,7 @@ export const config = createTamagui({
 
     },
     light: {
-      // ...themes.light,
+      ...themes.light,
       background: '#fff',
       secondaryBackground: '#bbb',
       color: '#111',
