@@ -1,7 +1,7 @@
 import { useState, type FC } from 'react';
 import { GetProps, Input, Button, Text, Separator, View, YStack } from 'tamagui';
 import { FlashList } from "@shopify/flash-list";
-import { UnstyledInput } from '.';
+import { UnstyledInput } from './UnstyledInput';
 
 
 interface Props<T> extends GetProps<typeof Input> {

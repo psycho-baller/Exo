@@ -3,9 +3,9 @@ import { createInterFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createMedia } from '@tamagui/react-native-media-driver'
-
 import { animations } from './animations'
 
+// https://github.com/dohomi/tamagui-kitchen-sink
 const headingFont = createInterFont({
   size: {
     6: 15,
@@ -53,7 +53,7 @@ const bodyFont = createInterFont(
 export const config = createTamagui({
   defaultFont: 'body',
   defaultTheme: 'dark',
-  animations: animations as any,
+  animations: animations,
   // shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,
@@ -70,7 +70,6 @@ export const config = createTamagui({
       secondaryBackground: '#555',
       color: '#fff',
       secondaryColor: '#bbb',
-
     },
     light: {
       ...themes.light,
