@@ -53,7 +53,7 @@ const bodyFont = createInterFont(
 export const config = createTamagui({
   defaultFont: 'body',
   defaultTheme: 'dark',
-  animations: animations as any,
+  animations: animations,
   // shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,
@@ -70,7 +70,6 @@ export const config = createTamagui({
       secondaryBackground: '#555',
       color: '#fff',
       secondaryColor: '#bbb',
-
     },
     light: {
       ...themes.light,

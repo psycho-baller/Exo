@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@acme/ui": "workspace:*",
+    "@acme/api": "workspace:*",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/colors": "latest",
     "@tamagui/font-inter": "latest",
@@ -34,7 +35,6 @@
     "tamagui": "latest"
   },
   "devDependencies": {
-    "@acme/api": "workspace:*",
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:*",
