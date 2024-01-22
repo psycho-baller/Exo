@@ -1,7 +1,7 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+const createEnv = require("@t3-oss/env-nextjs").createEnv;
+const z = require("zod").z;
 
-export const env = createEnv({
+const env = createEnv({
   shared: {
     VERCEL_URL: z
       .string()
@@ -37,3 +37,5 @@ export const env = createEnv({
     !!process.env.SKIP_ENV_VALIDATION ||
     process.env.npm_lifecycle_event === "lint",
 });
+
+module.exports = env;

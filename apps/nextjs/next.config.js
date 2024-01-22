@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 // Importing env files here to validate on build
-import './src/env.mjs'
-import '@acme/auth/env.mjs'
-import { withTamagui } from '@tamagui/next-plugin'
-import { join } from 'path'
+require('./src/env.js')
+require('@acme/auth/env.js')
+/** @type {import('next').NextConfig} */
+const { withTamagui } = require('@tamagui/next-plugin')
+const { join } = require('path')
 
 const boolVals = {
   true: true,
@@ -37,7 +38,7 @@ const plugins = [
 // you can add ones you don't need like: AnimatedFlatList, FlatList, SectionList,
 // VirtualizedList, VirtualizedSectionList.
 
-export default () => {
+module.exports = () => {
   let config = {
     typescript: {
       ignoreBuildErrors: true,
@@ -52,6 +53,7 @@ export default () => {
       'solito',
       'react-native-web',
       'expo-linking',
+      'expo-blur',
       'expo-constants',
       'expo-modules-core',
       '@shopify/flash-list',

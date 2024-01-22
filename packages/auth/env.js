@@ -1,7 +1,7 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+const createEnv = require("@t3-oss/env-nextjs").createEnv;
+const z = require("zod").z;
 
-export const env = createEnv({
+const env = createEnv({
   server: {
     AUTH_DISCORD_ID: z.string().min(1),
     AUTH_DISCORD_SECRET: z.string().min(1),
@@ -26,3 +26,5 @@ export const env = createEnv({
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
 });
+
+module.exports = env;
