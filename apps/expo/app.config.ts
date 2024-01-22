@@ -7,7 +7,7 @@ const defineConfig = (): ExpoConfig => ({
   version: "0.1.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
-  userInterfaceStyle: "light",
+  userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/icon.png",
     resizeMode: "contain",
@@ -27,6 +27,9 @@ const defineConfig = (): ExpoConfig => ({
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
     },
+  },
+  web: {
+    "bundler": "metro"
   },
   // extra: {
   //   eas: {

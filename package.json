@@ -33,7 +33,7 @@
       "@auth/core": "0.18.0"
     },
     "patchedDependencies": {
-      "@react-native/assets-registry@0.72.0": "patches/@react-native__assets-registry@0.72.0.patch"
+      "@react-native/assets-registry@0.73.1": "patches/@react-native__assets-registry@0.73.1.patch"
     }
   },
   "prettier": "@acme/prettier-config"
