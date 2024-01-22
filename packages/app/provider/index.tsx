@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
-  console.log('scheme', scheme)
   const loaded = loadFonts()
   useEffect(() => {
     if (loaded) {
