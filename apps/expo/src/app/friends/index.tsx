@@ -1,9 +1,9 @@
-import HomeScreen from "@acme/app/features/home/screen";
+import HomeScreen from "@acme/app/features/friends/screen";
 import { Button, useTheme, Text } from "@acme/ui";
 import { Stack } from 'expo-router'
 
 export default function Screen() {
-  const theme = useTheme()
+  // const theme = useTheme()
   return (
     <>
       <Stack.Screen

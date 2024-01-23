@@ -3,13 +3,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 // import { Link, Stack } from "expo-router";
 import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
-import { Plus, Search, Home, CircleUser, Settings, X, CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { api } from "@acme/api/utils/trpc"
 import type { RouterOutputs } from "@acme/api";
-import { Text, Page, Separator, View, FloatingFooter, Button, Sheet, UnstyledInput, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
+import { Text, Separator, View, FloatingFooter, Button, Sheet, UnstyledInput, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
 import { useAddFriendStore } from "../../stores/addQuestion";
 import { formatDate } from "../../lib/utils";
+import { PageWithNavFooter } from "../../shared/components/Footer/PageWithNavFooter";
 
 function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["all"][number] }) {
   const { question } = props;
@@ -34,9 +34,9 @@ function QuestionCard(props: {
   onDelete: () => void;
 }) {
   const { question, onDelete } = props;
-  
+
   return (
-    <Link  href={`/question/${question.id.toString()}`}>
+    <Link href={`/question/${question.id.toString()}`}>
       <XStack minHeight="$6" p={"$3"} ai="center" justifyContent="space-between">
         <XStack gap={"$3"}>
           <Checkbox borderColor='$secondaryBackground' onPress={onDelete} />
@@ -177,128 +177,7 @@ function QuestionCard(props: {
 //   );
 // };
 
-const AddFriend = (props: YStackProps) => {
-  const [friendSearch, setFriendSearch, setSelectedFriend] = useAddFriendStore((state) => [state.friendSearch, state.setFriendSearch, state.setSelectedFriend]);
-  const friendsQuery = api.friend.all.useQuery();
-
-  if (friendsQuery.isLoading) {
-    return <Text>Loading...</Text>;
-  }
-  const friendData = friendsQuery?.data?.map((friend) => {
-    return {name: friend.name, id: friend.id}
-  }) || [];
-
-  const filterFriendsFromSearch = (friends: {name: string, id: number}[], search: string) => {
-    return friends.filter((friend) => {
-      return friend.name.toLowerCase().includes(search.toLowerCase());
-    });
-  }
-  const onFriendSearch = (value: string) => {
-    // check if there is a friend with that name and set it as selected friend if there is
-    const friend = friendData.find((friend) => friend.name === value);
-    friend ? setSelectedFriend(friend) : setSelectedFriend(null);
-  }
-
-  const keyExtractor = (item: {name: string, id: number}) => item.name;
-  
-  return (
-    <YStack {...props}>
-      <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="friend">FRIEND</Label>
-      <AutocompleteInput placeholderTextColor='$secondaryColor' data={friendData} width={200} fontSize={"$8"} paddingVertical={"$2"} placeholder="Add Friend" value={friendSearch} setValue={setFriendSearch} filter={filterFriendsFromSearch} onSearch={onFriendSearch} keyExtractor={keyExtractor} />
-      {/* <FriendDropdown dropdownRef={dropdownRef} /> */}
-    </YStack>
-  );
-}
-
-const AddQuestion = () => {
-  const utils = api.useUtils();
-
-  const [selectedFriend, setSelectedFriend, friendSearch, setFriendSearch, dropdownOpen, setDropdownOpen] = useAddFriendStore((state) => [state.selectedFriend, state.setSelectedFriend, state.friendSearch, state.setFriendSearch, state.dropdownOpen, state.setDropdownOpen]);
-
-  const [question, setQuestion] = useState("");
-  const [mounted, setMounted] = useState(false);
-
-  const { mutate, error } = api.question.create.useMutation({
-    async onSuccess() {
-      setQuestion("");
-      setDropdownOpen(false);
-      setFriendSearch("");
-      await utils.question.all.invalidate();
-    },
-  });
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  function addQuestion(){
-    mutate({
-      createdByUserId: 1,
-      friendId: selectedFriend?.id,
-      text: question,
-    });
-  }
-
-  return (
-    <Sheet
-      open={dropdownOpen}
-      modal
-      onOpenChange={setDropdownOpen}
-      zIndex={50}
-    >
-      {/* <Sheet.Overlay
-        animation="lazy"
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      /> */}
-      <Sheet.Handle />
-      <Sheet.Frame padding="$4">
-        <XStack justifyContent="space-between">
-          <Label fontSize={"$1"} unstyled color={"$gray8"} htmlFor="question">QUESTION</Label>
-          <Button unstyled onPress={() => setDropdownOpen(false)}><X /></Button>
-        </XStack>
-        <UnstyledInput width={200} placeholderTextColor='$secondaryColor' fontSize={"$8"} paddingVertical={"$2"} style={mounted ? {
-          transform: [
-            {
-              translateY: 0,
-            },
-          ],
-        } : {
-          transform: [
-            {
-              translateY: 100,
-            },
-          ],
-        }} autoFocus={dropdownOpen} placeholder="Add Question" value={question} onChangeText={setQuestion}  />
-        <XStack>
-          <AddFriend flex={1} />
-          <Button jc="flex-end" unstyled onPress={addQuestion}>
-            <CheckCircle2 />
-          </Button>
-        </XStack>
-        {/* <XStack justifyContent="space-between">
-          <XStack>
-
-          </XStack>
-          
-        </XStack> */}
-        {error?.data?.code === "UNAUTHORIZED" && (
-          <ErrorText ta="center">
-            You need to be logged in to create a question
-          </ErrorText>
-        )}
-        {error?.data?.zodError?.fieldErrors.text && (
-          <ErrorText ta="center">
-            {error.data.zodError.fieldErrors.text}
-          </ErrorText>
-        )}
-      </Sheet.Frame>
-    </Sheet>
-  );
-}
-
 const Index = () => {
-  const [setDropdownOpen] = useAddFriendStore((state) => [state.setDropdownOpen]);
   const utils = api.useUtils();
   // const { width, height } = Dimensions.get('window');
   const questionQuery = api.question.all.useQuery();
@@ -307,16 +186,12 @@ const Index = () => {
     onSettled: () => utils.question.all.invalidate(),
   });
 
-  function handlePlusClick(){
-    setDropdownOpen(true);
-  }
-
   return (
-    <Page>
+    <PageWithNavFooter>
       <FlashList
         data={questionQuery.data}
         estimatedItemSize={20}
-        ItemSeparatorComponent={() => <Separator />}
+        // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => (
           <QuestionCard
             question={p.item}
@@ -325,17 +200,7 @@ const Index = () => {
           // <Text>{p.item.text}</Text>
         )}
       />
-
-      {/* <CreateQuestion /> */}
-      <FloatingFooter blurIntensity={70} >
-        <Home size={"$2"} />
-        <CircleUser size={"$2"} />
-        <Button unstyled onPress={handlePlusClick} icon={<Plus size={"$2.5"} />}/>
-        <Search size={"$2"} />
-        <Settings size={"$2"} />
-      </FloatingFooter>
-      <AddQuestion />
-    </Page>
+    </PageWithNavFooter>
   );
 };
 

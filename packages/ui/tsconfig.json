@@ -5,6 +5,6 @@
     // "composite": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src", "../app/components/PageWithNavFooter.tsx"],
   "exclude": ["node_modules"]
 }
