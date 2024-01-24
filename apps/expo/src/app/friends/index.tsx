@@ -10,7 +10,7 @@ export default function Screen() {
         // name="Home"
         options={{
           // headerStatusBarHeight:0,
-          title: 'Home',
+          title: 'Friends',
           // headerShown: false,
           headerStyle: {
             // backgroundColor: '$primary',

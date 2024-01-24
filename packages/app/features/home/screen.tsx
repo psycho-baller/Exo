@@ -1,63 +1,12 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import { Link, Stack } from "expo-router";
-import { Link } from "solito/link";
 import { FlashList } from "@shopify/flash-list";
 
 import { api } from "@acme/api/utils/trpc"
-import type { RouterOutputs } from "@acme/api";
-import { Text, Separator, View, FloatingFooter, Button, Sheet, UnstyledInput, Label, XStack, YStack, Checkbox, ErrorText, AutocompleteInput, GetProps, YStackProps } from "@acme/ui";
-import { useAddFriendStore } from "../../stores/addQuestion";
-import { formatDate } from "../../lib/utils";
 import { PageWithNavFooter } from "../../shared/components/Footer/PageWithNavFooter";
+import { QuestionCard } from "./QuestionCard";
 
-function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["all"][number] }) {
-  const { question } = props;
-  if (question.friendId === null) {
-    return null;
-  }
-  const {data: friend} = api.friend.byId.useQuery({
-    id: question.friendId,
-  });
-  if (!friend) {
-    return null;
-  }
-  return (
-    <Text>
-      {friend.name}
-    </Text>
-  );
-}
 
-function QuestionCard(props: {
-  question: RouterOutputs["question"]["all"][number];
-  onDelete: () => void;
-}) {
-  const { question, onDelete } = props;
-
-  return (
-    <Link href={`/question/${question.id.toString()}`}>
-      <XStack minHeight="$6" p={"$3"} ai="center" justifyContent="space-between">
-        <XStack gap={"$3"}>
-          <Checkbox borderColor='$secondaryBackground' onPress={onDelete} />
-          <Text fontSize={16} fontWeight="bold">
-            {question.text}
-          </Text>
-        </XStack>
-        <YStack gap="$1.5">
-          <Text
-            // style={styles.subTitle}
-          >
-            {formatDate(question.createdDatetime)}
-          </Text>
-          {/* tags */}
-          {/* friend */}
-          <FriendOrGroupForQuestion question={question} />
-        </YStack>
-      </XStack>
-    </Link>
-  );
-}
 // const FriendDropdown = () => {
 //   const utils = api.useUtils();
 //   const ADD_FRIEND = 'Add friend'
