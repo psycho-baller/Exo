@@ -2,13 +2,40 @@ import { RouterOutputs } from "@acme/api";
 import { api } from "@acme/api/utils/trpc";
 
 export function formatDate(inputDate: Date): string {
+  const getYear = (date: Date): string => {
+    const currentYear: number = new Date().getFullYear();
+    return (date.getFullYear() !== currentYear) ? `, ${date.getFullYear()}` : '';
+  };
+
+  const getMonthAndDay = (date: Date): string => {
+    const dateOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    return date.toLocaleString('default', dateOptions);
+  };
+
+  const isToday = (date: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dateWithoutTime = new Date(date.getTime());
+    dateWithoutTime.setHours(0, 0, 0, 0);
+    return dateWithoutTime.getTime() === today.getTime();
+  };
+
+  const getTime = (date: Date): string => {
+    const timeOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
+    return date.toLocaleString('default', timeOptions);
+  };
+
+  // Check if the input date is today
+  if (isToday(inputDate)) {
+    // If the input date is today, format the time and return it
+    return getTime(inputDate);
+  }
+
   // Get month abbreviation and day
-  const dateOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-  const monthAndDay: string = inputDate.toLocaleString('default', dateOptions);
+  const monthAndDay: string = getMonthAndDay(inputDate);
 
   // Get year if it's different from the current year
-  const currentYear: number = new Date().getFullYear();
-  const year: string = (inputDate.getFullYear() !== currentYear) ? `, ${inputDate.getFullYear()}` : '';
+  const year: string = getYear(inputDate);
 
   // Concatenate the results
   const formattedDate: string = `${monthAndDay}${year}`;
@@ -24,8 +51,7 @@ export function formatDate(inputDate: Date): string {
  */
 export function getQuestionsFromFriendId(friendId: number): RouterOutputs['question']['all'] {
   // Get all questions
-  const questions
-   = api.question.all.useQuery().data ?? [];
+  const questions = api.question.all.useQuery().data ?? [];
 
   // Filter questions by friendId
   const filteredQuestions = questions.filter((question) => question.friendId === friendId);
