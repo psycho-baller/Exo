@@ -34,7 +34,6 @@ export function QuestionCard(props: {
   );
 }
 
-
 function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["all"][number] }) {
   const { question } = props;
   if (question.friendId === null) {

@@ -20,7 +20,9 @@ export const PageWithNavFooter: FC<Props> = ({ children }) => {
     <Page>
       {children}
       <FloatingFooter blurIntensity={70} >
-        <Home size={"$2"} />
+        <Link href="/">
+          <Home size={"$2"} />
+        </Link>
         <Link href="/friends">
           <CircleUser size={"$2"} />
         </Link>

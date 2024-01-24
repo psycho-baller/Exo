@@ -16,7 +16,6 @@ const Component: FC<Props> = (props) => {
   const questions = getQuestionsFromFriendId(friend.id);
   const questionCount = questions.length;
 
-
   return (
     <Link href={`/friends/${friend.id.toString()}`}>
       <XStack px="$4" py="$4" ai="center" justifyContent="space-between">
