@@ -3,20 +3,10 @@ import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFoo
 import { api } from "@acme/api/utils/trpc"
 import { FlashList } from "@shopify/flash-list";
 import FriendCard from './FriendCard';
-interface Props extends ComponentPropsWithoutRef<"div"> {
 
-}
-
-
-const Component: FC<Props> = (props) => {
-  const { } = props;
-  const utils = api.useUtils();
+const Component: FC = () => {
 
   const friendQuery = api.friend.all.useQuery();
-
-  const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
-  });
 
   return (
     <PageWithNavFooter>
@@ -27,7 +17,6 @@ const Component: FC<Props> = (props) => {
         renderItem={(p) => (
           <FriendCard
             friend={p.item}
-            onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
           />
           // <Text>{p.item.text}</Text>
         )}

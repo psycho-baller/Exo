@@ -1,13 +1,16 @@
 import { RouterOutputs } from "@acme/api";
 import { Link } from "solito/link";
-import { XStack, Checkbox, YStack, Text } from "@acme/ui";
+import { type FC } from 'react';
+import { XStack, YStack, Text } from "@acme/ui";
 import { formatDate } from "../../lib/utils/date";
 import { api } from "@acme/api/utils/trpc";
 import { CalendarDays, CircleUser } from "@tamagui/lucide-icons";
 
-export function QuestionCard(props: {
+interface Props {
   question: RouterOutputs["question"]["all"][number];
-}) {
+}
+
+const Component: FC<Props> = (props) => {
   const { question } = props;
   const date = question.createdDatetime;
 
@@ -61,3 +64,5 @@ function FriendOrGroupForQuestion(props: { question: RouterOutputs["question"]["
     </XStack>
   );
 }
+
+export default Component;

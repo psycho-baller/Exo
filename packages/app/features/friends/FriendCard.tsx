@@ -1,18 +1,22 @@
 import { RouterOutputs } from '@acme/api';
 import { Link } from 'solito/link';
-import { type ComponentPropsWithoutRef, type FC } from 'react';
-import { XStack, Checkbox, YStack, Text } from '@acme/ui';
+import { type FC } from 'react';
+import { XStack, YStack, Text } from '@acme/ui';
 import { formatDate } from '../../lib/utils/date';
 import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons';
 import { api } from '@acme/api/utils/trpc';
 
-interface Props extends ComponentPropsWithoutRef<"div"> {
+interface Props {
   friend: RouterOutputs["friend"]["all"][number];
-  onDelete: () => void;
 }
 
-const Component: FC<Props> = (props) => {
-  const { friend, onDelete } = props;
+export const Component: FC<Props> = (props) => {
+  const { friend } = props;
+
+  const utils = api.useUtils();
+  const deleteQuestionMutation = api.question.delete.useMutation({
+    onSettled: () => utils.question.all.invalidate(),
+  });
 
   return (
     <Link href={`/friends/${friend.id.toString()}`}>
