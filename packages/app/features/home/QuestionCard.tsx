@@ -1,16 +1,20 @@
 import { RouterOutputs } from "@acme/api";
 import { Link } from "solito/link";
 import { XStack, Checkbox, YStack, Text } from "@acme/ui";
-import { formatDate } from "../../lib/utils";
+import { formatDate } from "../../lib/utils/date";
 import { api } from "@acme/api/utils/trpc";
 import { CalendarDays, CircleUser } from "@tamagui/lucide-icons";
 
 export function QuestionCard(props: {
   question: RouterOutputs["question"]["all"][number];
-  onDelete: () => void;
 }) {
-  const { question, onDelete } = props;
+  const { question } = props;
   const date = question.createdDatetime;
+
+  const utils = api.useUtils();
+  const deleteQuestionMutation = api.question.delete.useMutation({
+    onSettled: () => utils.question.all.invalidate(),
+  });
 
   return (
     <Link href={`/questions/${question.id.toString()}`}>

@@ -42,19 +42,3 @@ export function formatDate(inputDate: Date): string {
 
   return formattedDate;
 }
-
-/**
- * 
- * @param friendId 
- * @returns All questions that have the given friendId
- * @description This function is used to get all questions that have the given friendId.
- */
-export function getQuestionsFromFriendId(friendId: number): RouterOutputs['question']['all'] {
-  // Get all questions
-  const questions = api.question.all.useQuery().data ?? [];
-
-  // Filter questions by friendId
-  const filteredQuestions = questions.filter((question) => question.friendId === friendId);
-
-  return filteredQuestions;
-}

@@ -127,13 +127,9 @@ import { QuestionCard } from "./QuestionCard";
 // };
 
 const Index = () => {
-  const utils = api.useUtils();
   // const { width, height } = Dimensions.get('window');
   const questionQuery = api.question.all.useQuery();
 
-  const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
-  });
 
   return (
     <PageWithNavFooter>
@@ -144,9 +140,7 @@ const Index = () => {
         renderItem={(p) => (
           <QuestionCard
             question={p.item}
-            onDelete={() => deleteQuestionMutation.mutate(p.item.id)}
           />
-          // <Text>{p.item.text}</Text>
         )}
       />
     </PageWithNavFooter>
