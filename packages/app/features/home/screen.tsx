@@ -2,7 +2,7 @@ import { FlashList } from "@shopify/flash-list";
 
 import { api } from "@acme/api/utils/trpc"
 import { PageWithNavFooter } from "../../shared/components/Footer/PageWithNavFooter";
-import { QuestionCard } from "./QuestionCard";
+import QuestionCard from "./QuestionCard";
 
 
 const Index = () => {
