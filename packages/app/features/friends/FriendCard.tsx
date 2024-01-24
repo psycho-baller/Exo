@@ -3,7 +3,7 @@ import { Link } from 'solito/link';
 import { type ComponentPropsWithoutRef, type FC } from 'react';
 import { XStack, Checkbox, YStack, Text } from '@acme/ui';
 import { formatDate, getQuestionsFromFriendId } from '../../lib/utils';
-import { MessageCircleQuestion } from '@tamagui/lucide-icons';
+import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons';
 
 interface Props extends ComponentPropsWithoutRef<"div"> {
   friend: RouterOutputs["friend"]["all"][number];
@@ -15,6 +15,7 @@ const Component: FC<Props> = (props) => {
 
   const questions = getQuestionsFromFriendId(friend.id);
   const questionCount = questions.length;
+  const mostRecentQuestion = questions[0];
 
   return (
     <Link href={`/friends/${friend.id.toString()}`}>
@@ -23,11 +24,21 @@ const Component: FC<Props> = (props) => {
           <Text fontSize={20} fontWeight="bold">
             {friend.name}
           </Text>
-          <XStack gap={6} ai="center">
-            <Text color="$secondaryColor">
-              {questionCount}
-            </Text>
-            <MessageCircleQuestion size={15} color="$secondaryColor" strokeWidth={2.5} />
+          <XStack gap={18}>
+            <XStack gap={6} ai="center">
+              <MessageCircleQuestion size={15} color="$secondaryColor" strokeWidth={2.5} />
+              <Text color="$secondaryColor">
+                {questionCount}
+              </Text>
+            </XStack>
+            {mostRecentQuestion && (
+              <XStack gap={6} ai="center">
+                <CalendarDays size={15} color="$secondaryColor" strokeWidth={2.5} />
+                <Text color="$secondaryColor">
+                  {formatDate(mostRecentQuestion.createdDatetime)}
+                </Text>
+              </XStack>
+            )}
           </XStack>
         </YStack>
         <YStack gap="$1.5">
