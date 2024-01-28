@@ -31,11 +31,11 @@ const defineConfig = (): ExpoConfig => ({
   web: {
     "bundler": "metro"
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
+  extra: {
+    eas: {
+      projectId: "157198b0-9bf6-40f4-b39f-499bd1862c21",
+    },
+  },
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
