@@ -54,6 +54,7 @@ module.exports = () => {
       'react-native-web',
       'expo-linking',
       'expo-blur',
+      'react-native-gesture-handler',
       'expo-constants',
       'expo-modules-core',
       '@shopify/flash-list',

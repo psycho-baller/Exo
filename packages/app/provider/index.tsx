@@ -6,6 +6,7 @@ import { ToastViewport } from './ToastViewport'
 
 import config from '../tamagui.config'
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   const scheme = useColorScheme()
