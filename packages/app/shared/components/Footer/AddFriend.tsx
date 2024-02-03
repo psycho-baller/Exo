@@ -37,11 +37,12 @@ export const AddFriend = (props: YStackProps) => {
 
   return (
     <YStack {...props}>
-      <Label fontSize={'$1'} unstyled color={'$gray8'} htmlFor='friend'>
+      <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='friend'>
         FRIEND
       </Label>
       <AutocompleteInput
         placeholderTextColor='$secondaryColor'
+        opacity={0.75}
         data={friendData}
         width={200}
         fontSize={'$8'}

@@ -61,7 +61,7 @@ export const AddQuestion = () => {
       <Sheet.Handle />
       <Sheet.Frame padding='$4'>
         <XStack justifyContent='space-between'>
-          <Label fontSize={'$1'} unstyled color={'$gray8'} htmlFor='question'>
+          <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
             QUESTION
           </Label>
           <Button unstyled onPress={() => setDropdownOpen(false)}>
@@ -71,6 +71,7 @@ export const AddQuestion = () => {
         <UnstyledInput
           width={200}
           placeholderTextColor='$secondaryColor'
+          opacity={0.75}
           fontSize={'$8'}
           paddingVertical={'$2'}
           style={

@@ -77,7 +77,7 @@ export const config = createTamagui({
       background: '#fff',
       secondaryBackground: '#ccc',
       color: '#111',
-      secondaryColor: '#888',
+      secondaryColor: '#999',
     },
   },
   media: createMedia({

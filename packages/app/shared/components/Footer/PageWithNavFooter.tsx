@@ -21,7 +21,7 @@ export const PageWithNavFooter: FC<Props> = ({ children }) => {
   return (
     <Page>
       {children}
-      <FloatingFooter blurIntensity={70}>
+      <FloatingFooter blurIntensity={40}>
         <Link href='/'>
           <Home size={'$2'} />
         </Link>
