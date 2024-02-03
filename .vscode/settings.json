@@ -17,8 +17,5 @@
     "next/router.d.ts",
     "next/dist/client/router.d.ts"
   ],
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
   "WhiteSource Advise.Diff.BaseBranch": "main"
 }
