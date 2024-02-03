@@ -1,22 +1,20 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { desc, eq } from "@acme/db";
-import { questions } from "@acme/db/schema/question";
+import { desc, eq } from '@acme/db';
+import { questions } from '@acme/db/schema/question';
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const questionRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.questions.findMany({ orderBy: desc(questions.id) });
   }),
 
-  byId: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.questions.findFirst({
-        where: eq(questions.id, input.id),
-      });
-    }),
+  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
+    return ctx.db.query.questions.findFirst({
+      where: eq(questions.id, input.id),
+    });
+  }),
 
   create: protectedProcedure
     .input(
@@ -34,12 +32,10 @@ export const questionRouter = createTRPCRouter({
     return ctx.db.delete(questions).where(eq(questions.id, input));
   }),
 
-  getQuestionsForFriend: publicProcedure
-    .input(z.number())
-    .query(({ ctx, input }) => {
-      return ctx.db.query.questions.findMany({
-        where: eq(questions.friendId, input),
-        orderBy: desc(questions.createdDatetime),
-      });
-    }),
+  getQuestionsForFriend: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+    return ctx.db.query.questions.findMany({
+      where: eq(questions.friendId, input),
+      orderBy: desc(questions.createdDatetime),
+    });
+  }),
 });

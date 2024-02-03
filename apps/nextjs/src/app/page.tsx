@@ -1,18 +1,14 @@
-"use client"
-import { Suspense } from "react";
+'use client';
 
-import { AuthShowcase } from "./_components/auth-showcase";
-import {
-  CreateQuestionForm,
-  PostCardSkeleton,
-  PostList,
-} from "./_components/posts";
-import Index from "@acme/app/features/home/screen";
+import { Suspense } from 'react';
+
+import Index from '@acme/app/features/home/screen';
+
+import { AuthShowcase } from './_components/auth-showcase';
+import { CreateQuestionForm, PostCardSkeleton, PostList } from './_components/posts';
 
 // export const runtime = "edge";
 
 export default function HomePage() {
-  return (
-      <Index />
-  );
+  return <Index />;
 }

@@ -1,9 +1,9 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList } from '@shopify/flash-list';
 
-import { api } from "@acme/api/utils/trpc"
-import { PageWithNavFooter } from "../../shared/components/Footer/PageWithNavFooter";
-import QuestionCard from "./QuestionCard";
+import { api } from '@acme/api/utils/trpc';
 
+import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFooter';
+import QuestionCard from './QuestionCard';
 
 const Index = () => {
   // const { width, height } = Dimensions.get('window');
@@ -15,11 +15,7 @@ const Index = () => {
         data={questionQuery.data}
         estimatedItemSize={20}
         // ItemSeparatorComponent={() => <Separator />}
-        renderItem={(p) => (
-          <QuestionCard
-            question={p.item}
-          />
-        )}
+        renderItem={(p) => <QuestionCard question={p.item} />}
       />
     </PageWithNavFooter>
   );

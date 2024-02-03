@@ -49,9 +49,7 @@
       "compositePrimaryKeys": {
         "question_id": {
           "name": "question_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {}
@@ -86,9 +84,7 @@
       "compositePrimaryKeys": {
         "tag_id": {
           "name": "tag_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {}
@@ -167,23 +163,17 @@
       "compositePrimaryKeys": {
         "user_id": {
           "name": "user_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "user_email_unique": {
           "name": "user_email_unique",
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "user_username_unique": {
           "name": "user_username_unique",
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       }
     },
@@ -232,9 +222,7 @@
       "compositePrimaryKeys": {
         "friend_id": {
           "name": "friend_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {}
@@ -277,9 +265,7 @@
       "compositePrimaryKeys": {
         "group_id": {
           "name": "group_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {}

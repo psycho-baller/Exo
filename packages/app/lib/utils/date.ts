@@ -1,14 +1,17 @@
-import { RouterOutputs } from "@acme/api";
-import { api } from "@acme/api/utils/trpc";
+import { RouterOutputs } from '@acme/api';
+import { api } from '@acme/api/utils/trpc';
 
 export function formatDate(inputDate: Date): string {
   const getYear = (date: Date): string => {
     const currentYear: number = new Date().getFullYear();
-    return (date.getFullYear() !== currentYear) ? `, ${date.getFullYear()}` : '';
+    return date.getFullYear() !== currentYear ? `, ${date.getFullYear()}` : '';
   };
 
   const getMonthAndDay = (date: Date): string => {
-    const dateOptions: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    const dateOptions: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      day: 'numeric',
+    };
     return date.toLocaleString('default', dateOptions);
   };
 
@@ -21,7 +24,10 @@ export function formatDate(inputDate: Date): string {
   };
 
   const getTime = (date: Date): string => {
-    const timeOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: 'numeric',
+    };
     return date.toLocaleString('default', timeOptions);
   };
 
@@ -38,7 +44,7 @@ export function formatDate(inputDate: Date): string {
   const year: string = getYear(inputDate);
 
   // Concatenate the results
-  const formattedDate: string = `${monthAndDay}${year}`;
+  const formattedDate = `${monthAndDay}${year}`;
 
   return formattedDate;
 }

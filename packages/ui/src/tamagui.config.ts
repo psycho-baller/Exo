@@ -1,9 +1,10 @@
-import { createTamagui } from 'tamagui'
-import { createInterFont } from '@tamagui/font-inter'
-import { shorthands } from '@tamagui/shorthands'
-import { themes, tokens } from '@tamagui/themes'
-import { createMedia } from '@tamagui/react-native-media-driver'
-import { animations } from './animations'
+import { createInterFont } from '@tamagui/font-inter';
+import { createMedia } from '@tamagui/react-native-media-driver';
+import { shorthands } from '@tamagui/shorthands';
+import { themes, tokens } from '@tamagui/themes';
+import { createTamagui } from 'tamagui';
+
+import { animations } from './animations';
 
 // https://github.com/dohomi/tamagui-kitchen-sink
 const headingFont = createInterFont({
@@ -36,7 +37,7 @@ const headingFont = createInterFont({
   face: {
     700: { normal: 'InterBold' },
   },
-})
+});
 
 const bodyFont = createInterFont(
   {
@@ -47,14 +48,14 @@ const bodyFont = createInterFont(
   {
     sizeSize: (size) => Math.round(size * 1.1),
     sizeLineHeight: (size) => Math.round(size * 1.1 + (size > 20 ? 10 : 10)),
-  }
-)
+  },
+);
 
 export const config = createTamagui({
   defaultFont: 'body',
   defaultTheme: 'dark',
   animations: animations,
-  // shouldAddPrefersColorThemes: true,
+  shouldAddPrefersColorThemes: true,
   themeClassNameOnRoot: true,
   shorthands,
   fonts: {
@@ -69,7 +70,7 @@ export const config = createTamagui({
       background: '#111',
       secondaryBackground: '#444',
       color: '#fff',
-      secondaryColor: '#666',
+      secondaryColor: '#999',
     },
     light: {
       ...themes.light,
@@ -95,4 +96,4 @@ export const config = createTamagui({
     hoverNone: { hover: 'none' },
     pointerCoarse: { pointer: 'coarse' },
   }),
-})
+});

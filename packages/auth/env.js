@@ -1,14 +1,12 @@
-const createEnv = require("@t3-oss/env-nextjs").createEnv;
-const z = require("zod").z;
+const createEnv = require('@t3-oss/env-nextjs').createEnv;
+const z = require('zod').z;
 
 const env = createEnv({
   server: {
     AUTH_DISCORD_ID: z.string().min(1),
     AUTH_DISCORD_SECRET: z.string().min(1),
     AUTH_SECRET:
-      process.env.NODE_ENV === "production"
-        ? z.string().min(1)
-        : z.string().min(1).optional(),
+      process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
     AUTH_URL: z.preprocess(
       // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
       // Since NextAuth.js automatically uses the VERCEL_URL if present.

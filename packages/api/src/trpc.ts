@@ -6,13 +6,13 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { initTRPC, TRPCError } from '@trpc/server';
+import superjson from 'superjson';
+import { ZodError } from 'zod';
 
-import { auth } from "@acme/auth";
-import type { Session } from "@acme/auth";
-import { db } from "@acme/db";
+import { auth } from '@acme/auth';
+import type { Session } from '@acme/auth';
+import { db } from '@acme/db';
 
 /**
  * 1. CONTEXT
@@ -48,14 +48,11 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * process every request that goes through your tRPC endpoint
  * @link https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: {
-  req?: Request;
-  auth: Session | null;
-}) => {
+export const createTRPCContext = async (opts: { req?: Request; auth: Session | null }) => {
   const session = opts.auth ?? (await auth());
-  const source = opts.req?.headers.get("x-trpc-source") ?? "unknown";
+  const source = opts.req?.headers.get('x-trpc-source') ?? 'unknown';
 
-  console.log(">>> tRPC Request from", source, "by", session?.user);
+  console.log('>>> tRPC Request from', source, 'by', session?.user);
 
   return createInnerTRPCContext({
     session,
@@ -78,8 +75,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       ...shape,
       data: {
         ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
     };
   },
@@ -106,7 +102,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
   return next({
     ctx: {

@@ -22,14 +22,14 @@ module.exports = function (api) {
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
-          [
-            '@tamagui/babel-plugin',
-            {
-              components: ['@acme/ui', 'tamagui'],
-              config: './tamagui.config.ts',
-            },
-          ],
-        ]),
+            [
+              '@tamagui/babel-plugin',
+              {
+                components: ['@acme/ui', 'tamagui'],
+                config: './tamagui.config.ts',
+              },
+            ],
+          ]),
       'transform-inline-environment-variables',
     ],
   };

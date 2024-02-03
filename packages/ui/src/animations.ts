@@ -1,4 +1,4 @@
-import { createAnimations } from '@tamagui/animations-moti'
+import { createAnimations } from '@tamagui/animations-moti';
 
 export const animations = createAnimations({
   bouncy: {
@@ -36,4 +36,4 @@ export const animations = createAnimations({
     mass: 0.9,
     stiffness: 100,
   },
-})
+});

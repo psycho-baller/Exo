@@ -1,22 +1,20 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { desc, eq } from "@acme/db";
-import { tags } from "@acme/db/schema/question";
+import { desc, eq } from '@acme/db';
+import { tags } from '@acme/db/schema/question';
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const tagRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.tags.findMany({ orderBy: desc(tags.id) });
   }),
 
-  byId: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.tags.findFirst({
-        where: eq(tags.id, input.id),
-      });
-    }),
+  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
+    return ctx.db.query.tags.findFirst({
+      where: eq(tags.id, input.id),
+    });
+  }),
 
   create: protectedProcedure
     .input(

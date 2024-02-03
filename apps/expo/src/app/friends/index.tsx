@@ -1,6 +1,7 @@
-import HomeScreen from "@acme/app/features/friends/screen";
-import { Button, useTheme, Text } from "@acme/ui";
-import { Stack } from 'expo-router'
+import { Stack } from 'expo-router';
+
+import HomeScreen from '@acme/app/features/friends/screen';
+import { Button, Text, useTheme } from '@acme/ui';
 
 export default function Screen() {
   // const theme = useTheme()
@@ -24,7 +25,7 @@ export default function Screen() {
 
           //   />
           // ),
-          // headerTitle: props => <Text color='blue' {...props}>hi</Text>, 
+          // headerTitle: props => <Text color='blue' {...props}>hi</Text>,
           // headerRight: () => (
           //   <Button
           //     onPress={() => alert('This is a button!')}
@@ -37,5 +38,5 @@ export default function Screen() {
       />
       <HomeScreen />
     </>
-  )
+  );
 }

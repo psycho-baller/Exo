@@ -1,10 +1,9 @@
-import { authRouter } from "./router/auth";
-import { friendRouter } from "./router/friend";
-import { questionRouter } from "./router/question";
-import { tagRouter } from "./router/tag";
-import { userRouter } from "./router/user";
-
-import { createTRPCRouter } from "./trpc";
+import { authRouter } from './router/auth';
+import { friendRouter } from './router/friend';
+import { questionRouter } from './router/question';
+import { tagRouter } from './router/tag';
+import { userRouter } from './router/user';
+import { createTRPCRouter } from './trpc';
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,

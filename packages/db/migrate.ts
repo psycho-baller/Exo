@@ -1,9 +1,10 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 import { migrate } from 'drizzle-orm/mysql2/migrator';
-import { db, connection } from '.';
+
+import { connection, db } from '.';
 
 dotenv.config({
-  path: "../../.env",
+  path: '../../.env',
 });
 // This will run migrations on the database, skipping the ones already applied
 migrate(db, { migrationsFolder: './drizzle' });
