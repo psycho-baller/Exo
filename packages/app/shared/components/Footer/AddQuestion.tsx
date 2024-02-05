@@ -54,9 +54,9 @@ export const AddQuestion = () => {
   return (
     <Sheet open={dropdownOpen} modal onOpenChange={setDropdownOpen} zIndex={50}>
       {/* <Sheet.Overlay
-        animation="lazy"
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
+        animation='lazy'
+        // enterStyle={{ opacity: 0.75 }}
+        // exitStyle={{ opacity: 0.75 }}
       /> */}
       <Sheet.Handle />
       <Sheet.Frame padding='$4'>

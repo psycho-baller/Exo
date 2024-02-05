@@ -40,6 +40,14 @@ const getHeaders = cache(async () => headers());
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang='en'>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            // avoid flash of entered elements before enter animations run:
+            __html: `document.documentElement.classList.add('t_unmounted')`,
+          }}
+        />
+      </head>
       <body className={['font-sans', fontSans.variable].join(' ')}>
         <TRPCReactProvider headersPromise={getHeaders()}>
           <TamaguiProvider>{props.children}</TamaguiProvider>
