@@ -87,7 +87,7 @@ importers:
         specifier: next
         version: 11.0.0-next-beta.221
       expo:
-        specifier: ^50.0.4
+        specifier: ^50.0.*
         version: 50.0.4(@babel/core@7.23.7)(@react-native/babel-preset@0.73.19)
       expo-constants:
         specifier: ^15.4.5
@@ -96,7 +96,7 @@ importers:
         specifier: ^6.2.2
         version: 6.2.2(expo@50.0.4)
       expo-router:
-        specifier: ^3.4.6
+        specifier: ^3.4.*
         version: 3.4.6(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.2)(expo-status-bar@1.11.1)(expo@50.0.4)(react-dom@18.2.0)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.2)(react@18.2.0)
       expo-splash-screen:
         specifier: ^0.26.4
@@ -9372,7 +9372,7 @@ packages:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
     engines: {node: '>= 8'}
     dependencies:
-      minipass: 3.1.6
+      minipass: 3.3.6
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -11536,18 +11536,11 @@ packages:
       minipass: 3.3.6
     dev: false
 
-  /minipass@3.1.6:
-    resolution: {integrity: sha512-rty5kpw9/z8SX9dmxblFA6edItUmwJgMeYDZRrwlIVN27i8gysGbznJwUggw2V/FVqFSDdWy040ZPS811DYAqQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      yallist: 4.0.0
-
   /minipass@3.3.6:
     resolution: {integrity: sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==}
     engines: {node: '>=8'}
     dependencies:
       yallist: 4.0.0
-    dev: false
 
   /minipass@5.0.0:
     resolution: {integrity: sha512-3FnjYuehv9k6ovOEbyOswadCDPX1piCfhV8ncmYtHOjuPwylVWsghTLo7rabjC3Rx5xD4HDx8Wm1xnMF7S5qFQ==}
@@ -11562,7 +11555,7 @@ packages:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
     engines: {node: '>= 8'}
     dependencies:
-      minipass: 3.1.6
+      minipass: 3.3.6
       yallist: 4.0.0
 
   /mkdirp@0.5.6:

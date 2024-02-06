@@ -9,11 +9,12 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "push": "drizzle-kit push:mysql",
-    "generate": "drizzle-kit generate:mysql",
-    "drop": "drizzle-kit drop",
-    "studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit"
+    "generate": "pnpm with-env drizzle-kit generate:mysql",
+    "drop": "pnpm with-env drizzle-kit drop",
+    "push": "pnpm with-env drizzle-kit push:mysql",
+    "studio": "pnpm with-env drizzle-kit studio",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@planetscale/database": "^1.11.0",
