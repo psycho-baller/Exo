@@ -1,0 +1,674 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "59b38a11-ca18-418d-a32d-b22c44a3cd73",
+  "prevId": "5b9ff5cb-571f-4905-aad2-78a1b8a4ca58",
+  "tables": {
+    "Comments": {
+      "name": "Comments",
+      "columns": {
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Comments_created_by_username_post_id_created_datetime_pk": {
+          "name": "Comments_created_by_username_post_id_created_datetime_pk",
+          "columns": [
+            "created_by_username",
+            "post_id",
+            "created_datetime"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Follows": {
+      "name": "Follows",
+      "columns": {
+        "following_username": {
+          "name": "following_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "followed_username": {
+          "name": "followed_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Follows_following_username_followed_username_pk": {
+          "name": "Follows_following_username_followed_username_pk",
+          "columns": [
+            "following_username",
+            "followed_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Group": {
+      "name": "Group",
+      "columns": {
+        "reminder_datetime": {
+          "name": "reminder_datetime",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Group_name_created_by_username_pk": {
+          "name": "Group_name_created_by_username_pk",
+          "columns": [
+            "name",
+            "created_by_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Groups_of_people": {
+      "name": "Groups_of_people",
+      "columns": {
+        "name": {
+          "name": "name",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Groups_of_people_name_created_by_username_person_id_pk": {
+          "name": "Groups_of_people_name_created_by_username_person_id_pk",
+          "columns": [
+            "name",
+            "created_by_username",
+            "person_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Likes": {
+      "name": "Likes",
+      "columns": {
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Likes_created_by_username_post_id_pk": {
+          "name": "Likes_created_by_username_post_id_pk",
+          "columns": [
+            "created_by_username",
+            "post_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Person": {
+      "name": "Person",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "birthday": {
+          "name": "birthday",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "phone_number": {
+          "name": "phone_number",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "reminder_datetime": {
+          "name": "reminder_datetime",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "associated_username": {
+          "name": "associated_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Person_id_created_by_username_pk": {
+          "name": "Person_id_created_by_username_pk",
+          "columns": [
+            "id",
+            "created_by_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "Person_email_unique": {
+          "name": "Person_email_unique",
+          "columns": [
+            "email"
+          ]
+        },
+        "Person_phone_number_unique": {
+          "name": "Person_phone_number_unique",
+          "columns": [
+            "phone_number"
+          ]
+        }
+      }
+    },
+    "Post_topics": {
+      "name": "Post_topics",
+      "columns": {
+        "post_id": {
+          "name": "post_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "topic_id": {
+          "name": "topic_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Post_topics_post_id_topic_id_pk": {
+          "name": "Post_topics_post_id_topic_id_pk",
+          "columns": [
+            "post_id",
+            "topic_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Post": {
+      "name": "Post",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "question": {
+          "name": "question",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Post_id": {
+          "name": "Post_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Question_topics": {
+      "name": "Question_topics",
+      "columns": {
+        "topic_id": {
+          "name": "topic_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question_id": {
+          "name": "question_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Question_topics_topic_id_question_id_created_by_username_pk": {
+          "name": "Question_topics_topic_id_question_id_created_by_username_pk",
+          "columns": [
+            "topic_id",
+            "question_id",
+            "created_by_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Question": {
+      "name": "Question",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "question": {
+          "name": "question",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_datetime": {
+          "name": "created_datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "reminder_datetime": {
+          "name": "reminder_datetime",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "post_id": {
+          "name": "post_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "group_name": {
+          "name": "group_name",
+          "type": "varchar(63)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Question_id": {
+          "name": "Question_id",
+          "columns": [
+            "id"
+          ]
+        },
+        "Question_id_created_by_username_pk": {
+          "name": "Question_id_created_by_username_pk",
+          "columns": [
+            "id",
+            "created_by_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Search_history": {
+      "name": "Search_history",
+      "columns": {
+        "query": {
+          "name": "query",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "from_username": {
+          "name": "from_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "datetime": {
+          "name": "datetime",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Search_history_query_from_username_pk": {
+          "name": "Search_history_query_from_username_pk",
+          "columns": [
+            "query",
+            "from_username"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "Topic": {
+      "name": "Topic",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by_username": {
+          "name": "created_by_username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "Topic_id": {
+          "name": "Topic_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "User": {
+      "name": "User",
+      "columns": {
+        "username": {
+          "name": "username",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_public": {
+          "name": "is_public",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "default_landing_page": {
+          "name": "default_landing_page",
+          "type": "enum('questions','people','discover')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "default_post_visibility": {
+          "name": "default_post_visibility",
+          "type": "enum('public','private','friends')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "enum('admin','user')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(31)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "User_username": {
+          "name": "User_username",
+          "columns": [
+            "username"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "User_email_unique": {
+          "name": "User_email_unique",
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
