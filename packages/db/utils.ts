@@ -1,4 +1,3 @@
-import type { Connection } from '@planetscale/database';
 import { Client } from '@planetscale/database';
 import { drizzle } from 'drizzle-orm/planetscale-serverless';
 
@@ -7,7 +6,7 @@ import type { Database } from './schema/_table';
 
 interface ConnectionResult {
   db: Database;
-  connection: Connection;
+  client: Client;
 }
 
 export function createConnection(): ConnectionResult {
@@ -15,9 +14,9 @@ export function createConnection(): ConnectionResult {
   if (!databaseUrl) {
     throw new Error('DATABASE_URL is not set');
   }
-  const connection = new Client({
+  const client = new Client({
     url: databaseUrl,
-  }).connection();
+  });
   // export const connection = await mysql.createConnection({
   //   host: process.env.DB_HOST,
   //   user: process.env.DB_USER,
@@ -25,11 +24,11 @@ export function createConnection(): ConnectionResult {
   //   database: process.env.DB_NAME,
   //   multipleStatements: true,
   // });
-  const db = drizzle(connection, { schema });
+  const db = drizzle(client, { schema });
 
   return {
     db,
-    connection,
+    client,
     // if we want to use the "using" keyword in the future
     // [Symbol.asyncDispose]: async () => {
     //   console.log("🧨 Closing the database connection...");
