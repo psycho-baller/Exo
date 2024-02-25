@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1704894949256,
-      "tag": "0000_gray_hardball",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1708878299176,
-      "tag": "0001_plain_santa_claus",
+      "when": 1708896293975,
+      "tag": "0000_familiar_triathlon",
       "breakpoints": true
     }
   ]

@@ -8,6 +8,7 @@ import {
   primaryKey,
   serial,
   timestamp,
+  unique,
   varchar,
 } from 'drizzle-orm/mysql-core';
 
@@ -34,6 +35,8 @@ export const users = mySqlTable('User', {
   email: varchar('email', { length: 31 }).notNull().unique(),
   phone: varchar('phone', { length: 15 }),
 });
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 
 // Post
 export const posts = mySqlTable('Post', {
@@ -42,6 +45,8 @@ export const posts = mySqlTable('Post', {
   question: varchar('question', { length: 255 }).notNull(),
   createdByUsername: varchar('created_by_username', { length: 31 }),
 });
+export type Post = typeof posts.$inferSelect;
+export type NewPost = typeof posts.$inferInsert;
 
 // SearchHistory
 export const searchHistories = mySqlTable(
@@ -57,6 +62,8 @@ export const searchHistories = mySqlTable(
     };
   },
 );
+export type SearchHistory = typeof searchHistories.$inferSelect;
+export type NewSearchHistory = typeof searchHistories.$inferInsert;
 
 // Topic
 export const topics = mySqlTable('Topic', {
@@ -64,15 +71,17 @@ export const topics = mySqlTable('Topic', {
   name: varchar('name', { length: 255 }).notNull(),
   createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
 });
+export type Topic = typeof topics.$inferSelect;
+export type NewTopic = typeof topics.$inferInsert;
 
 // Person
 export const people = mySqlTable(
   'Person',
   {
-    id: serial('id').notNull(),
+    id: serial('id').primaryKey(),
     createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
     firstName: varchar('first_name', { length: 31 }).notNull(),
-    lastName: varchar('last_name', { length: 31 }).notNull(),
+    lastName: varchar('last_name', { length: 31 }),
     birthday: date('birthday'),
     email: varchar('email', { length: 31 }).unique(),
     phoneNumber: varchar('phone_number', { length: 15 }).unique(),
@@ -82,15 +91,18 @@ export const people = mySqlTable(
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.id, table.createdByUsername] }),
+      unique: unique().on(table.firstName, table.lastName, table.birthday),
     };
   },
 );
+export type Person = typeof people.$inferSelect;
+export type NewPerson = typeof people.$inferInsert;
 
 // Group
 export const groups = mySqlTable(
-  'Group',
+  'Grp',
   {
+    id: serial('id').primaryKey(),
     reminderDatetime: datetime('reminder_datetime'),
     createdDatetime: timestamp('created_datetime').defaultNow(),
     name: varchar('name', { length: 63 }).notNull(),
@@ -98,25 +110,28 @@ export const groups = mySqlTable(
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.name, table.createdByUsername] }),
+      unique: unique().on(table.name, table.createdByUsername),
     };
   },
 );
+export type Group = typeof groups.$inferSelect;
+export type NewGroup = typeof groups.$inferInsert;
 
 // groupsOfPeople
 export const groupsOfPeople = mySqlTable(
   'Groups_of_people',
   {
-    name: varchar('name', { length: 63 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
+    groupId: int('group_id').notNull(),
     personId: int('person_id').notNull(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.name, table.createdByUsername, table.personId] }),
+      pk: primaryKey({ columns: [table.groupId, table.personId] }),
     };
   },
 );
+export type GroupsOfPeople = typeof groupsOfPeople.$inferSelect;
+export type NewGroupsOfPeople = typeof groupsOfPeople.$inferInsert;
 
 // Likes
 export const likes = mySqlTable(
@@ -132,6 +147,8 @@ export const likes = mySqlTable(
     };
   },
 );
+export type Like = typeof likes.$inferSelect;
+export type NewLike = typeof likes.$inferInsert;
 
 // Comments
 export const comments = mySqlTable(
@@ -139,8 +156,8 @@ export const comments = mySqlTable(
   {
     createdDatetime: timestamp('created_datetime').defaultNow(),
     comment: varchar('comment', { length: 255 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    postId: int('post_id').notNull(),
+    createdByUsername: varchar('created_by_username', { length: 31 }),
+    postId: int('post_id'),
   },
   (table) => {
     return {
@@ -148,6 +165,8 @@ export const comments = mySqlTable(
     };
   },
 );
+export type Comment = typeof comments.$inferSelect;
+export type NewComment = typeof comments.$inferInsert;
 
 // PostTopics
 export const postTopics = mySqlTable(
@@ -162,6 +181,8 @@ export const postTopics = mySqlTable(
     };
   },
 );
+export type PostTopics = typeof postTopics.$inferSelect;
+export type NewPostTopics = typeof postTopics.$inferInsert;
 
 // Follows
 export const follows = mySqlTable(
@@ -176,26 +197,22 @@ export const follows = mySqlTable(
     };
   },
 );
+export type Follow = typeof follows.$inferSelect;
+export type NewFollow = typeof follows.$inferInsert;
 
 // Question
-export const questions = mySqlTable(
-  'Question',
-  {
-    id: serial('id').notNull().primaryKey(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    question: varchar('question', { length: 255 }).notNull(),
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    reminderDatetime: datetime('reminder_datetime'),
-    postId: int('post_id'),
-    groupName: varchar('group_name', { length: 63 }),
-    personId: int('person_id').notNull(),
-  },
-  (table) => {
-    return {
-      pk: primaryKey({ columns: [table.id, table.createdByUsername] }),
-    };
-  },
-);
+export const questions = mySqlTable('Question', {
+  id: serial('id').primaryKey(),
+  createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
+  question: varchar('question', { length: 255 }).notNull(),
+  createdDatetime: timestamp('created_datetime').defaultNow(),
+  reminderDatetime: datetime('reminder_datetime'),
+  postId: int('post_id'),
+  groupId: varchar('group_id', { length: 63 }),
+  personId: int('person_id'),
+});
+export type Question = typeof questions.$inferSelect;
+export type NewQuestion = typeof questions.$inferInsert;
 
 // QuestionTopics
 export const questionTopics = mySqlTable(
@@ -203,14 +220,15 @@ export const questionTopics = mySqlTable(
   {
     topicId: int('topic_id').notNull(),
     questionId: int('question_id').notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.topicId, table.questionId, table.createdByUsername] }),
+      pk: primaryKey({ columns: [table.topicId, table.questionId] }),
     };
   },
 );
+export type QuestionTopics = typeof questionTopics.$inferSelect;
+export type NewQuestionTopics = typeof questionTopics.$inferInsert;
 
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
@@ -264,13 +282,13 @@ export const groupsRelations = relations(groups, ({ one }) => ({
 export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
   group: one(groups, {
     relationName: 'Groups associated with person',
-    fields: [groupsOfPeople.name, groupsOfPeople.createdByUsername],
-    references: [groups.name, groups.createdByUsername],
+    fields: [groupsOfPeople.groupId],
+    references: [groups.id],
   }),
   person: one(people, {
     relationName: 'People associated with group',
-    fields: [groupsOfPeople.createdByUsername, groupsOfPeople.personId],
-    references: [people.createdByUsername, people.id],
+    fields: [groupsOfPeople.personId],
+    references: [people.id],
   }),
 }));
 
@@ -339,8 +357,8 @@ export const questionsRelations = relations(questions, ({ one }) => ({
   }),
   group: one(groups, {
     relationName: 'Group associated with question',
-    fields: [questions.groupName, questions.createdByUsername],
-    references: [groups.name, groups.createdByUsername],
+    fields: [questions.groupId, questions.createdByUsername],
+    references: [groups.id, groups.createdByUsername],
   }),
   person: one(people, {
     relationName: 'Person associated with question',
@@ -357,7 +375,7 @@ export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
   }),
   question: one(questions, {
     relationName: 'Question associated with topic',
-    fields: [questionTopics.questionId, questionTopics.createdByUsername],
-    references: [questions.id, questions.createdByUsername],
+    fields: [questionTopics.questionId],
+    references: [questions.id],
   }),
 }));
