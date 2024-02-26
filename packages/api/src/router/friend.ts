@@ -1,34 +1,26 @@
 import { z } from 'zod';
 
 import { desc, eq } from '@acme/db';
-import { friends } from '@acme/db/schema/user';
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
+import { people, personZod } from '@acme/db/schema';
 
-export const friendRouter = createTRPCRouter({
+export const personRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.friends.findMany({ orderBy: desc(friends.id) });
+    return ctx.db.query.people.findMany({ orderBy: desc(people.id) });
   }),
 
   byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.friends.findFirst({
-      where: eq(friends.id, input.id),
+    return ctx.db.query.people.findFirst({
+      where: eq(people.id, input.id),
     });
   }),
 
-  create: protectedProcedure
-    .input(
-      z.object({
-        createdByUserId: z.number(),
-        friendUserId: z.number().optional(),
-        name: z.string().min(1),
-      }),
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(friends).values(input);
-    }),
+  create: protectedProcedure.input(personZod).mutation(({ ctx, input }) => {
+    return ctx.db.insert(people).values(input);
+  }),
 
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(friends).where(eq(friends.id, input));
+    return ctx.db.delete(people).where(eq(people.id, input));
   }),
 });

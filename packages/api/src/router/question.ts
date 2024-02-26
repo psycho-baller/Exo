@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
 import { desc, eq } from '@acme/db';
-import { questions } from '@acme/db/schema/question';
-
+import { questions, questionZod } from '@acme/db/schema';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const questionRouter = createTRPCRouter({
@@ -16,17 +15,9 @@ export const questionRouter = createTRPCRouter({
     });
   }),
 
-  create: protectedProcedure
-    .input(
-      z.object({
-        createdByUserId: z.number(),
-        text: z.string().min(1),
-        friendId: z.number().optional(),
-      }),
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(questions).values(input);
-    }),
+  create: protectedProcedure.input(questionZod).mutation(({ ctx, input }) => {
+    return ctx.db.insert(questions).values(input);
+  }),
 
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.db.delete(questions).where(eq(questions.id, input));
@@ -34,7 +25,7 @@ export const questionRouter = createTRPCRouter({
 
   getQuestionsForFriend: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.db.query.questions.findMany({
-      where: eq(questions.friendId, input),
+      where: eq(questions.personId, input),
       orderBy: desc(questions.createdDatetime),
     });
   }),
