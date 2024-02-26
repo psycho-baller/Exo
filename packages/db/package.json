@@ -7,29 +7,35 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
+    "upgrade": "pnpm upgrade --latest",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "generate": "pnpm with-env drizzle-kit generate:mysql",
     "drop": "pnpm with-env drizzle-kit drop",
     "push": "pnpm with-env drizzle-kit push:mysql",
     "studio": "pnpm with-env drizzle-kit studio",
+    "seed": "pnpm with-env tsx ./scripts/seed/insert.ts",
+    "delete": "pnpm with-env tsx ./scripts/seed/delete.ts",
+    "migrate": "pnpm with-env tsx ./scripts/migrate.ts",
+    "drop:tables": "source ../../.env && ./scripts/drop_all_tables.sh",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.29.0"
+    "@planetscale/database": "^1.16.0",
+    "drizzle-orm": "^0.29.4"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.13",
-    "mysql2": "^3.6.5",
-    "eslint": "^8.53.0",
-    "prettier": "^3.1.0",
-    "typescript": "^5.2.2"
+    "drizzle-kit": "^0.20.14",
+    "eslint": "^8.57.0",
+    "mysql2": "^3.9.1",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,

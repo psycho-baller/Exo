@@ -8,7 +8,9 @@
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
+    "upgrade": "pnpm upgrade --latest",
     "clean:workspaces": "turbo clean",
+    "upgrade:workspaces": "turbo upgrade",
     "postinstall": "pnpm lint:ws",
     "db:push": "pnpm -F db push",
     "db:drop": "pnpm -F db drop",
@@ -23,9 +25,9 @@
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",
-    "@turbo/gen": "^1.11.3",
-    "prettier": "^3.2.4",
-    "turbo": "^1.12.2",
+    "@turbo/gen": "^1.12.4",
+    "prettier": "^3.2.5",
+    "turbo": "^1.12.4",
     "typescript": "^5.3.3"
   },
   "pnpm": {

@@ -25,6 +25,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
+    "upgrade": "pnpm upgrade --latest",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
@@ -33,22 +34,22 @@
   },
   "dependencies": {
     "@shopify/flash-list": "1.6.3",
-    "@tamagui/animations-moti": "^1.88.17",
-    "@tamagui/font-inter": "^1.88.2",
-    "@tamagui/react-native-media-driver": "^1.88.2",
-    "@tamagui/shorthands": "^1.88.2",
-    "@tamagui/themes": "^1.88.2",
-    "@tamagui/toast": "^1.88.2",
-    "expo-blur": "~12.4.1",
-    "tamagui": "^1.88.2"
+    "@tamagui/animations-moti": "^1.90.6",
+    "@tamagui/font-inter": "^1.90.6",
+    "@tamagui/react-native-media-driver": "^1.90.6",
+    "@tamagui/shorthands": "^1.90.6",
+    "@tamagui/themes": "^1.90.6",
+    "@tamagui/toast": "^1.90.6",
+    "expo-blur": "~12.9.2",
+    "tamagui": "^1.90.6"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
-    "@tamagui/build": "^1.88.2",
-    "eslint": "^8.53.0",
-    "typescript": "^5.2.2"
+    "@tamagui/build": "^1.90.6",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "extends": [
