@@ -5,7 +5,7 @@ import { topics, topicZod } from '@acme/db/schema';
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
-export const tagRouter = createTRPCRouter({
+export const topicRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.topics.findMany({ orderBy: desc(topics.id) });
   }),

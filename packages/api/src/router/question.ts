@@ -23,7 +23,7 @@ export const questionRouter = createTRPCRouter({
     return ctx.db.delete(questions).where(eq(questions.id, input));
   }),
 
-  getQuestionsForFriend: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+  getQuestionsForPerson: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.db.query.questions.findMany({
       where: eq(questions.personId, input),
       orderBy: desc(questions.createdDatetime),

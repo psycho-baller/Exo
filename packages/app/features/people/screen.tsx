@@ -1,22 +1,22 @@
-import type { ComponentPropsWithoutRef, FC } from 'react';
+import type { FC } from 'react';
 import { FlashList } from '@shopify/flash-list';
 
 import { api } from '@acme/api/utils/trpc';
 
 import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFooter';
-import FriendCard from './FriendCard';
+import PersonCard from './PersonCard';
 
 const Component: FC = () => {
-  const friendQuery = api.friend.all.useQuery();
+  const personQuery = api.person.all.useQuery();
 
   return (
     <PageWithNavFooter>
       <FlashList
-        data={friendQuery.data}
+        data={personQuery.data}
         estimatedItemSize={20}
         // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => (
-          <FriendCard friend={p.item} />
+          <PersonCard person={p.item} />
           // <Text>{p.item.text}</Text>
         )}
       />

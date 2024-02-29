@@ -9,11 +9,11 @@ import { Text, XStack, YStack } from '@acme/ui';
 import { formatDate } from '../../lib/utils/date';
 
 interface Props {
-  friend: RouterOutputs['friend']['all'][number];
+  person: RouterOutputs['person']['all'][number];
 }
 
 export const Component: FC<Props> = (props) => {
-  const { friend } = props;
+  const { person } = props;
 
   const utils = api.useUtils();
   const deleteQuestionMutation = api.question.delete.useMutation({
@@ -21,22 +21,22 @@ export const Component: FC<Props> = (props) => {
   });
 
   return (
-    <Link href={`/friends/${friend.id.toString()}`}>
+    <Link href={`/people/${person.id.toString()}`}>
       <XStack px='$4' py='$4' ai='center' justifyContent='space-between'>
         <YStack gap={6}>
           <Text fontSize={20} fontWeight='bold'>
-            {friend.name}
+            {person.firstName}
           </Text>
-          <QuestionMetadata friend={friend} />
+          <QuestionMetadata person={person} />
         </YStack>
-        {/* tags */}
+        {/* topics */}
       </XStack>
     </Link>
   );
 };
 
-function QuestionMetadata({ friend }: { friend: RouterOutputs['friend']['all'][number] }) {
-  const { data: questions } = api.question.getQuestionsForFriend.useQuery(friend.id);
+function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][number] }) {
+  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id);
   if (!questions) return null;
   const questionCount = questions.length;
   const mostRecentQuestion = questions[0];
@@ -50,7 +50,11 @@ function QuestionMetadata({ friend }: { friend: RouterOutputs['friend']['all'][n
       {mostRecentQuestion && (
         <XStack gap={6} ai='center'>
           <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
-          <Text color='$secondaryColor'>{formatDate(mostRecentQuestion.createdDatetime)}</Text>
+          <Text color='$secondaryColor'>
+            {mostRecentQuestion.createdDatetime
+              ? formatDate(mostRecentQuestion.createdDatetime)
+              : ''}
+          </Text>
         </XStack>
       )}
     </XStack>

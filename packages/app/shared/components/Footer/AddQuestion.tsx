@@ -5,8 +5,8 @@ import { Button, Label, Sheet, XStack } from 'tamagui';
 import { api } from '@acme/api/utils/trpc';
 import { ErrorText, UnstyledInput } from '@acme/ui';
 
-import { useAddFriendStore } from '../../../stores/addQuestion';
-import { AddFriend } from './AddFriend';
+import { useAddPersonStore } from '../../../stores/addQuestion';
+import { AddPerson } from './AddPerson';
 
 export const AddQuestion = () => {
   const utils = api.useUtils();
@@ -18,7 +18,7 @@ export const AddQuestion = () => {
     setFriendSearch,
     dropdownOpen,
     setDropdownOpen,
-  ] = useAddFriendStore((state) => [
+  ] = useAddPersonStore((state) => [
     state.selectedFriend,
     state.setSelectedFriend,
     state.friendSearch,
@@ -97,7 +97,7 @@ export const AddQuestion = () => {
           onChangeText={setQuestion}
         />
         <XStack>
-          <AddFriend flex={1} />
+          <AddPerson flex={1} />
           <Button jc='flex-end' unstyled onPress={addQuestion}>
             <CheckCircle2 />
           </Button>

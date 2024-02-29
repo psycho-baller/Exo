@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import Animated from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { CalendarDays, CircleUser } from '@tamagui/lucide-icons';
+import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 
 import type { RouterOutputs } from '@acme/api';
@@ -26,7 +26,16 @@ const Component: FC<Props> = (props) => {
 
   return (
     <GestureHandlerRootView>
-      <Swipeable renderRightActions={swipeRight} rightThreshold={-200}>
+      <Swipeable
+        renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
+        onSwipeableOpen={() => deleteQuestionMutation.mutate(question.id)}
+        enabled={true}
+        overshootRight={false}
+        overshootLeft={false}
+        friction={2}
+        leftThreshold={40}
+        rightThreshold={40}
+      >
         <Link href={`/questions/${question.id.toString()}`}>
           <XStack
             minHeight='$6'
@@ -81,23 +90,38 @@ function FriendOrGroupForQuestion(props: { question: RouterOutputs['question']['
   );
 }
 
-function swipeRight() {
+function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
   // progressAnimatedValue: AnimatedInterpolation<string | number>, dragAnimatedValue: AnimatedInterpolation<string | number>, swipeable: Swipeable
-  // const trans = dragX.interpolate({
-  //   inputRange: [0, 50, 100, 101],
-  //   outputRange: [-20, 0, 0, 1],
-  // });
+  // const dragX = dragAnimatedValue;
+  // console.log('dragX', dragX);
+  // console.log('progressAnimatedValue', progressAnimatedValue);
+  // const trans = interpolate(progressAnimatedValue, [0, 50, 100, 101], [-20, 0, 0, 1]);
+  // console.log(trans);
   return (
     // <Animated.View style={{
     //   transform: [{
     //     translateX: Number(trans.toString()) || 0,
     //   }]
     // }}>
-    <RectButton>
-      <XStack animation='bouncy' bg='$danger' p='$3' ai='center' justifyContent='center'>
-        <Text fontWeight='bold'>Delete</Text>
-      </XStack>
-    </RectButton>
+    // <RectButton>
+    <XStack
+      animation='bouncy'
+      bg='$red'
+      p='$3'
+      ai='center'
+      justifyContent='center'
+      // style={{
+      //   transform: [
+      //     {
+      //       translateX: Number(trans.toString()),
+      //     },
+      //   ],
+      // }}
+    >
+      <Trash2 size={20} color='white' strokeWidth={2.5} />
+      <Trash2 size={20} color='white' strokeWidth={2.5} />
+    </XStack>
+    // </RectButton>
     // </Animated.View>
   );
 }

@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-import HomeScreen from '@acme/app/features/friends/screen';
+import HomeScreen from '@acme/app/features/people/screen';
 import { Button, Text, useTheme } from '@acme/ui';
 
 export default function Screen() {
@@ -11,7 +11,7 @@ export default function Screen() {
         // name="Home"
         options={{
           // headerStatusBarHeight:0,
-          title: 'Friends',
+          title: 'People',
           // headerShown: false,
           headerStyle: {
             // backgroundColor: '$primary',
