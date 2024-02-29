@@ -10,7 +10,9 @@ import {
   timestamp,
   unique,
   varchar,
+  text,
 } from 'drizzle-orm/mysql-core';
+import { z } from 'zod';
 
 import { mySqlTable } from './_table';
 
@@ -27,26 +29,43 @@ export const role = mysqlEnum('role', roleOptions);
 export const users = mySqlTable('User', {
   username: varchar('username', { length: 31 }).notNull().primaryKey(),
   firstName: varchar('first_name', { length: 31 }).notNull(),
-  lastName: varchar('last_name', { length: 31 }).notNull(),
-  isPublic: boolean('is_public').notNull(),
+  lastName: varchar('last_name', { length: 31 }),
+  isPublic: boolean('is_public').default(false),
   defaultLandingPage: defaultLandingPage,
   defaultPostVisibility: defaultPostVisibility,
-  role: role.notNull(),
+  role: role.notNull().default('user'),
   email: varchar('email', { length: 31 }).notNull().unique(),
   phone: varchar('phone', { length: 15 }),
 });
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+export const userZod = z.object({
+  username: z.string().min(1).max(31),
+  firstName: z.string().min(1).max(31),
+  lastName: z.string().min(1).max(31),
+  isPublic: z.boolean().optional(),
+  defaultLandingPage: z.enum(landingPageOptions).optional(),
+  defaultPostVisibility: z.enum(postVisibilityOptions).optional(),
+  role: z.enum(roleOptions).optional(),
+  email: z.string().email(),
+  phone: z.string().min(10).max(15).optional(),
+});
 
 // Post
 export const posts = mySqlTable('Post', {
   id: serial('id').primaryKey(),
   createdDatetime: timestamp('created_datetime').defaultNow(),
-  question: varchar('question', { length: 255 }).notNull(),
+  question: text('question').notNull(),
   createdByUsername: varchar('created_by_username', { length: 31 }),
 });
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
+export const postZod = z.object({
+  id: z.number().optional(),
+  createdDatetime: z.string().optional(),
+  question: z.string().min(1),
+  createdByUsername: z.string().min(1).max(31),
+});
 
 // SearchHistory
 export const searchHistories = mySqlTable(
@@ -73,6 +92,11 @@ export const topics = mySqlTable('Topic', {
 });
 export type Topic = typeof topics.$inferSelect;
 export type NewTopic = typeof topics.$inferInsert;
+export const topicZod = z.object({
+  id: z.number().optional(),
+  name: z.string().min(1).max(255),
+  createdByUsername: z.string().min(1).max(31),
+});
 
 // Person
 export const people = mySqlTable(
@@ -97,7 +121,25 @@ export const people = mySqlTable(
 );
 export type Person = typeof people.$inferSelect;
 export type NewPerson = typeof people.$inferInsert;
-
+export const personZod = z.object({
+  id: z.number().optional(),
+  createdByUsername: z.string().min(1).max(31),
+  firstName: z.string().min(1).max(31),
+  lastName: z.string().min(1).max(31).optional(),
+  birthday: z.date().optional(),
+  email: z.string().email().optional(),
+  phoneNumber: z.string().min(10).max(15).optional(),
+  reminderDatetime: z.date().optional(),
+  createdDatetime: z.date().optional(),
+  associatedUsername: z
+    .string()
+    .min(1)
+    .max(31)
+    .optional()
+    .describe(
+      'If this person is a real user, and we are following them, this will be populated with their username.',
+    ),
+});
 // Group
 export const groups = mySqlTable(
   'Grp',
@@ -116,6 +158,13 @@ export const groups = mySqlTable(
 );
 export type Group = typeof groups.$inferSelect;
 export type NewGroup = typeof groups.$inferInsert;
+export const groupZod = z.object({
+  id: z.number().optional(),
+  reminderDatetime: z.date().optional(),
+  createdDatetime: z.date().optional(),
+  name: z.string().min(1).max(63),
+  createdByUsername: z.string().min(1).max(31),
+});
 
 // groupsOfPeople
 export const groupsOfPeople = mySqlTable(
@@ -132,6 +181,10 @@ export const groupsOfPeople = mySqlTable(
 );
 export type GroupsOfPeople = typeof groupsOfPeople.$inferSelect;
 export type NewGroupsOfPeople = typeof groupsOfPeople.$inferInsert;
+export const groupsOfPeopleZod = z.object({
+  groupId: z.number(),
+  personId: z.number(),
+});
 
 // Likes
 export const likes = mySqlTable(
@@ -149,6 +202,11 @@ export const likes = mySqlTable(
 );
 export type Like = typeof likes.$inferSelect;
 export type NewLike = typeof likes.$inferInsert;
+export const likeZod = z.object({
+  createdDatetime: z.date().optional(),
+  createdByUsername: z.string().min(1).max(31),
+  postId: z.number(),
+});
 
 // Comments
 export const comments = mySqlTable(
@@ -167,6 +225,12 @@ export const comments = mySqlTable(
 );
 export type Comment = typeof comments.$inferSelect;
 export type NewComment = typeof comments.$inferInsert;
+export const commentZod = z.object({
+  createdDatetime: z.date().optional(),
+  comment: z.string().min(1).max(255),
+  createdByUsername: z.string().min(1).max(31).optional(),
+  postId: z.number().optional(),
+});
 
 // PostTopics
 export const postTopics = mySqlTable(
@@ -183,6 +247,10 @@ export const postTopics = mySqlTable(
 );
 export type PostTopics = typeof postTopics.$inferSelect;
 export type NewPostTopics = typeof postTopics.$inferInsert;
+export const postTopicZod = z.object({
+  postId: z.number(),
+  topicId: z.number(),
+});
 
 // Follows
 export const follows = mySqlTable(
@@ -199,6 +267,10 @@ export const follows = mySqlTable(
 );
 export type Follow = typeof follows.$inferSelect;
 export type NewFollow = typeof follows.$inferInsert;
+export const followZod = z.object({
+  followingUsername: z.string().min(1).max(31),
+  followedUsername: z.string().min(1).max(31),
+});
 
 // Question
 export const questions = mySqlTable('Question', {
@@ -208,11 +280,20 @@ export const questions = mySqlTable('Question', {
   createdDatetime: timestamp('created_datetime').defaultNow(),
   reminderDatetime: datetime('reminder_datetime'),
   postId: int('post_id'),
-  groupId: varchar('group_id', { length: 63 }),
+  groupId: int('group_id'),
   personId: int('person_id'),
 });
 export type Question = typeof questions.$inferSelect;
 export type NewQuestion = typeof questions.$inferInsert;
+export const questionZod = z.object({
+  createdByUsername: z.string().min(1).max(31),
+  question: z.string().min(1).max(255),
+  createdDatetime: z.date().optional(),
+  reminderDatetime: z.date().optional(),
+  postId: z.number().optional().describe('The post the question is associated with'),
+  groupId: z.number().optional().describe('The group the user wants to ask the question to'),
+  personId: z.number().optional().describe('The person the user wants to ask the question to'),
+});
 
 // QuestionTopics
 export const questionTopics = mySqlTable(
@@ -229,7 +310,10 @@ export const questionTopics = mySqlTable(
 );
 export type QuestionTopics = typeof questionTopics.$inferSelect;
 export type NewQuestionTopics = typeof questionTopics.$inferInsert;
-
+export const questionTopicZod = z.object({
+  topicId: z.number(),
+  questionId: z.number(),
+});
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
