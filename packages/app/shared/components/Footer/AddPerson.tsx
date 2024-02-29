@@ -20,10 +20,10 @@ export const AddPerson = (props: YStackProps) => {
   const personData =
     personQuery?.data?.map((person) => {
       return { name: person.firstName, id: person.id };
-    }) || [];
+    }) ?? [];
 
-  const filterpersonsFromSearch = (persons: { name: string; id: number }[], search: string) => {
-    return persons.filter((person) => {
+  const filterPeopleFromSearch = (people: { name: string; id: number }[], search: string) => {
+    return people.filter((person) => {
       return person.name.toLowerCase().includes(search.toLowerCase());
     });
   };
@@ -49,8 +49,8 @@ export const AddPerson = (props: YStackProps) => {
         paddingVertical={'$2'}
         placeholder='Add person'
         value={personSearch}
-        setValue={setpersonSearch}
-        filter={filterpersonsFromSearch}
+        setValue={setPersonSearch}
+        filter={filterPeopleFromSearch}
         onSearch={onpersonSearch}
         keyExtractor={keyExtractor}
       />

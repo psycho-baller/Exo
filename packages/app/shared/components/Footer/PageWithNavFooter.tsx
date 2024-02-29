@@ -6,13 +6,13 @@ import { Button } from 'tamagui';
 import { FloatingFooter, Page } from '@acme/ui';
 import type { PageProps } from '@acme/ui';
 
-import { useAddFriendStore } from '../../../stores/addQuestion';
+import { useAddPersonStore } from '../../../stores/addQuestion';
 import { AddQuestion } from './../Footer/AddQuestion';
 
 type Props = PageProps;
 
 export const PageWithNavFooter: FC<Props> = ({ children }) => {
-  const [setDropdownOpen] = useAddFriendStore((state) => [state.setDropdownOpen]);
+  const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen]);
 
   function handlePlusClick() {
     setDropdownOpen(true);
