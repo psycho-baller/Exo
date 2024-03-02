@@ -1,7 +1,7 @@
-/** @type {import('next').NextConfig} */
+
 // Importing env files here to validate on build
-require('./src/env.js')
-require('@acme/auth/env.js')
+// require('./src/env.js')
+// require('@acme/auth/env.js')
 /** @type {import('next').NextConfig} */
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')

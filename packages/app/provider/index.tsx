@@ -1,20 +1,22 @@
-import type { TamaguiProviderProps} from '@acme/ui';
-import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui'
-import { useColorScheme } from 'react-native'
-import { loadFonts } from "../lib/loadFonts"
-import { ToastViewport } from './ToastViewport'
-
-import config from '../tamagui.config'
 import { useEffect } from 'react';
+import { useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import type { TamaguiProviderProps } from '@acme/ui';
+import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui';
+
+import { loadFonts } from '../lib/utils/loadFonts';
+import config from '../tamagui.config';
+import { ToastViewport } from './ToastViewport';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
-  const scheme = useColorScheme()
-  const loaded = loadFonts()
+  const scheme = useColorScheme();
+  const loaded = loadFonts();
   useEffect(() => {
     if (loaded) {
       // can hide splash screen here
     }
-  }, [loaded])
+  }, [loaded]);
 
   if (!loaded) {
     return null;
@@ -27,7 +29,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
       {...rest}
     >
       <ToastProvider
-        swipeDirection="horizontal"
+        swipeDirection='horizontal'
         duration={6000}
         native={
           [
@@ -39,7 +41,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
         {children}
         <CustomToast />
         <ToastViewport />
-       </ToastProvider>
-     </TamaguiProvider>
-  )
+      </ToastProvider>
+    </TamaguiProvider>
+  );
 }

@@ -51,20 +51,23 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       nitropack:
         specifier: ^2.7.2
         version: 2.9.1
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   apps/expo:
     dependencies:
+      '@acme/app':
+        specifier: workspace:^0.0.0
+        version: link:../../packages/app
       '@acme/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -154,7 +157,7 @@ importers:
         specifier: ^7.20.4
         version: 7.20.5
       '@types/react':
-        specifier: ^18.2.37
+        specifier: ^18.2.58
         version: 18.2.61
       babel-plugin-module-resolver:
         specifier: ^5.0.0
@@ -163,16 +166,16 @@ importers:
         specifier: ^0.4.4
         version: 0.4.4
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       metro-minify-terser:
         specifier: ^0.80.1
         version: 0.80.6
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   apps/nextjs:
@@ -193,11 +196,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       '@t3-oss/env-nextjs':
-        specifier: ^0.7.1
-        version: 0.7.3(typescript@5.3.3)(zod@3.22.4)
+        specifier: ^0.9.2
+        version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
       '@tamagui/config':
         specifier: ^1.88.2
-        version: 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.7.2)(react-native@0.73.4)(react@18.2.0)
+        version: 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react-native@0.73.4)(react@18.2.0)
       '@tamagui/next-theme':
         specifier: ^1.88.2
         version: 1.90.16(react@18.2.0)
@@ -220,7 +223,7 @@ importers:
         specifier: next
         version: 11.0.0-next-beta.303
       next:
-        specifier: ^14.0.2
+        specifier: ^14.1.0
         version: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
@@ -235,7 +238,7 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
       zod:
-        specifier: ^3.22.2
+        specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
       '@acme/eslint-config':
@@ -254,7 +257,7 @@ importers:
         specifier: ^18.18.13
         version: 18.19.21
       '@types/react':
-        specifier: ^18.2.37
+        specifier: ^18.2.58
         version: 18.2.61
       '@types/react-dom':
         specifier: ^18.2.15
@@ -263,16 +266,16 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       react-native:
         specifier: 0.73.4
         version: 0.73.4(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   packages/api:
@@ -286,6 +289,9 @@ importers:
       '@trpc/client':
         specifier: next
         version: 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
+      '@trpc/react-query':
+        specifier: next
+        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
         version: 11.0.0-next-beta.303
@@ -293,7 +299,7 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
       zod:
-        specifier: ^3.22.2
+        specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
       '@acme/eslint-config':
@@ -306,13 +312,13 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   packages/app:
@@ -320,23 +326,26 @@ importers:
       '@acme/ui':
         specifier: workspace:*
         version: link:../ui
+      '@shopify/flash-list':
+        specifier: 1.6.3
+        version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.4)(react@18.2.0)
       '@tamagui/animations-react-native':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-native@0.73.4)(react@18.2.0)
       '@tamagui/colors':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16
       '@tamagui/font-inter':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react@18.2.0)
       '@tamagui/lucide-icons':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-native-svg@15.0.0)(react@18.2.0)
       '@tamagui/shorthands':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16
       '@tamagui/themes':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16
       '@tanstack/react-query':
         specifier: ^5.24.1
@@ -351,13 +360,13 @@ importers:
         specifier: next
         version: 11.0.0-next-beta.303
       burnt:
-        specifier: ^0.11.0
-        version: 0.11.7(expo@50.0.8)(react-dom@18.2.0)(react-native@0.73.4)(react@18.2.0)
+        specifier: ^0.12.2
+        version: 0.12.2(expo@50.0.8)(react-dom@18.2.0)(react-native@0.73.4)(react@18.2.0)
       expo-constants:
         specifier: ^15.4.5
         version: 15.4.5(expo@50.0.8)
       expo-font:
-        specifier: ^11.10.2
+        specifier: ^11.10.3
         version: 11.10.3(expo@50.0.8)
       expo-linking:
         specifier: ^6.2.2
@@ -365,15 +374,24 @@ importers:
       react-native-element-dropdown:
         specifier: ^2.10.1
         version: 2.10.1(react-native@0.73.4)(react@18.2.0)
+      react-native-gesture-handler:
+        specifier: ~2.14.0
+        version: 2.14.1(react-native@0.73.4)(react@18.2.0)
+      react-native-reanimated:
+        specifier: ~3.6.3
+        version: 3.6.3(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0)
       react-native-safe-area-context:
         specifier: ~4.8.2
         version: 4.8.2(react-native@0.73.4)(react@18.2.0)
       solito:
-        specifier: latest
+        specifier: ^4.2.1
         version: 4.2.1
       tamagui:
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(@types/react@18.2.61)(react-dom@18.2.0)(react-native-web@0.19.10)(react-native@0.73.4)(react@18.2.0)
+      zustand:
+        specifier: ^4.5.1
+        version: 4.5.2(@types/react@18.2.61)(react@18.2.0)
     devDependencies:
       '@acme/api':
         specifier: workspace:*
@@ -388,13 +406,13 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/react':
-        specifier: ^18.2.37
+        specifier: ^18.2.58
         version: 18.2.61
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   packages/auth:
@@ -406,13 +424,13 @@ importers:
         specifier: 0.18.0
         version: 0.18.0
       '@auth/drizzle-adapter':
-        specifier: ^0.3.8
-        version: 0.3.17
+        specifier: ^0.7.0
+        version: 0.7.0
       '@t3-oss/env-nextjs':
-        specifier: ^0.7.1
-        version: 0.7.3(typescript@5.3.3)(zod@3.22.4)
+        specifier: ^0.9.2
+        version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
       next:
-        specifier: ^14.0.2
+        specifier: ^14.1.0
         version: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 5.0.0-beta.3
@@ -424,7 +442,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       zod:
-        specifier: ^3.22.2
+        specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
       '@acme/eslint-config':
@@ -437,22 +455,22 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   packages/db:
     dependencies:
       '@planetscale/database':
-        specifier: ^1.11.0
+        specifier: ^1.16.0
         version: 1.16.0
       drizzle-orm:
-        specifier: ^0.29.0
+        specifier: ^0.29.4
         version: 0.29.4(@planetscale/database@1.16.0)(mysql2@3.9.2)
     devDependencies:
       '@acme/eslint-config':
@@ -468,19 +486,22 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       drizzle-kit:
-        specifier: ^0.20.13
+        specifier: ^0.20.14
         version: 0.20.14
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       mysql2:
-        specifier: ^3.6.5
+        specifier: ^3.9.1
         version: 3.9.2
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
+      tsx:
+        specifier: ^4.7.1
+        version: 4.7.1
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   packages/ui:
@@ -488,29 +509,29 @@ importers:
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.4)(react@18.2.0)
-      '@tamagui/animations-react-native':
-        specifier: ^1.88.2
-        version: 1.90.16(react-native@0.73.4)(react@18.2.0)
+      '@tamagui/animations-moti':
+        specifier: ^1.90.6
+        version: 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3)
       '@tamagui/font-inter':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react@18.2.0)
       '@tamagui/react-native-media-driver':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-native@0.73.4)
       '@tamagui/shorthands':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16
       '@tamagui/themes':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16
       '@tamagui/toast':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-native@0.73.4)(react@18.2.0)
       expo-blur:
-        specifier: ~12.4.1
-        version: 12.4.1(expo@50.0.8)
+        specifier: ~12.9.2
+        version: 12.9.2(expo@50.0.8)
       tamagui:
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(@types/react@18.2.61)(react-dom@18.2.0)(react-native-web@0.19.10)(react-native@0.73.4)(react@18.2.0)
     devDependencies:
       '@acme/eslint-config':
@@ -523,13 +544,13 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       '@tamagui/build':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(typescript@5.3.3)
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   tooling/eslint:
@@ -572,10 +593,10 @@ importers:
         specifier: ^8.44.7
         version: 8.56.5
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   tooling/github: {}
@@ -586,7 +607,7 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(prettier@3.2.5)
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-tailwindcss:
         specifier: ^0.5.7
@@ -596,7 +617,7 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../typescript
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   tooling/tailwind:
@@ -618,13 +639,13 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../typescript
       eslint:
-        specifier: ^8.53.0
+        specifier: ^8.57.0
         version: 8.57.0
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.2.5
         version: 3.2.5
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.3.3
         version: 5.3.3
 
   tooling/typescript: {}
@@ -663,8 +684,8 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/drizzle-adapter@0.3.17:
-    resolution: {integrity: sha512-pyHwshtINeJfUGdA6e+2lIzklfTZB2V60iLPbGXbcMMiECmsKXeEPS+xlwtJryY2ckwOoxG9a781cVX371QxUg==}
+  /@auth/drizzle-adapter@0.7.0:
+    resolution: {integrity: sha512-p/8cjrREiPPns78CT/a7VGl2TD78BNXtJ9TAXrw80bUInHd2xkEtk4CzXajWS/5r7qXE9n3r4BV9sISrf6Yqnw==}
     dependencies:
       '@auth/core': 0.18.0
     transitivePeerDependencies:
@@ -2069,6 +2090,13 @@ packages:
     dependencies:
       superjson: 2.2.1
     dev: true
+
+  /@egjs/hammerjs@2.0.17:
+    resolution: {integrity: sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==}
+    engines: {node: '>=0.8.0'}
+    dependencies:
+      '@types/hammerjs': 2.0.45
+    dev: false
 
   /@emotion/is-prop-valid@0.8.8:
     resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
@@ -4628,10 +4656,10 @@ packages:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
 
-  /@t3-oss/env-core@0.7.3(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-hhtj59TKC6TKVdwJ0CcbKsvkr9R8Pc/SNKd4IgGUIC9T9X6moB8EZZ3FTJdABA/h9UABCK4J+KsF8gzmvMvHPg==}
+  /@t3-oss/env-core@0.9.2(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-KgWXljUTHgO3o7GMZQPAD5+P+HqpauMNNHowlm7V2b9IeMitSUpNKwG6xQrup/xARWHTdxRVIl0mSI4wCevQhQ==}
     peerDependencies:
-      typescript: '>=4.7.2'
+      typescript: '>=5.0.0'
       zod: ^3.0.0
     peerDependenciesMeta:
       typescript:
@@ -4641,16 +4669,16 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@t3-oss/env-nextjs@0.7.3(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-90TNffS17vjkQwfYyMUb4Zw9yqHwFV40f78qFug4JiQa5+N6DydTdlLOpzOcj8Cna/qpAVDwMSypofF/TVQDuA==}
+  /@t3-oss/env-nextjs@0.9.2(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
     peerDependencies:
-      typescript: '>=4.7.2'
+      typescript: '>=5.0.0'
       zod: ^3.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.7.3(typescript@5.3.3)(zod@3.22.4)
+      '@t3-oss/env-core': 0.9.2(typescript@5.3.3)(zod@3.22.4)
       typescript: 5.3.3
       zod: 3.22.4
     dev: false
@@ -4741,12 +4769,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@tamagui/animations-moti@1.90.16(react-dom@18.2.0)(react-native-reanimated@3.7.2):
+  /@tamagui/animations-moti@1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3):
     resolution: {integrity: sha512-D9Rgv9wfhQbEtIF8XfGUgdEOcSf/6vZqkjxjzCwbgUICXCWz/y2ED1M5eVyEtBKyZpqgRk3PkakOdsyOmsRktg==}
     dependencies:
       '@tamagui/use-presence': 1.90.16(react@18.2.0)
       '@tamagui/web': 1.90.16
-      moti: 0.27.5(react-dom@18.2.0)(react-native-reanimated@3.7.2)(react@18.2.0)
+      moti: 0.27.5(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react@18.2.0)
       react: 18.2.0
     transitivePeerDependencies:
       - react-dom
@@ -4956,11 +4984,11 @@ packages:
       - react
     dev: true
 
-  /@tamagui/config@1.90.16(react-dom@18.2.0)(react-native-reanimated@3.7.2)(react-native@0.73.4)(react@18.2.0):
+  /@tamagui/config@1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react-native@0.73.4)(react@18.2.0):
     resolution: {integrity: sha512-zeewDg39GwndzTwYuWPP0oCZgUdmodH5x6sGS4Lk92UN/lPIkpjedH2dVQgpOt9stIirjj5SjAcHj8vOlWeejw==}
     dependencies:
       '@tamagui/animations-css': 1.90.16
-      '@tamagui/animations-moti': 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.7.2)
+      '@tamagui/animations-moti': 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3)
       '@tamagui/animations-react-native': 1.90.16(react-native@0.73.4)(react@18.2.0)
       '@tamagui/colors': 1.90.16
       '@tamagui/font-inter': 1.90.16(react@18.2.0)
@@ -6216,6 +6244,10 @@ packages:
       '@types/node': 18.19.21
     dev: true
 
+  /@types/hammerjs@2.0.45:
+    resolution: {integrity: sha512-qkcUlZmX6c4J8q45taBKTL3p+LbITgyx7qhlPYOdOHZB7B31K0mXbP5YA7i7SgDeEGuI9MnumiKPEMrxg8j3KQ==}
+    dev: false
+
   /@types/html-minifier-terser@6.1.0:
     resolution: {integrity: sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==}
     dev: true
@@ -7366,8 +7398,8 @@ packages:
       semver: 7.6.0
     dev: true
 
-  /burnt@0.11.7(expo@50.0.8)(react-dom@18.2.0)(react-native@0.73.4)(react@18.2.0):
-    resolution: {integrity: sha512-Td70Axu53eDdEFDehCW1IvBY6xopdgcIISHMDKhQQFKAuoxdYHsensfXIzOAsjqTaNFA8NFmnYfLdQhAoPc9MA==}
+  /burnt@0.12.2(expo@50.0.8)(react-dom@18.2.0)(react-native@0.73.4)(react@18.2.0):
+    resolution: {integrity: sha512-bbZjGN4Om7dykr8ZcLb0tTO5L2becMR+HIez1ySUGgG/rvK+ePgBEuBA6lMOZqOTsUXhIKFUBH0sCXQ25fq5SA==}
     peerDependencies:
       expo: '*'
       react: '*'
@@ -9318,8 +9350,8 @@ packages:
       - supports-color
     dev: false
 
-  /expo-blur@12.4.1(expo@50.0.8):
-    resolution: {integrity: sha512-lGN8FS9LuGUlEriULTC62cCWyg5V7zSVQeJ6Duh1wSq8aAETinZ2/7wrT6o+Uhd/XVVxFNON2T25AGCOtMG6ew==}
+  /expo-blur@12.9.2(expo@50.0.8):
+    resolution: {integrity: sha512-q+EIOkXw7OCE3VBTLRANsUIdMxtFWDTFpaMulJEXMwtxNQaCcAvzHZvwWP9dlI96FM4A6UdX2/slBNfNJzJcCQ==}
     peerDependencies:
       expo: '*'
     dependencies:
@@ -10274,6 +10306,12 @@ packages:
 
   /hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+    dev: false
+
+  /hoist-non-react-statics@3.3.2:
+    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
+    dependencies:
+      react-is: 16.13.1
     dev: false
 
   /hookable@5.5.3:
@@ -12072,13 +12110,13 @@ packages:
       ufo: 1.4.0
     dev: true
 
-  /moti@0.27.5(react-dom@18.2.0)(react-native-reanimated@3.7.2)(react@18.2.0):
+  /moti@0.27.5(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react@18.2.0):
     resolution: {integrity: sha512-6PbHgNTzSyipTon57TBm5w3/cKKMZVugq/Ey2YLbZbMLxsmL4uz6zGO0uBcZWkKaVqm9O8LcK+WdGMyNiR2yrg==}
     peerDependencies:
       react-native-reanimated: '*'
     dependencies:
       framer-motion: 6.5.1(react-dom@18.2.0)(react@18.2.0)
-      react-native-reanimated: 3.7.2(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0)
+      react-native-reanimated: 3.6.3(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -13459,8 +13497,23 @@ packages:
       react-native: 0.73.4(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
 
-  /react-native-reanimated@3.7.2(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0):
-    resolution: {integrity: sha512-3KpTmYEcmHhkZeTqgWtioqnljpd4TLxKHClvarYsA3UXU2Tv+O1gqlRhVhfHBZuiDngVu436gWkde9+/VQVMFQ==}
+  /react-native-gesture-handler@2.14.1(react-native@0.73.4)(react@18.2.0):
+    resolution: {integrity: sha512-YiM1BApV4aKeuwsM6O4C2ufwewYEKk6VMXOt0YqEZFMwABBFWhXLySFZYjBSNRU2USGppJbfHP1q1DfFQpKhdA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      '@egjs/hammerjs': 2.0.17
+      hoist-non-react-statics: 3.3.2
+      invariant: 2.2.4
+      lodash: 4.17.21
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-native: 0.73.4(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+    dev: false
+
+  /react-native-reanimated@3.6.3(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0):
+    resolution: {integrity: sha512-2KkkPozoIvDbJcHuf8qeyoLROXQxizSi+2CTCkuNVkVZOxxY4B0Omvgq61aOQhSZUh/649x1YHoAaTyGMGDJUw==}
     peerDependencies:
       '@babel/core': ^7.0.0-0
       '@babel/plugin-proposal-nullish-coalescing-operator': ^7.0.0-0
@@ -15154,6 +15207,17 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+
+  /tsx@4.7.1:
+    resolution: {integrity: sha512-8d6VuibXHtlN5E3zFkgY8u4DX7Y3Z27zvvPKVmLon/D4AjuKzarkUBTLDBgj9iTQ0hg5xM7c/mYiRVM+HETf0g==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.19.12
+      get-tsconfig: 4.7.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
 
   /turbo-darwin-64@1.12.4:
     resolution: {integrity: sha512-dBwFxhp9isTa9RS/fz2gDVk5wWhKQsPQMozYhjM7TT4jTrnYn0ZJMzr7V3B/M/T8QF65TbniW7w1gtgxQgX5Zg==}

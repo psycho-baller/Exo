@@ -1,20 +1,20 @@
-import * as dotenv from "dotenv";
-import type { Config } from "drizzle-kit";
+import * as dotenv from 'dotenv';
+import type { Config } from 'drizzle-kit';
 
 dotenv.config({
-  path: "../../.env",
+  path: '../../.env',
 });
 
 if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set");
+  throw new Error('DATABASE_URL is not set');
 }
 
 export default {
-  schema: "./schema",
-  out: "./drizzle",
-  driver: "mysql2",
+  schema: './schema',
+  out: './drizzle',
+  driver: 'mysql2',
   dbCredentials: {
     uri: process.env.DATABASE_URL,
   },
-  tablesFilter: ["*"],
+  tablesFilter: ['*'],
 } satisfies Config;

@@ -1,38 +1,28 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { desc, eq } from "@acme/db";
-import { users } from "@acme/db/schema/user";
+import { desc, eq } from '@acme/db';
+import { users, userZod } from '@acme/db/schema';
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const userRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.users.findMany({ orderBy: desc(users.id) });
+    return ctx.db.query.users.findMany({ orderBy: desc(users.username) });
   }),
 
-  byId: publicProcedure
-    .input(z.object({ id: z.number() }))
+  byUsername: publicProcedure
+    .input(z.object({ username: z.string().min(1).max(31) }))
     .query(({ ctx, input }) => {
       return ctx.db.query.users.findFirst({
-        where: eq(users.id, input.id),
+        where: eq(users.username, input.username),
       });
     }),
 
-  create: protectedProcedure
-    .input(
-      z.object({
-        firstName: z.string().min(1),
-        lastName: z.string().min(1),
-        email: z.string().min(1),
-        username: z.string().min(1),
-        image: z.string().min(1),
-      }),
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(users).values(input);
-    }),
+  create: protectedProcedure.input(userZod).mutation(({ ctx, input }) => {
+    return ctx.db.insert(users).values(input);
+  }),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(users).where(eq(users.id, input));
+  delete: protectedProcedure.input(z.string().min(1).max(31)).mutation(({ ctx, input }) => {
+    return ctx.db.delete(users).where(eq(users.username, input));
   }),
 });
