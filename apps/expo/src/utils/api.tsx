@@ -1,9 +1,10 @@
-import React from "react";
-import Constants from "expo-constants";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/client";
-import superjson from "superjson";
-import { api } from "@acme/api/utils/trpc";
+import React from 'react';
+import Constants from 'expo-constants';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { httpBatchLink } from '@trpc/client';
+import superjson from 'superjson';
+
+import { api } from '@acme/api/utils/trpc';
 
 /**
  * Extend this function when going to production by
@@ -20,13 +21,11 @@ const getBaseUrl = () => {
    */
 
   const debuggerHost = Constants.expoConfig?.hostUri;
-  const localhost = debuggerHost?.split(":")[0];
+  const localhost = debuggerHost?.split(':')[0];
 
   if (!localhost) {
     // return "https://turbo.t3.gg";
-    throw new Error(
-      "Failed to get localhost. Please point to your production server.",
-    );
+    throw new Error('Failed to get localhost. Please point to your production server.');
   }
   return `http://${localhost}:3000`;
 };
@@ -46,7 +45,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Map<string, string>();
-            headers.set("x-trpc-source", "expo-react");
+            headers.set('x-trpc-source', 'expo-react');
             return Object.fromEntries(headers);
           },
         }),
@@ -56,9 +55,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
 
   return (
     <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        {props.children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{props.children}</QueryClientProvider>
     </api.Provider>
   );
 }

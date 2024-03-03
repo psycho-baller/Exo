@@ -1,6 +1,7 @@
-import type { ExpoConfig } from "@expo/config";
+import type { ConfigContext, ExpoConfig } from "expo/config";
 
-const defineConfig = (): ExpoConfig => ({
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  ...config,
   name: "expo",
   slug: "expo",
   scheme: "expo",
@@ -29,18 +30,16 @@ const defineConfig = (): ExpoConfig => ({
     },
   },
   web: {
-    "bundler": "metro"
+    bundler: "metro",
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
+  extra: {
+    eas: {
+      projectId: "157198b0-9bf6-40f4-b39f-499bd1862c21",
+    },
+  },
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
   },
-  plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
+  plugins: ["expo-router"],
 });
-
-export default defineConfig;

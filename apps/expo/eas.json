@@ -4,7 +4,7 @@
   },
   "build": {
     "base": {
-      "node": "18.16.1",
+      "node": "21.2.0",
       "ios": {
         "resourceClass": "m-medium"
       }
@@ -17,6 +17,9 @@
     "preview": {
       "extends": "base",
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "ios": {
         "simulator": true
       }

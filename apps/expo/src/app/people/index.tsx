@@ -1,17 +1,17 @@
 import { Stack } from 'expo-router';
 
-import HomeScreen from '@acme/app/features/home/screen';
+import HomeScreen from '@acme/app/features/people/screen';
 import { Button, Text, useTheme } from '@acme/ui';
 
 export default function Screen() {
-  const theme = useTheme();
+  // const theme = useTheme()
   return (
     <>
       <Stack.Screen
         // name="Home"
         options={{
           // headerStatusBarHeight:0,
-          title: 'Home',
+          title: 'People',
           // headerShown: false,
           headerStyle: {
             // backgroundColor: '$primary',

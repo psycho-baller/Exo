@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { cache } from 'react';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { headers } from 'next/headers';
 
-import { headers } from "next/headers";
+import { TamaguiProvider } from './TamaguiProvider';
+import { TRPCReactProvider } from './TRPCProviders';
 
-import { TRPCReactProvider } from "./TRPCProviders";
-import { TamaguiProvider } from "./TamaguiProvider";
-import { cache } from "react";
 const fontSans = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  subsets: ['latin'],
+  variable: '--font-sans',
 });
 
 /**
@@ -16,21 +16,21 @@ const fontSans = Inter({
  * make the entire app dynamic. You can move the `TRPCReactProvider` further
  * down the tree (e.g. /dashboard and onwards) to make part of the app statically rendered.
  */
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
+  title: 'Create T3 Turbo',
+  description: 'Simple monorepo with shared backend for web & mobile apps',
   openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
+    title: 'Create T3 Turbo',
+    description: 'Simple monorepo with shared backend for web & mobile apps',
+    url: 'https://create-t3-turbo.vercel.app',
+    siteName: 'Create T3 Turbo',
   },
   twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+    card: 'summary_large_image',
+    site: '@jullerino',
+    creator: '@jullerino',
   },
 };
 
@@ -39,12 +39,18 @@ const getHeaders = cache(async () => headers());
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={["font-sans", fontSans.variable].join(" ")}>
+    <html lang='en'>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            // avoid flash of entered elements before enter animations run:
+            __html: `document.documentElement.classList.add('t_unmounted')`,
+          }}
+        />
+      </head>
+      <body className={['font-sans', fontSans.variable].join(' ')}>
         <TRPCReactProvider headersPromise={getHeaders()}>
-          <TamaguiProvider>
-            {props.children}
-          </TamaguiProvider>
+          <TamaguiProvider>{props.children}</TamaguiProvider>
         </TRPCReactProvider>
       </body>
     </html>

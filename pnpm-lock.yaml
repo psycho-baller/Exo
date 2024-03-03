@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@auth/core': 0.18.0
-
 patchedDependencies:
   '@react-native/assets-registry@0.73.1':
     hash: ieiwhypvddbubq45ah5bswdrmu
@@ -21,7 +18,7 @@ importers:
         version: link:tooling/prettier
       '@turbo/gen':
         specifier: ^1.11.3
-        version: 1.12.4(@types/node@18.19.21)(typescript@5.3.3)
+        version: 1.12.4(@types/node@20.11.24)(typescript@5.3.3)
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
@@ -35,8 +32,8 @@ importers:
   apps/auth-proxy:
     dependencies:
       '@auth/core':
-        specifier: 0.18.0
-        version: 0.18.0
+        specifier: ^0.18.0
+        version: 0.18.6
     devDependencies:
       '@acme/eslint-config':
         specifier: workspace:^0.2.0
@@ -54,7 +51,7 @@ importers:
         specifier: ^8.57.0
         version: 8.57.0
       nitropack:
-        specifier: ^2.7.2
+        specifier: ^2.8.1
         version: 2.9.1
       prettier:
         specifier: ^3.2.5
@@ -74,17 +71,20 @@ importers:
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.4)(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.24.1
+        version: 5.24.6(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
+        version: 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-next-beta.303
+        version: 11.0.0-next-beta.305
       expo:
-        specifier: ^50.0.7
+        specifier: ^50.0.8
         version: 50.0.8(@babel/core@7.24.0)(@react-native/babel-preset@0.73.21)
       expo-constants:
         specifier: ^15.4.5
@@ -93,8 +93,8 @@ importers:
         specifier: ^6.2.2
         version: 6.2.2(expo@50.0.8)
       expo-router:
-        specifier: ^3.4.7
-        version: 3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.8)(react-dom@18.2.0)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.4)(react@18.2.0)
+        specifier: ^3.4.8
+        version: 3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.8)(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.4)(react@18.2.0)
       expo-splash-screen:
         specifier: ^0.26.4
         version: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.8)
@@ -110,6 +110,9 @@ importers:
       react-native:
         specifier: 0.73.4
         version: 0.73.4(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+      react-native-reanimated:
+        specifier: ~3.6.3
+        version: 3.6.3(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0)
       react-native-safe-area-context:
         specifier: ~4.8.2
         version: 4.8.2(react-native@0.73.4)(react@18.2.0)
@@ -136,25 +139,25 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       '@babel/core':
-        specifier: ^7.23.2
+        specifier: ^7.23.9
         version: 7.24.0
       '@babel/preset-env':
-        specifier: ^7.23.2
+        specifier: ^7.23.9
         version: 7.24.0(@babel/core@7.24.0)
       '@babel/runtime':
-        specifier: ^7.23.2
+        specifier: ^7.23.9
         version: 7.24.0
       '@expo/config-plugins':
         specifier: ^7.8.4
         version: 7.8.4
       '@expo/metro-config':
-        specifier: ^0.17.1
+        specifier: ^0.17.4
         version: 0.17.5(@react-native/babel-preset@0.73.21)
       '@tamagui/babel-plugin':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       '@types/babel__core':
-        specifier: ^7.20.4
+        specifier: ^7.20.5
         version: 7.20.5
       '@types/react':
         specifier: ^18.2.58
@@ -165,11 +168,14 @@ importers:
       babel-plugin-transform-inline-environment-variables:
         specifier: ^0.4.4
         version: 0.4.4
+      babel-preset-expo:
+        specifier: ^10.0.1
+        version: 10.0.1(@babel/core@7.24.0)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
       metro-minify-terser:
-        specifier: ^0.80.1
+        specifier: ^0.80.6
         version: 0.80.6
       prettier:
         specifier: ^3.2.5
@@ -199,11 +205,14 @@ importers:
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
       '@tamagui/config':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react-native@0.73.4)(react@18.2.0)
       '@tamagui/next-theme':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.24.1
+        version: 5.24.6(react@18.2.0)
       '@tanstack/react-query-devtools':
         specifier: ^5.24.1
         version: 5.24.6(@tanstack/react-query@5.24.6)(react@18.2.0)
@@ -212,16 +221,16 @@ importers:
         version: 5.24.1(@tanstack/react-query@5.24.6)(next@14.1.1)(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
+        version: 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
       '@trpc/next':
         specifier: next
-        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/react-query@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(next@14.1.1)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/react-query@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(next@14.1.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-next-beta.303
+        version: 11.0.0-next-beta.305
       next:
         specifier: ^14.1.0
         version: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
@@ -232,7 +241,7 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-native-web:
-        specifier: ^0.19.9
+        specifier: ^0.19.10
         version: 0.19.10(react-dom@18.2.0)(react@18.2.0)
       superjson:
         specifier: 2.2.1
@@ -251,16 +260,16 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       '@tamagui/next-plugin':
-        specifier: ^1.88.2
+        specifier: ^1.90.6
         version: 1.90.16(@babel/core@7.24.0)(next@14.1.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(webpack@5.90.3)
       '@types/node':
-        specifier: ^18.18.13
-        version: 18.19.21
+        specifier: ^20.11.20
+        version: 20.11.24
       '@types/react':
         specifier: ^18.2.58
         version: 18.2.61
       '@types/react-dom':
-        specifier: ^18.2.15
+        specifier: ^18.2.19
         version: 18.2.19
       dotenv-cli:
         specifier: ^7.3.0
@@ -288,13 +297,13 @@ importers:
         version: link:../db
       '@trpc/client':
         specifier: next
-        version: 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
+        version: 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-next-beta.303
+        version: 11.0.0-next-beta.305
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -352,13 +361,13 @@ importers:
         version: 5.24.6(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
+        version: 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-next-beta.303
+        version: 11.0.0-next-beta.305
       burnt:
         specifier: ^0.12.2
         version: 0.12.2(expo@50.0.8)(react-dom@18.2.0)(react-native@0.73.4)(react@18.2.0)
@@ -421,8 +430,8 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../db
       '@auth/core':
-        specifier: 0.18.0
-        version: 0.18.0
+        specifier: ^0.18.0
+        version: 0.18.6
       '@auth/drizzle-adapter':
         specifier: ^0.7.0
         version: 0.7.0
@@ -668,8 +677,8 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  /@auth/core@0.18.0:
-    resolution: {integrity: sha512-Xb41H3FIv4PlTZmwoFvntaNlVTwIqFxIg7i0/ieHOOxf/7H8EJpGTWoNrqKhwMyZEPU6fHp+VcUiqdX3vFrWSg==}
+  /@auth/core@0.0.0-manual.e9863699:
+    resolution: {integrity: sha512-/hVzGuFw7nAZimliD8kpuKnNjvkRu+jpaVhYB/FaIXLNJFNwhbO2MgXBnr5tvLIHgRJnR5C9UN5RNpQXiFHuSA==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -684,11 +693,53 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
+  /@auth/core@0.18.6:
+    resolution: {integrity: sha512-AI7tnyNOg5zVS2elA44O03MWS6jyp69S8habJts63IyiCIoSkhqcZX4EcEJ0287m0hxzOltPCV9Zq2aqXbrNSA==}
+    peerDependencies:
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.2
+      oauth4webapi: 2.10.3
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/core@0.27.0:
+    resolution: {integrity: sha512-3bydnRJIM/Al6mkYmb53MsC+6G8ojw3lLPzwgVnX4dCo6N2lrib6Wq6r0vxZIhuHGjLObqqtUfpeaEj5aeTHFg==}
+    peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.2
+      oauth4webapi: 2.10.3
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
   /@auth/drizzle-adapter@0.7.0:
     resolution: {integrity: sha512-p/8cjrREiPPns78CT/a7VGl2TD78BNXtJ9TAXrw80bUInHd2xkEtk4CzXajWS/5r7qXE9n3r4BV9sISrf6Yqnw==}
     dependencies:
-      '@auth/core': 0.18.0
+      '@auth/core': 0.27.0
     transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
       - nodemailer
     dev: false
 
@@ -1004,7 +1055,6 @@ packages:
       '@babel/helper-create-class-features-plugin': 7.24.0(@babel/core@7.24.0)
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/plugin-syntax-decorators': 7.24.0(@babel/core@7.24.0)
-    dev: false
 
   /@babel/plugin-proposal-export-default-from@7.23.3(@babel/core@7.24.0):
     resolution: {integrity: sha512-Q23MpLZfSGZL1kU7fWqV262q65svLSCIP5kZ/JCW/rKTCm/FrLjpvEd2kfUYMVeHh4QhV/xzyoRAHWrAZJrE3Q==}
@@ -1116,7 +1166,6 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.24.0
-    dev: false
 
   /@babel/plugin-syntax-dynamic-import@7.8.3(@babel/core@7.24.0):
     resolution: {integrity: sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==}
@@ -3282,7 +3331,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       jest-mock: 29.7.0
 
   /@jest/fake-timers@29.7.0:
@@ -3291,7 +3340,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -3308,7 +3357,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       '@types/yargs': 15.0.19
       chalk: 4.1.2
 
@@ -3319,7 +3368,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       '@types/yargs': 17.0.32
       chalk: 4.1.2
 
@@ -6070,21 +6119,21 @@ packages:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: true
 
-  /@trpc/client@11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303):
-    resolution: {integrity: sha512-xA4cnBjBHV6M0euJ9OSJG7hqEzGiSUsGfRAjC/xn5ribvJYyC5lYyT6NHW4lBCjC9+4CQPRfQ8LM8zYQAzmiKA==}
+  /@trpc/client@11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305):
+    resolution: {integrity: sha512-fh5Ix5GnQC7hFLTk7zJTO2ApqZT/Jx/CGOBb3hl0aUdFyrVvjn9oN1FvUQJQmmYNIU/amgafsHgc5zTR8EMOAA==}
     peerDependencies:
-      '@trpc/server': 11.0.0-next-beta.303+cdf215127
+      '@trpc/server': 11.0.0-next-beta.305+0a3c261bd
     dependencies:
-      '@trpc/server': 11.0.0-next-beta.303
+      '@trpc/server': 11.0.0-next-beta.305
     dev: false
 
-  /@trpc/next@11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/react-query@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(next@14.1.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6LAM7Zxi81D+FQseWRl8RTuaWuqyhZ18LFptjurN8HQgmW1jKoCJptbQ3AM0g/Pl9vjtFN6d7pgoeKQqAL8vhQ==}
+  /@trpc/next@11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/react-query@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(next@14.1.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-so3X+m5r0ruWZVSEAN1GvH9rBnXgNX3OZYJ+LCbnr7B1C1zdO2k8cDM4sfjFeDgfdgLxbp8AvQ/SmLbjEix0pQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
-      '@trpc/client': 11.0.0-next-beta.303+cdf215127
-      '@trpc/react-query': 11.0.0-next-beta.303+cdf215127
-      '@trpc/server': 11.0.0-next-beta.303+cdf215127
+      '@trpc/client': 11.0.0-next-beta.305+0a3c261bd
+      '@trpc/react-query': 11.0.0-next-beta.305+0a3c261bd
+      '@trpc/server': 11.0.0-next-beta.305+0a3c261bd
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -6095,32 +6144,32 @@ packages:
         optional: true
     dependencies:
       '@tanstack/react-query': 5.24.6(react@18.2.0)
-      '@trpc/client': 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
-      '@trpc/react-query': 11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server': 11.0.0-next-beta.303
+      '@trpc/client': 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
+      '@trpc/react-query': 11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 11.0.0-next-beta.305
       next: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/react-query@11.0.0-next-beta.303(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.303)(@trpc/server@11.0.0-next-beta.303)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-H4+kmw0Z6ipUWD30uVnuvWFV6AsM0Md31BHHBwn7MCJvEf8bcsuSEY+eW8bC7pjD9c9J+OdkN/Flx1gNkJpTyA==}
+  /@trpc/react-query@11.0.0-next-beta.305(@tanstack/react-query@5.24.6)(@trpc/client@11.0.0-next-beta.305)(@trpc/server@11.0.0-next-beta.305)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-bpVdlaJBI0ZRYK/vFeg5weqJB5FMeq0gTsZ9L36MbQXXWTfBa6sqpmGafJjrnGDFCkMVL03dmtzCAI9BaPHWqw==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
-      '@trpc/client': 11.0.0-next-beta.303+cdf215127
-      '@trpc/server': 11.0.0-next-beta.303+cdf215127
+      '@trpc/client': 11.0.0-next-beta.305+0a3c261bd
+      '@trpc/server': 11.0.0-next-beta.305+0a3c261bd
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
     dependencies:
       '@tanstack/react-query': 5.24.6(react@18.2.0)
-      '@trpc/client': 11.0.0-next-beta.303(@trpc/server@11.0.0-next-beta.303)
-      '@trpc/server': 11.0.0-next-beta.303
+      '@trpc/client': 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
+      '@trpc/server': 11.0.0-next-beta.305
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@11.0.0-next-beta.303:
-    resolution: {integrity: sha512-ubUYS8nkjSbAGOXDp+TnWbktLzDGmuLebc6ahXWM2L4rfdY9UWrUk84VafOYkGSdN6jpdlQ+7/dDUgRNYVgL/g==}
+  /@trpc/server@11.0.0-next-beta.305:
+    resolution: {integrity: sha512-uqMrlalEDu7fZD8Xhk2sBjGSqROkpunqXyK46IRhHOr15gvzNZVMfgasHYzVTid1ATBjyPuqFeE0bZNvJkm6rw==}
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -6139,7 +6188,7 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@turbo/gen@1.12.4(@types/node@18.19.21)(typescript@5.3.3):
+  /@turbo/gen@1.12.4(@types/node@20.11.24)(typescript@5.3.3):
     resolution: {integrity: sha512-3Z8KZ6Vnc2x6rr8sNJ4QNYpkAttLBfb91uPzDlFDY7vgJg+vfXT8YWyZznVL+19ZixF2C/F4Ucp4/YjG2e1drg==}
     hasBin: true
     dependencies:
@@ -6151,7 +6200,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.4.0
-      ts-node: 10.9.2(@types/node@18.19.21)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.24)(typescript@5.3.3)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -6213,6 +6262,10 @@ packages:
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
+
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
@@ -6234,14 +6287,14 @@ packages:
   /@types/fs-extra@9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
     dev: true
 
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
     dev: true
 
   /@types/hammerjs@2.0.45:
@@ -6255,7 +6308,7 @@ packages:
   /@types/http-proxy@1.17.14:
     resolution: {integrity: sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
     dev: true
 
   /@types/inquirer@6.5.0:
@@ -6293,8 +6346,8 @@ packages:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: true
 
-  /@types/node@18.19.21:
-    resolution: {integrity: sha512-2Q2NeB6BmiTFQi4DHBzncSoq/cJMLDdhPaAoJFnFCyD9a8VPZRf7a1GAwp1Edb7ROaZc5Jz/tnZyL6EsWMRaqw==}
+  /@types/node@20.11.24:
+    resolution: {integrity: sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==}
     dependencies:
       undici-types: 5.26.5
 
@@ -6331,7 +6384,7 @@ packages:
   /@types/through@0.0.33:
     resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
     dev: true
 
   /@types/tinycolor2@1.4.6:
@@ -7182,7 +7235,6 @@ packages:
 
   /babel-plugin-react-native-web@0.18.12:
     resolution: {integrity: sha512-4djr9G6fMdwQoD6LQ7hOKAm39+y12flWgovAqS1k5O8f42YQ3A1FFMyV5kKfetZuGhZO5BmNmOdRRZQ1TixtDw==}
-    dev: false
 
   /babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0:
     resolution: {integrity: sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==}
@@ -7213,7 +7265,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: false
 
   /babel-preset-fbjs@3.4.0(@babel/core@7.24.0):
     resolution: {integrity: sha512-9ywCsCvo1ojrw0b+XYk7aFvTH6D9064t0RIL1rtMf3nsa02Xw41MS7sZw216Im35xj/UY0PDBQsa1brUDDF1Ow==}
@@ -7631,7 +7682,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -7646,7 +7697,7 @@ packages:
   /chromium-edge-launcher@1.0.0:
     resolution: {integrity: sha512-pgtgjNKZ7i5U++1g1PWv75umkHvhVTDOQIZ+sjeUX9483S7Y6MUvO0lrd7ShGlQlFHMN4SwKTCq/X8hWrbv2KA==}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -7935,6 +7986,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -9424,7 +9480,7 @@ packages:
       invariant: 2.2.4
     dev: false
 
-  /expo-router@3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.8)(react-dom@18.2.0)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.4)(react@18.2.0):
+  /expo-router@3.4.8(expo-constants@15.4.5)(expo-linking@6.2.2)(expo-modules-autolinking@1.10.3)(expo-status-bar@1.11.1)(expo@50.0.8)(react-dom@18.2.0)(react-native-reanimated@3.6.3)(react-native-safe-area-context@4.8.2)(react-native-screens@3.29.0)(react-native@0.73.4)(react@18.2.0):
     resolution: {integrity: sha512-fOOAWHH4LSPjPFtIZbApxdTNU8xSS8qKvhZ7PfWNMfx9510J1R1Ce/nwENPzcRLHRuVofDsSAEBfi4kV03fJwg==}
     peerDependencies:
       '@react-navigation/drawer': ^6.5.8
@@ -9456,6 +9512,7 @@ packages:
       expo-splash-screen: 0.26.4(expo-modules-autolinking@1.10.3)(expo@50.0.8)
       expo-status-bar: 1.11.1
       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
+      react-native-reanimated: 3.6.3(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.4)(react@18.2.0)
       react-native-safe-area-context: 4.8.2(react-native@0.73.4)(react@18.2.0)
       react-native-screens: 3.29.0(react-native@0.73.4)(react@18.2.0)
       schema-utils: 4.2.0
@@ -10994,7 +11051,7 @@ packages:
       '@jest/environment': 29.7.0
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
@@ -11021,7 +11078,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       jest-util: 29.7.0
 
   /jest-util@29.7.0:
@@ -11029,7 +11086,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -11050,7 +11107,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -11059,7 +11116,7 @@ packages:
     resolution: {integrity: sha512-eIz2msL/EzL9UFTFFx7jBTkeZfku0yUAyZZZmJ93H2TYEiroIx2PQjEXcwYtYl8zXCxb+PAmA2hLIt/6ZEkPHw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -11087,6 +11144,10 @@ packages:
 
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
+    dev: false
+
+  /jose@5.2.2:
+    resolution: {integrity: sha512-/WByRr4jDcsKlvMd1dRJnPfS1GVO3WuKyaurJ/vvXcOaUQO8rnNObCQMlv/5uCceVQIq5Q4WLF44ohsdiTohdg==}
     dev: false
 
   /js-tokens@4.0.0:
@@ -12223,7 +12284,7 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.18.0
+      '@auth/core': 0.0.0-manual.e9863699
       next: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
@@ -15153,7 +15214,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.2(@types/node@18.19.21)(typescript@5.3.3):
+  /ts-node@10.9.2(@types/node@20.11.24)(typescript@5.3.3):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -15172,7 +15233,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 18.19.21
+      '@types/node': 20.11.24
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
@@ -15403,7 +15464,7 @@ packages:
       acorn: 8.11.3
       estree-walker: 3.0.3
       magic-string: 0.30.7
-      unplugin: 1.7.1
+      unplugin: 1.8.0
     dev: true
 
   /undici-types@5.26.5:
@@ -15465,7 +15526,7 @@ packages:
       pkg-types: 1.0.3
       scule: 1.3.0
       strip-literal: 1.3.0
-      unplugin: 1.7.1
+      unplugin: 1.8.0
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -15513,8 +15574,8 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  /unplugin@1.7.1:
-    resolution: {integrity: sha512-JqzORDAPxxs8ErLV4x+LL7bk5pk3YlcWqpSNsIkAZj972KzFZLClc/ekppahKkOczGkwIG6ElFgdOgOlK4tXZw==}
+  /unplugin@1.8.0:
+    resolution: {integrity: sha512-yGEQsodWICmgt7asHF7QzqDZYeEP9h14vyd9Lul98UnYf29pLZZLwI09z2QdTjwU/FCkum1SRvsK7cx232X8NA==}
     dependencies:
       acorn: 8.11.3
       chokidar: 3.6.0
@@ -15595,7 +15656,7 @@ packages:
       mlly: 1.6.1
       pathe: 1.1.2
       pkg-types: 1.0.3
-      unplugin: 1.7.1
+      unplugin: 1.8.0
     dev: true
 
   /update-browserslist-db@1.0.13(browserslist@4.23.0):
