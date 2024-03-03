@@ -16,7 +16,7 @@ export const FloatingFooter = (props: Props) => {
         intensity={blurIntensity}
         style={{ borderRadius: 999, padding: 12, overflow: 'hidden' }}
       >
-        <XStack gap={35} jc='space-evenly' px={0} ai='center' {...stackProps}>
+        <XStack gap={35} justifyContent='space-evenly' px={0} alignItems='center' {...stackProps}>
           {children}
         </XStack>
       </BlurView>

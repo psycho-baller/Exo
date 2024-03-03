@@ -98,7 +98,7 @@ export const AddQuestion = () => {
         />
         <XStack>
           <AddPerson flex={1} />
-          <Button jc='flex-end' unstyled onPress={addQuestion}>
+          <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
             <CheckCircle2 />
           </Button>
         </XStack>
@@ -109,10 +109,10 @@ export const AddQuestion = () => {
           
         </XStack> */}
         {error?.data?.code === 'UNAUTHORIZED' && (
-          <ErrorText ta='center'>You need to be logged in to create a question</ErrorText>
+          <ErrorText textAlign='center'>You need to be logged in to create a question</ErrorText>
         )}
         {error?.data?.zodError?.fieldErrors.text && (
-          <ErrorText ta='center'>{error.data.zodError.fieldErrors.text}</ErrorText>
+          <ErrorText textAlign='center'>{error.data.zodError.fieldErrors.text}</ErrorText>
         )}
       </Sheet.Frame>
     </Sheet>

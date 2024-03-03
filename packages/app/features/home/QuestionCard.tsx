@@ -39,10 +39,10 @@ const Component: FC<Props> = (props) => {
         <Link href={`/questions/${question.id.toString()}`}>
           <XStack
             minHeight='$6'
-            p={'$3'}
-            ai='center'
+            padding={'$3'}
+            alignItems='center'
             justifyContent='space-between'
-            bg='$background'
+            backgroundColor='$background'
             animation='bouncy'
             hoverStyle={{
               backgroundColor: '$secondaryBackground',
@@ -56,7 +56,7 @@ const Component: FC<Props> = (props) => {
               </Text>
               <XStack gap={18}>
                 {date && (
-                  <XStack gap={6} ai='center'>
+                  <XStack gap={6} alignItems='center'>
                     <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
                     <Text color='$secondaryColor'>{formatDate(date)}</Text>
                   </XStack>
@@ -90,7 +90,7 @@ function PersonOrGroupForQuestion(props: { question: RouterOutputs['question']['
     return null;
   }
   return (
-    <XStack gap={6} ai='center'>
+    <XStack gap={6} alignItems='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
       <Text color='$secondaryColor'>{person.firstName}</Text>
     </XStack>
@@ -113,9 +113,9 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
     // <RectButton>
     <XStack
       animation='bouncy'
-      bg='$red'
-      p='$3'
-      ai='center'
+      backgroundColor='$red'
+      padding='$3'
+      alignItems='center'
       justifyContent='center'
       // style={{
       //   transform: [

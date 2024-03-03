@@ -22,7 +22,12 @@ export const Component: FC<Props> = (props) => {
 
   return (
     <Link href={`/people/${person.id.toString()}`}>
-      <XStack px='$4' py='$4' ai='center' justifyContent='space-between'>
+      <XStack
+        paddingHorizontal='$4'
+        paddingVertical='$4'
+        alignItems='center'
+        justifyContent='space-between'
+      >
         <YStack gap={6}>
           <Text fontSize={20} fontWeight='bold'>
             {person.firstName}
@@ -43,12 +48,12 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
 
   return (
     <XStack gap={18}>
-      <XStack gap={6} ai='center'>
+      <XStack gap={6} alignItems='center'>
         <MessageCircleQuestion size={15} color='$secondaryColor' strokeWidth={2.5} />
         <Text color='$secondaryColor'>{questionCount}</Text>
       </XStack>
       {mostRecentQuestion && (
-        <XStack gap={6} ai='center'>
+        <XStack gap={6} alignItems='center'>
           <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
           <Text color='$secondaryColor'>
             {mostRecentQuestion.createdDatetime

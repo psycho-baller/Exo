@@ -24,7 +24,6 @@ export const AutocompleteInput: FC<Props<any>> = ({
   keyExtractor = (item) => item,
   ...restOfprops
 }) => {
-  //  const [value, setValue] = useState('');
   const [menuVisible, setMenuVisible] = useState(false);
   const [filteredData, setFilteredData] = useState<string[]>([]);
 
@@ -44,7 +43,7 @@ export const AutocompleteInput: FC<Props<any>> = ({
   };
 
   return (
-    <View position='relative' w='100%'>
+    <View position='relative' width='100%'>
       <UnstyledInput
         value={value}
         onChangeText={handleSearch}
