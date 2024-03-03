@@ -14,6 +14,7 @@ const Index = () => {
       <FlashList
         data={questionQuery.data}
         estimatedItemSize={20}
+        keyExtractor={(item) => item.id.toString()}
         // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => <QuestionCard question={p.item} />}
       />
