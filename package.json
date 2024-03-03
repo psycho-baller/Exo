@@ -31,9 +31,6 @@
     "typescript": "^5.3.3"
   },
   "pnpm": {
-    "overrides": {
-      "@auth/core": "0.18.0"
-    },
     "patchedDependencies": {
       "@react-native/assets-registry@0.73.1": "patches/@react-native__assets-registry@0.73.1.patch"
     }

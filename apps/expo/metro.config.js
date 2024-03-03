@@ -6,7 +6,7 @@ const path = require("path");
 
 module.exports = withTurborepoManagedCache(
   withMonorepoPaths(
-    getDefaultConfig(__dirname)
+    getDefaultConfig(__dirname),
   ),
 );
 
