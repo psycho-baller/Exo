@@ -7,9 +7,10 @@
   "packageManager": "pnpm@8.10.5",
   "scripts": {
     "build": "turbo build",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf node_modules pnpm-lock.yaml",
     "upgrade": "pnpm upgrade --latest",
     "clean:workspaces": "turbo clean",
+    "reset": "pnpm clean:workspaces && pnpm clean && pnpm i",
     "upgrade:workspaces": "turbo upgrade",
     "postinstall": "pnpm lint:ws",
     "db:push": "pnpm -F db push",
