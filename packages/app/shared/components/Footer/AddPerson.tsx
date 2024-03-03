@@ -13,12 +13,11 @@ export const AddPerson = (props: YStackProps) => {
     state.setSelectedPerson,
   ]);
   const personQuery = api.person.all.useQuery();
-
   if (personQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
   const personData =
-    personQuery?.data?.map((person) => {
+    personQuery.data?.map((person) => {
       return { name: person.firstName, id: person.id };
     }) ?? [];
 
@@ -27,7 +26,7 @@ export const AddPerson = (props: YStackProps) => {
       return person.name.toLowerCase().includes(search.toLowerCase());
     });
   };
-  const onpersonSearch = (value: string) => {
+  const onPersonSearch = (value: string) => {
     // check if there is a person with that name and set it as selected person if there is
     const person = personData.find((person) => person.name === value);
     person ? setSelectedPerson(person) : setSelectedPerson(null);
@@ -51,7 +50,7 @@ export const AddPerson = (props: YStackProps) => {
         value={personSearch}
         setValue={setPersonSearch}
         filter={filterPeopleFromSearch}
-        onSearch={onpersonSearch}
+        onSearch={onPersonSearch}
         keyExtractor={keyExtractor}
       />
       {/* <personDropdown dropdownRef={dropdownRef} /> */}

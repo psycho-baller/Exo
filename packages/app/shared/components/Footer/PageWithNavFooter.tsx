@@ -25,7 +25,7 @@ export const PageWithNavFooter: FC<Props> = ({ children }) => {
         <Link href='/'>
           <Home size={'$2'} />
         </Link>
-        <Link href='/friends'>
+        <Link href='/people'>
           <CircleUser size={'$2'} />
         </Link>
         <Button unstyled onPress={handlePlusClick} icon={<Plus size={'$2.5'} />} />

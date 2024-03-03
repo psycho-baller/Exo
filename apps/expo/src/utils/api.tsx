@@ -1,7 +1,8 @@
-import React from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import Constants from 'expo-constants';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
+import { httpBatchLink, loggerLink } from '@trpc/client';
 import superjson from 'superjson';
 
 import { api } from '@acme/api/utils/trpc';
@@ -35,13 +36,19 @@ const getBaseUrl = () => {
  * Use only in _app.tsx
  */
 
-export function TRPCProvider(props: { children: React.ReactNode }) {
-  const [queryClient] = React.useState(() => new QueryClient());
-  const [trpcClient] = React.useState(() =>
+export function TRPCProvider(props: { children: ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
     api.createClient({
-      transformer: superjson,
       links: [
+        loggerLink({
+          enabled: (opts) =>
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
+          colorMode: 'ansi',
+        }),
         httpBatchLink({
+          transformer: superjson,
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Map<string, string>();

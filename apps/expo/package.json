@@ -4,7 +4,7 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
-    "dev": "expo start --ios -c",
+    "dev": "expo start --ios",
     "clean": "git clean -xdf .expo .turbo node_modules .tamagui",
     "upgrade": "pnpm upgrade --latest",
     "dev:android": "expo start --android",

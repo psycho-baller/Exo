@@ -12,17 +12,17 @@ export const AddQuestion = () => {
   const utils = api.useUtils();
 
   const [
-    selectedFriend,
-    setSelectedFriend,
-    friendSearch,
-    setFriendSearch,
+    selectedPerson,
+    setSelectedPerson,
+    personSearch,
+    setPersonSearch,
     dropdownOpen,
     setDropdownOpen,
   ] = useAddPersonStore((state) => [
-    state.selectedFriend,
-    state.setSelectedFriend,
-    state.friendSearch,
-    state.setFriendSearch,
+    state.selectedPerson,
+    state.setSelectedPerson,
+    state.personSearch,
+    state.setPersonSearch,
     state.dropdownOpen,
     state.setDropdownOpen,
   ]);
@@ -34,7 +34,7 @@ export const AddQuestion = () => {
     async onSuccess() {
       setQuestion('');
       setDropdownOpen(false);
-      setFriendSearch('');
+      setPersonSearch('');
       await utils.question.all.invalidate();
     },
   });
@@ -45,9 +45,9 @@ export const AddQuestion = () => {
 
   function addQuestion() {
     mutate({
-      createdByUserId: 1,
-      friendId: selectedFriend?.id,
-      text: question,
+      createdByUsername: 'seeded_user_901',
+      personId: selectedPerson?.id,
+      question,
     });
   }
 

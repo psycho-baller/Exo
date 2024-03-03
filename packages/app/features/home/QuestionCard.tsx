@@ -52,7 +52,7 @@ const Component: FC<Props> = (props) => {
             <YStack gap={6}>
               {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
               <Text fontSize={18} fontWeight='bold'>
-                {question.text}
+                {question.question}
               </Text>
               <XStack gap={18}>
                 {date && (
@@ -61,7 +61,7 @@ const Component: FC<Props> = (props) => {
                     <Text color='$secondaryColor'>{formatDate(date)}</Text>
                   </XStack>
                 )}
-                <FriendOrGroupForQuestion question={question} />
+                <PersonOrGroupForQuestion question={question} />
               </XStack>
             </YStack>
           </XStack>
@@ -71,21 +71,21 @@ const Component: FC<Props> = (props) => {
   );
 };
 
-function FriendOrGroupForQuestion(props: { question: RouterOutputs['question']['all'][number] }) {
+function PersonOrGroupForQuestion(props: { question: RouterOutputs['question']['all'][number] }) {
   const { question } = props;
-  if (question.friendId === null) {
+  if (question.personId === null) {
     return null;
   }
-  const { data: friend } = api.friend.byId.useQuery({
-    id: question.friendId,
+  const { data: person } = api.person.byId.useQuery({
+    id: question.personId,
   });
-  if (!friend) {
+  if (!person) {
     return null;
   }
   return (
     <XStack gap={6} ai='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
-      <Text color='$secondaryColor'>{friend.name}</Text>
+      <Text color='$secondaryColor'>{person.firstName}</Text>
     </XStack>
   );
 }

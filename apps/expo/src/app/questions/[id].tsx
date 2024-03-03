@@ -1,7 +1,7 @@
 import { SafeAreaView, Text, View } from 'react-native';
 import { Stack, useGlobalSearchParams } from 'expo-router';
 
-import { api } from '~/utils/api';
+import { api } from '@acme/api/utils/trpc';
 
 export default function Post() {
   const { id } = useGlobalSearchParams();
@@ -12,10 +12,10 @@ export default function Post() {
 
   return (
     <SafeAreaView className='bg-[#1F104A]'>
-      <Stack.Screen options={{ title: data.text }} />
+      <Stack.Screen options={{ title: data.question }} />
       <View className='h-full w-full p-4'>
         <Text className='py-2 text-3xl font-bold text-white'>
-          {data.createdDatetime.toString()}
+          {data.createdDatetime?.toString()}
         </Text>
         <Text className='py-4 text-white'>{data.id}</Text>
       </View>

@@ -7,10 +7,10 @@ import {
   mysqlEnum,
   primaryKey,
   serial,
+  text,
   timestamp,
   unique,
   varchar,
-  text,
 } from 'drizzle-orm/mysql-core';
 import { z } from 'zod';
 
@@ -20,7 +20,7 @@ import { mySqlTable } from './_table';
 const landingPageOptions = ['questions', 'people', 'discover'] as const;
 export type LandingPageOptions = (typeof landingPageOptions)[number];
 export const defaultLandingPage = mysqlEnum('default_landing_page', landingPageOptions);
-const postVisibilityOptions = ['public', 'private', 'friends'] as const;
+const postVisibilityOptions = ['public', 'private', 'followers'] as const;
 export type PostVisibilityOptions = (typeof postVisibilityOptions)[number];
 export const defaultPostVisibility = mysqlEnum('default_post_visibility', postVisibilityOptions);
 const roleOptions = ['admin', 'user'] as const;

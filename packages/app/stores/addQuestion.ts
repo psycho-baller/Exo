@@ -10,7 +10,7 @@ export interface PersonState {
 
 export interface PersonActions {
   setPersonSearch: (search: string) => void;
-  setSelectedPerson: (friend: { name: string; id: number } | null) => void;
+  setSelectedPerson: (person: { name: string; id: number } | null) => void;
   setDropdownOpen: (open: boolean) => void;
 }
 
