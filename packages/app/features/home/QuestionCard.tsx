@@ -76,9 +76,16 @@ function PersonOrGroupForQuestion(props: { question: RouterOutputs['question']['
   if (question.personId === null) {
     return null;
   }
-  const { data: person } = api.person.byId.useQuery({
+  const personQuery = api.person.byId.useQuery({
     id: question.personId,
   });
+  if (personQuery.isLoading) {
+    return <Text>Loading...</Text>;
+  }
+  if (personQuery.error) {
+    return <Text>Error: {personQuery.error.message}</Text>;
+  }
+  const { data: person } = personQuery;
   if (!person) {
     return null;
   }

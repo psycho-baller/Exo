@@ -16,6 +16,9 @@ export const AddPerson = (props: YStackProps) => {
   if (personQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
+  if (personQuery.error) {
+    return <Text>Error: {personQuery.error.message}</Text>;
+  }
   const personData =
     personQuery.data?.map((person) => {
       return { name: person.firstName, id: person.id };
