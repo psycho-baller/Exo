@@ -14,6 +14,7 @@ const Component: FC = () => {
       <FlashList
         data={personQuery.data}
         estimatedItemSize={20}
+        keyExtractor={(item) => item.id.toString()}
         // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => (
           <PersonCard person={p.item} />
