@@ -1,26 +1,31 @@
 import { useState } from 'react';
 import type { FC } from 'react';
 import { FlashList } from '@shopify/flash-list';
-import type { GetProps, Input } from 'tamagui';
-import { Button, Separator, Text, View, YStack } from 'tamagui';
+import type { GetProps } from 'tamagui';
+import { Button, Input, Separator, Text, View, YStack } from 'tamagui';
 
 import { UnstyledInput } from './UnstyledInput';
 
+type T = any;
 interface Props<T> extends GetProps<typeof Input> {
   data: T[];
   value: string;
   setValue: (value: string) => void;
   filter: (data: T[], value: string) => T[];
-  onSearch?: (value: string) => void;
+  onSearch?: (value: T) => void;
+  onSelect?: (item: T) => void;
+  renderItem?: (item: T) => string;
   keyExtractor?: (item: T) => string;
 }
 
-export const AutocompleteInput: FC<Props<any>> = ({
+export const AutocompleteInput: FC<Props<T>> = ({
   data,
   value,
   setValue,
   filter,
   onSearch,
+  onSelect,
+  renderItem = (item) => item,
   keyExtractor = (item) => item,
   ...restOfprops
 }) => {
@@ -28,16 +33,14 @@ export const AutocompleteInput: FC<Props<any>> = ({
   const [filteredData, setFilteredData] = useState<string[]>([]);
 
   const handleSearch = (text: string) => {
-    console.debug('text', text);
     setMenuVisible(true);
     setValue(text);
     setFilteredData(filter(data, text));
     onSearch && onSearch(text);
   };
 
-  const handleDropdownSelect = (item: string) => {
-    setValue(item);
-    onSearch && onSearch(item);
+  const handleDropdownSelect = (item: T) => {
+    onSelect && onSelect(item);
     setFilteredData([]);
     setMenuVisible(false);
   };
@@ -73,15 +76,14 @@ export const AutocompleteInput: FC<Props<any>> = ({
             data={filteredData}
             estimatedItemSize={20}
             ItemSeparatorComponent={() => <Separator />}
+            keyExtractor={keyExtractor}
             renderItem={({ item }) => {
-              const itemKey = keyExtractor(item);
               return (
-                <Button onPress={() => handleDropdownSelect(itemKey)}>
-                  <Text>{itemKey}</Text>
+                <Button onPress={() => handleDropdownSelect(item)}>
+                  <Text>{renderItem(item)}</Text>
                 </Button>
               );
             }}
-            keyExtractor={keyExtractor}
           />
         )}
       </YStack>

@@ -4,7 +4,9 @@ import { Label, YStack } from 'tamagui';
 import { api } from '@acme/api/utils/trpc';
 import { AutocompleteInput, Text } from '@acme/ui';
 
+import { getFullName } from '../../../lib/utils/name';
 import { useAddPersonStore } from '../../../stores/addQuestion';
+import { PersonStore } from '../../../types/people';
 
 export const AddPerson = (props: YStackProps) => {
   const [personSearch, setPersonSearch, setSelectedPerson] = useAddPersonStore((state) => [
@@ -19,23 +21,39 @@ export const AddPerson = (props: YStackProps) => {
   if (personQuery.error) {
     return <Text>Error: {personQuery.error.message}</Text>;
   }
+
   const personData =
     personQuery.data?.map((person) => {
-      return { name: person.firstName, id: person.id };
+      const { firstName, lastName = null, id } = person;
+      return { firstName, lastName, id };
     }) ?? [];
 
-  const filterPeopleFromSearch = (people: { name: string; id: number }[], search: string) => {
+  const filterPeopleFromSearch = (people: PersonStore[], search: string) => {
+    console.log('people', people);
     return people.filter((person) => {
-      return person.name.toLowerCase().includes(search.toLowerCase());
+      const personFullName = getFullName(
+        person.firstName.toLowerCase(),
+        person.lastName?.toLowerCase(),
+      );
+      const searchFullName = search.toLowerCase();
+      return personFullName.includes(searchFullName);
     });
   };
   const onPersonSearch = (value: string) => {
     // check if there is a person with that name and set it as selected person if there is
-    const person = personData.find((person) => person.name === value);
-    person ? setSelectedPerson(person) : setSelectedPerson(null);
+    const matchedPerson = personData.find(
+      (person) => value.trim() === getFullName(person.firstName, person.lastName),
+    );
+    matchedPerson ? setSelectedPerson(matchedPerson) : setSelectedPerson(null);
   };
 
-  const keyExtractor = (item: { name: string; id: number }) => item.name;
+  const onPersonSelected = (item: PersonStore) => {
+    setPersonSearch(getFullName(item.firstName, item.lastName));
+    setSelectedPerson(item);
+    onPersonSearch(getFullName(item.firstName, item.lastName));
+  };
+
+  const keyExtractor = (item: PersonStore) => item.id.toString();
 
   return (
     <YStack {...props}>
@@ -55,6 +73,8 @@ export const AddPerson = (props: YStackProps) => {
         filter={filterPeopleFromSearch}
         onSearch={onPersonSearch}
         keyExtractor={keyExtractor}
+        renderItem={(item) => getFullName(item.firstName, item.lastName)}
+        onSelect={onPersonSelected}
       />
       {/* <personDropdown dropdownRef={dropdownRef} /> */}
     </YStack>

@@ -2,15 +2,17 @@ import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
+import { PersonStore } from '../types/people';
+
 export interface PersonState {
   personSearch: string;
-  selectedPerson: { name: string; id: number } | null;
+  selectedPerson: PersonStore | null;
   dropdownOpen: boolean;
 }
 
 export interface PersonActions {
   setPersonSearch: (search: string) => void;
-  setSelectedPerson: (person: { name: string; id: number } | null) => void;
+  setSelectedPerson: (person: PersonStore | null) => void;
   setDropdownOpen: (open: boolean) => void;
 }
 
