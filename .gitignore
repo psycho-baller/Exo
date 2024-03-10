@@ -24,7 +24,6 @@ next-env.d.ts
 .expo/
 dist/
 expo-env.d.ts
-apps/expo/.gitignore
 
 # production
 build
