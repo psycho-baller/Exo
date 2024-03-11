@@ -1,7 +1,5 @@
 # Convo Topics
 
-[Roadmap](https://github.com/users/psycho-baller/projects/2/views/1)
-
 ## Project structure
 
 This monrepo project structure and tech stack was inspired by [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) and [tamagui-starter](https://github.com/tamagui/starter-free)
@@ -53,10 +51,12 @@ turbo
 
 ## Other charts
 
+
 <!-- - [Extended ERD]() -->
 - [Relational Model](./packages/db/docs/RM.png)
 <!-- - [HIPO]() -->
 - [DFD](./packages/db/docs/DFD.md)
+
 
 ## Tech Stack
 
@@ -78,7 +78,7 @@ turbo
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (v18.0.0 or higher)
+- [Node.js](https://nodejs.org/en/) (v21.2.0 or higher)
 - [Pnpm](https://pnpm.io)
 - An emulator or physical device for iOS or Android (unless you are using the web)
 
