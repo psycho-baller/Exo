@@ -4,7 +4,7 @@
 
 ## Project structure
 
-This monrepo was inspired by [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) and [tamagui-starter](https://github.com/tamagui/starter-free)
+This monrepo project structure and tech stack was inspired by [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) and [tamagui-starter](https://github.com/tamagui/starter-free)
 
 ```plaintext
 .github
@@ -20,29 +20,18 @@ apps
   │   ├── Expo SDK 50
   │   ├── React Native using React 18
   │   ├── Navigation using Expo Router and Solito for cross-platform navigation
-  │   ├── Styling using Tamagui
+  │   ├── Tamagui as the UI library
   │   └── Typesafe API calls using tRPC
   └── nextjs
-      ├── public
+      ├── Next.js 14
       ├── React 18
-      ├── styling using Tamagui
+      ├── Tamagui as the UI library
       └── E2E Typesafe API Server & Client using tRPC
 packages
   ├── api
   │   └── tRPC v11 router definition
   ├── app
-  │   ├── features
-  │   │   ├── home
-  │   │   ├── people
-  │   │   └── user
-  │   ├── lib
-  │   │   └── utils
-  │   ├── provider
-  │   ├── shared
-  │   │   └── components
-  │   │       └── Footer
-  │   ├── stores
-  │   └── types
+  │   └── Shared app logic. Most code is written here then imported into the expo and nextjs apps
   ├── auth
   │   └── Authentication using next-auth
   ├── db
@@ -61,6 +50,13 @@ tooling
 turbo
   └── build system for TS monorepos
 ```
+
+## Other charts
+
+<!-- - [Extended ERD]() -->
+- [Relational Model](./packages/db/docs/RM.png)
+<!-- - [HIPO]() -->
+- [DFD](./packages/db/docs/dfd.md)
 
 ## Tech Stack
 
@@ -104,14 +100,16 @@ pnpm db:push
 
 #### Use iOS Simulator
 
-Make sure you have XCode and XCommand Line Tools installed as shown on expo docs.
+1. Make sure you have XCode and XCommand Line Tools installed as shown on expo docs.
 
 > NOTE: If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run npx expo start in the root dir, and then enter I to launch Expo Go. After the manual launch, you can run pnpm dev in the root directory.
+
+2. Change the dev script at apps/expo/package.json to open the Android emulator.
 
 ```bash
 +  "dev": "expo start --ios",
 ```
-Run `pnpm dev` at the project root folder.
+3. Run `pnpm dev` at the project root folder.
 
 #### Use Android Emulator
 
