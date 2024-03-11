@@ -56,7 +56,7 @@ turbo
 <!-- - [Extended ERD]() -->
 - [Relational Model](./packages/db/docs/RM.png)
 <!-- - [HIPO]() -->
-- [DFD](./packages/db/docs/dfd.md)
+- [DFD](./packages/db/docs/DFD.md)
 
 ## Tech Stack
 
