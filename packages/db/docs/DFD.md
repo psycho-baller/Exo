@@ -1,5 +1,7 @@
 # Data Flow Diagram
 
+- this uses mermaid syntax. You can use the [mermaid live editor](https://mermaid.live/) to visualize the diagram.
+
 ```mermaid
 flowchart TD
     %% subgraph ExternalEntities
