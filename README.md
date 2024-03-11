@@ -51,7 +51,6 @@ turbo
 
 ## Other charts
 
-
 <!-- - [Extended ERD]() -->
 - [Relational Model](./packages/db/docs/RM.png)
 <!-- - [HIPO]() -->
