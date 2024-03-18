@@ -129,3 +129,36 @@ pnpm db:push
 Run `pnpm dev` at the project root folder.
 
 > TIP: It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
+
+## Troubleshoting
+
+### Expo
+
+#### Expo Go with Android Emulator & your device
+
+To be able to run your app in your device, you will need to pass in `--tunnel` to the `expo start` command. This is because the default `lan` mode does not work with the Android Emulator in some routers as mentioned [here](https://stackoverflow.com/questions/67361077/expo-go-not-connecting-after-qr-code-scanning) and [here](https://stackoverflow.com/questions/45558678/unable-to-connect-android-phone-to-my-project-with-expo). But this will make our backend unreachable.
+
+To avoid this issue, just use the Android Emulator and the Expo Go app in there.
+
+Another issue you might face with the Android version of Expo Go is that `expo-router` will fail to detect where the codebase is at. Other times `expo-router` can't even be found lol.
+
+One workaround is to define our own entrypoint instead of using `expo-router`'s one. You can do this by modifying the [./apps/expo/package.json](./apps/expo/package.json) file:
+
+```json
+- "main": "expo-router/entry",
++ "main": "index.js",
+```
+
+where `index.js` has the same content as `expo-router/entry`:
+
+```js
+import '@expo/metro-runtime';
+
+import { App } from 'expo-router/build/qualified-entry';
+import { renderRootComponent } from 'expo-router/build/renderRootComponent';
+
+renderRootComponent(App);
+```
+
+In summary, just use the iOS simulator or the web version of the app.
+
