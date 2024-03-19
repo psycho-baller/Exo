@@ -19,11 +19,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'com.convo-topics',
+    bundleIdentifier: 'com.convo_topics',
     supportsTablet: true,
   },
   android: {
-    package: 'com.convo-topics',
+    package: 'com.convo_topics',
     adaptiveIcon: {
       foregroundImage: './assets/icon.png',
       backgroundColor: '#0D23FF',
