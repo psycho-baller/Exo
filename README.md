@@ -162,3 +162,6 @@ renderRootComponent(App);
 
 In summary, just use the iOS simulator or the web version of the app.
 
+#### Tamagui Lucide Icons breaking the build
+
+- I resolved that by installing `react-native-svg` inside [.apps/expo](./apps/expo) and [./packages/app](./packages/app) but I removed it from the app dir because I think it's not needed there as long it's in the expo dir. If the issue persists, you can try to install it in the app dir as well.
