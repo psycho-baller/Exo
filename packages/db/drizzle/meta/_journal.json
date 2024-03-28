@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1708896293975,
-      "tag": "0000_familiar_triathlon",
+      "when": 1711617583324,
+      "tag": "0000_mixed_morgan_stark",
       "breakpoints": true
     }
   ]

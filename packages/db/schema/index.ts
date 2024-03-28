@@ -1,41 +1,30 @@
 import { relations } from 'drizzle-orm';
-import {
-  boolean,
-  date,
-  datetime,
-  int,
-  mysqlEnum,
-  primaryKey,
-  serial,
-  text,
-  timestamp,
-  unique,
-  varchar,
-} from 'drizzle-orm/mysql-core';
+import { integer, primaryKey, text, unique } from 'drizzle-orm/sqlite-core';
 import { z } from 'zod';
 
-import { mySqlTable } from './_table';
+import { sqliteTable } from './_table';
 
 // User
 const landingPageOptions = ['questions', 'people', 'discover'] as const;
 export type LandingPageOptions = (typeof landingPageOptions)[number];
-export const defaultLandingPage = mysqlEnum('default_landing_page', landingPageOptions);
 const postVisibilityOptions = ['public', 'private', 'followers'] as const;
 export type PostVisibilityOptions = (typeof postVisibilityOptions)[number];
-export const defaultPostVisibility = mysqlEnum('default_post_visibility', postVisibilityOptions);
 const roleOptions = ['admin', 'user'] as const;
 export type RoleOptions = (typeof roleOptions)[number];
-export const role = mysqlEnum('role', roleOptions);
-export const users = mySqlTable('User', {
-  username: varchar('username', { length: 31 }).notNull().primaryKey(),
-  firstName: varchar('first_name', { length: 31 }).notNull(),
-  lastName: varchar('last_name', { length: 31 }),
-  isPublic: boolean('is_public').default(false),
-  defaultLandingPage: defaultLandingPage,
-  defaultPostVisibility: defaultPostVisibility,
-  role: role.notNull().default('user'),
-  email: varchar('email', { length: 31 }).notNull().unique(),
-  phone: varchar('phone', { length: 15 }),
+export const users = sqliteTable('User', {
+  username: text('username').notNull().primaryKey(),
+  firstName: text('first_name').notNull(),
+  lastName: text('last_name'),
+  isPublic: integer('is_public', { mode: 'boolean' }).default(false),
+  defaultLandingPage: text('default_landing_page', { enum: landingPageOptions }).default(
+    'questions',
+  ),
+  defaultPostVisibility: text('default_post_visibility', { enum: postVisibilityOptions }).default(
+    'public',
+  ),
+  role: text('role', { enum: roleOptions }).default('user'),
+  email: text('email').notNull().unique(),
+  phone: text('phone'),
 });
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -52,11 +41,11 @@ export const userZod = z.object({
 });
 
 // Post
-export const posts = mySqlTable('Post', {
-  id: serial('id').primaryKey(),
-  createdDatetime: timestamp('created_datetime').defaultNow(),
+export const posts = sqliteTable('Post', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
   question: text('question').notNull(),
-  createdByUsername: varchar('created_by_username', { length: 31 }),
+  createdByUsername: text('created_by_username'),
 });
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
@@ -68,12 +57,12 @@ export const postZod = z.object({
 });
 
 // SearchHistory
-export const searchHistories = mySqlTable(
+export const searchHistories = sqliteTable(
   'Search_history',
   {
-    query: varchar('query', { length: 255 }).notNull(),
-    fromUsername: varchar('from_username', { length: 31 }).notNull(),
-    datetime: timestamp('datetime').defaultNow(),
+    query: text('query').notNull(),
+    fromUsername: text('from_username').notNull(),
+    datetime: integer('datetime', { mode: 'timestamp_ms' }).defaultNow(),
   },
   (table) => {
     return {
@@ -85,10 +74,10 @@ export type SearchHistory = typeof searchHistories.$inferSelect;
 export type NewSearchHistory = typeof searchHistories.$inferInsert;
 
 // Topic
-export const topics = mySqlTable('Topic', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
+export const topics = sqliteTable('Topic', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  createdByUsername: text('created_by_username').notNull(),
 });
 export type Topic = typeof topics.$inferSelect;
 export type NewTopic = typeof topics.$inferInsert;
@@ -99,19 +88,19 @@ export const topicZod = z.object({
 });
 
 // Person
-export const people = mySqlTable(
+export const people = sqliteTable(
   'Person',
   {
-    id: serial('id').primaryKey(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    firstName: varchar('first_name', { length: 31 }).notNull(),
-    lastName: varchar('last_name', { length: 31 }),
-    birthday: date('birthday'),
-    email: varchar('email', { length: 31 }).unique(),
-    phoneNumber: varchar('phone_number', { length: 15 }).unique(),
-    reminderDatetime: datetime('reminder_datetime'),
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    associatedUsername: varchar('associated_username', { length: 31 }),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    createdByUsername: text('created_by_username').notNull(),
+    firstName: text('first_name').notNull(),
+    lastName: text('last_name'),
+    birthday: integer('birthday', { mode: 'timestamp' }),
+    email: text('email').unique(),
+    phoneNumber: text('phone_number').unique(),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    associatedUsername: text('associated_username'),
   },
   (table) => {
     return {
@@ -141,14 +130,14 @@ export const personZod = z.object({
     ),
 });
 // Group
-export const groups = mySqlTable(
+export const groups = sqliteTable(
   'Grp',
   {
-    id: serial('id').primaryKey(),
-    reminderDatetime: datetime('reminder_datetime'),
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    name: varchar('name', { length: 63 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    name: text('name').notNull(),
+    createdByUsername: text('created_by_username').notNull(),
   },
   (table) => {
     return {
@@ -167,11 +156,11 @@ export const groupZod = z.object({
 });
 
 // groupsOfPeople
-export const groupsOfPeople = mySqlTable(
+export const groupsOfPeople = sqliteTable(
   'Groups_of_people',
   {
-    groupId: int('group_id').notNull(),
-    personId: int('person_id').notNull(),
+    groupId: integer('group_id').notNull(),
+    personId: integer('person_id').notNull(),
   },
   (table) => {
     return {
@@ -187,12 +176,12 @@ export const groupsOfPeopleZod = z.object({
 });
 
 // Likes
-export const likes = mySqlTable(
+export const likes = sqliteTable(
   'Likes',
   {
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    postId: int('post_id').notNull(),
+    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    createdByUsername: text('created_by_username').notNull(),
+    postId: integer('post_id').notNull(),
   },
   (table) => {
     return {
@@ -209,13 +198,13 @@ export const likeZod = z.object({
 });
 
 // Comments
-export const comments = mySqlTable(
+export const comments = sqliteTable(
   'Comments',
   {
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    comment: varchar('comment', { length: 255 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }),
-    postId: int('post_id'),
+    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    comment: text('comment').notNull(),
+    createdByUsername: text('created_by_username'),
+    postId: integer('post_id'),
   },
   (table) => {
     return {
@@ -233,11 +222,11 @@ export const commentZod = z.object({
 });
 
 // PostTopics
-export const postTopics = mySqlTable(
+export const postTopics = sqliteTable(
   'Post_topics',
   {
-    postId: int('post_id').notNull(),
-    topicId: int('topic_id').notNull(),
+    postId: integer('post_id').notNull(),
+    topicId: integer('topic_id').notNull(),
   },
   (table) => {
     return {
@@ -253,11 +242,11 @@ export const postTopicZod = z.object({
 });
 
 // Follows
-export const follows = mySqlTable(
+export const follows = sqliteTable(
   'Follows',
   {
-    followingUsername: varchar('following_username', { length: 31 }).notNull(),
-    followedUsername: varchar('followed_username', { length: 31 }).notNull(),
+    followingUsername: text('following_username').notNull(),
+    followedUsername: text('followed_username').notNull(),
   },
   (table) => {
     return {
@@ -273,15 +262,15 @@ export const followZod = z.object({
 });
 
 // Question
-export const questions = mySqlTable('Question', {
-  id: serial('id').primaryKey(),
-  createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-  question: varchar('question', { length: 255 }).notNull(),
-  createdDatetime: timestamp('created_datetime').defaultNow(),
-  reminderDatetime: datetime('reminder_datetime'),
-  postId: int('post_id'),
-  groupId: int('group_id'),
-  personId: int('person_id'),
+export const questions = sqliteTable('Question', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdByUsername: text('created_by_username').notNull(),
+  question: text('question').notNull(),
+  createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+  reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+  postId: integer('post_id'),
+  groupId: integer('group_id'),
+  personId: integer('person_id'),
 });
 export type Question = typeof questions.$inferSelect;
 export type NewQuestion = typeof questions.$inferInsert;
@@ -296,11 +285,11 @@ export const questionZod = z.object({
 });
 
 // QuestionTopics
-export const questionTopics = mySqlTable(
+export const questionTopics = sqliteTable(
   'Question_topics',
   {
-    topicId: int('topic_id').notNull(),
-    questionId: int('question_id').notNull(),
+    topicId: integer('topic_id').notNull(),
+    questionId: integer('question_id').notNull(),
   },
   (table) => {
     return {

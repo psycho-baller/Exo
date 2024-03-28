@@ -1,12 +1,12 @@
-import { Client } from '@planetscale/database';
-import { drizzle } from 'drizzle-orm/planetscale-serverless';
+import { createClient } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/libsql';
 
 import * as schema from './schema';
 import type { Database } from './schema/_table';
 
 interface ConnectionResult {
   db: Database;
-  client: Client;
+  client: ReturnType<typeof createClient>;
 }
 
 export function createConnection(): ConnectionResult {
@@ -14,8 +14,8 @@ export function createConnection(): ConnectionResult {
   if (!databaseUrl) {
     throw new Error('DATABASE_URL is not set');
   }
-  const client = new Client({
-    url: databaseUrl,
+  const client = createClient({
+    url: 'http://127.0.0.1:8080',
   });
   // export const connection = await mysql.createConnection({
   //   host: process.env.DB_HOST,

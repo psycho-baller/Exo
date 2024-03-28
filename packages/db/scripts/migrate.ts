@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { migrate } from 'drizzle-orm/mysql2/migrator';
+import { migrate } from 'drizzle-orm/libsql/migrator';
 
 import { createConnection } from '../utils';
 

@@ -1,5 +1,5 @@
-import { mysqlTableCreator } from 'drizzle-orm/mysql-core';
-import type { PlanetScaleDatabase } from 'drizzle-orm/planetscale-serverless';
+import { LibSQLDatabase } from 'drizzle-orm/libsql';
+import { sqliteTableCreator } from 'drizzle-orm/sqlite-core';
 
 import type * as schema from '../schema';
 
@@ -9,6 +9,6 @@ import type * as schema from '../schema';
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const mySqlTable = mysqlTableCreator((name) => `${name}`);
+export const sqliteTable = sqliteTableCreator((name) => `${name}`);
 
-export type Database = PlanetScaleDatabase<typeof schema>;
+export type Database = LibSQLDatabase<typeof schema>;

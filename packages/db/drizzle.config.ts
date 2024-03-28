@@ -12,9 +12,9 @@ if (!process.env.DATABASE_URL) {
 export default {
   schema: './schema',
   out: './drizzle',
-  driver: 'mysql2',
-  dbCredentials: {
-    uri: process.env.DATABASE_URL,
-  },
+  driver: 'libsql',
   tablesFilter: ['*'],
+  dbCredentials: {
+    url: 'http://127.0.0.1:8080',
+  },
 } satisfies Config;

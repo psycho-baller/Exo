@@ -1,7 +1,7 @@
 {
   "version": "5",
-  "dialect": "mysql",
-  "id": "475fc17f-c687-4489-85cd-e19538f0d89f",
+  "dialect": "sqlite",
+  "id": "252cb63d-41bd-458e-aa6a-a3aae3dde4c7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "Comments": {
@@ -9,31 +9,31 @@
       "columns": {
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "comment": {
           "name": "comment",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "post_id": {
           "name": "post_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -41,12 +41,12 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Comments_created_by_username_post_id_created_datetime_pk": {
-          "name": "Comments_created_by_username_post_id_created_datetime_pk",
           "columns": [
             "created_by_username",
-            "post_id",
-            "created_datetime"
-          ]
+            "created_datetime",
+            "post_id"
+          ],
+          "name": "Comments_created_by_username_post_id_created_datetime_pk"
         }
       },
       "uniqueConstraints": {}
@@ -56,14 +56,14 @@
       "columns": {
         "following_username": {
           "name": "following_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "followed_username": {
           "name": "followed_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -73,11 +73,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Follows_following_username_followed_username_pk": {
-          "name": "Follows_following_username_followed_username_pk",
           "columns": [
-            "following_username",
-            "followed_username"
-          ]
+            "followed_username",
+            "following_username"
+          ],
+          "name": "Follows_following_username_followed_username_pk"
         }
       },
       "uniqueConstraints": {}
@@ -87,74 +87,68 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": false,
+          "type": "integer",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": true
         },
         "reminder_datetime": {
           "name": "reminder_datetime",
-          "type": "datetime",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "name": {
           "name": "name",
-          "type": "varchar(63)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "Grp_id": {
-          "name": "Grp_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {
+      "indexes": {
         "Grp_name_created_by_username_unique": {
           "name": "Grp_name_created_by_username_unique",
           "columns": [
             "name",
             "created_by_username"
-          ]
+          ],
+          "isUnique": true
         }
-      }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     },
     "Groups_of_people": {
       "name": "Groups_of_people",
       "columns": {
         "group_id": {
           "name": "group_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "person_id": {
           "name": "person_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -164,11 +158,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Groups_of_people_group_id_person_id_pk": {
-          "name": "Groups_of_people_group_id_person_id_pk",
           "columns": [
             "group_id",
             "person_id"
-          ]
+          ],
+          "name": "Groups_of_people_group_id_person_id_pk"
         }
       },
       "uniqueConstraints": {}
@@ -178,22 +172,22 @@
       "columns": {
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "post_id": {
           "name": "post_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -203,11 +197,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Likes_created_by_username_post_id_pk": {
-          "name": "Likes_created_by_username_post_id_pk",
           "columns": [
             "created_by_username",
             "post_id"
-          ]
+          ],
+          "name": "Likes_created_by_username_post_id_pk"
         }
       },
       "uniqueConstraints": {}
@@ -217,98 +211,90 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": false,
+          "type": "integer",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": true
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "first_name": {
           "name": "first_name",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "last_name": {
           "name": "last_name",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "birthday": {
           "name": "birthday",
-          "type": "date",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "email": {
           "name": "email",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "phone_number": {
           "name": "phone_number",
-          "type": "varchar(15)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "reminder_datetime": {
           "name": "reminder_datetime",
-          "type": "datetime",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "associated_username": {
           "name": "associated_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "Person_id": {
-          "name": "Person_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {
+      "indexes": {
         "Person_email_unique": {
           "name": "Person_email_unique",
           "columns": [
             "email"
-          ]
+          ],
+          "isUnique": true
         },
         "Person_phone_number_unique": {
           "name": "Person_phone_number_unique",
           "columns": [
             "phone_number"
-          ]
+          ],
+          "isUnique": true
         },
         "Person_first_name_last_name_birthday_unique": {
           "name": "Person_first_name_last_name_birthday_unique",
@@ -316,23 +302,27 @@
             "first_name",
             "last_name",
             "birthday"
-          ]
+          ],
+          "isUnique": true
         }
-      }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     },
     "Post_topics": {
       "name": "Post_topics",
       "columns": {
         "post_id": {
           "name": "post_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "topic_id": {
           "name": "topic_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -342,11 +332,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Post_topics_post_id_topic_id_pk": {
-          "name": "Post_topics_post_id_topic_id_pk",
           "columns": [
             "post_id",
             "topic_id"
-          ]
+          ],
+          "name": "Post_topics_post_id_topic_id_pk"
         }
       },
       "uniqueConstraints": {}
@@ -356,29 +346,29 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": false,
+          "type": "integer",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": true
         },
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "question": {
           "name": "question",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -386,14 +376,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "Post_id": {
-          "name": "Post_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "Question_topics": {
@@ -401,14 +384,14 @@
       "columns": {
         "topic_id": {
           "name": "topic_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "question_id": {
           "name": "question_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -418,11 +401,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Question_topics_topic_id_question_id_pk": {
-          "name": "Question_topics_topic_id_question_id_pk",
           "columns": [
-            "topic_id",
-            "question_id"
-          ]
+            "question_id",
+            "topic_id"
+          ],
+          "name": "Question_topics_topic_id_question_id_pk"
         }
       },
       "uniqueConstraints": {}
@@ -432,57 +415,57 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": false,
+          "type": "integer",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": true
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "question": {
           "name": "question",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_datetime": {
           "name": "created_datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         },
         "reminder_datetime": {
           "name": "reminder_datetime",
-          "type": "datetime",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "post_id": {
           "name": "post_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "group_id": {
           "name": "group_id",
-          "type": "varchar(63)",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "person_id": {
           "name": "person_id",
-          "type": "int",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -490,14 +473,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "Question_id": {
-          "name": "Question_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "Search_history": {
@@ -505,36 +481,36 @@
       "columns": {
         "query": {
           "name": "query",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "from_username": {
           "name": "from_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "datetime": {
           "name": "datetime",
-          "type": "timestamp",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "(now())"
+          "default": "(cast((julianday('now') - 2440587.5)*86400000 as integer))"
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "Search_history_query_from_username_pk": {
-          "name": "Search_history_query_from_username_pk",
           "columns": [
-            "query",
-            "from_username"
-          ]
+            "from_username",
+            "query"
+          ],
+          "name": "Search_history_query_from_username_pk"
         }
       },
       "uniqueConstraints": {}
@@ -544,21 +520,21 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": false,
+          "type": "integer",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": true
         },
         "name": {
           "name": "name",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_by_username": {
           "name": "created_by_username",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -566,14 +542,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "Topic_id": {
-          "name": "Topic_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "User": {
@@ -581,89 +550,87 @@
       "columns": {
         "username": {
           "name": "username",
-          "type": "varchar(31)",
-          "primaryKey": false,
+          "type": "text",
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
         "first_name": {
           "name": "first_name",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "last_name": {
           "name": "last_name",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "is_public": {
           "name": "is_public",
-          "type": "boolean",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
         },
         "default_landing_page": {
           "name": "default_landing_page",
-          "type": "enum('questions','people','discover')",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "'questions'"
         },
         "default_post_visibility": {
           "name": "default_post_visibility",
-          "type": "enum('public','private','friends')",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "'public'"
         },
         "role": {
           "name": "role",
-          "type": "enum('admin','user')",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'user'"
         },
         "email": {
           "name": "email",
-          "type": "varchar(31)",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "phone": {
           "name": "phone",
-          "type": "varchar(15)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "User_username": {
-          "name": "User_username",
-          "columns": [
-            "username"
-          ]
-        }
-      },
-      "uniqueConstraints": {
+      "indexes": {
         "User_email_unique": {
           "name": "User_email_unique",
           "columns": [
             "email"
-          ]
+          ],
+          "isUnique": true
         }
-      }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
-  "schemas": {},
+  "enums": {},
   "_meta": {
     "schemas": {},
     "tables": {},
