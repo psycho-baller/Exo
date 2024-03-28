@@ -10,10 +10,6 @@ interface ConnectionResult {
 }
 
 export function createConnection(): ConnectionResult {
-  const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL is not set');
-  }
   const client = createClient({
     url: 'http://127.0.0.1:8080',
   });
