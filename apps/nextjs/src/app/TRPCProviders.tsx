@@ -12,8 +12,15 @@ export function TRPCReactProvider(props: {
   children: React.ReactNode;
   headersPromise: Promise<Headers>;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const queryClientPersistCacheConfig = {
+    defaultOptions: {
+      queries: {
+        gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  };
 
+  const [queryClient] = useState(() => new QueryClient(queryClientPersistCacheConfig));
   const [trpcClient] = useState(() =>
     api.createClient({
       transformer: SuperJSON,
