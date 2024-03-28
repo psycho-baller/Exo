@@ -1,8 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { integer, primaryKey, text, unique } from 'drizzle-orm/sqlite-core';
+import { integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core';
 import { z } from 'zod';
 
-import { sqliteTable } from './_table';
+// import { sqliteTable } from './_table';
 
 // User
 const landingPageOptions = ['questions', 'people', 'discover'] as const;
