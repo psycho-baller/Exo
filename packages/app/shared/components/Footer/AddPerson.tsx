@@ -1,20 +1,25 @@
 import type { YStackProps } from 'tamagui';
-import { Label, YStack } from 'tamagui';
+import { Button, Label, YStack } from 'tamagui';
 
 import { api } from '@acme/api/utils/trpc';
 import { AutocompleteInput, Text } from '@acme/ui';
 
 import { getFullName } from '../../../lib/utils/name';
 import { useAddPersonStore } from '../../../stores/addQuestion';
-import { PersonStore } from '../../../types/people';
+import type { PersonStore } from '../../../types/people';
 
 export const AddPerson = (props: YStackProps) => {
+  const personQuery = api.person.all.useQuery();
+  const addPersonMutation = api.person.create.useMutation({
+    onSettled: async () => {
+      await personQuery.refetch();
+    },
+  });
   const [personSearch, setPersonSearch, setSelectedPerson] = useAddPersonStore((state) => [
     state.personSearch,
     state.setPersonSearch,
     state.setSelectedPerson,
   ]);
-  const personQuery = api.person.all.useQuery();
   if (personQuery.isLoading) {
     return <Text>Loading...</Text>;
   }
@@ -22,11 +27,14 @@ export const AddPerson = (props: YStackProps) => {
     return <Text>Error: {personQuery.error.message}</Text>;
   }
 
-  const personData =
-    personQuery.data?.map((person) => {
-      const { firstName, lastName = null, id } = person;
-      return { firstName, lastName, id };
-    }) ?? [];
+  const personData: PersonStore[] = [];
+
+  if (Array.isArray(personQuery.data)) {
+    for (const person of personQuery.data) {
+      const { firstName, lastName = null, id }: PersonStore = person;
+      personData.push({ firstName, lastName, id });
+    }
+  }
 
   const filterPeopleFromSearch = (people: PersonStore[], search: string) => {
     console.log('people', people);
@@ -53,6 +61,20 @@ export const AddPerson = (props: YStackProps) => {
     onPersonSearch(getFullName(item.firstName, item.lastName));
   };
 
+  const addPerson = () => {
+    addPersonMutation.mutate({
+      createdByUsername: 'admin',
+      firstName: personSearch.split(' ')[0] || personSearch,
+      lastName: personSearch.split(' ')[1],
+    });
+  };
+
+  const onNoPersonMatchingSearch: () => JSX.Element = () => (
+    <Button onPress={() => addPerson()}>
+      <Text> Add Person</Text>
+    </Button>
+  );
+
   const keyExtractor = (item: PersonStore) => item.id.toString();
 
   return (
@@ -73,7 +95,8 @@ export const AddPerson = (props: YStackProps) => {
         filter={filterPeopleFromSearch}
         onSearch={onPersonSearch}
         keyExtractor={keyExtractor}
-        renderItem={(item) => getFullName(item.firstName, item.lastName)}
+        renderItem={(item: PersonStore) => getFullName(item.firstName, item.lastName)}
+        onEmptyList={onNoPersonMatchingSearch}
         onSelect={onPersonSelected}
       />
       {/* <personDropdown dropdownRef={dropdownRef} /> */}

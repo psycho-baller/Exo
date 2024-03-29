@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { FC } from 'react';
 import { FlashList } from '@shopify/flash-list';
-import type { GetProps } from 'tamagui';
-import { Button, Input, Separator, Text, View, YStack } from 'tamagui';
+import type { GetProps, Input } from 'tamagui';
+import { Button, Separator, Text, View, YStack } from 'tamagui';
 
 import { UnstyledInput } from './UnstyledInput';
 
@@ -16,6 +16,7 @@ interface Props<T> extends GetProps<typeof Input> {
   onSelect?: (item: T) => void;
   renderItem?: (item: T) => string;
   keyExtractor?: (item: T) => string;
+  onEmptyList?: () => JSX.Element;
 }
 
 export const AutocompleteInput: FC<Props<T>> = ({
@@ -25,12 +26,13 @@ export const AutocompleteInput: FC<Props<T>> = ({
   filter,
   onSearch,
   onSelect,
-  renderItem = (item) => item,
-  keyExtractor = (item) => item,
+  onEmptyList,
+  renderItem = (item: T) => item,
+  keyExtractor = (item: T) => item,
   ...restOfprops
 }) => {
   const [menuVisible, setMenuVisible] = useState(false);
-  const [filteredData, setFilteredData] = useState<string[]>([]);
+  const [filteredData, setFilteredData] = useState<string[]>(data);
 
   const handleSearch = (text: string) => {
     setMenuVisible(true);
@@ -71,12 +73,13 @@ export const AutocompleteInput: FC<Props<T>> = ({
         padding='$1'
         borderRadius='$1'
       >
-        {filteredData.length > 0 && menuVisible && (
+        {menuVisible && (
           <FlashList
             data={filteredData}
             estimatedItemSize={20}
             ItemSeparatorComponent={() => <Separator />}
             keyExtractor={keyExtractor}
+            ListEmptyComponent={onEmptyList}
             renderItem={({ item }) => {
               return (
                 <Button onPress={() => handleDropdownSelect(item)}>
