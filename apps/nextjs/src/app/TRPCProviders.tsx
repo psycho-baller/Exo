@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client';
-import { createTRPCReact } from '@trpc/react-query';
 import SuperJSON from 'superjson';
 
 import { api } from '@acme/api/utils/trpc.web';
@@ -16,7 +15,6 @@ export function TRPCReactProvider(props: {
 
   const [trpcClient] = useState(() =>
     api.createClient({
-      transformer: SuperJSON,
       links: [
         loggerLink({
           enabled: (op) =>
@@ -24,6 +22,7 @@ export function TRPCReactProvider(props: {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
+          transformer: SuperJSON,
           url: getBaseUrl() + '/api/trpc',
           async headers() {
             const headers = new Map(await props.headersPromise);

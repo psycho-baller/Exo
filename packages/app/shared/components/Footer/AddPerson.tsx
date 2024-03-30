@@ -29,11 +29,9 @@ export const AddPerson = (props: YStackProps) => {
 
   const personData: PersonStore[] = [];
 
-  if (Array.isArray(personQuery.data)) {
-    for (const person of personQuery.data) {
-      const { firstName, lastName = null, id }: PersonStore = person;
-      personData.push({ firstName, lastName, id });
-    }
+  for (const person of personQuery.data ?? []) {
+    const { firstName, lastName = null, id }: PersonStore = person;
+    personData.push({ firstName, lastName, id });
   }
 
   const filterPeopleFromSearch = (people: PersonStore[], search: string) => {
