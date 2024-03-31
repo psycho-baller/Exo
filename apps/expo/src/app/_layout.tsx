@@ -14,7 +14,7 @@ const RootLayout = () => {
       <Provider>
         {/*
           The Stack component displays the current page.
-          It also allows you to configure your screens 
+          It also allows you to configure your screens
         */}
         <Stack
           screenOptions={{
