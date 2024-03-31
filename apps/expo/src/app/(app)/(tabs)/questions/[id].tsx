@@ -11,13 +11,10 @@ export default function Post() {
   if (!data) return null;
 
   return (
-    <SafeAreaView className='bg-[#0D23FF]'>
-      <Stack.Screen options={{ title: data.question }} />
-      <View className='h-full w-full p-4'>
-        <Text className='py-2 text-3xl font-bold text-white'>
-          {data.createdDatetime?.toString()}
-        </Text>
-        <Text className='py-4 text-white'>{data.id}</Text>
+    <SafeAreaView>
+      <View>
+        <Text>{data.createdDatetime?.toString()}</Text>
+        <Text>{data.id}</Text>
       </View>
     </SafeAreaView>
   );

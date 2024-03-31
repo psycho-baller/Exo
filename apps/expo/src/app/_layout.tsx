@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
-// import { StatusBar } from "expo-status-bar";
 import { Provider } from '@acme/app/provider';
 
 import { TRPCProvider } from '~/utils/api';
@@ -17,13 +17,15 @@ const RootLayout = () => {
           It also allows you to configure your screens 
         */}
         <Stack
-        // screenOptions={{
-        //   headerStyle: {
-
-        //   },
-        // }}
-        />
-        {/* <StatusBar /> */}
+          screenOptions={{
+            // headerTransparent: true,
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
+          <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
+        </Stack>
+        <StatusBar />
       </Provider>
     </TRPCProvider>
   );
