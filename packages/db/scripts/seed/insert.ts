@@ -27,7 +27,7 @@ import type {
   NewSearchHistory,
   NewTopic,
   NewUser,
-} from '../../schema';
+} from '../../schema/types';
 import type { Database } from '../../schema/_table';
 import {
   createConnection,

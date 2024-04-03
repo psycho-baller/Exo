@@ -1,16 +1,11 @@
 import { relations } from 'drizzle-orm';
 import { integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core';
-import { z } from 'zod';
-
 // import { sqliteTable } from './_table';
 
 // User
-const landingPageOptions = ['questions', 'people', 'discover'] as const;
-export type LandingPageOptions = (typeof landingPageOptions)[number];
-const postVisibilityOptions = ['public', 'private', 'followers'] as const;
-export type PostVisibilityOptions = (typeof postVisibilityOptions)[number];
-const roleOptions = ['admin', 'user'] as const;
-export type RoleOptions = (typeof roleOptions)[number];
+export const landingPageOptions = ['questions', 'people', 'discover'] as const;
+export const postVisibilityOptions = ['public', 'private', 'followers'] as const;
+export const roleOptions = ['admin', 'user'] as const;
 export const users = sqliteTable('User', {
   username: text('username').notNull().primaryKey(),
   firstName: text('first_name').notNull(),
@@ -26,19 +21,6 @@ export const users = sqliteTable('User', {
   email: text('email').notNull().unique(),
   phone: text('phone'),
 });
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
-export const userZod = z.object({
-  username: z.string().min(1).max(31),
-  firstName: z.string().min(1).max(31),
-  lastName: z.string().min(1).max(31),
-  isPublic: z.boolean().optional(),
-  defaultLandingPage: z.enum(landingPageOptions).optional(),
-  defaultPostVisibility: z.enum(postVisibilityOptions).optional(),
-  role: z.enum(roleOptions).optional(),
-  email: z.string().email(),
-  phone: z.string().min(10).max(15).optional(),
-});
 
 // Post
 export const posts = sqliteTable('Post', {
@@ -46,14 +28,6 @@ export const posts = sqliteTable('Post', {
   createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
   question: text('question').notNull(),
   createdByUsername: text('created_by_username'),
-});
-export type Post = typeof posts.$inferSelect;
-export type NewPost = typeof posts.$inferInsert;
-export const postZod = z.object({
-  id: z.number().optional(),
-  createdDatetime: z.string().optional(),
-  question: z.string().min(1),
-  createdByUsername: z.string().min(1).max(31),
 });
 
 // SearchHistory
@@ -70,21 +44,12 @@ export const searchHistories = sqliteTable(
     };
   },
 );
-export type SearchHistory = typeof searchHistories.$inferSelect;
-export type NewSearchHistory = typeof searchHistories.$inferInsert;
 
 // Topic
 export const topics = sqliteTable('Topic', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   createdByUsername: text('created_by_username').notNull(),
-});
-export type Topic = typeof topics.$inferSelect;
-export type NewTopic = typeof topics.$inferInsert;
-export const topicZod = z.object({
-  id: z.number().optional(),
-  name: z.string().min(1).max(255),
-  createdByUsername: z.string().min(1).max(31),
 });
 
 // Person
@@ -108,27 +73,7 @@ export const people = sqliteTable(
     };
   },
 );
-export type Person = typeof people.$inferSelect;
-export type NewPerson = typeof people.$inferInsert;
-export const personZod = z.object({
-  id: z.number().optional(),
-  createdByUsername: z.string().min(1).max(31),
-  firstName: z.string().min(1).max(31),
-  lastName: z.string().min(1).max(31).optional(),
-  birthday: z.date().optional(),
-  email: z.string().email().optional(),
-  phoneNumber: z.string().min(10).max(15).optional(),
-  reminderDatetime: z.date().optional(),
-  createdDatetime: z.date().optional(),
-  associatedUsername: z
-    .string()
-    .min(1)
-    .max(31)
-    .optional()
-    .describe(
-      'If this person is a real user, and we are following them, this will be populated with their username.',
-    ),
-});
+
 // Group
 export const groups = sqliteTable(
   'Grp',
@@ -145,15 +90,6 @@ export const groups = sqliteTable(
     };
   },
 );
-export type Group = typeof groups.$inferSelect;
-export type NewGroup = typeof groups.$inferInsert;
-export const groupZod = z.object({
-  id: z.number().optional(),
-  reminderDatetime: z.date().optional(),
-  createdDatetime: z.date().optional(),
-  name: z.string().min(1).max(63),
-  createdByUsername: z.string().min(1).max(31),
-});
 
 // groupsOfPeople
 export const groupsOfPeople = sqliteTable(
@@ -168,12 +104,6 @@ export const groupsOfPeople = sqliteTable(
     };
   },
 );
-export type GroupsOfPeople = typeof groupsOfPeople.$inferSelect;
-export type NewGroupsOfPeople = typeof groupsOfPeople.$inferInsert;
-export const groupsOfPeopleZod = z.object({
-  groupId: z.number(),
-  personId: z.number(),
-});
 
 // Likes
 export const likes = sqliteTable(
@@ -189,13 +119,6 @@ export const likes = sqliteTable(
     };
   },
 );
-export type Like = typeof likes.$inferSelect;
-export type NewLike = typeof likes.$inferInsert;
-export const likeZod = z.object({
-  createdDatetime: z.date().optional(),
-  createdByUsername: z.string().min(1).max(31),
-  postId: z.number(),
-});
 
 // Comments
 export const comments = sqliteTable(
@@ -212,14 +135,6 @@ export const comments = sqliteTable(
     };
   },
 );
-export type Comment = typeof comments.$inferSelect;
-export type NewComment = typeof comments.$inferInsert;
-export const commentZod = z.object({
-  createdDatetime: z.date().optional(),
-  comment: z.string().min(1).max(255),
-  createdByUsername: z.string().min(1).max(31).optional(),
-  postId: z.number().optional(),
-});
 
 // PostTopics
 export const postTopics = sqliteTable(
@@ -234,12 +149,6 @@ export const postTopics = sqliteTable(
     };
   },
 );
-export type PostTopics = typeof postTopics.$inferSelect;
-export type NewPostTopics = typeof postTopics.$inferInsert;
-export const postTopicZod = z.object({
-  postId: z.number(),
-  topicId: z.number(),
-});
 
 // Follows
 export const follows = sqliteTable(
@@ -254,12 +163,6 @@ export const follows = sqliteTable(
     };
   },
 );
-export type Follow = typeof follows.$inferSelect;
-export type NewFollow = typeof follows.$inferInsert;
-export const followZod = z.object({
-  followingUsername: z.string().min(1).max(31),
-  followedUsername: z.string().min(1).max(31),
-});
 
 // Question
 export const questions = sqliteTable('Question', {
@@ -271,17 +174,6 @@ export const questions = sqliteTable('Question', {
   postId: integer('post_id'),
   groupId: integer('group_id'),
   personId: integer('person_id'),
-});
-export type Question = typeof questions.$inferSelect;
-export type NewQuestion = typeof questions.$inferInsert;
-export const questionZod = z.object({
-  createdByUsername: z.string().min(1).max(31),
-  question: z.string().min(1).max(255),
-  createdDatetime: z.date().optional(),
-  reminderDatetime: z.date().optional(),
-  postId: z.number().optional().describe('The post the question is associated with'),
-  groupId: z.number().optional().describe('The group the user wants to ask the question to'),
-  personId: z.number().optional().describe('The person the user wants to ask the question to'),
 });
 
 // QuestionTopics
@@ -297,12 +189,7 @@ export const questionTopics = sqliteTable(
     };
   },
 );
-export type QuestionTopics = typeof questionTopics.$inferSelect;
-export type NewQuestionTopics = typeof questionTopics.$inferInsert;
-export const questionTopicZod = z.object({
-  topicId: z.number(),
-  questionId: z.number(),
-});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
