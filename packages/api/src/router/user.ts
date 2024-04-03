@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 import { desc, eq } from '@acme/db';
-import { users, userZod } from '@acme/db/schema';
+import { users } from '@acme/db/schema';
+import { insertUserSchema } from '@acme/db/schema/types';
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
@@ -18,7 +19,7 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  create: protectedProcedure.input(userZod).mutation(({ ctx, input }) => {
+  create: protectedProcedure.input(insertUserSchema).mutation(({ ctx, input }) => {
     return ctx.db.insert(users).values(input);
   }),
 
