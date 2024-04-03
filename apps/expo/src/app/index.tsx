@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-import HomeScreen from '@acme/app/features/home/screen';
+import HomeScreen from '@acme/app/features/questions/screen';
 import { Button, Text, useTheme } from '@acme/ui';
 
 export default function Screen() {

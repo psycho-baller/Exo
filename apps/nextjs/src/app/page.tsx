@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 
-import Index from '@acme/app/features/home/screen';
+import Index from '@acme/app/features/questions/screen';
 
 import { AuthShowcase } from './_components/auth-showcase';
 import { CreateQuestionForm, PostCardSkeleton, PostList } from './_components/posts';
