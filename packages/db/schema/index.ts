@@ -1,5 +1,7 @@
+import type { AdapterAccount } from '@auth/core/adapters';
 import { relations } from 'drizzle-orm';
-import { integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core';
+import { index, integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core';
+
 // import { sqliteTable } from './_table';
 
 // User
@@ -7,8 +9,13 @@ export const landingPageOptions = ['questions', 'people', 'discover'] as const;
 export const postVisibilityOptions = ['public', 'private', 'followers'] as const;
 export const roleOptions = ['admin', 'user'] as const;
 export const users = sqliteTable('User', {
-  username: text('username').notNull().primaryKey(),
-  firstName: text('first_name').notNull(),
+  id: text('id').notNull().primaryKey(),
+  username: text('username'), //.notNull().unique(),
+  name: text('name'),
+  image: text('image'),
+  email: text('email').notNull().unique(),
+  emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
+  firstName: text('first_name'), //.notNull(),
   lastName: text('last_name'),
   isPublic: integer('is_public', { mode: 'boolean' }).default(false),
   defaultLandingPage: text('default_landing_page', { enum: landingPageOptions }).default(
@@ -18,7 +25,6 @@ export const users = sqliteTable('User', {
     'public',
   ),
   role: text('role', { enum: roleOptions }).default('user'),
-  email: text('email').notNull().unique(),
   phone: text('phone'),
 });
 
@@ -190,6 +196,49 @@ export const questionTopics = sqliteTable(
   },
 );
 
+export const accounts = sqliteTable(
+  'account',
+  {
+    userId: text('userId')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    type: text('type').$type<AdapterAccount['type']>().notNull(),
+    provider: text('provider').notNull(),
+    providerAccountId: text('providerAccountId').notNull(),
+    refresh_token: text('refresh_token'),
+    access_token: text('access_token'),
+    expires_at: integer('expires_at'),
+    token_type: text('token_type'),
+    scope: text('scope'),
+    id_token: text('id_token'),
+    session_state: text('session_state'),
+  },
+  (account) => ({
+    compoundKey: primaryKey({ columns: [account.provider, account.providerAccountId] }),
+    userIdIdx: index('userId_idx').on(account.userId),
+  }),
+);
+
+export const sessions = sqliteTable('session', {
+  sessionToken: text('sessionToken').notNull().primaryKey(),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+});
+
+export const verificationTokens = sqliteTable(
+  'verificationToken',
+  {
+    identifier: text('identifier').notNull(),
+    token: text('token').notNull(),
+    expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+  }),
+);
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
@@ -197,6 +246,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   topics: many(topics, { relationName: 'Topics created by user' }),
   people: many(people, { relationName: 'People created by user' }),
   groups: many(groups, { relationName: 'Groups created by user' }),
+  accounts: many(accounts),
 }));
 
 export const postsRelations = relations(posts, ({ one }) => ({
