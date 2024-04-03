@@ -21,7 +21,7 @@ export const PageWithNavFooter: FC<Props> = ({ children }) => {
   return (
     <Page>
       {children}
-      <FloatingFooter blurIntensity={40}>
+      {/* <FloatingFooter blurIntensity={40}>
         <Link href='/'>
           <Home size={'$2'} />
         </Link>
@@ -32,7 +32,7 @@ export const PageWithNavFooter: FC<Props> = ({ children }) => {
         <Search size={'$2'} />
         <Settings size={'$2'} />
       </FloatingFooter>
-      <AddQuestion />
+      <AddQuestion /> */}
     </Page>
   );
 };
