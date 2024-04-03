@@ -122,12 +122,6 @@ pnpm db:push
 
 3. Run `pnpm dev` at the project root folder.
 
-#### Use Web
-```bash
-+  "dev": "expo start --web",
-```
-Run `pnpm dev` at the project root folder.
-
 > TIP: It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
 
 ## Troubleshoting
