@@ -25,7 +25,7 @@ export default function TabLayout() {
         // tabBarInactiveTintColor: theme.text?.get(),
         tabBarBackground: () => (
           <BlurView
-            // intensity={100}
+            intensity={100}
             tint={'dark'}
             style={{
               flex: 1,
@@ -40,12 +40,13 @@ export default function TabLayout() {
           />
         ),
         tabBarStyle: {
+          // height: 250,
           backgroundColor: 'transparent',
           position: 'absolute',
-          bottom: 0,
+          // bottom: 100,
           left: 0,
           right: 0,
-          elevation: 0,
+          elevation: 10,
           borderTopWidth: 0,
           // borderRadius: 999,
           // height: 70,

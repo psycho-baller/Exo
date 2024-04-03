@@ -20,6 +20,7 @@ const RootLayout = () => {
           screenOptions={{
             // headerTransparent: true,
             headerShown: false,
+            navigationBarColor: 'transparent',
           }}
         >
           <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
