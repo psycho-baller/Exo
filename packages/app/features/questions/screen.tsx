@@ -1,8 +1,12 @@
+import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 import { api } from '@acme/api/utils/trpc';
+import { Page } from '@acme/ui';
 
-import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFooter';
+import { AddQuestion } from '../../shared/components/Footer/AddQuestion';
+import { FloatingDropdownBtn } from '../../shared/components/Footer/FloatingDropdownBtn';
+import { MainPage } from '../../shared/components/Footer/MainPage';
 import QuestionCard from './QuestionCard';
 
 const Index = () => {
@@ -10,7 +14,7 @@ const Index = () => {
   const questionQuery = api.question.all.useQuery();
 
   return (
-    <PageWithNavFooter>
+    <MainPage>
       <FlashList
         data={questionQuery.data}
         estimatedItemSize={20}
@@ -18,7 +22,7 @@ const Index = () => {
         // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => <QuestionCard question={p.item} />}
       />
-    </PageWithNavFooter>
+    </MainPage>
   );
 };
 

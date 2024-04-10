@@ -74,7 +74,7 @@ export const config = createTamagui({
     },
     light: {
       ...themes.light,
-      background: '#f0f',
+      background: '#fff',
       secondaryBackground: '#ccc',
       color: '#111',
       secondaryColor: '#999',

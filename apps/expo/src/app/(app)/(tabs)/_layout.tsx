@@ -3,7 +3,8 @@ import { BlurView } from 'expo-blur';
 import { Tabs, useSegments } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { useTheme } from '@acme/ui';
+import { useAddPersonStore } from '@acme/app/stores/addQuestion';
+import { useTheme, useThemeName } from '@acme/ui';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -13,8 +14,12 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const theme = useTheme();
+  const themeName = useThemeName();
   const segments = useSegments();
+  const [dropdownOpen, setDropdownOpen] = useAddPersonStore((state) => [
+    state.dropdownOpen,
+    state.setDropdownOpen,
+  ]);
   console.log('segments', segments);
 
   return (
@@ -25,29 +30,34 @@ export default function TabLayout() {
         // tabBarInactiveTintColor: theme.text?.get(),
         tabBarBackground: () => (
           <BlurView
-            intensity={100}
-            tint={'dark'}
+            intensity={50}
+            tint={themeName === 'dark' ? 'dark' : 'light'}
             style={{
               flex: 1,
-              // left: 20,
-              // right: 20,
-              // bottom: 20,
-              // position: 'absolute',
-              backgroundColor: theme.background?.get(),
-              // borderRadius: 999,
-              // padding: 10,
+              overflow: 'hidden',
+              left: 20,
+              right: 20,
+              bottom: 20,
+              top: 0,
+              position: 'absolute',
+              opacity: 10,
+              backgroundColor: 'transparent',
+              borderRadius: 999,
+              padding: 10,
             }}
           />
         ),
         tabBarStyle: {
+          display: segments[3] === '[id]' ? 'none' : 'flex',
           // height: 250,
           backgroundColor: 'transparent',
+          borderTopWidth: 0,
           position: 'absolute',
-          // bottom: 100,
+          bottom: 0,
           left: 0,
           right: 0,
-          elevation: 10,
-          borderTopWidth: 0,
+          elevation: 0,
+          // borderTopWidth: 0,
           // borderRadius: 999,
           // height: 70,
           // padding: 10,
@@ -60,9 +70,20 @@ export default function TabLayout() {
           title: 'Questions',
           headerShown: false,
           // headerTransparent: true,
-          tabBarIcon: ({ color }) => <TabBarIcon name='question-circle' color={color} />,
-          tabBarStyle: {
-            display: segments[3] === '[id]' ? 'none' : 'flex',
+          tabBarIcon: ({ color }) => <TabBarIcon name='home' color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name='addQuestion'
+        options={{
+          title: 'Add',
+          tabBarIcon: ({ color }) => <TabBarIcon name='plus' color={color} />,
+          headerShown: false,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            setDropdownOpen(true);
           },
         }}
       />
@@ -70,13 +91,10 @@ export default function TabLayout() {
         name='people'
         options={{
           title: 'People',
-          // tabBarIcon: ({ size, color }) => (
-          //   <Ionicons name="chatbubbles" size={size} color={color} />
-          // ),
+          tabBarIcon: ({ size, color }) => (
+            <FontAwesome size={size} style={{ marginBottom: -3 }} name='users' color={color} />
+          ),
           headerShown: false,
-          tabBarStyle: {
-            display: segments[3] === '[id]' ? 'none' : 'flex',
-          },
         }}
       />
     </Tabs>

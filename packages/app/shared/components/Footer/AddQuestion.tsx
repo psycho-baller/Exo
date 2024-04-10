@@ -74,23 +74,23 @@ export const AddQuestion = () => {
           opacity={0.75}
           fontSize={'$8'}
           paddingVertical={'$2'}
-          style={
-            mounted
-              ? {
-                  transform: [
-                    {
-                      translateY: 0,
-                    },
-                  ],
-                }
-              : {
-                  transform: [
-                    {
-                      translateY: 100,
-                    },
-                  ],
-                }
-          }
+          // style={
+          //   mounted
+          //     ? {
+          //         transform: [
+          //           {
+          //             translateY: 0,
+          //           },
+          //         ],
+          //       }
+          //     : {
+          //         transform: [
+          //           {
+          //             translateY: 100,
+          //           },
+          //         ],
+          //       }
+          // }
           autoFocus={dropdownOpen}
           placeholder='Add Question'
           value={question}

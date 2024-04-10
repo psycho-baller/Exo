@@ -1,16 +1,19 @@
 import type { FC } from 'react';
+import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 import { api } from '@acme/api/utils/trpc';
+import { Page } from '@acme/ui';
 
-import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFooter';
+import { FloatingDropdownBtn } from '../../shared/components/Footer/FloatingDropdownBtn';
+import { MainPage } from '../../shared/components/Footer/MainPage';
 import PersonCard from './PersonCard';
 
-const Component: FC = () => {
+const Component = () => {
   const personQuery = api.person.all.useQuery();
 
   return (
-    <PageWithNavFooter>
+    <MainPage>
       <FlashList
         data={personQuery.data}
         estimatedItemSize={20}
@@ -21,7 +24,7 @@ const Component: FC = () => {
           // <Text>{p.item.text}</Text>
         )}
       />
-    </PageWithNavFooter>
+    </MainPage>
   );
 };
 
