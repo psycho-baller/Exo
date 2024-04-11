@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import type { TamaguiProviderProps } from '@acme/ui';
 import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui';

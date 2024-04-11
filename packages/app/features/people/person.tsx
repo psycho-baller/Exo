@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
-import { Stack, useGlobalSearchParams } from 'expo-router';
-import { ChevronLeft } from '@tamagui/lucide-icons';
+import { Text, View } from 'react-native';
 import { useLink, useParams } from 'solito/navigation';
 
 import { api } from '@acme/api/utils/trpc';

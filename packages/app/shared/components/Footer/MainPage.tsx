@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Platform } from 'react-native';
-import { CheckCircle2, CircleUser, Home, Plus, Search, Settings, X } from '@tamagui/lucide-icons';
+import { CircleUser, Home, Plus, Search, Settings } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 import { Button } from 'tamagui';
 

@@ -11,21 +11,14 @@ import { AddPerson } from './AddPerson';
 export const AddQuestion = () => {
   const utils = api.useUtils();
 
-  const [
-    selectedPerson,
-    setSelectedPerson,
-    personSearch,
-    setPersonSearch,
-    dropdownOpen,
-    setDropdownOpen,
-  ] = useAddPersonStore((state) => [
-    state.selectedPerson,
-    state.setSelectedPerson,
-    state.personSearch,
-    state.setPersonSearch,
-    state.dropdownOpen,
-    state.setDropdownOpen,
-  ]);
+  const [selectedPerson, setPersonSearch, dropdownOpen, setDropdownOpen] = useAddPersonStore(
+    (state) => [
+      state.selectedPerson,
+      state.setPersonSearch,
+      state.dropdownOpen,
+      state.setDropdownOpen,
+    ],
+  );
 
   const [question, setQuestion] = useState('');
   const [mounted, setMounted] = useState(false);

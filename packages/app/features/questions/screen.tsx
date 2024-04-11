@@ -1,11 +1,6 @@
-import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 import { api } from '@acme/api/utils/trpc';
-import { Page } from '@acme/ui';
-
-import { AddQuestion } from '../../shared/components/Footer/AddQuestion';
-import { FloatingDropdownBtn } from '../../shared/components/Footer/FloatingDropdownBtn';
 import { MainPage } from '../../shared/components/Footer/MainPage';
 import QuestionCard from './QuestionCard';
 

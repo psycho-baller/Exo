@@ -1,13 +1,9 @@
 import type { FC } from 'react';
-import { CheckCircle2, CircleUser, Home, Plus, Search, Settings, X } from '@tamagui/lucide-icons';
-import { Link } from 'solito/link';
+import { Plus} from '@tamagui/lucide-icons';
 import { Button } from 'tamagui';
-
-import { FloatingFooter, Page } from '@acme/ui';
 import type { ButtonProps } from '@acme/ui';
 
 import { useAddPersonStore } from '../../../stores/addQuestion';
-import { AddQuestion } from './AddQuestion';
 
 type Props = ButtonProps;
 

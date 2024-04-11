@@ -4,7 +4,7 @@ import { Tabs, useSegments } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { useAddPersonStore } from '@acme/app/stores/addQuestion';
-import { useTheme, useThemeName } from '@acme/ui';
+import { useThemeName } from '@acme/ui';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];

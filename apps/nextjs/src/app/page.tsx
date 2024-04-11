@@ -1,10 +1,7 @@
 // import ErrorPage from "@/components/ErrorPage";
-// import { getUser } from "@/lib/talkToBackend";
-// import { useAuthorStore } from "@/stores/author";
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { auth, signIn, signOut } from '@acme/auth';
+import { auth } from '@acme/auth';
 
 export default async function Home() {
   const session = await auth();
