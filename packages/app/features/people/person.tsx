@@ -8,15 +8,12 @@ import { api } from '@acme/api/utils/trpc';
 
 type Params = { id: string };
 
-const QuestionScreen = (): ReactNode => {
+const PersonScreen = (): ReactNode => {
   const { id } = useParams<Params>();
-  // const { id } = useGlobalSearchParams();
-
-  console.info('ass id', id);
   const link = useLink({
     href: '/',
   });
-  const { data } = api.question.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.person.byId.useQuery({ id: parseInt(id) });
   if (!data) return null;
 
   return (
@@ -27,4 +24,4 @@ const QuestionScreen = (): ReactNode => {
   );
 };
 
-export default QuestionScreen;
+export default PersonScreen;
