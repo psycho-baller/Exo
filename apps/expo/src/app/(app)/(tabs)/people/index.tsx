@@ -1,3 +1,1 @@
-import HomeScreen from '@acme/app/features/people/screen';
-
-export default HomeScreen;
+export { default } from '@acme/app/features/people/screen';
