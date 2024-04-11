@@ -1,14 +1,18 @@
-'use client';
+// import ErrorPage from "@/components/ErrorPage";
+// import { getUser } from "@/lib/talkToBackend";
+// import { useAuthorStore } from "@/stores/author";
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-import { Suspense } from 'react';
+import { auth, signIn, signOut } from '@acme/auth';
 
-import Index from '@acme/app/features/questions/screen';
-
-import { AuthShowcase } from './_components/auth-showcase';
-import { CreateQuestionForm, PostCardSkeleton, PostList } from './_components/posts';
-
-// export const runtime = "edge";
-
-export default function HomePage() {
-  return <Index />;
+export default async function Home() {
+  const session = await auth();
+  const isAuthSkip = process.env.AUTH_SKIP === 'true';
+  if (session || (process.env.NODE_ENV === 'development' && isAuthSkip)) {
+    redirect('/questions');
+  } else {
+    redirect('/settings');
+    // return <ErrorPage error='User not found' />;
+  }
 }
