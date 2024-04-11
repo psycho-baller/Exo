@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 
+import './globals.css';
+
 import { TamaguiProvider } from './TamaguiProvider';
 import { TRPCReactProvider } from './TRPCProviders';
 
