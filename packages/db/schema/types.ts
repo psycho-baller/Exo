@@ -42,6 +42,7 @@ export const insertPostSchema = createInsertSchema(posts);
 // SearchHistory
 export type SearchHistory = typeof searchHistories.$inferSelect;
 export type NewSearchHistory = typeof searchHistories.$inferInsert;
+export const insertSearchHistoryhSchema = createInsertSchema(searchHistories)
 
 // Topic
 export type Topic = typeof topics.$inferSelect;

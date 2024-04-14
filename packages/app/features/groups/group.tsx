@@ -1,20 +1,20 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 import { useLink, useParams } from 'solito/navigation';
 
 import { api } from '@acme/api/utils/trpc';
 
-interface Params {
-  id: string;
-}
+type Params = { id: string };
 
-const PersonScreen = (): ReactNode => {
+const QuestionScreen = (): ReactNode => {
   const { id } = useParams<Params>();
-  console.log('userid', id);
+  // const { id } = useGlobalSearchParams();
+
+  console.info('ass id', id);
   const link = useLink({
     href: '/',
   });
-  const { data } = api.person.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.group.byId.useQuery({ id: parseInt(id) });
   if (!data) return null;
 
   return (
@@ -25,4 +25,4 @@ const PersonScreen = (): ReactNode => {
   );
 };
 
-export default PersonScreen;
+export default QuestionScreen;

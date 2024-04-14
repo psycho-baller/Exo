@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2, X } from '@tamagui/lucide-icons';
-import { Button, Label, Sheet, XStack } from 'tamagui';
+import { Button, Label, Sheet, Text, XStack, YStack } from 'tamagui';
 
 import { api } from '@acme/api/utils/trpc';
 import { ErrorText, UnstyledInput } from '@acme/ui';
 
+import type { Topic } from '../../../../db/schema/types';
 import { useAddPersonStore } from '../../../stores/addQuestion';
 import { AddPerson } from './AddPerson';
 
 export const AddQuestion = () => {
   const utils = api.useUtils();
+  const createTopicMutation = api.topic.create.useMutation();
+  const createQuestionTopicRelation = api.questionTopic.create.useMutation();
+  const searchTopics = api.topic.search.useQuery;
 
   const [selectedPerson, setPersonSearch, dropdownOpen, setDropdownOpen] = useAddPersonStore(
     (state) => [
@@ -21,88 +25,137 @@ export const AddQuestion = () => {
   );
 
   const [question, setQuestion] = useState('');
-  const [mounted, setMounted] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [showTopicSuggestions, setShowTopicSuggestions] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTopics, setFilteredTopics] = useState<Topic[]>([]);
 
-  const { mutate, error } = api.question.create.useMutation({
-    async onSuccess() {
+  const { data: topics, isLoading } = searchTopics(
+    { query: searchTerm },
+    {
+      enabled: !!searchTerm,
+    },
+  );
+
+  useEffect(() => {
+    if (topics && !isLoading) {
+      setFilteredTopics(topics);
+    }
+  }, [topics, isLoading]);
+
+  useEffect(() => {
+    const words = question.includes(' ') ? question.split(' ') : [question];
+    // if any of the words starts with a hashtag, show topic suggestions
+    // for (const word of words) {
+    //   if (word.startsWith('#')) {
+    //     setShowTopicSuggestions(true);
+    //     setSearchTerm(word.slice(1));
+    //     return;
+    //   }
+    // }
+
+    const lastWord = words.slice(-1)[0];
+    if (lastWord?.startsWith('#') || lastWord === '#') {
+      setShowTopicSuggestions(true);
+      setSearchTerm(lastWord.slice(1));
+    } else {
+      setShowTopicSuggestions(false);
+      setSearchTerm('');
+    }
+  }, [question]);
+
+  const { mutate: mutateQuestion, error } = api.question.create.useMutation({
+    async onSuccess(data) {
+      const createdQuestion = data[0];
+      if (createdQuestion && selectedTopic) {
+        createQuestionTopicRelation.mutate({
+          questionId: createdQuestion.id,
+          topicId: selectedTopic.id,
+        });
+      }
+      // reset form
       setQuestion('');
+      setSelectedTopic(null);
       setDropdownOpen(false);
       setPersonSearch('');
       await utils.question.all.invalidate();
     },
   });
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   function addQuestion() {
-    mutate({
+    mutateQuestion({
       createdByUsername: 'seeded_user_901',
       personId: selectedPerson?.id,
-      question,
+      question: question.trim().replace(`#${selectedTopic?.name}`, ''),
     });
   }
 
+  const selectTopic = (topic: Topic) => {
+    // autocomplete the question with the selected topic
+    setQuestion(question.replace(/#[\w]*$/, `#${topic.name}`));
+    setSelectedTopic(topic);
+    setShowTopicSuggestions(false);
+  };
+
+  const createAndSelectTopic = (topicName: string) => {
+    createTopicMutation.mutate(
+      { name: topicName, createdByUsername: 'seeded_user_901' },
+      {
+        onSuccess: (topic) => {
+          selectTopic(topic[0]!);
+        },
+      },
+    );
+  };
+
   return (
     <Sheet open={dropdownOpen} modal onOpenChange={setDropdownOpen} zIndex={50}>
-      {/* <Sheet.Overlay
-        animation='lazy'
-        // enterStyle={{ opacity: 0.75 }}
-        // exitStyle={{ opacity: 0.75 }}
-      /> */}
       <Sheet.Handle />
       <Sheet.Frame padding='$4'>
         <XStack justifyContent='space-between'>
           <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
             QUESTION
           </Label>
-          <Button unstyled onPress={() => setDropdownOpen(false)}>
+          <Button unstyled style={{ cursor: 'pointer' }} onPress={() => setDropdownOpen(false)}>
             <X />
           </Button>
         </XStack>
-        <UnstyledInput
-          width={200}
-          placeholderTextColor='$secondaryColor'
-          opacity={0.75}
-          fontSize={'$8'}
-          paddingVertical={'$2'}
-          // style={
-          //   mounted
-          //     ? {
-          //         transform: [
-          //           {
-          //             translateY: 0,
-          //           },
-          //         ],
-          //       }
-          //     : {
-          //         transform: [
-          //           {
-          //             translateY: 100,
-          //           },
-          //         ],
-          //       }
-          // }
-          autoFocus={dropdownOpen}
-          placeholder='Add Question'
-          value={question}
-          onChangeText={setQuestion}
-        />
+        <XStack alignItems='center'>
+          <UnstyledInput
+            width={800}
+            placeholderTextColor='$secondaryColor'
+            opacity={0.75}
+            fontSize={'$8'}
+            paddingVertical={'$2'}
+            marginBottom={`$4`}
+            autoFocus={dropdownOpen}
+            placeholder='Add Question'
+            value={question}
+            onChangeText={setQuestion}
+          />
+        </XStack>
+        {showTopicSuggestions && (
+          <YStack padding='$2'>
+            {filteredTopics.map((topic) => (
+              <Button key={topic.id} onPress={() => selectTopic(topic)}>
+                {topic.name}
+              </Button>
+            ))}
+            {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
+              <Button onPress={() => createAndSelectTopic(searchTerm)}>
+                {`Create "${searchTerm}"`}
+              </Button>
+            )}
+          </YStack>
+        )}
         <XStack>
           <AddPerson flex={1} />
           <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
             <CheckCircle2 />
           </Button>
         </XStack>
-        {/* <XStack justifyContent="space-between">
-          <XStack>
-
-          </XStack>
-          
-        </XStack> */}
         {error?.data?.code === 'UNAUTHORIZED' && (
-          <ErrorText textAlign='center'>You need to be logged in to create a question</ErrorText>
+          <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
         )}
         {error?.data?.zodError?.fieldErrors.text && (
           <ErrorText textAlign='center'>{error.data.zodError.fieldErrors.text}</ErrorText>

@@ -1,11 +1,11 @@
 import type { FC } from 'react';
-import { Platform } from 'react-native';
-import { CircleUser, Home, Plus, Search, Settings } from '@tamagui/lucide-icons';
+import { Dimensions, Platform } from 'react-native';
+import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 import { Button } from 'tamagui';
 
-import { FloatingFooter, Page } from '@acme/ui';
 import type { PageProps } from '@acme/ui';
+import { FloatingFooter, Page, View } from '@acme/ui';
 
 import { useAddPersonStore } from '../../../stores/addQuestion';
 import { AddQuestion } from './AddQuestion';
@@ -24,15 +24,24 @@ export const MainPage: FC<Props> = ({ children }) => {
       {children}
       {Platform.OS === 'web' && (
         <FloatingFooter blurIntensity={40}>
-          <Link href='/'>
+          <Link href='/questions'>
             <Home size={'$2'} />
           </Link>
           <Link href='/people'>
-            <CircleUser size={'$2'} />
+            <User size={'$2'} />
           </Link>
-          <Button unstyled onPress={handlePlusClick} icon={<Plus size={'$2.5'} />} />
-          <Search size={'$2'} />
-          <Settings size={'$2'} />
+          <Button
+            unstyled
+            onPress={handlePlusClick}
+            cursor='pointer'
+            icon={<Plus size={'$2.5'} />}
+          />
+          <Link href='/search'>
+            <Search size={'$2'} />
+          </Link>
+          <Link href='/groups'>
+            <Users size={'$2'} />
+          </Link>
         </FloatingFooter>
       )}
       <AddQuestion />
