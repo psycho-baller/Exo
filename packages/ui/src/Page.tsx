@@ -3,9 +3,8 @@ import type { GetProps } from 'tamagui';
 
 export const Page = styled(YStack, {
   name: 'Page',
-  // flex: 1,
-  paddingHorizontal: '$3',
-  fullscreen: true,
+  flex: 1,
+  // fullscreen: true,
   backgroundColor: '$background',
   // style: {
   //   color: '#fff',

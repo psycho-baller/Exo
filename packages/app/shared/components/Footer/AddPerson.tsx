@@ -4,7 +4,7 @@ import { Button, Label, YStack } from 'tamagui';
 import { api } from '@acme/api/utils/trpc';
 import { AutocompleteInput, Text } from '@acme/ui';
 
-import { getFullName } from '../../../lib/utils/strings';
+import { getFullName } from '../../../lib/utils/name';
 import { useAddPersonStore } from '../../../stores/addQuestion';
 import type { PersonStore } from '../../../types/people';
 
@@ -78,7 +78,7 @@ export const AddPerson = (props: YStackProps) => {
   return (
     <YStack {...props}>
       <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='person'>
-        PERSON
+        person
       </Label>
       <AutocompleteInput
         placeholderTextColor='$secondaryColor'
@@ -87,7 +87,7 @@ export const AddPerson = (props: YStackProps) => {
         width={200}
         fontSize={'$8'}
         paddingVertical={'$2'}
-        placeholder='Add Person'
+        placeholder='Add person'
         value={personSearch}
         setValue={setPersonSearch}
         filter={filterPeopleFromSearch}

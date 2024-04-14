@@ -1,45 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
+import { Link } from 'solito/link';
 
+import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/utils/trpc';
-import { Button, Text, YStack } from '@acme/ui';
+import { Text, XStack, YStack } from '@acme/ui';
 
-const SearchHistory = () => {
-  const { data } = api.searchHistory.byUsername.useQuery({ username: 'admin' });
-  const [history, setHistory] = useState(data);
-  const deleteHistory = api.searchHistory.delete.useMutation();
+import { formatDate } from '../../lib/utils/date';
 
-  // Update local state whenever the data changes
-  useEffect(() => {
-    setHistory(data);
-  }, [data]);
+interface Props {
+  question: RouterOutputs['question']['all'][number];
+}
 
-  const handleClearHistory = () => {
-    deleteHistory.mutate({ username: 'admin' });
-    setHistory([]);
-  };
+const Component: FC<Props> = (props) => {
+  const { question } = props;
+  const date = question.createdDatetime;
 
-  if (!history || history.length === 0) {
-    return (
-      <YStack paddingTop='$4' gap='$2'>
-        <Text fontWeight='bold'>Search History</Text>
-        <Text>No search history found.</Text>
-      </YStack>
-    );
-  }
+  const utils = api.useUtils();
+  const deleteQuestionMutation = api.question.delete.useMutation({
+    onSettled: () => utils.question.all.invalidate(),
+  });
 
   return (
-    <YStack paddingTop='$4' gap='$2'>
-      <Text fontWeight='bold'>Search History</Text>
-      {history.map((item) => (
-        <Button key={item.datetime?.getMilliseconds()} paddingVertical='$2'>
-          {item.query}
-        </Button>
-      ))}
-      <Button onPress={handleClearHistory}>
-        Clear search history
-      </Button>
-    </YStack>
+    <XStack
+      minHeight='$6'
+      padding={'$3'}
+      alignItems='center'
+      justifyContent='space-between'
+      backgroundColor='$background'
+      animation='bouncy'
+      hoverStyle={{
+        backgroundColor: '$secondaryBackground',
+        borderRadius: 10,
+      }}
+    >
+      <YStack gap={6}>
+        {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
+        <Text fontSize={18} fontWeight='bold'>
+          {question.question}
+        </Text>
+        <XStack gap={18}>
+          {date && (
+            <XStack gap={6} alignItems='center'>
+              <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
+              <Text color='$secondaryColor'>{formatDate(date)}</Text>
+            </XStack>
+          )}
+        </XStack>
+      </YStack>
+    </XStack>
   );
 };
 
-export default SearchHistory;
+export default Component;

@@ -1,7 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 
 import { api } from '@acme/api/utils/trpc';
-
 import { MainPage } from '../../shared/components/Footer/MainPage';
 import QuestionCard from './QuestionCard';
 
@@ -13,14 +12,11 @@ const Index = () => {
     <MainPage>
       <FlashList
         data={questionQuery.data}
-        estimatedItemSize={10}
+        estimatedItemSize={20}
         keyExtractor={(item) => item.id.toString()}
         // ItemSeparatorComponent={() => <Separator />}
         renderItem={(p) => <QuestionCard question={p.item} />}
       />
-      {/* {questionQuery.data?.map((question) => (
-        <QuestionCard key={question.id} question={question} />
-      ))} */}
     </MainPage>
   );
 };

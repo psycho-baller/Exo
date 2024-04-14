@@ -1,16 +1,13 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 import { useLink, useParams } from 'solito/navigation';
 
 import { api } from '@acme/api/utils/trpc';
 
-interface Params {
-  id: string;
-}
+type Params = { id: string };
 
 const PersonScreen = (): ReactNode => {
   const { id } = useParams<Params>();
-  console.log('userid', id);
   const link = useLink({
     href: '/',
   });

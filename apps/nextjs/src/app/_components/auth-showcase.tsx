@@ -11,24 +11,18 @@ export async function AuthShowcase() {
           await signIn('discord');
         }}
       >
-        <button>Sign in with Discord</button>
+        <button className='rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20'>
+          Sign in with Discord
+        </button>
       </form>
     );
   }
 
   return (
-    <section>
-      {session && (
-        <div>
-          <p>Logged in as {session.user.name}</p>
-          <br />
-          <p>Email: {session.user.email}</p>
-          <br />
-          <img src={session.user?.image ?? undefined} alt={session.user?.name ?? undefined} />
-          <br />
-          <p>Access token: {session.expires}</p>
-        </div>
-      )}
+    <div className='flex flex-col items-center justify-center gap-4'>
+      <p className='text-center text-2xl text-white'>
+        {session && <span>Logged in as {session.user.name}</span>}
+      </p>
 
       <form
         action={async () => {
@@ -36,8 +30,10 @@ export async function AuthShowcase() {
           await signOut();
         }}
       >
-        <button>Sign out</button>
+        <button className='rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20'>
+          Sign out
+        </button>
       </form>
-    </section>
+    </div>
   );
 }

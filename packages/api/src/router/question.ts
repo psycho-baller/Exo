@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { desc, eq, like } from '@acme/db';
+import { desc, eq } from '@acme/db';
 import { questions } from '@acme/db/schema';
 import { insertQuestionSchema } from '@acme/db/schema/types';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
@@ -17,7 +17,7 @@ export const questionRouter = createTRPCRouter({
   }),
 
   create: protectedProcedure.input(insertQuestionSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(questions).values(input).returning();
+    return ctx.db.insert(questions).values(input);
   }),
 
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
@@ -28,12 +28,6 @@ export const questionRouter = createTRPCRouter({
     return ctx.db.query.questions.findMany({
       where: eq(questions.personId, input),
       orderBy: desc(questions.createdDatetime),
-    });
-  }),
-
-  search: protectedProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.questions.findMany({
-      where: like(questions.question, `%${input.query}%`)
     });
   }),
 });

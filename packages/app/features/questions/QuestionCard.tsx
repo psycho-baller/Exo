@@ -126,6 +126,7 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
       // }}
     >
       <Trash2 size={20} color='white' strokeWidth={2.5} />
+      <Trash2 size={20} color='white' strokeWidth={2.5} />
     </XStack>
     // </RectButton>
     // </Animated.View>
