@@ -338,9 +338,6 @@ importers:
 
   packages/app:
     dependencies:
-      '@acme/auth':
-        specifier: workspace:*
-        version: link:../auth
       '@acme/ui':
         specifier: workspace:*
         version: link:../ui

@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@acme/ui": "workspace:*",
-    "@acme/auth": "workspace:*",
     "@react-native-community/datetimepicker": "7.6.1",
     "@shopify/flash-list": "1.6.3",
     "@tamagui/animations-react-native": "^1.90.6",
