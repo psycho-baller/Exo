@@ -33,7 +33,7 @@ packages
   ├── auth
   │   └── Authentication using next-auth
   ├── db
-  │   └── Typesafe db calls using Drizzle & Planetscale
+  │   └── Typesafe db calls using Drizzle & Turso (sqlite)
   └── ui
       └── Tamagui reusable components and configurations
 patches
@@ -66,7 +66,7 @@ turbo
 - [Solito](https://solito.dev)
 - [Tamagui](https://tamagui.dev)
 - [Drizzle ORM](https://orm.drizzle.team)
-- [Planetscale](https://planetscale.com)
+- [Turso](https://turso.tech)
 - [Auth.js](https://authjs.org)
 - [Turbo](https://turbo.build/repo)
 - [ESLint](https://eslint.org)

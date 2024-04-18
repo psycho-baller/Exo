@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@libsql/client": "^0.5.6",
-    "@planetscale/database": "^1.16.0",
     "drizzle-orm": "^0.29.4",
     "drizzle-zod": "^0.5.1"
   },
@@ -35,7 +34,6 @@
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8.57.0",
-    "mysql2": "^3.9.1",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
