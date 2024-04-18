@@ -33,6 +33,7 @@
     "watch": "tamagui-build --watch"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "7.6.1",
     "@shopify/flash-list": "1.6.3",
     "@tamagui/animations-moti": "^1.90.6",
     "@tamagui/font-inter": "^1.90.6",

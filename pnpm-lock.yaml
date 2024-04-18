@@ -338,9 +338,15 @@ importers:
 
   packages/app:
     dependencies:
+      '@acme/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@acme/ui':
         specifier: workspace:*
         version: link:../ui
+      '@react-native-community/datetimepicker':
+        specifier: 7.6.1
+        version: 7.6.1
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.5)(react@18.2.0)
@@ -570,6 +576,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@react-native-community/datetimepicker':
+        specifier: 7.6.1
+        version: 7.6.1
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.5)(react@18.2.0)
@@ -4269,6 +4278,12 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+
+  /@react-native-community/datetimepicker@7.6.1:
+    resolution: {integrity: sha512-g66Q2Kd9Uw3eRL7kkrTsGhi+eXxNoPDRFYH6z78sZQuYjPkUQgJDDMUYgBmaBsQx/fKMtemPrCj1ulGmyi0OSw==}
+    dependencies:
+      invariant: 2.2.4
+    dev: false
 
   /@react-native/assets-registry@0.73.1(patch_hash=ieiwhypvddbubq45ah5bswdrmu):
     resolution: {integrity: sha512-2FgAbU7uKM5SbbW9QptPPZx8N9Ke2L7bsHb+EhAanZjFZunA9PaYtyjUQ1s7HD+zDVqOQIvjkpXSv7Kejd2tqg==}

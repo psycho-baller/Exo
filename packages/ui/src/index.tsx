@@ -7,3 +7,5 @@ export * from './Footer';
 export * from './ErrorText';
 export * from './AutocompleteInput';
 export * from './UnstyledInput';
+export * from './DateTimePicker';
+export * from './DateTimePicker.web';
