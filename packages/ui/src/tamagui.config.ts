@@ -7,6 +7,7 @@ import { createTamagui } from 'tamagui';
 import { animations } from './animations';
 
 // https://github.com/dohomi/tamagui-kitchen-sink
+// https://github.com/tamagui/starter-free/blob/main/packages/config/package.json
 const headingFont = createInterFont({
   size: {
     6: 15,

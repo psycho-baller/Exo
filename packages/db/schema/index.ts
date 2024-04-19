@@ -10,7 +10,6 @@ export const postVisibilityOptions = ['public', 'private', 'followers'] as const
 export const roleOptions = ['admin', 'user'] as const;
 export const users = sqliteTable('User', {
   id: text('id').notNull().primaryKey(),
-  username: text('username'), //.notNull().unique(),
   name: text('name'),
   image: text('image'),
   email: text('email').notNull().unique(),
@@ -31,9 +30,9 @@ export const users = sqliteTable('User', {
 // Post
 export const posts = sqliteTable('Post', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdByUserId: text('created_by_user_id').references(() => users.id, { onDelete: 'cascade' }),
   createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
   question: text('question').notNull(),
-  createdByUsername: text('created_by_username'),
 });
 
 // SearchHistory
@@ -41,12 +40,14 @@ export const searchHistories = sqliteTable(
   'Search_history',
   {
     query: text('query').notNull(),
-    fromUsername: text('from_username').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
     datetime: integer('datetime', { mode: 'timestamp_ms' }).defaultNow(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.query, table.fromUsername] }),
+      pk: primaryKey({ columns: [table.query, table.createdByUserId] }),
     };
   },
 );
@@ -54,8 +55,10 @@ export const searchHistories = sqliteTable(
 // Topic
 export const topics = sqliteTable('Topic', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdByUserId: text('created_by_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
-  createdByUsername: text('created_by_username').notNull(),
 });
 
 // Person
@@ -63,7 +66,6 @@ export const people = sqliteTable(
   'Person',
   {
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-    createdByUsername: text('created_by_username').notNull(),
     firstName: text('first_name').notNull(),
     lastName: text('last_name'),
     birthday: integer('birthday', { mode: 'timestamp' }),
@@ -71,7 +73,10 @@ export const people = sqliteTable(
     phoneNumber: text('phone_number').unique(),
     reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
     createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
-    associatedUsername: text('associated_username'),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    associatedUserId: text('associated_user_id').references(() => users.id),
   },
   (table) => {
     return {
@@ -88,11 +93,13 @@ export const groups = sqliteTable(
     reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
     createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
     name: text('name').notNull(),
-    createdByUsername: text('created_by_username').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      unique: unique().on(table.name, table.createdByUsername),
+      unique: unique().on(table.name, table.createdByUserId),
     };
   },
 );
@@ -101,8 +108,12 @@ export const groups = sqliteTable(
 export const groupsOfPeople = sqliteTable(
   'Groups_of_people',
   {
-    groupId: integer('group_id').notNull(),
-    personId: integer('person_id').notNull(),
+    groupId: integer('group_id')
+      .notNull()
+      .references(() => groups.id, { onDelete: 'cascade' }),
+    personId: integer('person_id')
+      .notNull()
+      .references(() => people.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
@@ -116,12 +127,16 @@ export const likes = sqliteTable(
   'Likes',
   {
     createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
-    createdByUsername: text('created_by_username').notNull(),
-    postId: integer('post_id').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    postId: integer('post_id')
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.createdByUsername, table.postId] }),
+      pk: primaryKey({ columns: [table.createdByUserId, table.postId] }),
     };
   },
 );
@@ -132,12 +147,14 @@ export const comments = sqliteTable(
   {
     createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
     comment: text('comment').notNull(),
-    createdByUsername: text('created_by_username'),
-    postId: integer('post_id'),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    postId: integer('post_id').references(() => posts.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.createdByUsername, table.postId, table.createdDatetime] }),
+      pk: primaryKey({ columns: [table.createdByUserId, table.postId, table.createdDatetime] }),
     };
   },
 );
@@ -146,8 +163,12 @@ export const comments = sqliteTable(
 export const postTopics = sqliteTable(
   'Post_topics',
   {
-    postId: integer('post_id').notNull(),
-    topicId: integer('topic_id').notNull(),
+    postId: integer('post_id')
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade' }),
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
@@ -160,12 +181,16 @@ export const postTopics = sqliteTable(
 export const follows = sqliteTable(
   'Follows',
   {
-    followingUsername: text('following_username').notNull(),
-    followedUsername: text('followed_username').notNull(),
+    followingUserId: text('following_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    followedUserId: text('followed_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.followingUsername, table.followedUsername] }),
+      pk: primaryKey({ columns: [table.followingUserId, table.followedUserId] }),
     };
   },
 );
@@ -173,21 +198,27 @@ export const follows = sqliteTable(
 // Question
 export const questions = sqliteTable('Question', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  createdByUsername: text('created_by_username').notNull(),
   question: text('question').notNull(),
   createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
   reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
-  postId: integer('post_id'),
-  groupId: integer('group_id'),
-  personId: integer('person_id'),
+  createdByUserId: text('created_by_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  groupId: integer('group_id').references(() => groups.id),
+  personId: integer('person_id').references(() => people.id),
+  postId: integer('post_id').references(() => posts.id),
 });
 
 // QuestionTopics
 export const questionTopics = sqliteTable(
   'Question_topics',
   {
-    topicId: integer('topic_id').notNull(),
-    questionId: integer('question_id').notNull(),
+    questionId: integer('question_id')
+      .notNull()
+      .references(() => questions.id, { onDelete: 'cascade' }),
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
@@ -239,7 +270,7 @@ export const verificationTokens = sqliteTable(
   }),
 );
 
-// Relations
+// Relations (deprecated)
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
   searchHistories: many(searchHistories, { relationName: 'Search history by user' }),
@@ -252,40 +283,40 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const postsRelations = relations(posts, ({ one }) => ({
   user: one(users, {
     relationName: 'Created by user',
-    fields: [posts.createdByUsername],
-    references: [users.username],
+    fields: [posts.createdByUserId],
+    references: [users.id],
   }),
 }));
 
 export const searchHistoriesRelations = relations(searchHistories, ({ one }) => ({
   user: one(users, {
     relationName: 'Search history by user',
-    fields: [searchHistories.fromUsername],
-    references: [users.username],
+    fields: [searchHistories.createdByUserId],
+    references: [users.id],
   }),
 }));
 
 export const topicsRelations = relations(topics, ({ one }) => ({
   user: one(users, {
     relationName: 'Topics created by user',
-    fields: [topics.createdByUsername],
-    references: [users.username],
+    fields: [topics.createdByUserId],
+    references: [users.id],
   }),
 }));
 
 export const peopleRelations = relations(people, ({ one }) => ({
   user: one(users, {
     relationName: 'People created by user',
-    fields: [people.createdByUsername],
-    references: [users.username],
+    fields: [people.createdByUserId],
+    references: [users.id],
   }),
 }));
 
 export const groupsRelations = relations(groups, ({ one }) => ({
   user: one(users, {
     relationName: 'Groups created by user',
-    fields: [groups.createdByUsername],
-    references: [users.username],
+    fields: [groups.createdByUserId],
+    references: [users.id],
   }),
 }));
 
@@ -305,8 +336,8 @@ export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
 export const likesRelations = relations(likes, ({ one }) => ({
   user: one(users, {
     relationName: 'User who liked post',
-    fields: [likes.createdByUsername],
-    references: [users.username],
+    fields: [likes.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post liked by user',
@@ -318,8 +349,8 @@ export const likesRelations = relations(likes, ({ one }) => ({
 export const commentsRelations = relations(comments, ({ one }) => ({
   user: one(users, {
     relationName: 'User who commented on post',
-    fields: [comments.createdByUsername],
-    references: [users.username],
+    fields: [comments.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post commented on by user',
@@ -344,21 +375,21 @@ export const postTopicsRelations = relations(postTopics, ({ one }) => ({
 export const followsRelations = relations(follows, ({ one }) => ({
   follower: one(users, {
     relationName: 'User following',
-    fields: [follows.followingUsername],
-    references: [users.username],
+    fields: [follows.followingUserId],
+    references: [users.id],
   }),
   followed: one(users, {
     relationName: 'User being followed',
-    fields: [follows.followedUsername],
-    references: [users.username],
+    fields: [follows.followedUserId],
+    references: [users.id],
   }),
 }));
 
 export const questionsRelations = relations(questions, ({ one }) => ({
   user: one(users, {
     relationName: 'User who asked question',
-    fields: [questions.createdByUsername],
-    references: [users.username],
+    fields: [questions.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post associated with question',
@@ -367,13 +398,13 @@ export const questionsRelations = relations(questions, ({ one }) => ({
   }),
   group: one(groups, {
     relationName: 'Group associated with question',
-    fields: [questions.groupId, questions.createdByUsername],
-    references: [groups.id, groups.createdByUsername],
+    fields: [questions.groupId, questions.createdByUserId],
+    references: [groups.id, groups.createdByUserId],
   }),
   person: one(people, {
     relationName: 'Person associated with question',
-    fields: [questions.createdByUsername, questions.personId],
-    references: [people.createdByUsername, people.id],
+    fields: [questions.createdByUserId, questions.personId],
+    references: [people.createdByUserId, people.id],
   }),
 }));
 

@@ -31,7 +31,7 @@ export function generateRandomId(length: number): number {
   return Math.floor(id);
 }
 
-export function generateRandomUsername(): string {
+export function generateRandomUserId(): string {
   const base = 'seeded_user_';
   const randomNumber = generateRandomId(3).toString();
   const username = base + randomNumber;

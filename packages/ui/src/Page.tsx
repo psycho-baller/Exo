@@ -4,7 +4,7 @@ import type { GetProps } from 'tamagui';
 export const Page = styled(YStack, {
   name: 'Page',
   flex: 1,
-  // fullscreen: true,
+  fullscreen: true,
   backgroundColor: '$background',
   // style: {
   //   color: '#fff',

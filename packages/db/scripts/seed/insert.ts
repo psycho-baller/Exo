@@ -1,3 +1,5 @@
+import { eq, exists } from 'drizzle-orm';
+
 import {
   comments,
   follows,
@@ -13,6 +15,7 @@ import {
   topics,
   users,
 } from '../../schema';
+import type { Database } from '../../schema/_table';
 import type {
   NewComment,
   NewFollow,
@@ -28,13 +31,12 @@ import type {
   NewTopic,
   NewUser,
 } from '../../schema/types';
-import type { Database } from '../../schema/_table';
 import {
   createConnection,
   generateRandomFirstName,
   generateRandomId,
   generateRandomLastName,
-  generateRandomUsername,
+  generateRandomUserId,
 } from '../../utils';
 
 const seedUserTable = async (db: Database, userData: NewUser[]) => {
@@ -103,8 +105,15 @@ const seedCommentsTable = async (db: Database, commentsData: NewComment[]) => {
 };
 
 const seedAllTables = async (db: Database) => {
-  const username = generateRandomUsername();
-
+  // check if there exists a user with id 69420
+  const user69420 = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.id, '69420'))
+    .execute();
+  const user69420Exists = user69420.length > 0;
+  const userId1 = user69420Exists ? generateRandomUserId() : '69420';
+  const userId2 = generateRandomUserId();
   const postId1 = generateRandomId(3);
   const postId2 = generateRandomId(3);
   const topicId1 = generateRandomId(3);
@@ -115,40 +124,55 @@ const seedAllTables = async (db: Database) => {
   const groupId2 = generateRandomId(3);
   const questionId1 = generateRandomId(3);
   const questionId2 = generateRandomId(3);
-
-  const userData: NewUser = {
-    username: username,
-    firstName: generateRandomFirstName(),
-    lastName: generateRandomLastName(),
+  const firstName1 = generateRandomFirstName();
+  const lastName1 = generateRandomLastName();
+  const firstName2 = generateRandomFirstName();
+  const lastName2 = generateRandomLastName();
+  const user1: NewUser = {
+    id: userId1,
+    firstName: firstName1,
+    lastName: lastName1,
     isPublic: true,
     defaultLandingPage: 'questions',
     defaultPostVisibility: 'public',
     role: 'user',
-    email: `${username}@dummy.com`,
+    email: `${firstName1.toLowerCase()}@${lastName1.toLowerCase()}.com`,
   };
+  const user2: NewUser = {
+    id: userId2,
+    firstName: firstName2,
+    lastName: lastName2,
+    isPublic: true,
+    defaultLandingPage: 'questions',
+    defaultPostVisibility: 'public',
+    role: 'user',
+    email: `${firstName2.toLowerCase()}@${lastName2.toLowerCase()}.com`,
+  };
+
+  const userData: NewUser[] = [user1, user2];
 
   const postData: NewPost[] = [
     {
       id: postId1,
       question: 'Sample question 1',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
     {
       id: postId2,
       question: 'Sample question 2',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
   ];
 
   const searchHistoryData: NewSearchHistory[] = [
     {
       query: 'Sample query 1',
-      fromUsername: userData.username,
+      createdByUserId: user1.id,
       datetime: new Date(),
     },
     {
       query: 'Sample query 2',
-      fromUsername: userData.username,
+      createdByUserId: user1.id,
       datetime: new Date(),
     },
   ];
@@ -157,25 +181,25 @@ const seedAllTables = async (db: Database) => {
     {
       id: topicId1,
       name: 'Sample topic 1',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
     {
       id: topicId2,
       name: 'Sample topic 2',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
   ];
 
   const personData: NewPerson[] = [
     {
       id: personId1,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       firstName: 'John',
       lastName: 'Doe',
     },
     {
       id: personId2,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       firstName: 'Jane',
       lastName: 'Doe',
     },
@@ -185,12 +209,12 @@ const seedAllTables = async (db: Database) => {
     {
       id: groupId1,
       name: 'UCalgary',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
     {
       id: groupId2,
       name: 'IBM',
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
   ];
 
@@ -207,23 +231,23 @@ const seedAllTables = async (db: Database) => {
 
   const followsData: NewFollow[] = [
     {
-      followingUsername: generateRandomUsername(),
-      followedUsername: userData.username,
+      followingUserId: user2.id,
+      followedUserId: user1.id,
     },
     {
-      followingUsername: userData.username,
-      followedUsername: generateRandomUsername(),
+      followingUserId: user1.id,
+      followedUserId: user2.id,
     },
   ];
 
   const questionData: NewQuestion[] = [
     {
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       question: 'Sample question',
       personId: personId1,
     },
     {
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       question: 'Another sample question',
       personId: personId2,
     },
@@ -258,28 +282,28 @@ const seedAllTables = async (db: Database) => {
   const likesData: NewLike[] = [
     {
       postId: postId1,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
     {
       postId: postId2,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
     },
   ];
 
   const commentsData: NewComment[] = [
     {
       postId: postId1,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       comment: 'Sample comment 1',
     },
     {
       postId: postId2,
-      createdByUsername: userData.username,
+      createdByUserId: user1.id,
       comment: 'Sample comment 2',
     },
   ];
   try {
-    await seedUserTable(db, [userData]);
+    await seedUserTable(db, userData);
     await seedPostTable(db, postData);
     await seedSearchHistoryTable(db, searchHistoryData);
     await seedTopicTable(db, topicData);
@@ -287,7 +311,7 @@ const seedAllTables = async (db: Database) => {
     await seedPostTopicsTable(db, postTopicsData);
     await seedFollowsTable(db, followsData);
     await seedQuestionTable(db, questionData);
-    await seedQuestionTopicsTable(db, questionTopicsData);
+    // await seedQuestionTopicsTable(db, questionTopicsData);
     await seedLikesTable(db, likesData);
     await seedCommentsTable(db, commentsData);
     await seedGroupTable(db, groupData);

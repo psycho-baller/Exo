@@ -27,7 +27,6 @@ export type RoleOptions = (typeof roleOptions)[number];
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export const insertUserSchema = createInsertSchema(users, {
-  username: ({ username }) => username.min(1).max(31),
   firstName: ({ firstName }) => firstName.min(1).max(31),
   lastName: ({ lastName }) => lastName.min(1).max(31),
   email: ({ email }) => email.min(5).max(31),
@@ -37,16 +36,22 @@ export const insertUserSchema = createInsertSchema(users, {
 // Post
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
-export const insertPostSchema = createInsertSchema(posts);
+export const insertPostSchema = createInsertSchema(posts, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
+});
 
 // SearchHistory
 export type SearchHistory = typeof searchHistories.$inferSelect;
 export type NewSearchHistory = typeof searchHistories.$inferInsert;
+export const insertSearchHistoryhSchema = createInsertSchema(searchHistories, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
+});
 
 // Topic
 export type Topic = typeof topics.$inferSelect;
 export type NewTopic = typeof topics.$inferInsert;
 export const insertTopicSchema = createInsertSchema(topics, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   name: ({ name }) => name.min(1).max(31),
 });
 
@@ -54,6 +59,7 @@ export const insertTopicSchema = createInsertSchema(topics, {
 export type Person = typeof people.$inferSelect;
 export type NewPerson = typeof people.$inferInsert;
 export const insertPersonSchema = createInsertSchema(people, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   firstName: ({ firstName }) => firstName.min(1).max(31),
   lastName: ({ lastName }) => lastName.min(1).max(31),
   phoneNumber: ({ phoneNumber }) => phoneNumber.min(10).max(15),
@@ -63,6 +69,7 @@ export const insertPersonSchema = createInsertSchema(people, {
 export type Group = typeof groups.$inferSelect;
 export type NewGroup = typeof groups.$inferInsert;
 export const insertGroupSchema = createInsertSchema(groups, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   name: ({ name }) => name.min(1).max(63),
 });
 
@@ -97,6 +104,7 @@ export const insertFollowSchema = createInsertSchema(follows);
 export type Question = typeof questions.$inferSelect;
 export type NewQuestion = typeof questions.$inferInsert;
 export const insertQuestionSchema = createInsertSchema(questions, {
+  createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   question: ({ question }) => question.min(1).max(255),
   postId: ({ postId }) => postId.describe('The post the question is associated with'),
   groupId: ({ groupId }) => groupId.describe('The group the user wants to ask the question to'),
