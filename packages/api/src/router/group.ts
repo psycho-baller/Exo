@@ -27,7 +27,7 @@ export const groupRouter = createTRPCRouter({
   create: protectedProcedure.input(insertGroupSchema).mutation(({ ctx, input }) => {
     return ctx.db
       .insert(groups)
-      .values({ ...input, createdByUserId: ctx.session.user.id })
+      .values({ createdByUserId: ctx.session.user.id, ...input })
       .returning();
   }),
 

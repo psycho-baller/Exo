@@ -21,7 +21,7 @@ export const searchHistoryRouter = createTRPCRouter({
   create: protectedProcedure.input(insertSearchHistoryhSchema).mutation(({ ctx, input }) => {
     return ctx.db
       .insert(searchHistories)
-      .values({ ...input, createdByUserId: ctx.session.user.id });
+      .values({ createdByUserId: ctx.session.user.id, ...input });
   }),
 
   delete: protectedProcedure.input(z.object({ userId: z.string() })).mutation(({ ctx, input }) => {

@@ -20,7 +20,7 @@ export const questionRouter = createTRPCRouter({
   create: protectedProcedure.input(insertQuestionSchema).mutation(({ ctx, input }) => {
     return ctx.db
       .insert(questions)
-      .values({ ...input, createdByUserId: ctx.session.user.id })
+      .values({ createdByUserId: ctx.session.user.id, ...input })
       .returning();
   }),
 
