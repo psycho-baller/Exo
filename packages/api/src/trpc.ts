@@ -101,13 +101,15 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
-    throw new TRPCError({ code: 'UNAUTHORIZED' });
-  }
+  // throw new TRPCError({ code: 'UNAUTHORIZED' });
+  // TODO: THIS IS DANGEROUS, DO NOT DO THIS IN PRODUCTION
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      session: {
+        user: {
+          id: '69420',
+        },
+      },
     },
   });
 });
@@ -138,7 +140,7 @@ const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure; //.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 export const publicProcedure = t.procedure;
 /**
  * This is how you create new routers and subrouters in your tRPC API

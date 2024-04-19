@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { desc, eq } from '@acme/db';
+import { desc, eq, like } from '@acme/db';
 import { topics } from '@acme/db/schema';
 import { insertTopicSchema } from '@acme/db/schema/types';
 
@@ -18,10 +18,20 @@ export const topicRouter = createTRPCRouter({
   }),
 
   create: protectedProcedure.input(insertTopicSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(topics).values(input);
+    return ctx.db
+      .insert(topics)
+      .values({ ...input, createdByUserId: ctx.session.user.id })
+      .returning();
   }),
 
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.db.delete(topics).where(eq(topics.id, input));
+  }),
+
+  search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
+    return ctx.db.query.topics.findMany({
+      where: like(topics.name, `%${input.query}%`),
+      orderBy: desc(topics.id),
+    });
   }),
 });

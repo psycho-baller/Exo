@@ -8,22 +8,20 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 
 export const userRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.users.findMany({ orderBy: desc(users.username) });
+    return ctx.db.query.users.findMany({ orderBy: desc(users.id) });
   }),
 
-  byUsername: publicProcedure
-    .input(z.object({ username: z.string().min(1).max(31) }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.users.findFirst({
-        where: eq(users.username, input.username),
-      });
-    }),
+  byCurrentUserId: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.users.findFirst({
+      where: eq(users.id, ctx.session.user.id),
+    });
+  }),
 
   create: protectedProcedure.input(insertUserSchema).mutation(({ ctx, input }) => {
     return ctx.db.insert(users).values(input);
   }),
 
-  delete: protectedProcedure.input(z.string().min(1).max(31)).mutation(({ ctx, input }) => {
-    return ctx.db.delete(users).where(eq(users.username, input));
+  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.db.delete(users).where(eq(users.id, input));
   }),
 });
