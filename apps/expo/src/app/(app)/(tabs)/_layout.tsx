@@ -20,7 +20,6 @@ export default function TabLayout() {
     state.dropdownOpen,
     state.setDropdownOpen,
   ]);
-  console.log('segments', segments);
 
   return (
     <Tabs
@@ -67,16 +66,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name='questions'
         options={{
-          title: 'Questions',
+          title: '',
           headerShown: false,
           // headerTransparent: true,
           tabBarIcon: ({ color }) => <TabBarIcon name='home' color={color} />,
         }}
       />
       <Tabs.Screen
+        name='people'
+        options={{
+          title: '',
+          tabBarIcon: ({ size, color }) => (
+            <FontAwesome size={size} style={{ marginBottom: -3 }} name='users' color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name='addQuestion'
         options={{
-          title: 'Add',
+          title: '',
           tabBarIcon: ({ color }) => <TabBarIcon name='plus' color={color} />,
           headerShown: false,
         }}
@@ -88,9 +97,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='people'
+        name='search'
         options={{
-          title: 'People',
+          title: '',
+          tabBarIcon: ({ size, color }) => (
+            <FontAwesome size={size} style={{ marginBottom: -3 }} name='search' color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name='groups'
+        options={{
+          title: '',
           tabBarIcon: ({ size, color }) => (
             <FontAwesome size={size} style={{ marginBottom: -3 }} name='users' color={color} />
           ),
