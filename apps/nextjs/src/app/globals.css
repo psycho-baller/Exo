@@ -33,3 +33,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -ms-overflow-style: scrollbar;
 }
+
+input {
+  color-scheme: dark;
+}
+/* input::-webkit-inner-spin-button,
+input::-webkit-clear-button {
+  display: block;
+}
+*/
+input[type='datetime-local'] {
+}
+
+input[type='datetime-local']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  /* background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="font_unset "><rect width="18" height="18" x="3" y="4" rx="2" ry="2" stroke="#fff"></rect><line x1="16" x2="16" y1="2" y2="6" stroke="#ffffff"></line><line x1="8" x2="8" y1="2" y2="6" stroke="#ffffff"></line><line x1="3" x2="21" y1="10" y2="10" stroke="#ffffff"></line><path d="M8 14h.01" stroke="#ffffff"></path><path d="M12 14h.01" stroke="#ffffff"></path><path d="M16 14h.01" stroke="#ffffff"></path><path d="M8 18h.01" stroke="#ffffff"></path><path d="M12 18h.01" stroke="#ffffff"></path><path d="M16 18h.01" stroke="#ffffff"></path></svg>'); */
+}

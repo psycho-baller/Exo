@@ -37,7 +37,6 @@ const plugins = [
 // from the bundle: Switch, ProgressBar Picker, CheckBox, Touchable. To save more,
 // you can add ones you don't need like: AnimatedFlatList, FlatList, SectionList,
 // VirtualizedList, VirtualizedSectionList.
-
 module.exports = () => {
   let config = {
     typescript: {

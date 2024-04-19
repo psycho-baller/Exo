@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 
+import { auth } from '@acme/auth';
+
 import { api } from '~/utils/api';
 import type { RouterOutputs } from '~/utils/api';
 
-export function CreateQuestionForm() {
+export async function CreateQuestionForm() {
   const context = api.useContext();
+  const session = await auth();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -27,7 +30,7 @@ export function CreateQuestionForm() {
         try {
           await createQuestion({
             text: title,
-            createdByUserId: 1,
+            createdByUserId: session?.user.id,
           });
           setTitle('');
           setContent('');

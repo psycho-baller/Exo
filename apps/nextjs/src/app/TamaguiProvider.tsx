@@ -4,7 +4,6 @@ import '@tamagui/core/reset.css';
 import '@tamagui/polyfill-dev';
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { useServerInsertedHTML } from 'next/navigation';
 import { config as configBase } from '@tamagui/config/v2';
 import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
@@ -22,23 +21,28 @@ export type Conf = typeof config;
 export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useRootTheme();
 
+  // useServerInsertedHTML(() => {
+  //   // @ts-ignore
+  //   const rnwStyle = StyleSheet.getSheet();
+  //   return (
+  //     <>
+  //       <style dangerouslySetInnerHTML={{ __html: rnwStyle.textContent }} id={rnwStyle.id} />
+  //       <style
+  //         dangerouslySetInnerHTML={{
+  //           __html: Tamagui.getNewCSS({
+  //             // if you are using "outputCSS" option, you should use this "exclude"
+  //             // if not, then you can leave the option out
+  //             exclude: process.env.NODE_ENV === 'production' ? 'design-system' : null,
+  //           }),
+  //         }}
+  //       />
+  //     </>
+  //   );
+  // });
   useServerInsertedHTML(() => {
-    // @ts-ignore
-    const rnwStyle = StyleSheet.getSheet();
-    return (
-      <>
-        <style dangerouslySetInnerHTML={{ __html: rnwStyle.textContent }} id={rnwStyle.id} />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: Tamagui.getCSS({
-              // if you are using "outputCSS" option, you should use this "exclude"
-              // if not, then you can leave the option out
-              exclude: process.env.NODE_ENV === 'production' ? 'design-system' : null,
-            }),
-          }}
-        />
-      </>
-    );
+    // the first time this runs you'll get the full CSS including all themes
+    // after that, it will only return CSS generated since the last call
+    return <style dangerouslySetInnerHTML={{ __html: Tamagui.getNewCSS() }} />;
   });
 
   return (
