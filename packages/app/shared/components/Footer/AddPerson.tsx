@@ -1,10 +1,8 @@
-import type { YStackProps } from 'tamagui';
-import { Button, Label, YStack } from 'tamagui';
-
 import { api } from '@acme/api/utils/trpc';
-import { AutocompleteInput, Text } from '@acme/ui';
+import type { YStackProps } from '@acme/ui';
+import { AutocompleteInput, Button, Label, Text, YStack } from '@acme/ui';
 
-import { getFullName } from '../../../lib/utils/name';
+import { getFullName } from '../../../lib/utils/strings';
 import { useAddPersonStore } from '../../../stores/addQuestion';
 import type { PersonStore } from '../../../types/people';
 
@@ -61,7 +59,6 @@ export const AddPerson = (props: YStackProps) => {
 
   const addPerson = () => {
     addPersonMutation.mutate({
-      createdByUsername: 'admin',
       firstName: personSearch.split(' ')[0] || personSearch,
       lastName: personSearch.split(' ')[1],
     });
@@ -78,7 +75,7 @@ export const AddPerson = (props: YStackProps) => {
   return (
     <YStack {...props}>
       <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='person'>
-        person
+        PERSON
       </Label>
       <AutocompleteInput
         placeholderTextColor='$secondaryColor'
@@ -87,7 +84,7 @@ export const AddPerson = (props: YStackProps) => {
         width={200}
         fontSize={'$8'}
         paddingVertical={'$2'}
-        placeholder='Add person'
+        placeholder='Add Person'
         value={personSearch}
         setValue={setPersonSearch}
         filter={filterPeopleFromSearch}
