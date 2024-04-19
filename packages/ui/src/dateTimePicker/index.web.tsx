@@ -6,7 +6,7 @@ type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onC
   onChange: (date: Date) => Promise<void>;
 };
 
-const MyDateTimePicker = ({ value, onChange, style, ...props }: Props) => {
+export const MyDateTimePicker = ({ value, onChange, style, ...props }: Props) => {
   return (
     <View
       paddingVertical='$2'
@@ -50,5 +50,3 @@ const toLocalISOString = (date: Date) => {
   console.log('date', date, 'dateUTC', dateUTC);
   return dateUTC;
 };
-
-export default MyDateTimePicker;

@@ -6,7 +6,7 @@ type Props = Omit<BaseProps, 'value' | 'onChange'> & {
   onChange: (date: Date) => Promise<void>;
 };
 
-const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
+export const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
   return (
     <DateTimePicker
       value={value ?? new Date()}
@@ -21,5 +21,3 @@ const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
     />
   );
 };
-
-export default MyDateTimePicker;
