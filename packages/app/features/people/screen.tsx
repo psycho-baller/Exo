@@ -1,24 +1,27 @@
-import { FlashList } from '@shopify/flash-list';
+import { Text, VirtualList } from '@acme/ui';
 
 import { api } from '@acme/api/utils/trpc';
+
 import { MainPage } from '../../shared/components/Footer/MainPage';
-import PersonCard from './PersonCard';
+import { PersonCard } from './PersonCard';
 
 const Component = () => {
-  const personQuery = api.person.all.useQuery();
+  const { isLoading, error, data } = api.person.all.useQuery();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+  if (error) {
+    return <Text>Error: {error.message}</Text>;
+  }
 
   return (
     <MainPage>
-      <FlashList
-        data={personQuery.data}
-        estimatedItemSize={20}
-        keyExtractor={(item) => item.id.toString()}
-        // ItemSeparatorComponent={() => <Separator />}
-        renderItem={(p) => (
-          <PersonCard person={p.item} />
-          // <Text>{p.item.text}</Text>
-        )}
-      />
+      {data ? (
+        <VirtualList data={data} itemHeight={20} renderItem={(p) => <PersonCard person={p} />} />
+      ) : (
+        <Text>No data</Text>
+      )}
     </MainPage>
   );
 };

@@ -1,11 +1,14 @@
+import { Platform } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+
 import { api } from '@acme/api/utils/trpc';
 import { Text, VirtualList } from '@acme/ui';
 
 import { MainPage } from '../../shared/components/Footer/MainPage';
-import { QuestionCard } from './QuestionCard';
+import { GroupCard } from './GroupCard';
 
 const Index = () => {
-  const { isLoading, error, data } = api.question.all.useQuery();
+  const { isLoading, error, data } = api.group.all.useQuery();
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -17,12 +20,9 @@ const Index = () => {
   return (
     <MainPage>
       {data ? (
-        <VirtualList
-          data={data}
-          itemHeight={20}
-          renderItem={(g) => <QuestionCard question={g} />}
-        />
+        <VirtualList data={data} itemHeight={20} renderItem={(g) => <GroupCard group={g} />} />
       ) : (
+        // TODO: ADD YOUR FIRST QUESTION!!!
         <Text>No data</Text>
       )}
     </MainPage>
