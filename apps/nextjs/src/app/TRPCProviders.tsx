@@ -23,10 +23,10 @@ const getQueryClient = () => {
     // Server: always make a new query client
     return createQueryClient()
   }
-    // Browser: use singleton pattern to keep the same query client
-    
-    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-    return (clientQueryClientSingleton ??= createQueryClient())
+  // Browser: use singleton pattern to keep the same query client
+  
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+  return (clientQueryClientSingleton ??= createQueryClient())
 }
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
