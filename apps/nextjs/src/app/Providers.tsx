@@ -1,6 +1,8 @@
 'use client';
 
 import '@tamagui/core/reset.css';
+import './globals.css';
+
 import '@tamagui/polyfill-dev';
 
 import React from 'react';
@@ -13,7 +15,7 @@ import Tamagui from '../../tamagui.config';
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   // useServerInsertedHTML(() => {
   //   // @ts-ignore
-  //   const rnwStyle = StyleSheet.getSheet();
+  //   const rnwStyle = StyleSheet.getSheet(;
   //   return (
   //     <>
   //       <style dangerouslySetInnerHTML={{ __html: rnwStyle.textContent }} id={rnwStyle.id} />
