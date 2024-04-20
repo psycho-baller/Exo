@@ -4,7 +4,7 @@ import { Plus } from '@tamagui/lucide-icons';
 import { Button } from '@acme/ui';
 import type { ButtonProps } from '@acme/ui';
 
-import { useAddPersonStore } from '../../../stores/addQuestion';
+import { useAddPersonStore } from '../../stores/addQuestion';
 
 type Props = ButtonProps;
 

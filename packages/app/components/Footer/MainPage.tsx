@@ -4,9 +4,9 @@ import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 
 import type { PageProps } from '@acme/ui';
-import { FloatingFooter, Page, Button } from '@acme/ui';
+import { Button, FloatingFooter, Page } from '@acme/ui';
 
-import { useAddPersonStore } from '../../../stores/addQuestion';
+import { useAddPersonStore } from '../../stores/addQuestion';
 import { AddQuestion } from './AddQuestion';
 
 type Props = PageProps;

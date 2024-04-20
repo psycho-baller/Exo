@@ -2,9 +2,9 @@ import { api } from '@acme/api/utils/trpc';
 import type { YStackProps } from '@acme/ui';
 import { AutocompleteInput, Button, Label, Text, YStack } from '@acme/ui';
 
-import { getFullName } from '../../../lib/utils/strings';
-import { useAddPersonStore } from '../../../stores/addQuestion';
-import type { PersonStore } from '../../../types/people';
+import { useAddPersonStore } from '../../stores/addQuestion';
+import type { PersonStore } from '../../types/people';
+import { getFullName } from '../../utils/strings';
 
 export const AddPerson = (props: YStackProps) => {
   const personQuery = api.person.all.useQuery();

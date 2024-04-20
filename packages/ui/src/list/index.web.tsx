@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 interface Props {
@@ -16,7 +16,7 @@ export const VirtualList = ({
   itemHeight,
   listEmptyComponent,
 }: Props): ReactNode => {
-  const { top, bottom } = useSafeAreaInsets();
+  // const { top, bottom } = useSafeAreaInsets();
 
   const parentRef = useRef();
   const dataLength = data?.length || 0;
@@ -30,8 +30,8 @@ export const VirtualList = ({
     <div
       ref={parentRef as any}
       style={{
-        paddingTop: top,
-        paddingBottom: bottom,
+        // paddingTop: top,
+        // paddingBottom: bottom,
         height: '100%',
         overflow: 'auto', // Make it scroll!
       }}
@@ -39,9 +39,9 @@ export const VirtualList = ({
       {/* The large inner element to hold all of the items */}
       <div
         style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          // height: `${rowVirtualizer.getTotalSize()}px`,
           width: '100%',
-          position: 'relative',
+          // position: 'relative',
         }}
       >
         {/* Only the visible items in the virtualizer, manually positioned to be in view */}
@@ -52,12 +52,12 @@ export const VirtualList = ({
             <div
               key={virtualItem.key}
               style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
+                // position: 'absolute',
+                // top: 0,
+                // left: 0,
                 width: '100%',
-                height: `${virtualItem.size}px`,
-                transform: `translateY(${virtualItem.start}px)`,
+                // height: `${virtualItem.size}px`,
+                // transform: `translateY(${virtualItem.start}px)`,
               }}
             >
               {renderItem(data[virtualItem.index])}

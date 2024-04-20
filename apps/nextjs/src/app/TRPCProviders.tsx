@@ -7,12 +7,28 @@ import SuperJSON from 'superjson';
 
 import { api } from '@acme/api/utils/trpc.web';
 
-export function TRPCReactProvider(props: {
-  children: React.ReactNode;
-  headersPromise: Promise<Headers>;
-}) {
-  const [queryClient] = useState(() => new QueryClient());
-
+const createQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        // With SSR, we usually want to set some default staleTime
+        // above 0 to avoid refetching immediately on the client
+        staleTime: 30 * 1000,
+      },
+    },
+  });
+let clientQueryClientSingleton: QueryClient | undefined = undefined;
+const getQueryClient = () => {
+  if (typeof window === 'undefined') {
+    // Server: always make a new query client
+    return createQueryClient();
+  } else {
+    // Browser: use singleton pattern to keep the same query client
+    return (clientQueryClientSingleton ??= createQueryClient());
+  }
+};
+export function TRPCReactProvider(props: { children: React.ReactNode }) {
+  const queryClient = getQueryClient();
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -24,10 +40,10 @@ export function TRPCReactProvider(props: {
         unstable_httpBatchStreamLink({
           transformer: SuperJSON,
           url: getBaseUrl() + '/api/trpc',
-          async headers() {
-            const headers = new Map(await props.headersPromise);
+          headers() {
+            const headers = new Headers();
             headers.set('x-trpc-source', 'nextjs-react');
-            return Object.fromEntries(headers);
+            return headers;
           },
         }),
       ],

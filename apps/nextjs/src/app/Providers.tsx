@@ -5,22 +5,12 @@ import '@tamagui/polyfill-dev';
 
 import React from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
-import { config as configBase } from '@tamagui/config/v2';
-import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
-import { createTamagui, TamaguiProvider as TamaguiProviderOG } from 'tamagui';
+
+import { Provider } from '@acme/app/provider';
 
 import Tamagui from '../../tamagui.config';
 
-const config = createTamagui({
-  ...configBase,
-  themeClassNameOnRoot: false,
-});
-
-export type Conf = typeof config;
-
-export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useRootTheme();
-
+export const Providers = ({ children }: { children: React.ReactNode }) => {
   // useServerInsertedHTML(() => {
   //   // @ts-ignore
   //   const rnwStyle = StyleSheet.getSheet();
@@ -45,16 +35,5 @@ export const TamaguiProvider = ({ children }: { children: React.ReactNode }) => 
     return <style dangerouslySetInnerHTML={{ __html: Tamagui.getNewCSS() }} />;
   });
 
-  return (
-    <NextThemeProvider
-      skipNextHead
-      onChangeTheme={(next) => {
-        setTheme(next as any);
-      }}
-    >
-      <TamaguiProviderOG config={config} themeClassNameOnRoot defaultTheme={theme}>
-        {children}
-      </TamaguiProviderOG>
-    </NextThemeProvider>
-  );
+  return <Provider>{children}</Provider>;
 };

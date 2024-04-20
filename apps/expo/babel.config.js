@@ -18,6 +18,7 @@ module.exports = function (api) {
       // if you want reanimated support
       // '@babel/plugin-transform-export-namespace-from',
       // 'react-native-reanimated/plugin',
+      'jotai/babel/plugin-react-refresh',
     ],
   };
 };

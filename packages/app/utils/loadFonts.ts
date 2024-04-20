@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 
 export function loadFonts() {
