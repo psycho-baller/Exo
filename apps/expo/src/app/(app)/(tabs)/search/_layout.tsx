@@ -1,12 +1,12 @@
 // import Colors from '@/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
-import { Link, Stack } from 'expo-router';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'
+import { Link, Stack } from 'expo-router'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 
-import { useTheme } from '@acme/ui';
+import { useTheme } from '@acme/ui'
 
 const Layout = () => {
-  const theme = useTheme();
+  const theme = useTheme()
   return (
     <Stack>
       <Stack.Screen
@@ -50,6 +50,6 @@ const Layout = () => {
         }}
       />
     </Stack>
-  );
-};
-export default Layout;
+  )
+}
+export default Layout

@@ -1,7 +1,7 @@
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
-import { sqliteTableCreator } from 'drizzle-orm/sqlite-core';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql'
+import { sqliteTableCreator } from 'drizzle-orm/sqlite-core'
 
-import type * as schema from '../schema';
+import type * as schema from '../schema'
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -9,6 +9,6 @@ import type * as schema from '../schema';
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const sqliteTable = sqliteTableCreator((name) => `${name}`);
+export const sqliteTable = sqliteTableCreator((name) => `${name}`)
 
-export type Database = LibSQLDatabase<typeof schema>;
+export type Database = LibSQLDatabase<typeof schema>

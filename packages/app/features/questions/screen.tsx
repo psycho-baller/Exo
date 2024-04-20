@@ -1,17 +1,17 @@
-import { api } from '@acme/api/utils/trpc';
-import { Text, VirtualList } from '@acme/ui';
+import { api } from '@acme/api/utils/trpc'
+import { Text, VirtualList } from '@acme/ui'
 
-import { MainPage } from '../../components/Footer/MainPage';
-import { QuestionCard } from './QuestionCard';
+import { MainPage } from '../../components/Footer/MainPage'
+import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
-  const { isLoading, error, data } = api.question.all.useQuery();
+  const { isLoading, error, data } = api.question.all.useQuery()
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <Text>Loading...</Text>
   }
   if (error) {
-    return <Text>Error: {error.message}</Text>;
+    return <Text>Error: {error.message}</Text>
   }
 
   return (
@@ -23,7 +23,7 @@ const Index = () => {
         listEmptyComponent={<Text>No data</Text>}
       />
     </MainPage>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

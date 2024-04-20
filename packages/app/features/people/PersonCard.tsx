@@ -1,24 +1,24 @@
-import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons';
-import type { FC } from 'react';
-import { Link } from 'solito/link';
+import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons'
+import type { FC } from 'react'
+import { Link } from 'solito/link'
 
-import type { RouterOutputs } from '@acme/api';
-import { api } from '@acme/api/utils/trpc';
-import { Text, XStack, YStack } from '@acme/ui';
+import type { RouterOutputs } from '@acme/api'
+import { api } from '@acme/api/utils/trpc'
+import { Text, XStack, YStack } from '@acme/ui'
 
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../utils/date'
 
 interface Props {
-  person: RouterOutputs['person']['all'][number];
+  person: RouterOutputs['person']['all'][number]
 }
 
 export const PersonCard: FC<Props> = (props) => {
-  const { person } = props;
+  const { person } = props
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: () => utils.question.all.invalidate(),
-  });
+  })
 
   return (
     <Link href={`/people/${person.id.toString()}`}>
@@ -37,14 +37,14 @@ export const PersonCard: FC<Props> = (props) => {
         {/* topics */}
       </XStack>
     </Link>
-  );
-};
+  )
+}
 
 function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][number] }) {
-  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id);
-  if (!questions) return null;
-  const questionCount = questions.length;
-  const mostRecentQuestion = questions[0];
+  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id)
+  if (!questions) return null
+  const questionCount = questions.length
+  const mostRecentQuestion = questions[0]
 
   return (
     <XStack gap={18}>
@@ -63,5 +63,5 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
         </XStack>
       )}
     </XStack>
-  );
+  )
 }

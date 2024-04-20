@@ -1,22 +1,22 @@
-import { FlashList } from '@shopify/flash-list';
-import { useState } from 'react';
-import type { FC } from 'react';
-import type { GetProps, Input } from 'tamagui';
-import { Button, Separator, Text, View, YStack } from 'tamagui';
+import { FlashList } from '@shopify/flash-list'
+import { useState } from 'react'
+import type { FC } from 'react'
+import type { GetProps, Input } from 'tamagui'
+import { Button, Separator, Text, View, YStack } from 'tamagui'
 
-import { UnstyledInput } from './UnstyledInput';
+import { UnstyledInput } from './UnstyledInput'
 
-type T = any;
+type T = any
 interface Props<T> extends GetProps<typeof Input> {
-  data: T[];
-  value: string;
-  setValue: (value: string) => void;
-  filter: (data: T[], value: string) => T[];
-  onSearch?: (value: T) => void;
-  onSelect?: (item: T) => void;
-  renderItem?: (item: T) => string;
-  keyExtractor?: (item: T) => string;
-  onEmptyList?: () => JSX.Element;
+  data: T[]
+  value: string
+  setValue: (value: string) => void
+  filter: (data: T[], value: string) => T[]
+  onSearch?: (value: T) => void
+  onSelect?: (item: T) => void
+  renderItem?: (item: T) => string
+  keyExtractor?: (item: T) => string
+  onEmptyList?: () => JSX.Element
 }
 
 export const AutocompleteInput: FC<Props<T>> = ({
@@ -31,21 +31,21 @@ export const AutocompleteInput: FC<Props<T>> = ({
   keyExtractor = (item: T) => item,
   ...restOfprops
 }) => {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [filteredData, setFilteredData] = useState<string[]>(data);
+  const [menuVisible, setMenuVisible] = useState(false)
+  const [filteredData, setFilteredData] = useState<string[]>(data)
 
   const handleSearch = (text: string) => {
-    setMenuVisible(true);
-    setValue(text);
-    setFilteredData(filter(data, text));
-    onSearch && onSearch(text);
-  };
+    setMenuVisible(true)
+    setValue(text)
+    setFilteredData(filter(data, text))
+    onSearch && onSearch(text)
+  }
 
   const handleDropdownSelect = (item: T) => {
-    onSelect && onSelect(item);
-    setFilteredData([]);
-    setMenuVisible(false);
-  };
+    onSelect && onSelect(item)
+    setFilteredData([])
+    setMenuVisible(false)
+  }
 
   return (
     <View position='relative' width='100%'>
@@ -54,13 +54,13 @@ export const AutocompleteInput: FC<Props<T>> = ({
         onChangeText={handleSearch}
         onFocus={() => {
           // if (value.length === 0) {
-          setMenuVisible(true);
+          setMenuVisible(true)
           // }
         }}
         onBlur={() => {
           setTimeout(() => {
-            setMenuVisible(false);
-          }, 200);
+            setMenuVisible(false)
+          }, 200)
         }}
         {...restOfprops}
       />
@@ -85,11 +85,11 @@ export const AutocompleteInput: FC<Props<T>> = ({
                 <Button onPress={() => handleDropdownSelect(item)}>
                   <Text>{renderItem(item)}</Text>
                 </Button>
-              );
+              )
             }}
           />
         )}
       </YStack>
     </View>
-  );
-};
+  )
+}

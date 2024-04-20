@@ -1,30 +1,30 @@
-import { FlashList } from '@shopify/flash-list';
-import { ArrowLeft } from '@tamagui/lucide-icons';
-import type { ReactNode } from 'react';
-import { Platform } from 'react-native';
-import { useLink, useParams } from 'solito/navigation';
+import { FlashList } from '@shopify/flash-list'
+import { ArrowLeft } from '@tamagui/lucide-icons'
+import type { ReactNode } from 'react'
+import { Platform } from 'react-native'
+import { useLink, useParams } from 'solito/navigation'
 
-import { api } from '@acme/api/utils/trpc';
-import { Button, Page, Text, VirtualList, YStack } from '@acme/ui';
+import { api } from '@acme/api/utils/trpc'
+import { Button, Page, Text, VirtualList, YStack } from '@acme/ui'
 
-import { getFullName } from '../../utils/strings';
-import { QuestionCard } from '../questions/QuestionCard';
-import { EditPersonText } from './EditPersonText';
-import { PersonProperties } from './PersonProperties';
+import { getFullName } from '../../utils/strings'
+import { QuestionCard } from '../questions/QuestionCard'
+import { EditPersonText } from './EditPersonText'
+import { PersonProperties } from './PersonProperties'
 
 interface Params {
-  id: string;
-  [key: string]: string;
+  id: string
+  [key: string]: string
 }
 
 const PersonScreen = (): ReactNode => {
-  const { id } = useParams<Params>();
+  const { id } = useParams<Params>()
 
   const link = useLink({
     href: '/people',
-  });
-  const { data } = api.person.byId.useQuery({ id: Number.parseInt(id) });
-  if (!data) return null;
+  })
+  const { data } = api.person.byId.useQuery({ id: Number.parseInt(id) })
+  if (!data) return null
 
   return (
     <Page animation='bouncy' paddingHorizontal='$5' paddingVertical='$2'>
@@ -43,15 +43,15 @@ const PersonScreen = (): ReactNode => {
       <PersonProperties {...data} />
       <QuestionsForPerson personId={data.id} />
     </Page>
-  );
-};
+  )
+}
 
 const QuestionsForPerson = ({ personId }: { personId: number }) => {
-  const { data } = api.question.getQuestionsForPerson.useQuery(personId);
+  const { data } = api.question.getQuestionsForPerson.useQuery(personId)
   return (
     <YStack flex={1}>
       <VirtualList data={data} itemHeight={20} renderItem={(q) => <QuestionCard question={q} />} />
     </YStack>
-  );
-};
-export default PersonScreen;
+  )
+}
+export default PersonScreen

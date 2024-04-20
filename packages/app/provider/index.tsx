@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
-import type { TamaguiProviderProps } from '@acme/ui';
-import { CustomToast, ToastProvider } from '@acme/ui';
+import type { TamaguiProviderProps } from '@acme/ui'
+import { CustomToast, ToastProvider } from '@acme/ui'
 
-import { SafeAreaProvider } from './safe-area';
-import { TamaguiProvider } from './tamagui';
-import { TamaguiThemeProvider } from './theme';
-import { ToastViewport } from './toast-viewport';
+import { SafeAreaProvider } from './safe-area'
+import { TamaguiProvider } from './tamagui'
+import { TamaguiThemeProvider } from './theme'
+import { ToastViewport } from './toast-viewport'
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
@@ -30,5 +30,5 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
         {/* </SafeAreaProvider> */}
       </TamaguiProvider>
     </TamaguiThemeProvider>
-  );
+  )
 }

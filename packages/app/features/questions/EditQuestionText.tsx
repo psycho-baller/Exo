@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import { api } from '@acme/api/utils/trpc';
-import { UnstyledInput } from '@acme/ui';
+import { api } from '@acme/api/utils/trpc'
+import { UnstyledInput } from '@acme/ui'
 
 export function EditQuestionText({ id, content }: { id: number; content: string }) {
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const { mutate: updateQuestion } = api.question.updateQuestion.useMutation({
     async onSuccess() {
-      await utils.question.all.invalidate();
+      await utils.question.all.invalidate()
     },
-  });
-  const [question, setQuestion] = useState(content);
+  })
+  const [question, setQuestion] = useState(content)
 
   // debounce the input
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateQuestion({ id: id, question });
-    }, 2000);
+      updateQuestion({ id: id, question })
+    }, 2000)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [question]);
+      clearTimeout(timer)
+    }
+  }, [question])
 
   return (
     <UnstyledInput
@@ -35,5 +35,5 @@ export function EditQuestionText({ id, content }: { id: number; content: string 
       value={question}
       onChangeText={setQuestion}
     />
-  );
+  )
 }

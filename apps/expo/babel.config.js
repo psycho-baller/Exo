@@ -1,6 +1,6 @@
 /** @type {import("@babel/core").ConfigFunction} */
 module.exports = (api) => {
-  api.cache(true);
+  api.cache(true)
   return {
     presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }]],
     plugins: [
@@ -20,5 +20,5 @@ module.exports = (api) => {
       // 'react-native-reanimated/plugin',
       'jotai/babel/plugin-react-refresh',
     ],
-  };
-};
+  }
+}

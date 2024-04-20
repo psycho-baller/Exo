@@ -1,5 +1,5 @@
-const createEnv = require('@t3-oss/env-nextjs').createEnv;
-const z = require('zod').z;
+const createEnv = require('@t3-oss/env-nextjs').createEnv
+const z = require('zod').z
 
 const env = createEnv({
   shared: {
@@ -36,6 +36,6 @@ const env = createEnv({
     !!process.env.CI ||
     !!process.env.SKIP_ENV_VALIDATION ||
     process.env.npm_lifecycle_event === 'lint',
-});
+})
 
-module.exports = env;
+module.exports = env

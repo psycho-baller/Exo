@@ -1,5 +1,5 @@
 export type PersonStore = {
-  id: number;
-  firstName: string;
-  lastName: string | null;
-};
+  id: number
+  firstName: string
+  lastName: string | null
+}

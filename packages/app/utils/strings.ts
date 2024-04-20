@@ -1,15 +1,15 @@
-import type { AppRouterKeys } from '@acme/api/src/root';
+import type { AppRouterKeys } from '@acme/api/src/root'
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {
-  return lastName ? `${firstName} ${lastName}` : firstName;
-};
+  return lastName ? `${firstName} ${lastName}` : firstName
+}
 
-type singularOptions = Exclude<AppRouterKeys, 'auth'>;
+type singularOptions = Exclude<AppRouterKeys, 'auth'>
 export const getSingularFromPlural = (word: string): singularOptions => {
   switch (word) {
     case 'people':
-      return 'person';
+      return 'person'
     default:
-      return word.replace(/s$/, '') as singularOptions;
+      return word.replace(/s$/, '') as singularOptions
   }
-};
+}

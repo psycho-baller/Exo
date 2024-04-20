@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import Screen from '@acme/app/features/questions/question';
+import Screen from '@acme/app/features/questions/question'
 
 const Page = () => {
-  return <Screen />;
-};
+  return <Screen />
+}
 
-export default Page;
+export default Page

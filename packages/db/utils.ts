@@ -1,19 +1,19 @@
-import { createClient } from '@libsql/client';
-import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client'
+import { drizzle } from 'drizzle-orm/libsql'
 
-import * as schema from './schema';
-import type { Database } from './schema/_table';
+import * as schema from './schema'
+import type { Database } from './schema/_table'
 
 interface ConnectionResult {
-  db: Database;
-  client: ReturnType<typeof createClient>;
+  db: Database
+  client: ReturnType<typeof createClient>
 }
 
 export function createConnection(): ConnectionResult {
   const client = createClient({
     url: 'http://127.0.0.1:8080',
-  });
-  const db = drizzle(client, { schema });
+  })
+  const db = drizzle(client, { schema })
 
   return {
     db,
@@ -23,31 +23,31 @@ export function createConnection(): ConnectionResult {
     //   console.log("🧨 Closing the database connection...");
     //   await pg.end();
     // },
-  };
+  }
 }
 
 export function generateRandomId(length: number): number {
-  const id = Math.random() * 10 ** length;
-  return Math.floor(id);
+  const id = Math.random() * 10 ** length
+  return Math.floor(id)
 }
 
 export function generateRandomUserId(): string {
-  const base = 'seeded_user_';
-  const randomNumber = generateRandomId(3).toString();
-  const username = base + randomNumber;
-  return username;
+  const base = 'seeded_user_'
+  const randomNumber = generateRandomId(3).toString()
+  const username = base + randomNumber
+  return username
 }
 
 export function generateRandomFirstName(): string {
-  const base = 'seeded_first_name_';
-  const randomNumber = generateRandomId(3).toString();
-  const firstName = base + randomNumber;
-  return firstName;
+  const base = 'seeded_first_name_'
+  const randomNumber = generateRandomId(3).toString()
+  const firstName = base + randomNumber
+  return firstName
 }
 
 export function generateRandomLastName(): string {
-  const base = 'seeded_last_name_';
-  const randomNumber = generateRandomId(3).toString();
-  const lastName = base + randomNumber;
-  return lastName;
+  const base = 'seeded_last_name_'
+  const randomNumber = generateRandomId(3).toString()
+  const lastName = base + randomNumber
+  return lastName
 }

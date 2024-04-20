@@ -1,21 +1,21 @@
-import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons';
-import type { FC } from 'react';
-import { Platform } from 'react-native';
-import { Link } from 'solito/link';
+import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
+import type { FC } from 'react'
+import { Platform } from 'react-native'
+import { Link } from 'solito/link'
 
-import type { PageProps } from '@acme/ui';
-import { Button, FloatingFooter, Page } from '@acme/ui';
+import type { PageProps } from '@acme/ui'
+import { Button, FloatingFooter, Page } from '@acme/ui'
 
-import { useAddPersonStore } from '../../stores/addQuestion';
-import { AddQuestion } from './AddQuestion';
+import { useAddPersonStore } from '../../stores/addQuestion'
+import { AddQuestion } from './AddQuestion'
 
-type Props = PageProps;
+type Props = PageProps
 
 export const MainPage: FC<Props> = ({ children }) => {
-  const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen]);
+  const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen])
 
   function handlePlusClick() {
-    setDropdownOpen(true);
+    setDropdownOpen(true)
   }
 
   return (
@@ -45,5 +45,5 @@ export const MainPage: FC<Props> = ({ children }) => {
       )}
       <AddQuestion />
     </Page>
-  );
-};
+  )
+}

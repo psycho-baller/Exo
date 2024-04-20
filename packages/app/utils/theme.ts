@@ -2,8 +2,8 @@ export const ThemeVariant = {
   light: 'light',
   dark: 'dark',
   system: 'system',
-} as const;
+} as const
 
-export type ThemeVariant = keyof typeof ThemeVariant;
+export type ThemeVariant = keyof typeof ThemeVariant
 
-export type CurrentThemeVariant = 'light' | 'dark';
+export type CurrentThemeVariant = 'light' | 'dark'

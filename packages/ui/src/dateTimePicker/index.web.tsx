@@ -1,10 +1,10 @@
-import type { InputHTMLAttributes } from 'react';
-import { View } from 'tamagui';
+import type { InputHTMLAttributes } from 'react'
+import { View } from 'tamagui'
 
 type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'> & {
-  value: Date | null;
-  onChange: (date: Date) => Promise<void>;
-};
+  value: Date | null
+  onChange: (date: Date) => Promise<void>
+}
 
 export const MyDateTimePicker = ({ value, onChange, style, ...props }: Props) => {
   return (
@@ -32,21 +32,21 @@ export const MyDateTimePicker = ({ value, onChange, style, ...props }: Props) =>
         type='datetime-local'
         value={value?.toISOString().slice(0, 16)}
         onChange={async (e) => {
-          const date = new Date(e.target.value);
+          const date = new Date(e.target.value)
           if (date) {
-            await onChange(toLocalISOString(date));
+            await onChange(toLocalISOString(date))
           }
         }}
         {...props}
       />
     </View>
-  );
-};
+  )
+}
 
 const toLocalISOString = (date: Date) => {
-  const offset = date.getTimezoneOffset();
+  const offset = date.getTimezoneOffset()
   // subtract the offset to get the UTC time
-  const dateUTC = new Date(date.getTime() - offset * 60 * 1000);
-  console.log('date', date, 'dateUTC', dateUTC);
-  return dateUTC;
-};
+  const dateUTC = new Date(date.getTime() - offset * 60 * 1000)
+  console.log('date', date, 'dateUTC', dateUTC)
+  return dateUTC
+}

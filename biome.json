@@ -1,56 +1,66 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
-	"files": {
-		"ignore": [
-			"**/.wrangler/**",
-			"**/tamagui.css",
-			"**/workbox*.js",
-			"**/sw*.js",
-			"**/service-worker.js",
-			"**/fallback*.js",
-			"**/node_modules/**",
-			"**/dist/**",
-			"**/build/**",
-			"**/ios/**",
-			"**/.git/**",
-			"**/.vscode/**",
-			"**/.android/**",
-			"**/.DS_Store/**",
-			"**/Thumbs.db/**",
-			"**/.tamagui*",
-			"**/.next*"
-		],
-		"ignoreUnknown": true
-	},
-	"formatter": {
-		"enabled": true,
-		"formatWithErrors": false,
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineEnding": "lf",
-		"lineWidth": 100,
-		"attributePosition": "auto"
-	},
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
-	},
-	"javascript": {
-		"formatter": {
-			"jsxQuoteStyle": "single",
-			"quoteProperties": "asNeeded",
-			"trailingComma": "all",
-			"semicolons": "always",
-			"arrowParentheses": "always",
-			"bracketSpacing": true,
-			"bracketSameLine": false,
-			"quoteStyle": "single",
-			"attributePosition": "auto"
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "files": {
+    "ignore": [
+      "**/.wrangler/**",
+      "**/tamagui.css",
+      "**/workbox*.js",
+      "**/sw*.js",
+      "**/service-worker.js",
+      "**/fallback*.js",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/ios/**",
+      "**/.git/**",
+      "**/.vscode/**",
+      "**/.android/**",
+      "**/.DS_Store/**",
+      "**/Thumbs.db/**",
+      "**/.tamagui*",
+      "**/.next*"
+    ],
+    "ignoreUnknown": true
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useTemplate": "warn"
+      },
+      "suspicious": {
+        "noEmptyInterface": "off",
+        "noExplicitAny": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingComma": "all",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto"
+    }
+  }
 }

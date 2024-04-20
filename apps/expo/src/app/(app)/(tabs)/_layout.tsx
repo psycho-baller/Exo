@@ -1,25 +1,25 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { BlurView } from 'expo-blur';
-import { Tabs, useSegments } from 'expo-router';
-import type React from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { BlurView } from 'expo-blur'
+import { Tabs, useSegments } from 'expo-router'
+import type React from 'react'
 
-import { useAddPersonStore } from '@acme/app/stores/addQuestion';
-import { useThemeName } from '@acme/ui';
+import { useAddPersonStore } from '@acme/app/stores/addQuestion'
+import { useThemeName } from '@acme/ui'
 
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
+  name: React.ComponentProps<typeof FontAwesome>['name']
+  color: string
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
 }
 
 export default function TabLayout() {
-  const themeName = useThemeName();
-  const segments = useSegments();
+  const themeName = useThemeName()
+  const segments = useSegments()
   const [dropdownOpen, setDropdownOpen] = useAddPersonStore((state) => [
     state.dropdownOpen,
     state.setDropdownOpen,
-  ]);
+  ])
 
   return (
     <Tabs
@@ -91,8 +91,8 @@ export default function TabLayout() {
         }}
         listeners={{
           tabPress: (e) => {
-            e.preventDefault();
-            setDropdownOpen(true);
+            e.preventDefault()
+            setDropdownOpen(true)
           },
         }}
       />
@@ -117,5 +117,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  );
+  )
 }

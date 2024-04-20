@@ -1,28 +1,28 @@
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
-import type { FC } from 'react';
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { Link } from 'solito/link';
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
+import type { FC } from 'react'
+import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
+import { Link } from 'solito/link'
 
-import type { RouterOutputs } from '@acme/api';
-import { api } from '@acme/api/utils/trpc';
-import { Text, XStack, YStack } from '@acme/ui';
+import type { RouterOutputs } from '@acme/api'
+import { api } from '@acme/api/utils/trpc'
+import { Text, XStack, YStack } from '@acme/ui'
 
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../utils/date'
 
 interface Props {
-  group: RouterOutputs['group']['all'][number];
+  group: RouterOutputs['group']['all'][number]
 }
 
 export const GroupCard: FC<Props> = (props) => {
-  const { group } = props;
-  const date = group.createdDatetime;
+  const { group } = props
+  const date = group.createdDatetime
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const { mutate: deleteMutation } = api.group.delete.useMutation({
     onSettled: () => utils.group.all.invalidate(),
-  });
+  })
 
   return (
     <GestureHandlerRootView>
@@ -68,35 +68,35 @@ export const GroupCard: FC<Props> = (props) => {
         </Link>
       </Swipeable>
     </GestureHandlerRootView>
-  );
-};
+  )
+}
 
 function PersonOrGroupForGroup(props: {
-  group: RouterOutputs['group']['all'][number];
+  group: RouterOutputs['group']['all'][number]
 }) {
-  const { group } = props;
+  const { group } = props
   if (group.personId === null) {
-    return null;
+    return null
   }
   const personQuery = api.person.byId.useQuery({
     id: group.personId,
-  });
+  })
   if (personQuery.isLoading) {
-    return <Text>Loading...</Text>;
+    return <Text>Loading...</Text>
   }
   if (personQuery.error) {
-    return <Text>Error: {personQuery.error.message}</Text>;
+    return <Text>Error: {personQuery.error.message}</Text>
   }
-  const { data: person } = personQuery;
+  const { data: person } = personQuery
   if (!person) {
-    return null;
+    return null
   }
   return (
     <XStack gap={6} alignItems='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
       <Text color='$secondaryColor'>{person.firstName}</Text>
     </XStack>
-  );
+  )
 }
 
 function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
@@ -132,5 +132,5 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
     </XStack>
     // </RectButton>
     // </Animated.View>
-  );
+  )
 }

@@ -8,6 +8,6 @@ const config = {
   },
   plugins: ['drizzle'],
   rules: {},
-};
+}
 
-module.exports = config;
+module.exports = config

@@ -1,25 +1,25 @@
-import { atom, useAtom } from 'jotai';
-import { Appearance } from 'react-native';
+import { atom, useAtom } from 'jotai'
+import { Appearance } from 'react-native'
 
-import { storage } from '../provider/kv';
-import { type CurrentThemeVariant, ThemeVariant } from '../utils/theme';
+import { storage } from '../provider/kv'
+import { type CurrentThemeVariant, ThemeVariant } from '../utils/theme'
 
-export const appThemeKey = 'appTheme';
+export const appThemeKey = 'appTheme'
 
-const appThemeAtom = atom<ThemeVariant>(storage.getString(appThemeKey) as ThemeVariant);
+const appThemeAtom = atom<ThemeVariant>(storage.getString(appThemeKey) as ThemeVariant)
 
 export function useAppTheme() {
-  return [...useAtom(appThemeAtom)] as const;
+  return [...useAtom(appThemeAtom)] as const
 }
 
 const currentThemeAtom = atom<CurrentThemeVariant>((get) => {
-  const userTheme = get(appThemeAtom);
+  const userTheme = get(appThemeAtom)
   if (userTheme === ThemeVariant.system) {
-    return Appearance.getColorScheme() as CurrentThemeVariant;
+    return Appearance.getColorScheme() as CurrentThemeVariant
   }
-  return userTheme;
-});
+  return userTheme
+})
 
 export function useCurrentTheme() {
-  return [...useAtom(currentThemeAtom)] as const;
+  return [...useAtom(currentThemeAtom)] as const
 }

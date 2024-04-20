@@ -1,36 +1,36 @@
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import { useFonts } from 'expo-font'
+import { SplashScreen, Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import React, { useEffect } from 'react'
 
-import { Provider } from '@acme/app/provider';
+import { Provider } from '@acme/app/provider'
 
-import { TRPCProvider } from '~/utils/api';
+import { TRPCProvider } from '~/utils/api'
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from 'expo-router'
 
 const RootLayout = () => {
   const [loaded, error] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
-  });
+  })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (error) throw error
+  }, [error])
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
     }
-  }, [loaded]);
+  }, [loaded])
 
   if (!loaded) {
-    return null;
+    return null
   }
 
   return (
@@ -53,7 +53,7 @@ const RootLayout = () => {
         <StatusBar />
       </TRPCProvider>
     </Provider>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

@@ -1,1 +1,1 @@
-export { default } from '@acme/app/features/search/screen';
+export { default } from '@acme/app/features/search/screen'

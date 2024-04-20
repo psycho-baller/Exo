@@ -1,13 +1,13 @@
-import type { AdapterAccount } from '@auth/core/adapters';
-import { relations } from 'drizzle-orm';
-import { index, integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core';
+import type { AdapterAccount } from '@auth/core/adapters'
+import { relations } from 'drizzle-orm'
+import { index, integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
 
 // import { sqliteTable } from './_table';
 
 // User
-export const landingPageOptions = ['questions', 'people', 'discover'] as const;
-export const postVisibilityOptions = ['public', 'private', 'followers'] as const;
-export const roleOptions = ['admin', 'user'] as const;
+export const landingPageOptions = ['questions', 'people', 'discover'] as const
+export const postVisibilityOptions = ['public', 'private', 'followers'] as const
+export const roleOptions = ['admin', 'user'] as const
 export const users = sqliteTable('User', {
   id: text('id').notNull().primaryKey(),
   name: text('name'),
@@ -25,7 +25,7 @@ export const users = sqliteTable('User', {
   }).default('public'),
   role: text('role', { enum: roleOptions }).default('user'),
   phone: text('phone'),
-});
+})
 
 // Post
 export const posts = sqliteTable('Post', {
@@ -37,7 +37,7 @@ export const posts = sqliteTable('Post', {
     mode: 'timestamp_ms',
   }).defaultNow(),
   question: text('question').notNull(),
-});
+})
 
 // SearchHistory
 export const searchHistories = sqliteTable(
@@ -52,9 +52,9 @@ export const searchHistories = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.query, table.createdByUserId] }),
-    };
+    }
   },
-);
+)
 
 // Topic
 export const topics = sqliteTable('Topic', {
@@ -63,7 +63,7 @@ export const topics = sqliteTable('Topic', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
-});
+})
 
 // Person
 export const people = sqliteTable(
@@ -87,9 +87,9 @@ export const people = sqliteTable(
   (table) => {
     return {
       unique: unique().on(table.firstName, table.lastName, table.birthday),
-    };
+    }
   },
-);
+)
 
 // Group
 export const groups = sqliteTable(
@@ -108,9 +108,9 @@ export const groups = sqliteTable(
   (table) => {
     return {
       unique: unique().on(table.name, table.createdByUserId),
-    };
+    }
   },
-);
+)
 
 // groupsOfPeople
 export const groupsOfPeople = sqliteTable(
@@ -126,9 +126,9 @@ export const groupsOfPeople = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.groupId, table.personId] }),
-    };
+    }
   },
-);
+)
 
 // Likes
 export const likes = sqliteTable(
@@ -147,9 +147,9 @@ export const likes = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.createdByUserId, table.postId] }),
-    };
+    }
   },
-);
+)
 
 // Comments
 export const comments = sqliteTable(
@@ -171,9 +171,9 @@ export const comments = sqliteTable(
       pk: primaryKey({
         columns: [table.createdByUserId, table.postId, table.createdDatetime],
       }),
-    };
+    }
   },
-);
+)
 
 // PostTopics
 export const postTopics = sqliteTable(
@@ -189,9 +189,9 @@ export const postTopics = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.postId, table.topicId] }),
-    };
+    }
   },
-);
+)
 
 // Follows
 export const follows = sqliteTable(
@@ -209,9 +209,9 @@ export const follows = sqliteTable(
       pk: primaryKey({
         columns: [table.followingUserId, table.followedUserId],
       }),
-    };
+    }
   },
-);
+)
 
 // Question
 export const questions = sqliteTable('Question', {
@@ -227,7 +227,7 @@ export const questions = sqliteTable('Question', {
   groupId: integer('group_id').references(() => groups.id),
   personId: integer('person_id').references(() => people.id),
   postId: integer('post_id').references(() => posts.id),
-});
+})
 
 // QuestionTopics
 export const questionTopics = sqliteTable(
@@ -243,9 +243,9 @@ export const questionTopics = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.topicId, table.questionId] }),
-    };
+    }
   },
-);
+)
 
 export const accounts = sqliteTable(
   'account',
@@ -270,7 +270,7 @@ export const accounts = sqliteTable(
     }),
     userIdIdx: index('userId_idx').on(account.userId),
   }),
-);
+)
 
 export const sessions = sqliteTable('session', {
   sessionToken: text('sessionToken').notNull().primaryKey(),
@@ -278,7 +278,7 @@ export const sessions = sqliteTable('session', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
-});
+})
 
 export const verificationTokens = sqliteTable(
   'verificationToken',
@@ -290,7 +290,7 @@ export const verificationTokens = sqliteTable(
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
-);
+)
 
 // Relations (deprecated)
 export const usersRelations = relations(users, ({ many }) => ({
@@ -302,7 +302,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   people: many(people, { relationName: 'People created by user' }),
   groups: many(groups, { relationName: 'Groups created by user' }),
   accounts: many(accounts),
-}));
+}))
 
 export const postsRelations = relations(posts, ({ one }) => ({
   user: one(users, {
@@ -310,7 +310,7 @@ export const postsRelations = relations(posts, ({ one }) => ({
     fields: [posts.createdByUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const searchHistoriesRelations = relations(searchHistories, ({ one }) => ({
   user: one(users, {
@@ -318,7 +318,7 @@ export const searchHistoriesRelations = relations(searchHistories, ({ one }) => 
     fields: [searchHistories.createdByUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const topicsRelations = relations(topics, ({ one }) => ({
   user: one(users, {
@@ -326,7 +326,7 @@ export const topicsRelations = relations(topics, ({ one }) => ({
     fields: [topics.createdByUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const peopleRelations = relations(people, ({ one }) => ({
   user: one(users, {
@@ -334,7 +334,7 @@ export const peopleRelations = relations(people, ({ one }) => ({
     fields: [people.createdByUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const groupsRelations = relations(groups, ({ one }) => ({
   user: one(users, {
@@ -342,7 +342,7 @@ export const groupsRelations = relations(groups, ({ one }) => ({
     fields: [groups.createdByUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
   group: one(groups, {
@@ -355,7 +355,7 @@ export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
     fields: [groupsOfPeople.personId],
     references: [people.id],
   }),
-}));
+}))
 
 export const likesRelations = relations(likes, ({ one }) => ({
   user: one(users, {
@@ -368,7 +368,7 @@ export const likesRelations = relations(likes, ({ one }) => ({
     fields: [likes.postId],
     references: [posts.id],
   }),
-}));
+}))
 
 export const commentsRelations = relations(comments, ({ one }) => ({
   user: one(users, {
@@ -381,7 +381,7 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     fields: [comments.postId],
     references: [posts.id],
   }),
-}));
+}))
 
 export const postTopicsRelations = relations(postTopics, ({ one }) => ({
   post: one(posts, {
@@ -394,7 +394,7 @@ export const postTopicsRelations = relations(postTopics, ({ one }) => ({
     fields: [postTopics.topicId],
     references: [topics.id],
   }),
-}));
+}))
 
 export const followsRelations = relations(follows, ({ one }) => ({
   follower: one(users, {
@@ -407,7 +407,7 @@ export const followsRelations = relations(follows, ({ one }) => ({
     fields: [follows.followedUserId],
     references: [users.id],
   }),
-}));
+}))
 
 export const questionsRelations = relations(questions, ({ one }) => ({
   user: one(users, {
@@ -430,7 +430,7 @@ export const questionsRelations = relations(questions, ({ one }) => ({
     fields: [questions.createdByUserId, questions.personId],
     references: [people.createdByUserId, people.id],
   }),
-}));
+}))
 
 export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
   topic: one(topics, {
@@ -443,4 +443,4 @@ export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
     fields: [questionTopics.questionId],
     references: [questions.id],
   }),
-}));
+}))

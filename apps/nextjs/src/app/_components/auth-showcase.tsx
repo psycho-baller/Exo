@@ -1,19 +1,19 @@
-import { auth, signIn, signOut } from '@acme/auth';
+import { auth, signIn, signOut } from '@acme/auth'
 
 export async function AuthShowcase() {
-  const session = await auth();
+  const session = await auth()
 
   if (!session) {
     return (
       <form
         action={async () => {
-          'use server';
-          await signIn('discord');
+          'use server'
+          await signIn('discord')
         }}
       >
         <button>Sign in with Discord</button>
       </form>
-    );
+    )
   }
 
   return (
@@ -32,12 +32,12 @@ export async function AuthShowcase() {
 
       <form
         action={async () => {
-          'use server';
-          await signOut();
+          'use server'
+          await signOut()
         }}
       >
         <button>Sign out</button>
       </form>
     </section>
-  );
+  )
 }

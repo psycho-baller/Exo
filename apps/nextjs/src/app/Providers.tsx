@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import '@tamagui/core/reset.css';
-import './globals.css';
+import '@tamagui/core/reset.css'
+import './globals.css'
 
-import '@tamagui/polyfill-dev';
+import '@tamagui/polyfill-dev'
 
-import { useServerInsertedHTML } from 'next/navigation';
-import type React from 'react';
+import { useServerInsertedHTML } from 'next/navigation'
+import type React from 'react'
 
-import { Provider } from '@acme/app/provider';
+import { Provider } from '@acme/app/provider'
 
-import Tamagui from '../../tamagui.config';
+import Tamagui from '../../tamagui.config'
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   // useServerInsertedHTML(() => {
@@ -34,8 +34,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   useServerInsertedHTML(() => {
     // the first time this runs you'll get the full CSS including all themes
     // after that, it will only return CSS generated since the last call
-    return <style dangerouslySetInnerHTML={{ __html: Tamagui.getNewCSS() }} />;
-  });
+    return <style dangerouslySetInnerHTML={{ __html: Tamagui.getNewCSS() }} />
+  })
 
-  return <Provider>{children}</Provider>;
-};
+  return <Provider>{children}</Provider>
+}

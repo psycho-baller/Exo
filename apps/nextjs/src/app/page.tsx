@@ -1,15 +1,15 @@
 // import ErrorPage from "@/components/ErrorPage";
-import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation'
 
-import { auth } from '@acme/auth';
+import { auth } from '@acme/auth'
 
 export default async function Home() {
-  const session = await auth();
-  const isAuthSkip = process.env.AUTH_SKIP === 'true';
+  const session = await auth()
+  const isAuthSkip = process.env.AUTH_SKIP === 'true'
   if (session || (process.env.NODE_ENV === 'development' && isAuthSkip)) {
-    redirect('/questions');
+    redirect('/questions')
   } else {
-    redirect('/settings');
+    redirect('/settings')
     // return <ErrorPage error='User not found' />;
   }
 }

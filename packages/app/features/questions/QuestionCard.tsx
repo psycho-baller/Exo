@@ -1,28 +1,28 @@
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
-import type { FC } from 'react';
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { Link } from 'solito/link';
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
+import type { FC } from 'react'
+import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
+import { Link } from 'solito/link'
 
-import type { RouterOutputs } from '@acme/api';
-import { api } from '@acme/api/utils/trpc';
-import { Text, XStack, YStack } from '@acme/ui';
+import type { RouterOutputs } from '@acme/api'
+import { api } from '@acme/api/utils/trpc'
+import { Text, XStack, YStack } from '@acme/ui'
 
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../utils/date'
 
 interface Props {
-  question: RouterOutputs['question']['all'][number];
+  question: RouterOutputs['question']['all'][number]
 }
 
 export const QuestionCard: FC<Props> = (props) => {
-  const { question } = props;
-  const date = question.createdDatetime;
+  const { question } = props
+  const date = question.createdDatetime
 
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: () => utils.question.all.invalidate(),
-  });
+  })
 
   return (
     <GestureHandlerRootView>
@@ -68,35 +68,35 @@ export const QuestionCard: FC<Props> = (props) => {
         </Link>
       </Swipeable>
     </GestureHandlerRootView>
-  );
-};
+  )
+}
 
 function PersonOrGroupForQuestion(props: {
-  question: RouterOutputs['question']['all'][number];
+  question: RouterOutputs['question']['all'][number]
 }) {
-  const { question } = props;
+  const { question } = props
   if (question.personId === null) {
-    return null;
+    return null
   }
   const personQuery = api.person.byId.useQuery({
     id: question.personId,
-  });
+  })
   if (personQuery.isLoading) {
-    return <Text>Loading...</Text>;
+    return <Text>Loading...</Text>
   }
   if (personQuery.error) {
-    return <Text>Error: {personQuery.error.message}</Text>;
+    return <Text>Error: {personQuery.error.message}</Text>
   }
-  const { data: person } = personQuery;
+  const { data: person } = personQuery
   if (!person) {
-    return null;
+    return null
   }
   return (
     <XStack gap={6} alignItems='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
       <Text color='$secondaryColor'>{person.firstName}</Text>
     </XStack>
-  );
+  )
 }
 
 function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
@@ -131,5 +131,5 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
     </XStack>
     // </RectButton>
     // </Animated.View>
-  );
+  )
 }

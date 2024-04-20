@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import { api } from '@acme/api/utils/trpc';
-import { UnstyledInput } from '@acme/ui';
+import { api } from '@acme/api/utils/trpc'
+import { UnstyledInput } from '@acme/ui'
 
 export function EditPersonText({ id, content }: { id: number; content: string }) {
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const { mutate: updatePerson } = api.person.updatePerson.useMutation({
     async onSuccess() {
-      await utils.person.all.invalidate();
+      await utils.person.all.invalidate()
     },
-  });
-  const [person, setPerson] = useState(content);
+  })
+  const [person, setPerson] = useState(content)
 
   // debounce the input
   useEffect(() => {
-    const [firstName, lastName] = person.split(' ', 2);
-    if (!firstName) return;
+    const [firstName, lastName] = person.split(' ', 2)
+    if (!firstName) return
     const timer = setTimeout(() => {
-      updatePerson({ id: id, firstName: firstName, lastName: lastName });
-    }, 2000);
+      updatePerson({ id: id, firstName: firstName, lastName: lastName })
+    }, 2000)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [id, person, updatePerson]);
+      clearTimeout(timer)
+    }
+  }, [id, person, updatePerson])
 
   return (
     <UnstyledInput
@@ -37,5 +37,5 @@ export function EditPersonText({ id, content }: { id: number; content: string })
       value={person}
       onChangeText={setPerson}
     />
-  );
+  )
 }

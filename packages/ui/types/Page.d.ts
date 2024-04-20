@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import type { GetProps } from 'tamagui';
+import type { GetProps } from 'tamagui'
 
 export declare const Page: import('tamagui').TamaguiComponent<
   | (Omit<
@@ -18,7 +18,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
           | import('react-native').ViewStyle
           | import('react').CSSProperties
           | (import('react').CSSProperties & import('react-native').ViewStyle)
-        >;
+        >
       } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
       import('@tamagui/web').WithShorthands<
         import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -41,59 +41,57 @@ export declare const Page: import('tamagui').TamaguiComponent<
               >
           >
       > & {
-        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
         onStartShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        onResponderEnd?:
-          | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
+        onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
         onResponderGrant?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderReject?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderMove?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderRelease?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderStart?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderTerminationRequest?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onResponderTerminate?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onStartShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        elevationAndroid?: string | number | undefined;
-        rel?: any;
-        download?: any;
-        dataSet?: Record<string, string | number | null | undefined> | undefined;
-        onScrollShouldSetResponder?: unknown;
-        onScrollShouldSetResponderCapture?: unknown;
-        onSelectionChangeShouldSetResponder?: unknown;
-        onSelectionChangeShouldSetResponderCapture?: unknown;
-        href?: string | undefined;
+          | undefined
+        elevationAndroid?: string | number | undefined
+        rel?: any
+        download?: any
+        dataSet?: Record<string, string | number | null | undefined> | undefined
+        onScrollShouldSetResponder?: unknown
+        onScrollShouldSetResponderCapture?: unknown
+        onSelectionChangeShouldSetResponder?: unknown
+        onSelectionChangeShouldSetResponderCapture?: unknown
+        href?: string | undefined
         hrefAttrs?:
           | {
-              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-              rel?: string | undefined;
-              download?: boolean | undefined;
+              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+              rel?: string | undefined
+              download?: boolean | undefined
             }
-          | undefined;
+          | undefined
       } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
       Omit<
         import('tamagui').StackProps,
@@ -350,8 +348,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
         | 'elevationAndroid'
         | 'key'
       > & {
-        readonly fullscreen?: boolean | undefined;
-        readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+        readonly fullscreen?: boolean | undefined
+        readonly elevation?: number | import('tamagui').SizeTokens | undefined
       } & import('@tamagui/web').PseudoProps<
         Partial<
           Omit<
@@ -370,7 +368,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
                 | import('react-native').ViewStyle
                 | import('react').CSSProperties
                 | (import('react').CSSProperties & import('react-native').ViewStyle)
-              >;
+              >
             } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
             import('@tamagui/web').WithShorthands<
               import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -397,59 +395,59 @@ export declare const Page: import('tamagui').TamaguiComponent<
                     >
                 >
             > & {
-              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
               onStartShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderEnd?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderGrant?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderReject?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderMove?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderRelease?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderStart?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderTerminationRequest?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderTerminate?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onStartShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
-              elevationAndroid?: string | number | undefined;
-              rel?: any;
-              download?: any;
-              dataSet?: Record<string, string | number | null | undefined> | undefined;
-              onScrollShouldSetResponder?: unknown;
-              onScrollShouldSetResponderCapture?: unknown;
-              onSelectionChangeShouldSetResponder?: unknown;
-              onSelectionChangeShouldSetResponderCapture?: unknown;
-              href?: string | undefined;
+                | undefined
+              elevationAndroid?: string | number | undefined
+              rel?: any
+              download?: any
+              dataSet?: Record<string, string | number | null | undefined> | undefined
+              onScrollShouldSetResponder?: unknown
+              onScrollShouldSetResponderCapture?: unknown
+              onSelectionChangeShouldSetResponder?: unknown
+              onSelectionChangeShouldSetResponderCapture?: unknown
+              href?: string | undefined
               hrefAttrs?:
                 | {
-                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-                    rel?: string | undefined;
-                    download?: boolean | undefined;
+                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+                    rel?: string | undefined
+                    download?: boolean | undefined
                   }
-                | undefined;
+                | undefined
             } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
             Omit<
               import('tamagui').StackProps,
@@ -706,8 +704,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
               | 'elevationAndroid'
               | 'key'
             > & {
-              readonly fullscreen?: boolean | undefined;
-              readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+              readonly fullscreen?: boolean | undefined
+              readonly elevation?: number | import('tamagui').SizeTokens | undefined
             }
         >
       > &
@@ -729,7 +727,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
                 | import('react-native').ViewStyle
                 | import('react').CSSProperties
                 | (import('react').CSSProperties & import('react-native').ViewStyle)
-              >;
+              >
             } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
             import('@tamagui/web').WithShorthands<
               import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -756,59 +754,59 @@ export declare const Page: import('tamagui').TamaguiComponent<
                     >
                 >
             > & {
-              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
               onStartShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderEnd?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderGrant?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderReject?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderMove?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderRelease?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderStart?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderTerminationRequest?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderTerminate?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onStartShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
-              elevationAndroid?: string | number | undefined;
-              rel?: any;
-              download?: any;
-              dataSet?: Record<string, string | number | null | undefined> | undefined;
-              onScrollShouldSetResponder?: unknown;
-              onScrollShouldSetResponderCapture?: unknown;
-              onSelectionChangeShouldSetResponder?: unknown;
-              onSelectionChangeShouldSetResponderCapture?: unknown;
-              href?: string | undefined;
+                | undefined
+              elevationAndroid?: string | number | undefined
+              rel?: any
+              download?: any
+              dataSet?: Record<string, string | number | null | undefined> | undefined
+              onScrollShouldSetResponder?: unknown
+              onScrollShouldSetResponderCapture?: unknown
+              onSelectionChangeShouldSetResponder?: unknown
+              onSelectionChangeShouldSetResponderCapture?: unknown
+              href?: string | undefined
               hrefAttrs?:
                 | {
-                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-                    rel?: string | undefined;
-                    download?: boolean | undefined;
+                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+                    rel?: string | undefined
+                    download?: boolean | undefined
                   }
-                | undefined;
+                | undefined
             } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
             Omit<
               import('tamagui').StackProps,
@@ -1065,8 +1063,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
               | 'elevationAndroid'
               | 'key'
             > & {
-              readonly fullscreen?: boolean | undefined;
-              readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+              readonly fullscreen?: boolean | undefined
+              readonly elevation?: number | import('tamagui').SizeTokens | undefined
             }
         >
       >)
@@ -1086,7 +1084,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
           | import('react-native').ViewStyle
           | import('react').CSSProperties
           | (import('react').CSSProperties & import('react-native').ViewStyle)
-        >;
+        >
       } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
       import('@tamagui/web').WithShorthands<
         import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -1109,59 +1107,57 @@ export declare const Page: import('tamagui').TamaguiComponent<
               >
           >
       > & {
-        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
         onStartShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        onResponderEnd?:
-          | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
+        onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
         onResponderGrant?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderReject?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderMove?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderRelease?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderStart?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderTerminationRequest?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onResponderTerminate?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onStartShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        elevationAndroid?: string | number | undefined;
-        rel?: any;
-        download?: any;
-        dataSet?: Record<string, string | number | null | undefined> | undefined;
-        onScrollShouldSetResponder?: unknown;
-        onScrollShouldSetResponderCapture?: unknown;
-        onSelectionChangeShouldSetResponder?: unknown;
-        onSelectionChangeShouldSetResponderCapture?: unknown;
-        href?: string | undefined;
+          | undefined
+        elevationAndroid?: string | number | undefined
+        rel?: any
+        download?: any
+        dataSet?: Record<string, string | number | null | undefined> | undefined
+        onScrollShouldSetResponder?: unknown
+        onScrollShouldSetResponderCapture?: unknown
+        onSelectionChangeShouldSetResponder?: unknown
+        onSelectionChangeShouldSetResponderCapture?: unknown
+        href?: string | undefined
         hrefAttrs?:
           | {
-              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-              rel?: string | undefined;
-              download?: boolean | undefined;
+              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+              rel?: string | undefined
+              download?: boolean | undefined
             }
-          | undefined;
+          | undefined
       } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
       Omit<
         import('tamagui').StackProps,
@@ -1418,8 +1414,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
         | 'elevationAndroid'
         | 'key'
       > & {
-        readonly fullscreen?: boolean | undefined;
-        readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+        readonly fullscreen?: boolean | undefined
+        readonly elevation?: number | import('tamagui').SizeTokens | undefined
       } & import('@tamagui/web').PseudoProps<
         Partial<
           Omit<
@@ -1438,7 +1434,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
                 | import('react-native').ViewStyle
                 | import('react').CSSProperties
                 | (import('react').CSSProperties & import('react-native').ViewStyle)
-              >;
+              >
             } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
             import('@tamagui/web').WithShorthands<
               import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -1465,59 +1461,59 @@ export declare const Page: import('tamagui').TamaguiComponent<
                     >
                 >
             > & {
-              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
               onStartShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderEnd?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderGrant?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderReject?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderMove?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderRelease?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderStart?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderTerminationRequest?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderTerminate?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onStartShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
-              elevationAndroid?: string | number | undefined;
-              rel?: any;
-              download?: any;
-              dataSet?: Record<string, string | number | null | undefined> | undefined;
-              onScrollShouldSetResponder?: unknown;
-              onScrollShouldSetResponderCapture?: unknown;
-              onSelectionChangeShouldSetResponder?: unknown;
-              onSelectionChangeShouldSetResponderCapture?: unknown;
-              href?: string | undefined;
+                | undefined
+              elevationAndroid?: string | number | undefined
+              rel?: any
+              download?: any
+              dataSet?: Record<string, string | number | null | undefined> | undefined
+              onScrollShouldSetResponder?: unknown
+              onScrollShouldSetResponderCapture?: unknown
+              onSelectionChangeShouldSetResponder?: unknown
+              onSelectionChangeShouldSetResponderCapture?: unknown
+              href?: string | undefined
               hrefAttrs?:
                 | {
-                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-                    rel?: string | undefined;
-                    download?: boolean | undefined;
+                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+                    rel?: string | undefined
+                    download?: boolean | undefined
                   }
-                | undefined;
+                | undefined
             } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
             Omit<
               import('tamagui').StackProps,
@@ -1774,8 +1770,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
               | 'elevationAndroid'
               | 'key'
             > & {
-              readonly fullscreen?: boolean | undefined;
-              readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+              readonly fullscreen?: boolean | undefined
+              readonly elevation?: number | import('tamagui').SizeTokens | undefined
             }
         >
       > &
@@ -1797,7 +1793,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
                 | import('react-native').ViewStyle
                 | import('react').CSSProperties
                 | (import('react').CSSProperties & import('react-native').ViewStyle)
-              >;
+              >
             } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
             import('@tamagui/web').WithShorthands<
               import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -1824,59 +1820,59 @@ export declare const Page: import('tamagui').TamaguiComponent<
                     >
                 >
             > & {
-              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+              onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
               onStartShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponder?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderEnd?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderGrant?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderReject?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderMove?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderRelease?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderStart?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onResponderTerminationRequest?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onResponderTerminate?:
                 | ((event: import('react-native').GestureResponderEvent) => void)
-                | undefined;
+                | undefined
               onStartShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
+                | undefined
               onMoveShouldSetResponderCapture?:
                 | ((event: import('react-native').GestureResponderEvent) => boolean)
-                | undefined;
-              elevationAndroid?: string | number | undefined;
-              rel?: any;
-              download?: any;
-              dataSet?: Record<string, string | number | null | undefined> | undefined;
-              onScrollShouldSetResponder?: unknown;
-              onScrollShouldSetResponderCapture?: unknown;
-              onSelectionChangeShouldSetResponder?: unknown;
-              onSelectionChangeShouldSetResponderCapture?: unknown;
-              href?: string | undefined;
+                | undefined
+              elevationAndroid?: string | number | undefined
+              rel?: any
+              download?: any
+              dataSet?: Record<string, string | number | null | undefined> | undefined
+              onScrollShouldSetResponder?: unknown
+              onScrollShouldSetResponderCapture?: unknown
+              onSelectionChangeShouldSetResponder?: unknown
+              onSelectionChangeShouldSetResponderCapture?: unknown
+              href?: string | undefined
               hrefAttrs?:
                 | {
-                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-                    rel?: string | undefined;
-                    download?: boolean | undefined;
+                    target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+                    rel?: string | undefined
+                    download?: boolean | undefined
                   }
-                | undefined;
+                | undefined
             } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
             Omit<
               import('tamagui').StackProps,
@@ -2133,8 +2129,8 @@ export declare const Page: import('tamagui').TamaguiComponent<
               | 'elevationAndroid'
               | 'key'
             > & {
-              readonly fullscreen?: boolean | undefined;
-              readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+              readonly fullscreen?: boolean | undefined
+              readonly elevation?: number | import('tamagui').SizeTokens | undefined
             }
         >
       >),
@@ -2155,7 +2151,7 @@ export declare const Page: import('tamagui').TamaguiComponent<
         | import('react-native').ViewStyle
         | import('react').CSSProperties
         | (import('react').CSSProperties & import('react-native').ViewStyle)
-      >;
+      >
     } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
     import('@tamagui/web').WithShorthands<
       import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
@@ -2178,55 +2174,51 @@ export declare const Page: import('tamagui').TamaguiComponent<
             >
         >
     > & {
-      onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+      onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
       onStartShouldSetResponder?:
         | ((event: import('react-native').GestureResponderEvent) => boolean)
-        | undefined;
+        | undefined
       onMoveShouldSetResponder?:
         | ((event: import('react-native').GestureResponderEvent) => boolean)
-        | undefined;
-      onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined;
-      onResponderGrant?:
-        | ((event: import('react-native').GestureResponderEvent) => void)
-        | undefined;
+        | undefined
+      onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
+      onResponderGrant?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
       onResponderReject?:
         | ((event: import('react-native').GestureResponderEvent) => void)
-        | undefined;
-      onResponderMove?: ((event: import('react-native').GestureResponderEvent) => void) | undefined;
+        | undefined
+      onResponderMove?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
       onResponderRelease?:
         | ((event: import('react-native').GestureResponderEvent) => void)
-        | undefined;
-      onResponderStart?:
-        | ((event: import('react-native').GestureResponderEvent) => void)
-        | undefined;
+        | undefined
+      onResponderStart?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
       onResponderTerminationRequest?:
         | ((event: import('react-native').GestureResponderEvent) => boolean)
-        | undefined;
+        | undefined
       onResponderTerminate?:
         | ((event: import('react-native').GestureResponderEvent) => void)
-        | undefined;
+        | undefined
       onStartShouldSetResponderCapture?:
         | ((event: import('react-native').GestureResponderEvent) => boolean)
-        | undefined;
+        | undefined
       onMoveShouldSetResponderCapture?:
         | ((event: import('react-native').GestureResponderEvent) => boolean)
-        | undefined;
-      elevationAndroid?: string | number | undefined;
-      rel?: any;
-      download?: any;
-      dataSet?: Record<string, string | number | null | undefined> | undefined;
-      onScrollShouldSetResponder?: unknown;
-      onScrollShouldSetResponderCapture?: unknown;
-      onSelectionChangeShouldSetResponder?: unknown;
-      onSelectionChangeShouldSetResponderCapture?: unknown;
-      href?: string | undefined;
+        | undefined
+      elevationAndroid?: string | number | undefined
+      rel?: any
+      download?: any
+      dataSet?: Record<string, string | number | null | undefined> | undefined
+      onScrollShouldSetResponder?: unknown
+      onScrollShouldSetResponderCapture?: unknown
+      onSelectionChangeShouldSetResponder?: unknown
+      onSelectionChangeShouldSetResponderCapture?: unknown
+      href?: string | undefined
       hrefAttrs?:
         | {
-            target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-            rel?: string | undefined;
-            download?: boolean | undefined;
+            target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+            rel?: string | undefined
+            download?: boolean | undefined
           }
-        | undefined;
+        | undefined
     } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
     Omit<
       import('tamagui').StackProps,
@@ -2484,11 +2476,11 @@ export declare const Page: import('tamagui').TamaguiComponent<
       | 'key'
     >,
   {
-    readonly fullscreen?: boolean | undefined;
-    readonly elevation?: number | import('tamagui').SizeTokens | undefined;
+    readonly fullscreen?: boolean | undefined
+    readonly elevation?: number | import('tamagui').SizeTokens | undefined
   },
   {
-    displayName: string | undefined;
+    displayName: string | undefined
     __baseProps: Omit<
       import('react-native').ViewProps,
       | 'style'
@@ -2505,70 +2497,68 @@ export declare const Page: import('tamagui').TamaguiComponent<
           | import('react-native').ViewStyle
           | import('react').CSSProperties
           | (import('react').CSSProperties & import('react-native').ViewStyle)
-        >;
+        >
       } & import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
       import('@tamagui/web').WithShorthands<
         import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase>
       > & {
-        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
         onStartShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        onResponderEnd?:
-          | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
+        onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
         onResponderGrant?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderReject?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderMove?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderRelease?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderStart?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderTerminationRequest?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onResponderTerminate?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onStartShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        elevationAndroid?: string | number | undefined;
-        rel?: any;
-        download?: any;
-        dataSet?: Record<string, string | number | null | undefined> | undefined;
-        onScrollShouldSetResponder?: unknown;
-        onScrollShouldSetResponderCapture?: unknown;
-        onSelectionChangeShouldSetResponder?: unknown;
-        onSelectionChangeShouldSetResponderCapture?: unknown;
-        href?: string | undefined;
+          | undefined
+        elevationAndroid?: string | number | undefined
+        rel?: any
+        download?: any
+        dataSet?: Record<string, string | number | null | undefined> | undefined
+        onScrollShouldSetResponder?: unknown
+        onScrollShouldSetResponderCapture?: unknown
+        onSelectionChangeShouldSetResponder?: unknown
+        onSelectionChangeShouldSetResponderCapture?: unknown
+        href?: string | undefined
         hrefAttrs?:
           | {
-              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-              rel?: string | undefined;
-              download?: boolean | undefined;
+              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+              rel?: string | undefined
+              download?: boolean | undefined
             }
-          | undefined;
+          | undefined
       } & {
         style?: import('@tamagui/web').StyleProp<
           | import('react-native').ViewStyle
           | import('react').CSSProperties
           | (import('react').CSSProperties & import('react-native').ViewStyle)
-        >;
+        >
       } & import('@tamagui/web').PseudoProps<
         import('@tamagui/web').WithThemeValues<import('@tamagui/web').StackStylePropsBase> &
           import('@tamagui/web').WithShorthands<
@@ -2587,59 +2577,57 @@ export declare const Page: import('tamagui').TamaguiComponent<
               >
           >
       > & {
-        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined;
+        onLayout?: ((event: import('react-native').LayoutChangeEvent) => void) | undefined
         onStartShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponder?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        onResponderEnd?:
-          | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
+        onResponderEnd?: ((event: import('react-native').GestureResponderEvent) => void) | undefined
         onResponderGrant?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderReject?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderMove?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderRelease?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderStart?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onResponderTerminationRequest?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onResponderTerminate?:
           | ((event: import('react-native').GestureResponderEvent) => void)
-          | undefined;
+          | undefined
         onStartShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
+          | undefined
         onMoveShouldSetResponderCapture?:
           | ((event: import('react-native').GestureResponderEvent) => boolean)
-          | undefined;
-        elevationAndroid?: string | number | undefined;
-        rel?: any;
-        download?: any;
-        dataSet?: Record<string, string | number | null | undefined> | undefined;
-        onScrollShouldSetResponder?: unknown;
-        onScrollShouldSetResponderCapture?: unknown;
-        onSelectionChangeShouldSetResponder?: unknown;
-        onSelectionChangeShouldSetResponderCapture?: unknown;
-        href?: string | undefined;
+          | undefined
+        elevationAndroid?: string | number | undefined
+        rel?: any
+        download?: any
+        dataSet?: Record<string, string | number | null | undefined> | undefined
+        onScrollShouldSetResponder?: unknown
+        onScrollShouldSetResponderCapture?: unknown
+        onSelectionChangeShouldSetResponder?: unknown
+        onSelectionChangeShouldSetResponderCapture?: unknown
+        href?: string | undefined
         hrefAttrs?:
           | {
-              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined;
-              rel?: string | undefined;
-              download?: boolean | undefined;
+              target?: 'top' | '_blank' | '_self' | '_top' | 'blank' | 'self' | undefined
+              rel?: string | undefined
+              download?: boolean | undefined
             }
-          | undefined;
+          | undefined
       } & import('react').RefAttributes<import('tamagui').TamaguiElement> &
       Omit<
         import('tamagui').StackProps,
@@ -2895,12 +2883,12 @@ export declare const Page: import('tamagui').TamaguiComponent<
         | 'hrefAttrs'
         | 'elevationAndroid'
         | 'key'
-      >;
+      >
     __variantProps: void & {
-      readonly fullscreen?: boolean | undefined;
-      readonly elevation?: number | import('tamagui').SizeTokens | undefined;
-    };
+      readonly fullscreen?: boolean | undefined
+      readonly elevation?: number | import('tamagui').SizeTokens | undefined
+    }
   }
->;
-export type PageProps = GetProps<typeof Page>;
+>
+export type PageProps = GetProps<typeof Page>
 //# sourceMappingURL=Page.d.ts.map
