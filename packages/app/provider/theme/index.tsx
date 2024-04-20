@@ -44,7 +44,8 @@ export const TamaguiThemeProvider = ({
     if (appTheme === undefined) {
       storage.set(appThemeKey, defaultTheme);
       setAppTheme(defaultTheme);
-    } else {
+      //  TODO: check if we still need to do this with MMKV or I can just go back to else
+    } else if (appTheme) {
       storage.set(appThemeKey, appTheme);
     }
   }, [appTheme, setAppTheme]);
