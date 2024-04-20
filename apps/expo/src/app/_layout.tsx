@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from 'react';
 
 import { Provider } from '@acme/app/provider';
 

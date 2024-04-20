@@ -1,7 +1,7 @@
-import React from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { BlurView } from 'expo-blur';
 import { Tabs, useSegments } from 'expo-router';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import type React from 'react';
 
 import { useAddPersonStore } from '@acme/app/stores/addQuestion';
 import { useThemeName } from '@acme/ui';

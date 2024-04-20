@@ -1,8 +1,8 @@
-import { Appearance } from 'react-native';
 import { atom, useAtom } from 'jotai';
+import { Appearance } from 'react-native';
 
 import { storage } from '../provider/kv';
-import { ThemeVariant, type CurrentThemeVariant } from '../utils/theme';
+import { type CurrentThemeVariant, ThemeVariant } from '../utils/theme';
 
 export const appThemeKey = 'appTheme';
 

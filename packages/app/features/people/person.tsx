@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ArrowLeft } from '@tamagui/lucide-icons';
+import type { ReactNode } from 'react';
+import { Platform } from 'react-native';
 import { useLink, useParams } from 'solito/navigation';
 
 import { api } from '@acme/api/utils/trpc';
@@ -23,7 +23,7 @@ const PersonScreen = (): ReactNode => {
   const link = useLink({
     href: '/people',
   });
-  const { data } = api.person.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.person.byId.useQuery({ id: Number.parseInt(id) });
   if (!data) return null;
 
   return (

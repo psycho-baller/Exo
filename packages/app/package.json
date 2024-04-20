@@ -4,9 +4,7 @@
   "private": true,
   "license": "MIT",
   "main": "index.ts",
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": ["*.css"],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "upgrade": "pnpm upgrade --latest",
@@ -54,10 +52,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
-    ]
+    "extends": ["@acme/eslint-config/base", "@acme/eslint-config/react"]
   },
   "prettier": "@acme/prettier-config"
 }

@@ -8,7 +8,9 @@ import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 export const searchHistoryRouter = createTRPCRouter({
   all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.searchHistories.findMany({ orderBy: desc(searchHistories.datetime) });
+    return ctx.db.query.searchHistories.findMany({
+      orderBy: desc(searchHistories.datetime),
+    });
   }),
 
   byCurrentUserId: protectedProcedure.query(({ ctx }) => {

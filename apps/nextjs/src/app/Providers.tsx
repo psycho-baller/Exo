@@ -5,8 +5,8 @@ import './globals.css';
 
 import '@tamagui/polyfill-dev';
 
-import React from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
+import type React from 'react';
 
 import { Provider } from '@acme/app/provider';
 

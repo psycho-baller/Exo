@@ -1,5 +1,5 @@
 import { BlurView } from 'expo-blur';
-import { Button, Footer, View, XStack } from 'tamagui';
+import { Button, Footer, type View, XStack } from 'tamagui';
 import type { GetProps } from 'tamagui';
 
 interface Props extends GetProps<typeof View> {

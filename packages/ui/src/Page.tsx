@@ -1,4 +1,4 @@
-import { styled, YStack } from 'tamagui';
+import { YStack, styled } from 'tamagui';
 import type { GetProps } from 'tamagui';
 
 export const Page = styled(YStack, {

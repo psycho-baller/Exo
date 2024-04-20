@@ -1,5 +1,5 @@
-import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+import { Platform } from 'react-native';
 
 import { api } from '@acme/api/utils/trpc';
 import { Text, VirtualList } from '@acme/ui';

@@ -69,7 +69,15 @@ const GroupProperty = ({ id }: { id: number }) => {
 };
 
 const TopicsProperty = ({ questionId }: { questionId: number }) => {
-  const topics = api.questionTopic.getTopicsFromQuestionId.useQuery({ questionId });
+  const topics = api.questionTopic.getTopicsFromQuestionId.useQuery({
+    questionId,
+  });
 
-  return <YStack>{topics.data?.map((topic) => <Text key={topic.id}>{topic.name}</Text>)}</YStack>;
+  return (
+    <YStack>
+      {topics.data?.map((topic) => (
+        <Text key={topic.id}>{topic.name}</Text>
+      ))}
+    </YStack>
+  );
 };

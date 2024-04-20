@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",
+    "@biomejs/biome": "1.7.0",
     "@turbo/gen": "^1.12.4",
     "prettier": "^3.2.5",
     "turbo": "^1.12.4",

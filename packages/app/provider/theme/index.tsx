@@ -1,7 +1,8 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { Appearance } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import type React from 'react';
+import { useEffect, useLayoutEffect } from 'react';
+import { Appearance } from 'react-native';
 
 import { useForceUpdate } from '@acme/ui';
 

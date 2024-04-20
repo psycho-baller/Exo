@@ -1,7 +1,7 @@
-import { useRef } from 'react';
-import type { ReactElement, ReactNode } from 'react';
 // import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { useRef } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 interface Props {
   data: any[] | undefined | null;

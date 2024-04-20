@@ -1,6 +1,6 @@
+import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons';
 import type { FC } from 'react';
 import { Platform } from 'react-native';
-import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 
 import type { PageProps } from '@acme/ui';

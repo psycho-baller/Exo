@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons';
+import type { FC } from 'react';
 import { Link } from 'solito/link';
 
 import type { RouterOutputs } from '@acme/api';

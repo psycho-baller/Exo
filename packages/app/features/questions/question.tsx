@@ -1,6 +1,6 @@
+import { ArrowLeft } from '@tamagui/lucide-icons';
 import type { ReactNode } from 'react';
 import { Platform } from 'react-native';
-import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useLink, useParams } from 'solito/navigation';
 
 import { api } from '@acme/api/utils/trpc';
@@ -20,7 +20,7 @@ const QuestionScreen = (): ReactNode => {
   const link = useLink({
     href: '/questions',
   });
-  const { data } = api.question.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.question.byId.useQuery({ id: Number.parseInt(id) });
   if (!data) return null;
 
   return (

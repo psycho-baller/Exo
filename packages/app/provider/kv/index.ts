@@ -1,6 +1,6 @@
-import { MMKV } from 'react-native-mmkv';
+import AsyncStorage, { type AsyncStorageStatic } from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import AsyncStorage, { AsyncStorageStatic } from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
 
 type CustomAsyncStorage = AsyncStorageStatic & {
   getString: (key: string) => Promise<string | null>;

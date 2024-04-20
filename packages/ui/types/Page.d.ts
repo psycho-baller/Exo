@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { type GetProps } from 'tamagui';
+import type { GetProps } from 'tamagui';
 
 export declare const Page: import('tamagui').TamaguiComponent<
   | (Omit<

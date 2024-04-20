@@ -28,7 +28,13 @@ export const personRouter = createTRPCRouter({
     }),
 
   updatePerson: protectedProcedure
-    .input(z.object({ id: z.number(), firstName: z.string(), lastName: z.string().optional() }))
+    .input(
+      z.object({
+        id: z.number(),
+        firstName: z.string(),
+        lastName: z.string().optional(),
+      }),
+    )
     .mutation(({ ctx, input }) => {
       return ctx.db.update(people).set(input).where(eq(people.id, input.id));
     }),

@@ -1,4 +1,4 @@
-import { AppRouterKeys } from '@acme/api/src/root';
+import type { AppRouterKeys } from '@acme/api/src/root';
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {
   return lastName ? `${firstName} ${lastName}` : firstName;

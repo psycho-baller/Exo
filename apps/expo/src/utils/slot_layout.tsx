@@ -1,5 +1,5 @@
-import type { ComponentPropsWithoutRef, FC } from 'react';
 import { Slot } from 'expo-router';
+import type { ComponentPropsWithoutRef, FC } from 'react';
 
 interface Props extends ComponentPropsWithoutRef<'div'> {}
 

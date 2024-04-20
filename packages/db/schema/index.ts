@@ -17,12 +17,12 @@ export const users = sqliteTable('User', {
   firstName: text('first_name'), //.notNull(),
   lastName: text('last_name'),
   isPublic: integer('is_public', { mode: 'boolean' }).default(false),
-  defaultLandingPage: text('default_landing_page', { enum: landingPageOptions }).default(
-    'questions',
-  ),
-  defaultPostVisibility: text('default_post_visibility', { enum: postVisibilityOptions }).default(
-    'public',
-  ),
+  defaultLandingPage: text('default_landing_page', {
+    enum: landingPageOptions,
+  }).default('questions'),
+  defaultPostVisibility: text('default_post_visibility', {
+    enum: postVisibilityOptions,
+  }).default('public'),
   role: text('role', { enum: roleOptions }).default('user'),
   phone: text('phone'),
 });
@@ -30,8 +30,12 @@ export const users = sqliteTable('User', {
 // Post
 export const posts = sqliteTable('Post', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  createdByUserId: text('created_by_user_id').references(() => users.id, { onDelete: 'cascade' }),
-  createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+  createdByUserId: text('created_by_user_id').references(() => users.id, {
+    onDelete: 'cascade',
+  }),
+  createdDatetime: integer('created_datetime', {
+    mode: 'timestamp_ms',
+  }).defaultNow(),
   question: text('question').notNull(),
 });
 
@@ -72,7 +76,9 @@ export const people = sqliteTable(
     email: text('email').unique(),
     phoneNumber: text('phone_number').unique(),
     reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
-    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
     createdByUserId: text('created_by_user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
@@ -91,7 +97,9 @@ export const groups = sqliteTable(
   {
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
-    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
     name: text('name').notNull(),
     createdByUserId: text('created_by_user_id')
       .notNull()
@@ -126,7 +134,9 @@ export const groupsOfPeople = sqliteTable(
 export const likes = sqliteTable(
   'Likes',
   {
-    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
     createdByUserId: text('created_by_user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
@@ -145,16 +155,22 @@ export const likes = sqliteTable(
 export const comments = sqliteTable(
   'Comments',
   {
-    createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
     comment: text('comment').notNull(),
     createdByUserId: text('created_by_user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
-    postId: integer('post_id').references(() => posts.id, { onDelete: 'cascade' }),
+    postId: integer('post_id').references(() => posts.id, {
+      onDelete: 'cascade',
+    }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.createdByUserId, table.postId, table.createdDatetime] }),
+      pk: primaryKey({
+        columns: [table.createdByUserId, table.postId, table.createdDatetime],
+      }),
     };
   },
 );
@@ -190,7 +206,9 @@ export const follows = sqliteTable(
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.followingUserId, table.followedUserId] }),
+      pk: primaryKey({
+        columns: [table.followingUserId, table.followedUserId],
+      }),
     };
   },
 );
@@ -199,7 +217,9 @@ export const follows = sqliteTable(
 export const questions = sqliteTable('Question', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
   question: text('question').notNull(),
-  createdDatetime: integer('created_datetime', { mode: 'timestamp_ms' }).defaultNow(),
+  createdDatetime: integer('created_datetime', {
+    mode: 'timestamp_ms',
+  }).defaultNow(),
   reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
   createdByUserId: text('created_by_user_id')
     .notNull()
@@ -245,7 +265,9 @@ export const accounts = sqliteTable(
     session_state: text('session_state'),
   },
   (account) => ({
-    compoundKey: primaryKey({ columns: [account.provider, account.providerAccountId] }),
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
     userIdIdx: index('userId_idx').on(account.userId),
   }),
 );
@@ -273,7 +295,9 @@ export const verificationTokens = sqliteTable(
 // Relations (deprecated)
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
-  searchHistories: many(searchHistories, { relationName: 'Search history by user' }),
+  searchHistories: many(searchHistories, {
+    relationName: 'Search history by user',
+  }),
   topics: many(topics, { relationName: 'Topics created by user' }),
   people: many(people, { relationName: 'People created by user' }),
   groups: many(groups, { relationName: 'Groups created by user' }),

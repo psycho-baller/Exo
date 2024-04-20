@@ -1,6 +1,6 @@
 import {
-  SafeAreaProvider as SafeAreaProviderOg,
   type Metrics,
+  SafeAreaProvider as SafeAreaProviderOg,
 } from 'react-native-safe-area-context';
 
 export const initialWindowMetrics: Metrics | null = {

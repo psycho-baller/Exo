@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import { ChevronLeft } from '@tamagui/lucide-icons';
+import React from 'react';
 import { createParam } from 'solito';
 import { useLink } from 'solito/navigation';
 

@@ -1,8 +1,8 @@
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
 import type { FC } from 'react';
 import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 
 import type { RouterOutputs } from '@acme/api';
@@ -71,7 +71,9 @@ export const GroupCard: FC<Props> = (props) => {
   );
 };
 
-function PersonOrGroupForGroup(props: { group: RouterOutputs['group']['all'][number] }) {
+function PersonOrGroupForGroup(props: {
+  group: RouterOutputs['group']['all'][number];
+}) {
   const { group } = props;
   if (group.personId === null) {
     return null;

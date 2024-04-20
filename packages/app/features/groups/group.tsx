@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ArrowLeft } from '@tamagui/lucide-icons';
+import type { ReactNode } from 'react';
+import { Platform } from 'react-native';
 import { useLink, useParams } from 'solito/navigation';
 import { Button } from 'tamagui';
 
@@ -24,7 +24,7 @@ const GroupScreen = (): ReactNode => {
   const link = useLink({
     href: '/people',
   });
-  const { data } = api.group.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.group.byId.useQuery({ id: Number.parseInt(id) });
   if (!data) return null;
 
   return (

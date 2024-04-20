@@ -2,7 +2,7 @@ import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { PersonStore } from '../types/people';
+import type { PersonStore } from '../types/people';
 
 export interface PersonState {
   personSearch: string;

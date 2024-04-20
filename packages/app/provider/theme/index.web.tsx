@@ -1,4 +1,4 @@
-import { ColorScheme, NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
+import { type ColorScheme, NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
 
 export const TamaguiThemeProvider = ({
   children,

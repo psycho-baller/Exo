@@ -40,10 +40,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/drizzle"
-    ]
+    "extends": ["@acme/eslint-config/base", "@acme/eslint-config/drizzle"]
   },
   "prettier": "@acme/prettier-config"
 }

@@ -1,6 +1,6 @@
+import { FlashList } from '@shopify/flash-list';
 import { useState } from 'react';
 import type { FC } from 'react';
-import { FlashList } from '@shopify/flash-list';
 import type { GetProps, Input } from 'tamagui';
 import { Button, Separator, Text, View, YStack } from 'tamagui';
 

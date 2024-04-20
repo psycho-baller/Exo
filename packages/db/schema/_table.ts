@@ -1,4 +1,4 @@
-import { LibSQLDatabase } from 'drizzle-orm/libsql';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { sqliteTableCreator } from 'drizzle-orm/sqlite-core';
 
 import type * as schema from '../schema';

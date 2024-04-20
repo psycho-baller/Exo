@@ -27,7 +27,7 @@ export function createConnection(): ConnectionResult {
 }
 
 export function generateRandomId(length: number): number {
-  const id = Math.random() * Math.pow(10, length);
+  const id = Math.random() * 10 ** length;
   return Math.floor(id);
 }
 

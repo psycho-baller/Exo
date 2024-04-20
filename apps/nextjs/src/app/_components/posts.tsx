@@ -95,7 +95,9 @@ export function PostList() {
   );
 }
 
-export function PostCard(props: { question: RouterOutputs['question']['all'][number] }) {
+export function PostCard(props: {
+  question: RouterOutputs['question']['all'][number];
+}) {
   const context = api.useContext();
   const deleteQuestion = api.question.delete.useMutation();
 

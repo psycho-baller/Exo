@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-import { PersonStore } from '../types/people';
+import type { PersonStore } from '../types/people';
 
 export interface PersonState {
   personSearch: string;

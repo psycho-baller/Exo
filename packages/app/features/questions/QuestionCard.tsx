@@ -1,8 +1,8 @@
+import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
 import type { FC } from 'react';
 import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
 import { Link } from 'solito/link';
 
 import type { RouterOutputs } from '@acme/api';
@@ -71,7 +71,9 @@ export const QuestionCard: FC<Props> = (props) => {
   );
 };
 
-function PersonOrGroupForQuestion(props: { question: RouterOutputs['question']['all'][number] }) {
+function PersonOrGroupForQuestion(props: {
+  question: RouterOutputs['question']['all'][number];
+}) {
   const { question } = props;
   if (question.personId === null) {
     return null;
