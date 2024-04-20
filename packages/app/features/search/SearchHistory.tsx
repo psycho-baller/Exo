@@ -1,58 +1,30 @@
-import type { FC } from 'react';
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { interpolate } from 'react-native-reanimated'; // Import AnimatedInterpolation
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons';
-import { Link } from 'solito/link';
+import React, { useEffect, useState } from 'react';
 
-import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/utils/trpc';
-import { Text, XStack, YStack } from '@acme/ui';
+import { Text, YStack } from '@acme/ui';
 
-import { formatDate } from '../../lib/utils/date';
+const SearchHistory = () => {
+  // Use the TRPC query hook, with query execution dependent on the session being loaded
+  const { data, isLoading, isError } = api.searchHistory.byCurrentUserId.useQuery();
 
-interface Props {
-  question: RouterOutputs['question']['all'][number];
-}
+  // Render handling for different states
+  if (isLoading) {
+    return <Text>Loading search history...</Text>; // Show while session is not yet loaded
+  }
 
-const Component: FC<Props> = (props) => {
-  const { question } = props;
-  const date = question.createdDatetime;
-
-  const utils = api.useUtils();
-  const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
-  });
+  if (isError) {
+    return <Text>Unable to load data. Please check your session and network connection.</Text>;
+  }
 
   return (
-    <XStack
-      minHeight='$6'
-      padding={'$3'}
-      alignItems='center'
-      justifyContent='space-between'
-      backgroundColor='$background'
-      animation='bouncy'
-      hoverStyle={{
-        backgroundColor: '$secondaryBackground',
-        borderRadius: 10,
-      }}
-    >
-      <YStack gap={6}>
-        {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
-        <Text fontSize={18} fontWeight='bold'>
-          {question.question}
-        </Text>
-        <XStack gap={18}>
-          {date && (
-            <XStack gap={6} alignItems='center'>
-              <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
-              <Text color='$secondaryColor'>{formatDate(date)}</Text>
-            </XStack>
-          )}
-        </XStack>
-      </YStack>
-    </XStack>
+    <YStack>
+      {data && data.length > 0 ? (
+        data.map((item, index) => <Text key={index}>{item.query}</Text>)
+      ) : (
+        <Text>No history found.</Text>
+      )}
+    </YStack>
   );
 };
 
-export default Component;
+export default SearchHistory;
