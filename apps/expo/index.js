@@ -17,3 +17,6 @@ renderRootComponent(App);
 // }
 
 // registerRootComponent(App);
+// import { LogBox } from 'react-native'
+// console.disableYellowBox = true
+// LogBox.ignoreAllLogs()
