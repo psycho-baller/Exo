@@ -3,28 +3,28 @@ import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useLink, useParams } from 'solito/navigation';
-import { Button } from '@acme/ui';
+import { Button } from 'tamagui';
 
 import { api } from '@acme/api/utils/trpc';
 import { Page, Text, YStack } from '@acme/ui';
 
-import { getFullName } from '../../lib/utils/strings';
+import { PersonCard } from '../people/PersonCard';
 import { QuestionCard } from '../questions/QuestionCard';
-import { EditPersonText } from './EditPersonText';
-import { PersonProperties } from './PersonProperties';
+import { EditGroupText } from './EditGroupText';
+import { GroupProperties } from './GroupProperties';
 
 interface Params {
   id: string;
   [key: string]: string;
 }
 
-const PersonScreen = (): ReactNode => {
+const GroupScreen = (): ReactNode => {
   const { id } = useParams<Params>();
 
   const link = useLink({
     href: '/people',
   });
-  const { data } = api.person.byId.useQuery({ id: parseInt(id) });
+  const { data } = api.group.byId.useQuery({ id: parseInt(id) });
   if (!data) return null;
 
   return (
@@ -34,21 +34,22 @@ const PersonScreen = (): ReactNode => {
         </Button>
       </XStack> */}
 
-      {/* <Label htmlFor='question' /> */}
+      {/* <Label htmlFor='group' /> */}
       {Platform.OS === 'web' && (
         <Button {...link} icon={ArrowLeft} size='$3' variant='outlined'>
           Back
         </Button>
       )}
-      <EditPersonText id={data.id} content={getFullName(data.firstName, data.lastName)} />
-      <PersonProperties {...data} />
-      <QuestionsForPerson personId={data.id} />
+      <EditGroupText id={data.id} content={data.name} />
+      <GroupProperties {...data} />
+      <PeopleInGroup groupId={data.id} />
+      <QuestionsForGroup groupId={data.id} />
     </Page>
   );
 };
 
-const QuestionsForPerson = ({ personId }: { personId: number }) => {
-  const questions = api.question.getQuestionsForPerson.useQuery(personId);
+const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
+  const questions = api.group.getQuestionsForGroup.useQuery(groupId);
   return (
     <YStack flex={1}>
       <FlashList
@@ -60,4 +61,19 @@ const QuestionsForPerson = ({ personId }: { personId: number }) => {
     </YStack>
   );
 };
-export default PersonScreen;
+
+const PeopleInGroup = ({ groupId }: { groupId: number }) => {
+  const people = api.groupsOfPeople.getPeopleFromGroupId.useQuery(groupId);
+  return (
+    <YStack flex={1}>
+      <FlashList
+        data={people.data}
+        estimatedItemSize={20}
+        keyExtractor={(item) => item.people.id.toString()}
+        renderItem={(p) => <PersonCard person={p.item.people} />}
+      />
+    </YStack>
+  );
+};
+
+export default GroupScreen;

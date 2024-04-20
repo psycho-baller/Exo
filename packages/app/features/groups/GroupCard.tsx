@@ -12,23 +12,23 @@ import { Text, XStack, YStack } from '@acme/ui';
 import { formatDate } from '../../lib/utils/date';
 
 interface Props {
-  question: RouterOutputs['question']['all'][number];
+  group: RouterOutputs['group']['all'][number];
 }
 
-export const QuestionCard: FC<Props> = (props) => {
-  const { question } = props;
-  const date = question.createdDatetime;
+export const GroupCard: FC<Props> = (props) => {
+  const { group } = props;
+  const date = group.createdDatetime;
 
   const utils = api.useUtils();
-  const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
+  const { mutate: deleteMutation } = api.group.delete.useMutation({
+    onSettled: () => utils.group.all.invalidate(),
   });
 
   return (
     <GestureHandlerRootView>
       <Swipeable
         renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
-        onSwipeableOpen={() => deleteQuestionMutation.mutate(question.id)}
+        onSwipeableOpen={() => deleteMutation(group.id)}
         enabled={true}
         overshootRight={false}
         overshootLeft={false}
@@ -36,10 +36,10 @@ export const QuestionCard: FC<Props> = (props) => {
         leftThreshold={40}
         rightThreshold={40}
       >
-        <Link href={`/questions/${question.id.toString()}`}>
+        <Link href={`/groups/${group.id.toString()}`}>
           <XStack
             minHeight='$6'
-            padding='$3'
+            padding={'$3'}
             alignItems='center'
             justifyContent='space-between'
             backgroundColor='$background'
@@ -52,7 +52,7 @@ export const QuestionCard: FC<Props> = (props) => {
             <YStack gap={6}>
               {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
               <Text fontSize={18} fontWeight='bold'>
-                {question.question}
+                {group.name}
               </Text>
               <XStack gap={18}>
                 {date && (
@@ -61,7 +61,7 @@ export const QuestionCard: FC<Props> = (props) => {
                     <Text color='$secondaryColor'>{formatDate(date)}</Text>
                   </XStack>
                 )}
-                <PersonOrGroupForQuestion question={question} />
+                {/* <PersonOrGroupForGroup group={group} /> */}
               </XStack>
             </YStack>
           </XStack>
@@ -71,13 +71,13 @@ export const QuestionCard: FC<Props> = (props) => {
   );
 };
 
-function PersonOrGroupForQuestion(props: { question: RouterOutputs['question']['all'][number] }) {
-  const { question } = props;
-  if (question.personId === null) {
+function PersonOrGroupForGroup(props: { group: RouterOutputs['group']['all'][number] }) {
+  const { group } = props;
+  if (group.personId === null) {
     return null;
   }
   const personQuery = api.person.byId.useQuery({
-    id: question.personId,
+    id: group.personId,
   });
   if (personQuery.isLoading) {
     return <Text>Loading...</Text>;
@@ -126,8 +126,10 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
       // }}
     >
       <Trash2 size={20} color='white' strokeWidth={2.5} />
+      <Trash2 size={20} color='white' strokeWidth={2.5} />
     </XStack>
     // </RectButton>
     // </Animated.View>
   );
 }
+

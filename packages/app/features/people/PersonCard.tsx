@@ -12,7 +12,7 @@ interface Props {
   person: RouterOutputs['person']['all'][number];
 }
 
-export const Component: FC<Props> = (props) => {
+export const PersonCard: FC<Props> = (props) => {
   const { person } = props;
 
   const utils = api.useUtils();
@@ -65,5 +65,3 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
     </XStack>
   );
 }
-
-export default Component;
