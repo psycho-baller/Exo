@@ -55,7 +55,7 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
       <VirtualList
         data={questions.data}
         itemHeight={20}
-        renderItem={(q) => <QuestionCard question={q.item} />}
+        renderItem={(q) => <QuestionCard question={q} />}
       />
     </YStack>
   );
@@ -68,7 +68,7 @@ const PeopleInGroup = ({ groupId }: { groupId: number }) => {
       <VirtualList
         data={data}
         itemHeight={20}
-        renderItem={(p) => <PersonCard person={p.item.people} />}
+        renderItem={(p) => <PersonCard person={p.people} />}
       />
     </YStack>
   );
