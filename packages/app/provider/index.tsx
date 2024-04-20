@@ -3,23 +3,12 @@ import { useEffect } from 'react';
 import type { TamaguiProviderProps } from '@acme/ui';
 import { CustomToast, ToastProvider } from '@acme/ui';
 
-import { loadFonts } from '../utils/loadFonts';
 import { SafeAreaProvider } from './safe-area';
 import { TamaguiProvider } from './tamagui';
 import { TamaguiThemeProvider } from './theme';
 import { ToastViewport } from './toast-viewport';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
-  const loaded = loadFonts();
-  useEffect(() => {
-    if (loaded) {
-      // can hide splash screen here
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
   return (
     <TamaguiThemeProvider>
       <TamaguiProvider>
