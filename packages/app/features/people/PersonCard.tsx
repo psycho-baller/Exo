@@ -6,7 +6,7 @@ import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/utils/trpc';
 import { Text, XStack, YStack } from '@acme/ui';
 
-import { formatDate } from '../../lib/utils/date';
+import { formatDate } from '../../utils/date';
 
 interface Props {
   person: RouterOutputs['person']['all'][number];

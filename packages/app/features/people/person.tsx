@@ -7,7 +7,7 @@ import { useLink, useParams } from 'solito/navigation';
 import { api } from '@acme/api/utils/trpc';
 import { Button, Page, Text, VirtualList, YStack } from '@acme/ui';
 
-import { getFullName } from '../../lib/utils/strings';
+import { getFullName } from '../../utils/strings';
 import { QuestionCard } from '../questions/QuestionCard';
 import { EditPersonText } from './EditPersonText';
 import { PersonProperties } from './PersonProperties';

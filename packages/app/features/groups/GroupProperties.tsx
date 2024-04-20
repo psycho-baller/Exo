@@ -4,7 +4,7 @@ import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/utils/trpc';
 import { MyDateTimePicker, Text, XStack, YStack } from '@acme/ui';
 
-import { getFullName } from '../../lib/utils/strings';
+import { getFullName } from '../../utils/strings';
 
 type Props = RouterOutputs['group']['all'][number];
 

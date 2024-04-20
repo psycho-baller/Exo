@@ -10,8 +10,8 @@ import { TRPCProvider } from '~/utils/api';
 // It wraps your pages with the providers they need
 const RootLayout = () => {
   return (
-    <TRPCProvider>
-      <Provider>
+    <Provider>
+      <TRPCProvider>
         {/*
           The Stack component displays the current page.
           It also allows you to configure your screens
@@ -27,8 +27,8 @@ const RootLayout = () => {
           <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
         </Stack>
         <StatusBar />
-      </Provider>
-    </TRPCProvider>
+      </TRPCProvider>
+    </Provider>
   );
 };
 

@@ -1,11 +1,9 @@
-import { cache } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { headers } from 'next/headers';
 
 import './globals.css';
 
-import { TamaguiProvider } from './TamaguiProvider';
+import { Providers } from './Providers';
 import { TRPCReactProvider } from './TRPCProviders';
 
 const fontSans = Inter({
@@ -36,9 +34,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Lazy load headers
-const getHeaders = cache(async () => headers());
-
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang='en'>
@@ -51,9 +46,9 @@ export default function Layout(props: { children: React.ReactNode }) {
         />
       </head>
       <body className={['font-sans', fontSans.variable].join(' ')}>
-        <TRPCReactProvider headersPromise={getHeaders()}>
-          <TamaguiProvider>{props.children}</TamaguiProvider>
-        </TRPCReactProvider>
+        <Providers>
+          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );

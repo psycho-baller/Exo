@@ -9,7 +9,7 @@ import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/utils/trpc';
 import { Text, XStack, YStack } from '@acme/ui';
 
-import { formatDate } from '../../lib/utils/date';
+import { formatDate } from '../../utils/date';
 
 interface Props {
   group: RouterOutputs['group']['all'][number];
@@ -132,4 +132,3 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
     // </Animated.View>
   );
 }
-

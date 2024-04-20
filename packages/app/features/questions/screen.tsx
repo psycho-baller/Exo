@@ -1,7 +1,7 @@
 import { api } from '@acme/api/utils/trpc';
 import { Text, VirtualList } from '@acme/ui';
 
-import { MainPage } from '../../shared/components/Footer/MainPage';
+import { MainPage } from '../../components/Footer/MainPage';
 import { QuestionCard } from './QuestionCard';
 
 const Index = () => {
