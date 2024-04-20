@@ -19,6 +19,8 @@ if (Constants.appOwnership === 'expo') {
   storage.set = async (key: string, value: string) => {
     await AsyncStorage.setItem(key, value);
   };
+
+  // storage.clear();
 } else {
   // We are in a standalone app, use MMKV
   storage = new MMKV();
