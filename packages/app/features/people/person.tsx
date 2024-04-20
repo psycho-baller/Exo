@@ -50,11 +50,7 @@ const QuestionsForPerson = ({ personId }: { personId: number }) => {
   const { data } = api.question.getQuestionsForPerson.useQuery(personId);
   return (
     <YStack flex={1}>
-      <VirtualList
-        data={data}
-        itemHeight={20}
-        renderItem={(q) => <QuestionCard question={q.item} />}
-      />
+      <VirtualList data={data} itemHeight={20} renderItem={(q) => <QuestionCard question={q} />} />
     </YStack>
   );
 };
