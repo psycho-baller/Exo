@@ -36,7 +36,7 @@ export function PersonProperties({ id, reminderDatetime, firstName, createdByUse
           onChange={onChange}
         />
       </XStack>
-      <XStack columnGap='$5'></XStack>
+      <XStack columnGap='$5' />
       <XStack columnGap='$5'>
         <Tag size={20} />
         <View>

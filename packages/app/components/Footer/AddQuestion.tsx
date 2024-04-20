@@ -124,7 +124,7 @@ export const AddQuestion = () => {
             opacity={0.75}
             fontSize={'$8'}
             paddingVertical={'$2'}
-            marginBottom={`$4`}
+            marginBottom={'$4'}
             autoFocus={dropdownOpen}
             placeholder='Add Question'
             value={question}

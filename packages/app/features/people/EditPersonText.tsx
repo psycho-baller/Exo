@@ -32,7 +32,7 @@ export function EditPersonText({ id, content }: { id: number; content: string })
       opacity={0.75}
       fontSize={'$8'}
       paddingVertical={'$2'}
-      marginBottom={`$4`}
+      marginBottom={'$4'}
       placeholder='Add person'
       value={person}
       onChangeText={setPerson}

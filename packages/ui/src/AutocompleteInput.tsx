@@ -38,11 +38,11 @@ export const AutocompleteInput: FC<Props<T>> = ({
     setMenuVisible(true)
     setValue(text)
     setFilteredData(filter(data, text))
-    onSearch && onSearch(text)
+    onSearch?.(text)
   }
 
   const handleDropdownSelect = (item: T) => {
-    onSelect && onSelect(item)
+    onSelect?.(item)
     setFilteredData([])
     setMenuVisible(false)
   }
