@@ -1,15 +1,21 @@
 import { useCallback } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 
 interface Props {
-  data: any[];
-  renderItem: (item: any) => React.ReactElement;
+  data: any[] | undefined | null;
+  renderItem: (item: any) => ReactElement;
   itemHeight: number;
+  listEmptyComponent?: ReactElement;
 }
 
-export function VirtualList<T>({ data, renderItem, itemHeight }: Props): ReactNode {
+export function VirtualList<T>({
+  data,
+  renderItem,
+  itemHeight,
+  listEmptyComponent,
+}: Props): ReactNode {
   const { bottom } = useSafeAreaInsets();
 
   const render = useCallback(
@@ -22,6 +28,7 @@ export function VirtualList<T>({ data, renderItem, itemHeight }: Props): ReactNo
   return (
     <FlashList
       data={data}
+      ListEmptyComponent={listEmptyComponent}
       // I can make a PR for that
       keyExtractor={(item, idx) => item?.id.toString() || idx}
       contentContainerStyle={{

@@ -6,7 +6,7 @@ import { useLink, useParams } from 'solito/navigation';
 import { Button } from 'tamagui';
 
 import { api } from '@acme/api/utils/trpc';
-import { Page, Text, YStack } from '@acme/ui';
+import { Page, Text, VirtualList, YStack } from '@acme/ui';
 
 import { PersonCard } from '../people/PersonCard';
 import { QuestionCard } from '../questions/QuestionCard';
@@ -52,10 +52,9 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
   const questions = api.group.getQuestionsForGroup.useQuery(groupId);
   return (
     <YStack flex={1}>
-      <FlashList
+      <VirtualList
         data={questions.data}
-        estimatedItemSize={20}
-        keyExtractor={(item) => item.id.toString()}
+        itemHeight={20}
         renderItem={(q) => <QuestionCard question={q.item} />}
       />
     </YStack>
@@ -63,13 +62,12 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
 };
 
 const PeopleInGroup = ({ groupId }: { groupId: number }) => {
-  const people = api.groupsOfPeople.getPeopleFromGroupId.useQuery(groupId);
+  const { data } = api.groupsOfPeople.getPeopleFromGroupId.useQuery(groupId);
   return (
     <YStack flex={1}>
-      <FlashList
-        data={people.data}
-        estimatedItemSize={20}
-        keyExtractor={(item) => item.people.id.toString()}
+      <VirtualList
+        data={data}
+        itemHeight={20}
         renderItem={(p) => <PersonCard person={p.item.people} />}
       />
     </YStack>

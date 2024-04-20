@@ -1,6 +1,5 @@
-import { Text, VirtualList } from '@acme/ui';
-
 import { api } from '@acme/api/utils/trpc';
+import { Text, VirtualList } from '@acme/ui';
 
 import { MainPage } from '../../shared/components/Footer/MainPage';
 import { PersonCard } from './PersonCard';
@@ -17,11 +16,12 @@ const Component = () => {
 
   return (
     <MainPage>
-      {data ? (
-        <VirtualList data={data} itemHeight={20} renderItem={(p) => <PersonCard person={p} />} />
-      ) : (
-        <Text>No data</Text>
-      )}
+      <VirtualList
+        data={data}
+        itemHeight={20}
+        renderItem={(p) => <PersonCard person={p} />}
+        listEmptyComponent={<Text>No data</Text>}
+      />
     </MainPage>
   );
 };

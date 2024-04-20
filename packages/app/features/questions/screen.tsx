@@ -16,15 +16,12 @@ const Index = () => {
 
   return (
     <MainPage>
-      {data ? (
-        <VirtualList
-          data={data}
-          itemHeight={20}
-          renderItem={(g) => <QuestionCard question={g} />}
-        />
-      ) : (
-        <Text>No data</Text>
-      )}
+      <VirtualList
+        data={data}
+        itemHeight={20}
+        renderItem={(q) => <QuestionCard question={q} />}
+        listEmptyComponent={<Text>No data</Text>}
+      />
     </MainPage>
   );
 };

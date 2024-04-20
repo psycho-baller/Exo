@@ -1,20 +1,27 @@
 import { useRef } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 interface Props {
-  data: any[];
-  renderItem: (item: any) => React.ReactNode;
+  data: any[] | undefined | null;
+  renderItem: (item: any) => ReactElement;
   itemHeight: number;
+  listEmptyComponent?: ReactElement;
 }
 
-export const VirtualList = ({ data, renderItem, itemHeight }: Props): ReactNode => {
+export const VirtualList = ({
+  data,
+  renderItem,
+  itemHeight,
+  listEmptyComponent,
+}: Props): ReactNode => {
   const { top, bottom } = useSafeAreaInsets();
 
   const parentRef = useRef();
+  const dataLength = data?.length || 0;
   const rowVirtualizer = useVirtualizer({
-    count: data.length,
+    count: dataLength,
     getScrollElement: () => parentRef.current as any,
     estimateSize: () => itemHeight,
   });
@@ -38,21 +45,25 @@ export const VirtualList = ({ data, renderItem, itemHeight }: Props): ReactNode 
         }}
       >
         {/* Only the visible items in the virtualizer, manually positioned to be in view */}
-        {rowVirtualizer.getVirtualItems().map((virtualItem) => (
-          <div
-            key={virtualItem.key}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: `${virtualItem.size}px`,
-              transform: `translateY(${virtualItem.start}px)`,
-            }}
-          >
-            {renderItem(data[virtualItem.index])}
-          </div>
-        ))}
+        {!data ? (
+          <>{listEmptyComponent || <div>No data</div>}</>
+        ) : (
+          rowVirtualizer.getVirtualItems().map((virtualItem) => (
+            <div
+              key={virtualItem.key}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: `${virtualItem.size}px`,
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              {renderItem(data[virtualItem.index])}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

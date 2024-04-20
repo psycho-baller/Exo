@@ -3,10 +3,9 @@ import { Platform } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useLink, useParams } from 'solito/navigation';
-import { Button } from '@acme/ui';
 
 import { api } from '@acme/api/utils/trpc';
-import { Page, Text, YStack } from '@acme/ui';
+import { Button, Page, Text, VirtualList, YStack } from '@acme/ui';
 
 import { getFullName } from '../../lib/utils/strings';
 import { QuestionCard } from '../questions/QuestionCard';
@@ -48,13 +47,12 @@ const PersonScreen = (): ReactNode => {
 };
 
 const QuestionsForPerson = ({ personId }: { personId: number }) => {
-  const questions = api.question.getQuestionsForPerson.useQuery(personId);
+  const { data } = api.question.getQuestionsForPerson.useQuery(personId);
   return (
     <YStack flex={1}>
-      <FlashList
-        data={questions.data}
-        estimatedItemSize={20}
-        keyExtractor={(item) => item.id.toString()}
+      <VirtualList
+        data={data}
+        itemHeight={20}
         renderItem={(q) => <QuestionCard question={q.item} />}
       />
     </YStack>
