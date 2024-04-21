@@ -43,6 +43,19 @@ export const MainPage: FC<Props> = ({ children }) => {
           </Link>
         </FloatingFooter>
       )}
+      {/* <Button
+        // unstyled
+        borderRadius='$xl'
+        backgroundColor='$background'
+        paddingHorizontal='$2.5'
+        paddingVertical='$5'
+        position='absolute'
+        right='$4.5'
+        bottom='11.5%'
+        onPress={handlePlusClick}
+        cursor='pointer'
+        icon={<Plus size={'$3'} />}
+      /> */}
       <AddQuestion />
     </Page>
   )

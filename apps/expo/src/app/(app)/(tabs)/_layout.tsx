@@ -1,17 +1,9 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { BlurView } from 'expo-blur'
-import { Tabs, useSegments } from 'expo-router'
-import type React from 'react'
+import { Link, Tabs, useSegments } from 'expo-router'
+import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 
 import { useAddPersonStore } from '@acme/app/stores/addQuestion'
 import { useThemeName } from '@acme/ui'
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name']
-  color: string
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
-}
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -23,31 +15,37 @@ export default function TabLayout() {
 
   return (
     <Tabs
+    // tabBar={(props) => (
+    //   <CustomTabBar {...props} />
+    // )}
+
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),
         // tabBarInactiveTintColor: theme.text?.get(),
+        headerShown: false,
+        tabBarShowLabel: false,
+        
         tabBarBackground: () => (
           <BlurView
             intensity={50}
-            tint={themeName === 'dark' ? 'dark' : 'light'}
+            tint={themeName === 'dark' ? 'dark' : 'extraLight'}
             style={{
               flex: 1,
               overflow: 'hidden',
-              left: 20,
-              right: 20,
-              bottom: 20,
-              top: 0,
+              left: 10,
+              right: 10,
+              bottom: 17.5,
+              top: -5,
               position: 'absolute',
-              opacity: 10,
-              backgroundColor: 'transparent',
               borderRadius: 999,
-              padding: 10,
             }}
           />
         ),
         tabBarStyle: {
           display: segments[3] === '[id]' ? 'none' : 'flex',
+          // transform: [{ translateY: segments[3] === '[id]' ? 100 : 0 }],
+          // transformOrigin: 'bottom',
           // height: 250,
           backgroundColor: 'transparent',
           borderTopWidth: 0,
@@ -58,7 +56,7 @@ export default function TabLayout() {
           elevation: 0,
           // borderTopWidth: 0,
           // borderRadius: 999,
-          // height: 70,
+          height: 85,
           // padding: 10,
         },
       }}
@@ -66,27 +64,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name='questions'
         options={{
-          title: '',
-          headerShown: false,
-          // headerTransparent: true,
-          tabBarIcon: ({ color }) => <TabBarIcon name='home' color={color} />,
+          title: 'Questions',
+          tabBarIcon: ({ color,focused }) => <Home size='$2.5' color={focused ? color : undefined} />,
         }}
       />
       <Tabs.Screen
         name='people'
         options={{
-          title: '',
-          tabBarIcon: ({ size, color }) => (
-            <FontAwesome size={size} style={{ marginBottom: -3 }} name='users' color={color} />
+          title: 'People',
+          tabBarIcon: ({ size, color, focused }) => (
+            <User size='$2.5' color={focused ? color : undefined} />
           ),
-          headerShown: false,
         }}
       />
       <Tabs.Screen
         name='addQuestion'
         options={{
-          title: '',
-          tabBarIcon: ({ color }) => <TabBarIcon name='plus' color={color} />,
+          title: 'Add Question',
+          tabBarIcon: ({ size, color, focused }) => (
+            <Plus size='$3' color={focused ? color : undefined} />
+          ),
           headerShown: false,
         }}
         listeners={{
@@ -99,21 +96,19 @@ export default function TabLayout() {
       <Tabs.Screen
         name='search'
         options={{
-          title: '',
-          tabBarIcon: ({ size, color }) => (
-            <FontAwesome size={size} style={{ marginBottom: -3 }} name='search' color={color} />
+          title: 'Search',
+          tabBarIcon: ({ size, color, focused }) => (
+            <Search size='$2.5' color={focused ? color : undefined} />
           ),
-          headerShown: false,
         }}
       />
       <Tabs.Screen
         name='groups'
         options={{
-          title: '',
-          tabBarIcon: ({ size, color }) => (
-            <FontAwesome size={size} style={{ marginBottom: -3 }} name='users' color={color} />
+          title: 'Groups',
+          tabBarIcon: ({ size, color, focused }) => (
+            <Users size='$2.5' color={focused ? color : undefined} />
           ),
-          headerShown: false,
         }}
       />
     </Tabs>
