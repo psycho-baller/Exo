@@ -12,7 +12,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
   return (
     <TamaguiThemeProvider>
       <TamaguiProvider>
-        {/* <SafeAreaProvider> */}
+        <SafeAreaProvider>
         <ToastProvider
           swipeDirection='horizontal'
           duration={6000}
@@ -27,7 +27,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
           <CustomToast />
           <ToastViewport />
         </ToastProvider>
-        {/* </SafeAreaProvider> */}
+        </SafeAreaProvider>
       </TamaguiProvider>
     </TamaguiThemeProvider>
   )

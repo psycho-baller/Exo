@@ -6,6 +6,7 @@ import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import { GroupCard } from './GroupCard'
+import { CARD_HEIGHT } from '../../utils/constants'
 
 const Index = () => {
   const { isLoading, error, data } = api.group.all.useQuery()
@@ -20,7 +21,7 @@ const Index = () => {
   return (
     <MainPage>
       {data ? (
-        <VirtualList data={data} itemHeight={20} renderItem={(g) => <GroupCard group={g} />} />
+        <VirtualList data={data} itemHeight={CARD_HEIGHT} renderItem={(g) => <GroupCard group={g} />} />
       ) : (
         // TODO: ADD YOUR FIRST QUESTION!!!
         <Text>No data</Text>

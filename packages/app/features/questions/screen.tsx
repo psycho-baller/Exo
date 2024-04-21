@@ -3,6 +3,7 @@ import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import { QuestionCard } from './QuestionCard'
+import { CARD_HEIGHT } from '../../utils/constants'
 
 const Index = () => {
   const { isLoading, error, data } = api.question.all.useQuery()
@@ -18,7 +19,7 @@ const Index = () => {
     <MainPage>
       <VirtualList
         data={data}
-        itemHeight={20}
+        itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
         listEmptyComponent={<Text>No data</Text>}
       />

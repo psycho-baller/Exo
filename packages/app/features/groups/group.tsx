@@ -12,6 +12,7 @@ import { PersonCard } from '../people/PersonCard'
 import { QuestionCard } from '../questions/QuestionCard'
 import { EditGroupText } from './EditGroupText'
 import { GroupProperties } from './GroupProperties'
+import { CARD_HEIGHT } from '../../utils/constants'
 
 interface Params {
   id: string
@@ -54,7 +55,7 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
     <YStack flex={1}>
       <VirtualList
         data={questions.data}
-        itemHeight={20}
+        itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
       />
     </YStack>
@@ -67,7 +68,7 @@ const PeopleInGroup = ({ groupId }: { groupId: number }) => {
     <YStack flex={1}>
       <VirtualList
         data={data}
-        itemHeight={20}
+        itemHeight={CARD_HEIGHT}
         renderItem={(p) => <PersonCard person={p.people} />}
       />
     </YStack>
