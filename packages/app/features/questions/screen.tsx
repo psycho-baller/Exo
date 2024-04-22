@@ -22,6 +22,7 @@ const Index = () => {
         itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
         listEmptyComponent={<Text>No data</Text>}
+        isPage
       />
     </MainPage>
   )

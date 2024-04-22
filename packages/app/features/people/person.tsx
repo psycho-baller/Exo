@@ -7,11 +7,11 @@ import { useLink, useParams } from 'solito/navigation'
 import { api } from '@acme/api/utils/trpc'
 import { Button, Page, Text, VirtualList, YStack } from '@acme/ui'
 
+import { CARD_HEIGHT } from '../../utils/constants'
 import { getFullName } from '../../utils/strings'
 import { QuestionCard } from '../questions/QuestionCard'
 import { EditPersonText } from './EditPersonText'
 import { PersonProperties } from './PersonProperties'
-import { CARD_HEIGHT } from '../../utils/constants'
 
 interface Params {
   id: string
@@ -51,7 +51,11 @@ const QuestionsForPerson = ({ personId }: { personId: number }) => {
   const { data } = api.question.getQuestionsForPerson.useQuery(personId)
   return (
     <YStack flex={1}>
-      <VirtualList data={data} itemHeight={CARD_HEIGHT} renderItem={(q) => <QuestionCard question={q} />} />
+      <VirtualList
+        data={data}
+        itemHeight={CARD_HEIGHT}
+        renderItem={(q) => <QuestionCard question={q} />}
+      />
     </YStack>
   )
 }

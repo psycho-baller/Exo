@@ -22,6 +22,7 @@ const Component = () => {
         itemHeight={CARD_HEIGHT}
         renderItem={(p) => <PersonCard person={p} />}
         listEmptyComponent={<Text>No data</Text>}
+        isPage
       />
     </MainPage>
   )

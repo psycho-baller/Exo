@@ -1,12 +1,9 @@
-import { FlashList } from '@shopify/flash-list'
-import { Platform } from 'react-native'
-
 import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
-import { GroupCard } from './GroupCard'
 import { CARD_HEIGHT } from '../../utils/constants'
+import { GroupCard } from './GroupCard'
 
 const Index = () => {
   const { isLoading, error, data } = api.group.all.useQuery()
@@ -20,12 +17,14 @@ const Index = () => {
 
   return (
     <MainPage>
-      {data ? (
-        <VirtualList data={data} itemHeight={CARD_HEIGHT} renderItem={(g) => <GroupCard group={g} />} />
-      ) : (
-        // TODO: ADD YOUR FIRST QUESTION!!!
-        <Text>No data</Text>
-      )}
+      // TODO: ADD YOUR FIRST QUESTION!!!
+      <VirtualList
+        data={data}
+        itemHeight={CARD_HEIGHT}
+        renderItem={(g) => <GroupCard group={g} />}
+        listEmptyComponent={<Text>No data</Text>}
+        isPage
+      />
     </MainPage>
   )
 }
