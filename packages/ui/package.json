@@ -1,18 +1,25 @@
 {
   "name": "@acme/ui",
   "version": "0.1.0",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "private": true,
   "types": "./types/index",
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "module:jsx": "src",
-  "files": ["types", "dist"],
+  "files": [
+    "types",
+    "dist"
+  ],
   "exports": {
-    ".": "./src/index.tsx"
+    ".": "./src/index.ts"
   },
   "typesVersions": {
     "*": {
-      "*": ["src/*"]
+      "*": [
+        "src/*"
+      ]
     }
   },
   "license": "MIT",
@@ -47,7 +54,10 @@
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
-    "extends": ["@acme/eslint-config/base", "@acme/eslint-config/react"]
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/react"
+    ]
   },
   "prettier": "@acme/prettier-config"
 }

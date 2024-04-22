@@ -15,9 +15,9 @@ const Index = () => {
     return <Text>Error: {error.message}</Text>
   }
 
+  // TODO: ADD YOUR FIRST QUESTION!!!
   return (
     <MainPage>
-      // TODO: ADD YOUR FIRST QUESTION!!!
       <VirtualList
         data={data}
         itemHeight={CARD_HEIGHT}

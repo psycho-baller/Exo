@@ -12,7 +12,7 @@ const Layout = () => {
       <Stack.Screen
         name='index'
         options={{
-          title: 'People',
+          title: 'Search',
           // headerLargeTitle: true,
           headerTransparent: true,
           headerBlurEffect: 'regular',

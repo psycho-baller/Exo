@@ -1,17 +1,20 @@
-const MillionLint = require('@million/lint')
-/** @type {import('next').NextConfig} */
 // Importing env files here to validate on build
 // require('./src/env.js');
 // require('@acme/auth/env.mjs');
-/** @type {import('next').NextConfig} */
+const MillionLint = require('@million/lint')
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
 const boolVals = {
   true: true,
   false: false,
 }
+
 const disableExtraction =
   boolVals[process.env.DISABLE_EXTRACTION] ?? process.env.NODE_ENV === 'development'
+
+const enableMillionJS =
+  boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
+
 const plugins = [
   withTamagui({
     config: './tamagui.config.ts',
@@ -35,9 +38,11 @@ const plugins = [
 // from the bundle: Switch, ProgressBar Picker, CheckBox, Touchable. To save more,
 // you can add ones you don't need like: AnimatedFlatList, FlatList, SectionList,
 // VirtualizedList, VirtualizedSectionList.
-module.exports = MillionLint.next({
-  rsc: true,
-})(() => {
+// MillionLint.next({
+// rsc: true,
+// })(
+/** @type {import('next').NextConfig} */
+module.exports = () => {
   let config = {
     typescript: {
       ignoreBuildErrors: true,
@@ -56,7 +61,6 @@ module.exports = MillionLint.next({
       'react-native-gesture-handler',
       'expo-constants',
       'expo-modules-core',
-      '@shopify/flash-list',
     ],
     experimental: {
       scrollRestoration: true,
@@ -68,5 +72,19 @@ module.exports = MillionLint.next({
       ...plugin(config),
     }
   }
+
+  const millionConfig = {
+    auto: true,
+    mute: true,
+  }
+
+  if (enableMillionJS) {
+    config = MillionLint.next(config, millionConfig)
+  }
+
+  // if (enablePattyCake) {
+  //   config = pattycake.next(config)
+  // }
+
   return config
-})
+}

@@ -11,7 +11,7 @@ import { AddQuestion } from './AddQuestion'
 
 type Props = PageProps
 
-export const MainPage: FC<Props> = ({ children }) => {
+export const MainPage: FC<Props> = ({ children, ...props }) => {
   const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen])
 
   function handlePlusClick() {
@@ -19,7 +19,7 @@ export const MainPage: FC<Props> = ({ children }) => {
   }
 
   return (
-    <Page>
+    <Page {...props}>
       {children}
       {Platform.OS === 'web' && (
         <FloatingFooter blurIntensity={40}>

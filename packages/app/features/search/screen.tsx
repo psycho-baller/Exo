@@ -9,8 +9,13 @@ import { MainPage } from '../../components/Footer/MainPage'
 import LinkButton from '../../components/LinkButton'
 import { getFullName, getSingularFromPlural } from '../../utils/strings'
 import SearchHistory from './SearchHistory'
+import { useHeaderHeight } from '@react-navigation/elements'
+import { Platform } from 'react-native'
+
 
 const Index = () => {
+  const headerHeight = Platform.OS !== 'web' ? useHeaderHeight() : 0
+
   const [searchTerm, setSearchTerm] = useState<string>('')
   const searchTermRef = useRef<string>('') // This ref will store the last non-empty search term.
 
@@ -74,13 +79,12 @@ const Index = () => {
   }
 
   return (
-    <MainPage>
-      <YStack padding='$4'>
+    <MainPage paddingTop={headerHeight}>
+      <YStack>
         <Input
           placeholder='Search questions, people, and groups'
           value={searchTerm}
           onChangeText={setSearchTerm}
-          flex={1}
         />
         {/* Render search results */}
         <YStack paddingTop='$4' columnGap='$4'>

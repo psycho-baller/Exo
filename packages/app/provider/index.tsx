@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import type { TamaguiProviderProps } from '@acme/ui'
 import { CustomToast, ToastProvider } from '@acme/ui'
 
