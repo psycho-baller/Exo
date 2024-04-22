@@ -8,11 +8,11 @@ import { Button } from 'tamagui'
 import { api } from '@acme/api/utils/trpc'
 import { Page, Text, VirtualList, YStack } from '@acme/ui'
 
+import { CARD_HEIGHT } from '../../utils/constants'
 import { PersonCard } from '../people/PersonCard'
 import { QuestionCard } from '../questions/QuestionCard'
 import { EditGroupText } from './EditGroupText'
 import { GroupProperties } from './GroupProperties'
-import { CARD_HEIGHT } from '../../utils/constants'
 
 interface Params {
   id: string

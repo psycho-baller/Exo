@@ -2,8 +2,8 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
-import { PersonCard } from './PersonCard'
 import { CARD_HEIGHT } from '../../utils/constants'
+import { PersonCard } from './PersonCard'
 
 const Component = () => {
   const { isLoading, error, data } = api.person.all.useQuery()

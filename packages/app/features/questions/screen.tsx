@@ -2,8 +2,8 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
-import { QuestionCard } from './QuestionCard'
 import { CARD_HEIGHT } from '../../utils/constants'
+import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
   const { isLoading, error, data } = api.question.all.useQuery()

@@ -1,6 +1,6 @@
+import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 import { BlurView } from 'expo-blur'
 import { Link, Tabs, useSegments } from 'expo-router'
-import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 
 import { useAddPersonStore } from '@acme/app/stores/addQuestion'
 import { useThemeName } from '@acme/ui'
@@ -15,17 +15,12 @@ export default function TabLayout() {
 
   return (
     <Tabs
-    // tabBar={(props) => (
-    //   <CustomTabBar {...props} />
-    // )}
-
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),
         // tabBarInactiveTintColor: theme.text?.get(),
         headerShown: false,
         tabBarShowLabel: false,
-        
         tabBarBackground: () => (
           <BlurView
             intensity={50}
@@ -46,7 +41,6 @@ export default function TabLayout() {
           display: segments[3] === '[id]' ? 'none' : 'flex',
           // transform: [{ translateY: segments[3] === '[id]' ? 100 : 0 }],
           // transformOrigin: 'bottom',
-          // height: 250,
           backgroundColor: 'transparent',
           borderTopWidth: 0,
           position: 'absolute',
@@ -55,9 +49,7 @@ export default function TabLayout() {
           right: 0,
           elevation: 0,
           // borderTopWidth: 0,
-          // borderRadius: 999,
           height: 85,
-          // padding: 10,
         },
       }}
     >
@@ -65,7 +57,9 @@ export default function TabLayout() {
         name='questions'
         options={{
           title: 'Questions',
-          tabBarIcon: ({ color,focused }) => <Home size='$2.5' color={focused ? color : undefined} />,
+          tabBarIcon: ({ color, focused }) => (
+            <Home size='$2.5' color={focused ? color : undefined} />
+          ),
         }}
       />
       <Tabs.Screen

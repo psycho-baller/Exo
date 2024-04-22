@@ -63,13 +63,8 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
-    ],
-    "ignorePatterns": [
-      "expo-plugins/**"
-    ]
+    "extends": ["@acme/eslint-config/base", "@acme/eslint-config/react"],
+    "ignorePatterns": ["expo-plugins/**"]
   },
   "prettier": "@acme/prettier-config"
 }

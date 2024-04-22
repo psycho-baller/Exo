@@ -1,8 +1,8 @@
+import { useHeaderHeight } from '@react-navigation/elements'
 import { FlashList } from '@shopify/flash-list'
 import { useCallback } from 'react'
 import type { ReactElement, ReactNode } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useHeaderHeight } from '@react-navigation/elements'
 
 interface Props {
   data: any[] | undefined | null
@@ -37,7 +37,7 @@ export function VirtualList<T>({
       keyExtractor={(item, idx) => item?.id.toString() || idx}
       contentContainerStyle={{
         paddingTop: isPage ? headerHeight : 0,
-        paddingBottom: bottom + (isPage ? 50 : 0)
+        paddingBottom: bottom + (isPage ? 50 : 0),
       }}
       renderItem={render}
       estimatedItemSize={itemHeight}

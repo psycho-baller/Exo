@@ -1,1 +1,1 @@
-export const CARD_HEIGHT = 70;
+export const CARD_HEIGHT = 70
