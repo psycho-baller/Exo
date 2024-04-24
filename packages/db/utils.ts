@@ -8,11 +8,12 @@ interface ConnectionResult {
   db: Database
   client: ReturnType<typeof createClient>
 }
-
+export const dbCredentials = {
+  url: process.env.TURSO_CONNECTION_URL || 'http://127.0.0.1:8080',
+  authToken: process.env.TURSO_AUTH_TOKEN,
+}
 export function createConnection(): ConnectionResult {
-  const client = createClient({
-    url: 'http://127.0.0.1:8080',
-  })
+  const client = createClient(dbCredentials)
   const db = drizzle(client, { schema })
 
   return {

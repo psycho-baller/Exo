@@ -21,7 +21,7 @@ export function EditGroupText({ id, content }: { id: number; content: string }) 
     return () => {
       clearTimeout(timer)
     }
-  }, [id, group, updateName])
+  }, [id, updateName, content])
 
   return (
     <UnstyledInput

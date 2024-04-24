@@ -1,3 +1,4 @@
+/* eslint-disable */
 const createEnv = require('@t3-oss/env-nextjs').createEnv
 const z = require('zod').z
 

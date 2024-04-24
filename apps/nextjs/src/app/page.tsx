@@ -5,8 +5,8 @@ import { auth } from '@acme/auth'
 
 export default async function Home() {
   const session = await auth()
-  const isAuthSkip = process.env.AUTH_SKIP === 'true'
-  if (session || (process.env.NODE_ENV === 'development' && isAuthSkip)) {
+  // const isAuthSkip = process.env.AUTH_SKIP === 'true'
+  if (session?.user ?? process.env.NODE_ENV === 'development') {
     redirect('/questions')
   } else {
     redirect('/settings')

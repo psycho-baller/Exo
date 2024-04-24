@@ -1,7 +1,7 @@
 // Importing env files here to validate on build
 // require('./src/env.js');
 // require('@acme/auth/env.mjs');
-const MillionLint = require('@million/lint')
+// const MillionLint = require('@million/lint')
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
 const boolVals = {
@@ -73,14 +73,14 @@ module.exports = () => {
     }
   }
 
-  const millionConfig = {
-    auto: true,
-    mute: true,
-  }
+  // const millionConfig = {
+  //   auto: true,
+  //   mute: true,
+  // }
 
-  if (enableMillionJS) {
-    config = MillionLint.next(config, millionConfig)
-  }
+  // if (enableMillionJS) {
+  //   config = MillionLint.next(config, millionConfig)
+  // }
 
   // if (enablePattyCake) {
   //   config = pattycake.next(config)

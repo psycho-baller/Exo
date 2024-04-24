@@ -104,15 +104,23 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+  if (!ctx.session?.user) {
   // throw new TRPCError({ code: 'UNAUTHORIZED' });
-  // TODO: THIS IS DANGEROUS, DO NOT DO THIS IN PRODUCTION
-  return next({
-    ctx: {
-      session: {
-        user: {
-          id: '69420',
+    // TODO: THIS IS DANGEROUS, DO NOT DO THIS IN PRODUCTION
+    return next({
+      ctx: {
+        session: {
+          user: {
+            id: '69420',
+          },
         },
       },
+    })
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
     },
   })
 })
