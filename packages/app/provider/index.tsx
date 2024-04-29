@@ -7,32 +7,26 @@ import { TamaguiProvider } from './tamagui'
 import { TamaguiThemeProvider } from './theme'
 import { ToastViewport } from './toast-viewport'
 import { BottomSheetModalProvider } from './bottom-sheet-modal'
+import { TRPCProvider } from './trpc';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
     <TamaguiThemeProvider>
-      <TamaguiProvider>
-        <SafeAreaProvider>
-          <ToastProvider
-            swipeDirection='horizontal'
-            duration={6000}
-            native={
-              [
-                /* uncomment the next line to do native toasts on mobile. NOTE: it'll require you making a dev build and won't work with Expo Go */
-                // 'mobile'
-              ]
-            }
-          >
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <BottomSheetModalProvider>
-                {children}
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-            <CustomToast />
-            <ToastViewport />
-          </ToastProvider>
-        </SafeAreaProvider>
-      </TamaguiProvider>
+      <SafeAreaProvider>
+        <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+          <TRPCProvider>
+            <TamaguiProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                  {children}
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+              <CustomToast />
+              <ToastViewport />
+            </TamaguiProvider>
+          </TRPCProvider>
+        </ToastProvider>
+      </SafeAreaProvider>
     </TamaguiThemeProvider>
   )
 }

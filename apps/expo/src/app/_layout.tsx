@@ -5,8 +5,6 @@ import React, { useEffect } from 'react'
 
 import { Provider } from '@acme/app/provider'
 
-import { TRPCProvider } from '~/utils/api'
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -34,7 +32,6 @@ const RootLayout = () => {
   }
 
   return (
-    <TRPCProvider>
       <Provider>
         {/*
           The Stack component displays the current page.
@@ -52,7 +49,6 @@ const RootLayout = () => {
         </Stack>
         <StatusBar />
       </Provider>
-    </TRPCProvider>
   )
 }
 
