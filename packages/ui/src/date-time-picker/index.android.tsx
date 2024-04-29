@@ -1,6 +1,6 @@
-import {DateTimePickerAndroid} from '@react-native-community/datetimepicker'
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import { Button, XStack, Text } from 'tamagui'
-import type { BaseProps, AndroidNativeProps } from '@react-native-community/datetimepicker'
+import type { AndroidNativeProps } from '@react-native-community/datetimepicker'
 type Props = Omit<AndroidNativeProps, 'value' | 'onChange'> & {
   value: Date | null
   onChange: (date: Date) => Promise<void>
@@ -36,7 +36,7 @@ export const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
         {value?.toLocaleDateString()}
       </Button>
       <Button size='$3' fontSize='$5' borderRadius='$lg' onPress={showTimepicker}>
-        {value?.toLocaleTimeString().replace(/:\d+ /, ' ')}
+        {value?.toLocaleTimeString()?.replace(/:\d+ /, ' ')}
       </Button>
     </XStack>
   );

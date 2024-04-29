@@ -75,8 +75,8 @@ importers:
         specifier: ^4.6.1
         version: 4.6.1(@types/react@18.2.61)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.3)(react-native@0.73.6)(react@18.2.0)
       '@react-native-community/datetimepicker':
-        specifier: 7.6.1
-        version: 7.6.1
+        specifier: 8.0.0
+        version: 8.0.0(react-native@0.73.6)(react@18.2.0)
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.6)(react@18.2.0)
@@ -595,8 +595,8 @@ importers:
   packages/ui:
     dependencies:
       '@react-native-community/datetimepicker':
-        specifier: 7.6.1
-        version: 7.6.1
+        specifier: 8.0.0
+        version: 8.0.0(react-native@0.73.6)(react@18.2.0)
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.6)(react@18.2.0)
@@ -5075,10 +5075,19 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@react-native-community/datetimepicker@7.6.1:
-    resolution: {integrity: sha512-g66Q2Kd9Uw3eRL7kkrTsGhi+eXxNoPDRFYH6z78sZQuYjPkUQgJDDMUYgBmaBsQx/fKMtemPrCj1ulGmyi0OSw==}
+  /@react-native-community/datetimepicker@8.0.0(react-native@0.73.6)(react@18.2.0):
+    resolution: {integrity: sha512-hFiGlG5ovhspLYIZlvRs7sMg2NtKjHaG2CJQbECQH1M31760cR7BjYujS/MCM2d44ihhn4ZKLspAyXVN+Gh08g==}
+    peerDependencies:
+      react: '*'
+      react-native: ^0.73.0
+      react-native-windows: ^0.73.0
+    peerDependenciesMeta:
+      react-native-windows:
+        optional: true
     dependencies:
       invariant: 2.2.4
+      react: 18.2.0
+      react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
 
   /@react-native/assets-registry@0.73.1(patch_hash=ieiwhypvddbubq45ah5bswdrmu):

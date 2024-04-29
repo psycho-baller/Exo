@@ -7,6 +7,9 @@
       "node": "21.2.0",
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "TAMAGUI_TARGET": "native"
       }
     },
     "development-simulator": {
@@ -25,6 +28,7 @@
       "extends": "base",
       "distribution": "internal",
       "android": {
+        "gradleCommand": ":app:assembleRelease",
         "buildType": "apk"
       },
       "ios": {
