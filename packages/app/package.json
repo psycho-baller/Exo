@@ -28,7 +28,7 @@
     "@trpc/react-query": "next",
     "@trpc/server": "next",
     "burnt": "^0.12.2",
-    "expo-constants": "^15.4.5",
+    "expo-constants": "^15.4.6",
     "expo-font": "^11.10.3",
     "expo-linking": "^6.2.2",
     "jotai": "^2.8.0",
