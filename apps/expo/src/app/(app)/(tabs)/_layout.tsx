@@ -4,14 +4,17 @@ import { Link, Tabs, useSegments } from 'expo-router'
 
 import { useAddPersonStore } from '@acme/app/stores/addQuestion'
 import { useThemeName } from '@acme/ui'
+import { dropdownOpenAtom } from '@acme/app/atoms/addQuestion'
+import { useAtom } from 'jotai'
 
 export default function TabLayout() {
   const themeName = useThemeName()
   const segments = useSegments()
-  const [dropdownOpen, setDropdownOpen] = useAddPersonStore((state) => [
-    state.dropdownOpen,
-    state.setDropdownOpen,
-  ])
+  // const [dropdownOpen, setDropdownOpen] = useAddPersonStore((state) => [
+  //   state.dropdownOpen,
+  //   state.setDropdownOpen,
+  // ])
+  const [_, setDropdownOpen] = useAtom(dropdownOpenAtom)
 
   return (
     <Tabs

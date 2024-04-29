@@ -1,6 +1,10 @@
 {
   "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
+    "paths": {
+      "react-native-reanimated": ["./node_modules/react-native-reanimated/src"],
+      "~@gorhom/bottom-sheet": ["./node_modules/@gorhom/bottom-sheet/src"]
+    },
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     // "composite": true,
     "jsx": "react-jsx"

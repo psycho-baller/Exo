@@ -7,14 +7,14 @@ module.exports = (api) => {
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
-            [
-              '@tamagui/babel-plugin',
-              {
-                components: ['@acme/ui', 'tamagui'],
-                config: './tamagui.config.ts',
-              },
-            ],
-          ]),
+          [
+            '@tamagui/babel-plugin',
+            {
+              components: ['@acme/ui', 'tamagui'],
+              config: './tamagui.config.ts',
+            },
+          ],
+        ]),
       // if you want reanimated support
       // '@babel/plugin-transform-export-namespace-from',
       // 'react-native-reanimated/plugin',

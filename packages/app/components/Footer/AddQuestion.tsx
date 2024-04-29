@@ -1,20 +1,27 @@
 import { CheckCircle2, X } from '@tamagui/lucide-icons'
-import { useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
-import { Button, ErrorText, Label, Sheet, UnstyledInput, XStack, YStack } from '@acme/ui'
+import { Button, ErrorText, Label, UnstyledInput, XStack, YStack, BottomSheet } from '@acme/ui'
+import type { BottomSheetModalRef } from '@acme/ui'
 
 import type { Topic } from '../../../db/schema/types'
 import { useAddPersonStore } from '../../stores/addQuestion'
 import { AddPerson } from './AddPerson'
 
-export const AddQuestion = () => {
+import { useAtom } from 'jotai'
+import { dropdownOpenAtom } from '../../atoms/addQuestion'
+export const AddQuestion: FC = () => {
   const utils = api.useUtils()
   const createTopicMutation = api.topic.create.useMutation()
   const createQuestionTopicRelation = api.questionTopic.create.useMutation()
   const searchTopics = api.topic.search.useQuery
 
-  const [selectedPerson, setPersonSearch, dropdownOpen, setDropdownOpen] = useAddPersonStore(
+  const [selectedPerson, setPersonSearch,
+    // dropdownOpen,
+    // setDropdownOpen
+  ] = useAddPersonStore(
     (state) => [
       state.selectedPerson,
       state.setPersonSearch,
@@ -22,6 +29,7 @@ export const AddQuestion = () => {
       state.setDropdownOpen,
     ],
   )
+
 
   const [question, setQuestion] = useState('')
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
@@ -99,65 +107,63 @@ export const AddQuestion = () => {
       { name: topicName },
       {
         onSuccess: (topic) => {
-          selectTopic(topic[0]!)
+          selectTopic(topic?.[0] ?? { id: 0, name: '', createdByUserId: '' })
         },
       },
     )
   }
+  const [dropdownOpen, setDropdownOpen] = useAtom(dropdownOpenAtom)
 
   return (
-    <Sheet open={dropdownOpen} modal onOpenChange={setDropdownOpen} zIndex={50}>
-      <Sheet.Handle />
-      <Sheet.Frame padding='$4'>
-        <XStack justifyContent='space-between'>
-          <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
-            QUESTION
-          </Label>
-          <Button unstyled style={{ cursor: 'pointer' }} onPress={() => setDropdownOpen(false)}>
-            <X />
-          </Button>
-        </XStack>
-        <XStack alignItems='center'>
-          <UnstyledInput
-            width={800}
-            placeholderTextColor='$secondaryColor'
-            opacity={0.75}
-            fontSize={'$8'}
-            paddingVertical={'$2'}
-            marginBottom={'$4'}
-            autoFocus={dropdownOpen}
-            placeholder='Add Question'
-            value={question}
-            onChangeText={setQuestion}
-          />
-        </XStack>
-        {showTopicSuggestions && (
-          <YStack padding='$2'>
-            {filteredTopics.map((topic) => (
-              <Button key={topic.id} onPress={() => selectTopic(topic)}>
-                {topic.name}
-              </Button>
-            ))}
-            {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
-              <Button onPress={() => createAndSelectTopic(searchTerm)}>
-                {`Create "${searchTerm}"`}
-              </Button>
-            )}
-          </YStack>
-        )}
-        <XStack>
-          <AddPerson flex={1} />
-          <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
-            <CheckCircle2 />
-          </Button>
-        </XStack>
-        {error?.data?.code === 'UNAUTHORIZED' && (
-          <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
-        )}
-        {error?.data?.zodError?.fieldErrors.text && (
-          <ErrorText textAlign='center'>{error.data.zodError.fieldErrors.text}</ErrorText>
-        )}
-      </Sheet.Frame>
-    </Sheet>
+    <BottomSheet title='Ask a Question' snapPoints={['50%']}>
+      <XStack justifyContent='space-between'>
+        <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
+          QUESTION
+        </Label>
+        <Button unstyled style={{ cursor: 'pointer' }} onPress={() => setDropdownOpen(false)}>
+          <X />
+        </Button>
+      </XStack>
+      <XStack alignItems='center'>
+        <UnstyledInput
+          width={800}
+          placeholderTextColor='$secondaryColor'
+          opacity={0.75}
+          fontSize={'$8'}
+          paddingVertical={'$2'}
+          marginBottom={'$4'}
+          autoFocus={dropdownOpen}
+          placeholder='Add Question'
+          value={question}
+          onChangeText={setQuestion}
+        />
+      </XStack>
+      {showTopicSuggestions && (
+        <YStack padding='$2'>
+          {filteredTopics.map((topic) => (
+            <Button key={topic.id} onPress={() => selectTopic(topic)}>
+              {topic.name}
+            </Button>
+          ))}
+          {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
+            <Button onPress={() => createAndSelectTopic(searchTerm)}>
+              {`Create "${searchTerm}"`}
+            </Button>
+          )}
+        </YStack>
+      )}
+      <XStack>
+        <AddPerson flex={1} />
+        <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
+          <CheckCircle2 />
+        </Button>
+      </XStack>
+      {error?.data?.code === 'UNAUTHORIZED' && (
+        <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
+      )}
+      {error?.data?.zodError?.fieldErrors.text && (
+        <ErrorText textAlign='center'>{error.data.zodError.fieldErrors.text}</ErrorText>
+      )}
+    </BottomSheet>
   )
 }

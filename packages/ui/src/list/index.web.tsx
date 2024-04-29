@@ -16,7 +16,7 @@ export const VirtualList = ({
   itemHeight,
   listEmptyComponent,
 }: Props): ReactNode => {
-  const { top, bottom } = useSafeAreaInsets()
+  const { top, bottom } = { top: 0, bottom: 0 }// useSafeAreaInsets()
 
   const parentRef = useRef()
   const dataLength = data?.length || 0

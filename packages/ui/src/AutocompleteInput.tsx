@@ -5,6 +5,7 @@ import type { GetProps, Input } from 'tamagui'
 import { Button, Separator, Text, View, YStack } from 'tamagui'
 
 import { UnstyledInput } from './UnstyledInput'
+import { VirtualList } from './list'
 
 type T = any
 interface Props<T> extends GetProps<typeof Input> {
@@ -74,12 +75,11 @@ export const AutocompleteInput: FC<Props<T>> = ({
         borderRadius='$1'
       >
         {menuVisible && (
-          <FlashList
+          <VirtualList
             data={filteredData}
-            estimatedItemSize={20}
-            ItemSeparatorComponent={() => <Separator />}
-            keyExtractor={keyExtractor}
-            ListEmptyComponent={onEmptyList}
+            itemHeight={20}
+            // ={() => <Separator />}
+            // listEmptyComponent={<onEmptyList/>}
             renderItem={({ item }) => {
               return (
                 <Button onPress={() => handleDropdownSelect(item)}>

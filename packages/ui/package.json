@@ -32,6 +32,7 @@
     "watch": "tamagui-build --watch"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.1",
     "@react-native-community/datetimepicker": "7.6.1",
     "@shopify/flash-list": "1.6.3",
     "@tamagui/animations-moti": "^1.90.6",
@@ -42,6 +43,7 @@
     "@tamagui/toast": "^1.90.6",
     "@tanstack/react-virtual": "^3.4.0",
     "expo-blur": "~12.9.2",
+    "jotai": "^2.8.0",
     "tamagui": "^1.90.6"
   },
   "devDependencies": {
