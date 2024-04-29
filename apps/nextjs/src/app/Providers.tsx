@@ -2,6 +2,9 @@
 
 import '@tamagui/core/reset.css'
 import './globals.css'
+if (process.env.NODE_ENV === 'production') {
+  require('../../public/tamagui.css')
+}
 
 import '@tamagui/polyfill-dev'
 

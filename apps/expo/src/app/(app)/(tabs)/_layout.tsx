@@ -1,17 +1,15 @@
 import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 import { BlurView } from 'expo-blur'
-import { Link, Tabs, useSegments } from 'expo-router'
+import { Tabs, useSegments } from 'expo-router'
 
-import { useAddPersonStore } from '@acme/app/stores/addQuestion'
 import { useThemeName } from '@acme/ui'
+import { sheetRefAtom } from '@acme/app/atoms/addQuestion'
+import { useAtom } from 'jotai'
 
 export default function TabLayout() {
   const themeName = useThemeName()
   const segments = useSegments()
-  const [dropdownOpen, setDropdownOpen] = useAddPersonStore((state) => [
-    state.dropdownOpen,
-    state.setDropdownOpen,
-  ])
+  const [sheetRef] = useAtom(sheetRefAtom)
 
   return (
     <Tabs
@@ -82,7 +80,7 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault()
-            setDropdownOpen(true)
+            sheetRef?.current?.present()
           },
         }}
       />

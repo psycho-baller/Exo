@@ -34,8 +34,8 @@ const RootLayout = () => {
   }
 
   return (
-    <Provider>
-      <TRPCProvider>
+    <TRPCProvider>
+      <Provider>
         {/*
           The Stack component displays the current page.
           It also allows you to configure your screens
@@ -51,8 +51,8 @@ const RootLayout = () => {
           <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
         </Stack>
         <StatusBar />
-      </TRPCProvider>
-    </Provider>
+      </Provider>
+    </TRPCProvider>
   )
 }
 

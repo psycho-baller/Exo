@@ -1,4 +1,5 @@
 import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
+import { useRef, useCallback, useEffect } from 'react'
 import type { FC } from 'react'
 import { Platform } from 'react-native'
 import { Link } from 'solito/link'
@@ -6,17 +7,16 @@ import { Link } from 'solito/link'
 import type { PageProps } from '@acme/ui'
 import { Button, FloatingFooter, Page } from '@acme/ui'
 
-import { useAddPersonStore } from '../../stores/addQuestion'
 import { AddQuestion } from './AddQuestion'
+import { useAtom } from 'jotai'
+import { sheetRefAtom } from '../../atoms/addQuestion'
 
 type Props = PageProps
 
 export const MainPage: FC<Props> = ({ children, ...props }) => {
-  const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen])
+  const [sheetRef] = useAtom(sheetRefAtom)
 
-  function handlePlusClick() {
-    setDropdownOpen(true)
-  }
+  const handlePresentModalPress = () => sheetRef?.current?.present()
 
   return (
     <Page {...props}>
@@ -31,7 +31,7 @@ export const MainPage: FC<Props> = ({ children, ...props }) => {
           </Link>
           <Button
             unstyled
-            onPress={handlePlusClick}
+            onPress={handlePresentModalPress}
             cursor='pointer'
             icon={<Plus size={'$2.5'} />}
           />

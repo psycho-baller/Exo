@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'com.convo_topics',
+    bundleIdentifier: 'com.convo-topics',
     supportsTablet: true,
   },
   android: {

@@ -1,6 +1,5 @@
 import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
 import { Link } from 'solito/link'
@@ -25,49 +24,47 @@ export const QuestionCard: FC<Props> = (props) => {
   })
 
   return (
-    <GestureHandlerRootView>
-      <Swipeable
-        renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
-        onSwipeableOpen={() => deleteQuestionMutation.mutate(question.id)}
-        enabled={true}
-        overshootRight={false}
-        overshootLeft={false}
-        friction={2}
-        leftThreshold={40}
-        rightThreshold={40}
-      >
-        <Link href={`/questions/${question.id.toString()}`}>
-          <XStack
-            minHeight='$6'
-            padding='$3'
-            alignItems='center'
-            justifyContent='space-between'
-            backgroundColor='$background'
-            animation='bouncy'
-            hoverStyle={{
-              backgroundColor: '$secondaryBackground',
-              borderRadius: 10,
-            }}
-          >
-            <YStack gap={6}>
-              {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
-              <Text fontSize={18} fontWeight='bold'>
-                {question.question}
-              </Text>
-              <XStack gap={18}>
-                {date && (
-                  <XStack gap={6} alignItems='center'>
-                    <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
-                    <Text color='$secondaryColor'>{formatDate(date)}</Text>
-                  </XStack>
-                )}
-                <PersonOrGroupForQuestion question={question} />
-              </XStack>
-            </YStack>
-          </XStack>
-        </Link>
-      </Swipeable>
-    </GestureHandlerRootView>
+    <Swipeable
+      renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
+      onSwipeableOpen={() => deleteQuestionMutation.mutate(question.id)}
+      enabled={true}
+      overshootRight={false}
+      overshootLeft={false}
+      friction={2}
+      leftThreshold={40}
+      rightThreshold={40}
+    >
+      <Link href={`/questions/${question.id.toString()}`}>
+        <XStack
+          minHeight='$6'
+          padding='$3'
+          alignItems='center'
+          justifyContent='space-between'
+          backgroundColor='$background'
+          animation='bouncy'
+          hoverStyle={{
+            backgroundColor: '$secondaryBackground',
+            borderRadius: 10,
+          }}
+        >
+          <YStack gap={6}>
+            {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
+            <Text fontSize={18} fontWeight='bold'>
+              {question.question}
+            </Text>
+            <XStack gap={18}>
+              {date && (
+                <XStack gap={6} alignItems='center'>
+                  <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
+                  <Text color='$secondaryColor'>{formatDate(date)}</Text>
+                </XStack>
+              )}
+              <PersonOrGroupForQuestion question={question} />
+            </XStack>
+          </YStack>
+        </XStack>
+      </Link>
+    </Swipeable>
   )
 }
 
@@ -119,13 +116,13 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
       padding='$3'
       alignItems='center'
       justifyContent='center'
-      // style={{
-      //   transform: [
-      //     {
-      //       translateX: Number(trans.toString()),
-      //     },
-      //   ],
-      // }}
+    // style={{
+    //   transform: [
+    //     {
+    //       translateX: Number(trans.toString()),
+    //     },
+    //   ],
+    // }}
     >
       <Trash2 size={20} color='white' strokeWidth={2.5} />
     </XStack>

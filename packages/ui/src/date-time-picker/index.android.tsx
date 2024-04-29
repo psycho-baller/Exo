@@ -33,7 +33,6 @@ export const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
   return (
     <XStack gap='$1.5' paddingVertical='$0'>
       <Button fontWeight='100' size='$3' fontSize='$5' borderRadius='$lg' onPress={showDatepicker} >
-        {/* Apr 29, 2024 */}
         {value?.toLocaleDateString()}
       </Button>
       <Button size='$3' fontSize='$5' borderRadius='$lg' onPress={showTimepicker}>
