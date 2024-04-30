@@ -30,7 +30,7 @@
     "log:ios": "cd apps/expo && pnpm log:ios",
     "build:android": "cd apps/expo && pnpm build:android",
     "build:android:local": "cd apps/expo && pnpm build:android:local",
-    "build:ios": "cd apps/expo && pnpm build:ios",
+    "build:ios": "cd apps/expo && pnpm build:ios"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",
