@@ -6,6 +6,8 @@ expo-env.d.ts
 
 android
 ios
+builds
+credentials.json
 
 # Expo
 .expo
