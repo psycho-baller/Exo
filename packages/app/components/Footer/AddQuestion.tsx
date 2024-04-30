@@ -9,10 +9,18 @@ import { BottomSheet } from '../bottom-sheet'
 import type { Topic } from '../../../db/schema/types'
 import { useAddPersonStore } from '../../stores/addQuestion'
 import { AddPerson } from './AddPerson'
+import { sheetRefAtom } from '../../atoms/addQuestion'
+import { useAtom } from 'jotai'
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
-  const createTopicMutation = api.topic.create.useMutation()
+  const [sheetRef] = useAtom(sheetRefAtom)
+  const createTopicMutation = api.topic.create.useMutation({
+    async onSuccess(data) {
+      await utils.topic.all.invalidate()
+      return data
+    },
+  })
   const createQuestionTopicRelation = api.questionTopic.create.useMutation()
   const searchTopics = api.topic.search.useQuery
 
@@ -69,6 +77,7 @@ export const AddQuestion: FC = () => {
 
   const { mutate: mutateQuestion, error } = api.question.create.useMutation({
     async onSuccess(data) {
+      sheetRef?.current?.close()
       const createdQuestion = data[0]
       if (createdQuestion && selectedTopic) {
         createQuestionTopicRelation.mutate({
@@ -111,14 +120,11 @@ export const AddQuestion: FC = () => {
   }
 
   return (
-    <BottomSheet snapPoints={['50%']}>
+    <BottomSheet snapPoints={['75%']}>
       <XStack justifyContent='space-between'>
         <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
           QUESTION
         </Label>
-        <Button unstyled style={{ cursor: 'pointer' }} onPress={() => setDropdownOpen(false)}>
-          <X />
-        </Button>
       </XStack>
       <XStack alignItems='center'>
         <UnstyledInput
