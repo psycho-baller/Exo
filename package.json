@@ -25,7 +25,12 @@
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "log:android": "cd apps/expo && pnpm log:android",
+    "log:ios": "cd apps/expo && pnpm log:ios",
+    "build:android": "cd apps/expo && pnpm build:android",
+    "build:android:local": "cd apps/expo && pnpm build:android:local",
+    "build:ios": "cd apps/expo && pnpm build:ios",
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",

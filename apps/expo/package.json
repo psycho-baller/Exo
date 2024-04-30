@@ -13,7 +13,12 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "log:android": "npx react-native log-android",
+    "log:ios": "npx react-native log-ios",
+    "build:android": "eas build --profile preview --platform android",
+    "build:android:local": "eas build --profile preview --platform android --local",
+    "build:ios": "eas build --profile development --platform ios"
   },
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",
