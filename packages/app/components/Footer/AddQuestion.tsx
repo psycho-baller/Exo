@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
-import { Button, ErrorText, Label, UnstyledInput, XStack, YStack } from '@acme/ui'
+import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack } from '@acme/ui'
 import { BottomSheet } from '../bottom-sheet'
 
 import type { Topic } from '../../../db/schema/types'
@@ -120,14 +120,14 @@ export const AddQuestion: FC = () => {
   }
 
   return (
-    <BottomSheet snapPoints={['75%']}>
+    <BottomSheet snapPoints={['50%', '75%']}>
       <XStack justifyContent='space-between'>
         <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
           QUESTION
         </Label>
       </XStack>
       <XStack alignItems='center'>
-        <UnstyledInput
+        <BottomSheetInput
           width={800}
           placeholderTextColor='$secondaryColor'
           opacity={0.75}

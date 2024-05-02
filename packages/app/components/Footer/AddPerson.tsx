@@ -80,7 +80,7 @@ export const AddPerson = (props: YStackProps) => {
       <AutocompleteInput
         placeholderTextColor='$secondaryColor'
         opacity={0.75}
-        data={personData}
+        data={personQuery.data ?? []}
         width={200}
         fontSize={'$8'}
         paddingVertical={'$2'}
@@ -90,9 +90,11 @@ export const AddPerson = (props: YStackProps) => {
         filter={filterPeopleFromSearch}
         onSearch={onPersonSearch}
         keyExtractor={keyExtractor}
-        renderItem={(item: PersonStore) => getFullName(item.firstName, item.lastName)}
+        renderItem={(item: PersonStore) => getFullName(item?.firstName, item?.lastName)}
         onEmptyList={onNoPersonMatchingSearch}
         onSelect={onPersonSelected}
+        insideBottomSheet
+
       />
       {/* <personDropdown dropdownRef={dropdownRef} /> */}
     </YStack>

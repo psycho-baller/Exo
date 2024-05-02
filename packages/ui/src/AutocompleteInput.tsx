@@ -4,7 +4,8 @@ import type { FC } from 'react'
 import type { GetProps, Input } from 'tamagui'
 import { Button, Separator, Text, View, YStack } from 'tamagui'
 
-import { UnstyledInput } from './UnstyledInput'
+import { VirtualList } from './list'
+import { BottomSheetInput } from './BottomSheetInput'
 
 type T = any
 interface Props<T> extends GetProps<typeof Input> {
@@ -17,6 +18,7 @@ interface Props<T> extends GetProps<typeof Input> {
   renderItem?: (item: T) => string
   keyExtractor?: (item: T) => string
   onEmptyList?: () => JSX.Element
+  insideBottomSheet?: boolean
 }
 
 export const AutocompleteInput: FC<Props<T>> = ({
@@ -29,6 +31,7 @@ export const AutocompleteInput: FC<Props<T>> = ({
   onEmptyList,
   renderItem = (item: T) => item,
   keyExtractor = (item: T) => item,
+  insideBottomSheet = false,
   ...restOfprops
 }) => {
   const [menuVisible, setMenuVisible] = useState(false)
@@ -49,7 +52,7 @@ export const AutocompleteInput: FC<Props<T>> = ({
 
   return (
     <View position='relative' width='100%'>
-      <UnstyledInput
+      <BottomSheetInput
         value={value}
         onChangeText={handleSearch}
         onFocus={() => {
@@ -62,6 +65,7 @@ export const AutocompleteInput: FC<Props<T>> = ({
             setMenuVisible(false)
           }, 200)
         }}
+        enabled={insideBottomSheet}
         {...restOfprops}
       />
       <YStack
@@ -76,10 +80,9 @@ export const AutocompleteInput: FC<Props<T>> = ({
         {menuVisible && (
           <FlashList
             data={filteredData}
-            estimatedItemSize={20}
-            ItemSeparatorComponent={() => <Separator />}
-            keyExtractor={keyExtractor}
-            ListEmptyComponent={onEmptyList}
+            estimatedItemSize={10}
+            // ={() => <Separator />}
+            // listEmptyComponent={<onEmptyList/>}
             renderItem={({ item }) => {
               return (
                 <Button onPress={() => handleDropdownSelect(item)}>
