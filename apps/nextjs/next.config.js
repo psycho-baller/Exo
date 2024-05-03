@@ -49,7 +49,7 @@ module.exports = () => {
     },
     modularizeImports: {
       '@tamagui/lucide-icons': {
-        transform: `@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}`,
+        transform: '@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}',
         skipDefaultConversion: true,
       },
     },
@@ -59,6 +59,8 @@ module.exports = () => {
       'expo-linking',
       'expo-blur',
       'react-native-gesture-handler',
+      // 'react-native-reanimated',
+      // '@gorhom/bottom-sheet',
       'expo-constants',
       'expo-modules-core',
     ],

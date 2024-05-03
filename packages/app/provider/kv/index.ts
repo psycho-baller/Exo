@@ -11,14 +11,14 @@ let storage: CustomAsyncStorage | MMKV
 
 if (Constants.appOwnership === 'expo') {
   // We are in Expo Go, use AsyncStorage
-  storage = AsyncStorage as CustomAsyncStorage
-  storage.getString = async (key: string) => {
-    const value = await AsyncStorage.getItem(key)
-    return value
-  }
-  storage.set = async (key: string, value: string) => {
-    await AsyncStorage.setItem(key, value)
-  }
+  // storage = AsyncStorage as CustomAsyncStorage
+  // storage.getString = async (key: string) => {
+  //   const value = await AsyncStorage.getItem(key)
+  //   return value
+  // }
+  // storage.set = async (key: string, value: string) => {
+  //   await AsyncStorage.setItem(key, value)
+  // }
 
   // storage.clear();
 } else {

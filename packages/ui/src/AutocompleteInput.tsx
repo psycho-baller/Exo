@@ -1,14 +1,14 @@
 import { FlashList } from '@shopify/flash-list'
 import { useState } from 'react'
 import type { FC } from 'react'
-import type { GetProps, Input } from 'tamagui'
+import type { UnstyledInputProps } from './UnstyledInput'
 import { Button, Separator, Text, View, YStack } from 'tamagui'
 
 import { VirtualList } from './list'
 import { BottomSheetInput } from './BottomSheetInput'
 
 type T = any
-interface Props<T> extends GetProps<typeof Input> {
+interface Props<T> extends UnstyledInputProps {
   data: T[]
   value: string
   setValue: (value: string) => void
@@ -32,7 +32,7 @@ export const AutocompleteInput: FC<Props<T>> = ({
   renderItem = (item: T) => item,
   keyExtractor = (item: T) => item,
   insideBottomSheet = false,
-  ...restOfprops
+  ...rest
 }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const [filteredData, setFilteredData] = useState<string[]>(data)
@@ -66,7 +66,7 @@ export const AutocompleteInput: FC<Props<T>> = ({
           }, 200)
         }}
         enabled={insideBottomSheet}
-        {...restOfprops}
+        {...rest}
       />
       <YStack
         gap='$1'

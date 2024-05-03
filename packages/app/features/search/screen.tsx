@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-import { Input, Text, YStack } from '@acme/ui'
+import { MyInput, Text, YStack } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import LinkButton from '../../components/LinkButton'
@@ -11,36 +11,38 @@ import { getFullName, getSingularFromPlural } from '../../utils/strings'
 import SearchHistory from './SearchHistory'
 import { useHeaderHeight } from '@react-navigation/elements'
 import { Platform } from 'react-native'
+import { useAtom } from 'jotai'
+import { queryAtom } from '../../atoms/search'
 
 
 const Index = () => {
   const headerHeight = Platform.OS !== 'web' ? useHeaderHeight() : 0
 
-  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [query, setQuery] = useAtom(queryAtom)
   const searchTermRef = useRef<string>('') // This ref will store the last non-empty search term.
 
   const createSearchHistory = api.searchHistory.create.useMutation()
 
   // tRPC hooks for searching people, groups, and questions
   const peopleSearch = api.person.search.useQuery(
-    { query: searchTerm },
-    { enabled: searchTerm.length > 0 },
+    { query },
+    { enabled: query.length > 0 },
   )
   const groupSearch = api.group.search.useQuery(
-    { query: searchTerm },
-    { enabled: searchTerm.length > 0 },
+    { query },
+    { enabled: query.length > 0 },
   )
   const questionSearch = api.question.search.useQuery(
-    { query: searchTerm },
-    { enabled: searchTerm.length > 0 },
+    { query },
+    { enabled: query.length > 0 },
   )
 
   // Update the ref whenever searchTerm changes and is not empty
   useEffect(() => {
-    if (searchTerm) {
-      searchTermRef.current = searchTerm // Only update ref if searchTerm is not empty
+    if (query) {
+      searchTermRef.current = query // Only update ref if searchTerm is not empty
     }
-  }, [searchTerm])
+  }, [query])
 
   // Function to render search result section
   const renderSearchSection = (slug: 'people' | 'groups' | 'questions', data: unknown) => {
@@ -52,7 +54,7 @@ const Index = () => {
     // capitalize the first letter of the slug
     const title = slug.charAt(0).toUpperCase() + slug.slice(1)
 
-    if (searchTerm && dataTyped && dataTyped.length > 0) {
+    if (query && dataTyped && dataTyped.length > 0) {
       return (
         <YStack paddingTop='$4' columnGap='$1'>
           <Text fontWeight='bold'>{title}</Text>
@@ -67,7 +69,7 @@ const Index = () => {
           ))}
         </YStack>
       )
-    } else if (searchTerm && (!dataTyped || dataTyped.length === 0)) {
+    } else if (query && (!dataTyped || dataTyped.length === 0)) {
       return (
         <YStack marginTop='$2'>
           <Text fontWeight='bold'>{title}</Text>
@@ -81,11 +83,6 @@ const Index = () => {
   return (
     <MainPage paddingTop={headerHeight}>
       <YStack>
-        <Input
-          placeholder='Search questions, people, and groups'
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-        />
         {/* Render search results */}
         <YStack paddingTop='$4' columnGap='$4'>
           {renderSearchSection('people', peopleSearch.data)}
