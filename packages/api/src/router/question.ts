@@ -50,10 +50,4 @@ export const questionRouter = createTRPCRouter({
         .set({ question: input.question })
         .where(eq(questions.id, input.id))
     }),
-
-  search: protectedProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.questions.findMany({
-      where: like(questions.question, `%${input.query}%`),
-    })
-  }),
 })

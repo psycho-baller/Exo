@@ -42,13 +42,4 @@ export const personRouter = createTRPCRouter({
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.db.delete(people).where(eq(people.id, input))
   }),
-
-  search: protectedProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.people.findMany({
-      where: or(
-        like(people.firstName, `%${input.query}%`),
-        like(people.lastName, `%${input.query}%`),
-      ),
-    })
-  }),
 })

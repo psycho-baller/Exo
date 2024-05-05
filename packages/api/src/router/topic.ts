@@ -28,10 +28,10 @@ export const topicRouter = createTRPCRouter({
     return ctx.db.delete(topics).where(eq(topics.id, input))
   }),
 
-  search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.topics.findMany({
-      where: like(topics.name, `%${input.query}%`),
-      orderBy: desc(topics.id),
-    })
-  }),
+  // search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
+  //   return ctx.db.query.topics.findMany({
+  //     where: like(topics.name, `%${input.query}%`),
+  //     orderBy: desc(topics.id),
+  //   })
+  // }),
 })

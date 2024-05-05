@@ -46,10 +46,4 @@ export const groupRouter = createTRPCRouter({
   delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.db.delete(groups).where(eq(groups.id, input))
   }),
-
-  search: protectedProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-    return ctx.db.query.groups.findMany({
-      where: like(groups.name, `%${input.query}%`),
-    })
-  }),
 })

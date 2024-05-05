@@ -21,7 +21,7 @@ export const PersonCard: FC<Props> = (props) => {
   })
 
   return (
-    <Link href={`/people/${person.id.toString()}`}>
+    <Link href={`/people/${String(person.id)}`}>
       <XStack
         paddingHorizontal='$4'
         paddingVertical='$4'

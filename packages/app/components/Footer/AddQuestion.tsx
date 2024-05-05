@@ -22,7 +22,6 @@ export const AddQuestion: FC = () => {
     },
   })
   const createQuestionTopicRelation = api.questionTopic.create.useMutation()
-  const searchTopics = api.topic.search.useQuery
 
   const [selectedPerson, setPersonSearch,
     dropdownOpen,
@@ -42,18 +41,19 @@ export const AddQuestion: FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredTopics, setFilteredTopics] = useState<Topic[]>([])
 
-  const { data: topics, isLoading } = searchTopics(
-    { query: searchTerm },
-    {
-      enabled: !!searchTerm,
-    },
-  )
+  // const searchTopics = api.topic.search.useQuery
+  // const { data: topics, isLoading } = searchTopics(
+  //   { query: searchTerm },
+  //   {
+  //     enabled: !!searchTerm,
+  //   },
+  // )
 
-  useEffect(() => {
-    if (topics && !isLoading) {
-      setFilteredTopics(topics)
-    }
-  }, [topics, isLoading])
+  // useEffect(() => {
+  //   if (topics && !isLoading) {
+  //     setFilteredTopics(topics)
+  //   }
+  // }, [topics, isLoading])
 
   useEffect(() => {
     const words = question.includes(' ') ? question.split(' ') : [question]

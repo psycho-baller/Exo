@@ -71,23 +71,6 @@ const PersonSearch = () => {
 
 const Index = () => {
   const headerHeight = Platform.OS !== 'web' ? useHeaderHeight() : 0
-  const searchTermRef = useRef<string>('') // This ref will store the last non-empty search term.
-
-  const createSearchHistory = api.searchHistory.create.useMutation()
-
-  // tRPC hooks for searching people, groups, and questions
-  // const peopleSearch = api.person.search.useQuery(
-  //   { query },
-  //   { enabled: query.length > 0 },
-  // )
-  // const groupSearch = api.group.search.useQuery(
-  //   { query },
-  //   { enabled: query.length > 0 },
-  // )
-  // const questionSearch = api.question.search.useQuery(
-  //   { query },
-  //   { enabled: query.length > 0 },
-  // )
 
   // Function to render search result section
   const renderSearchSection = (slug: 'people' | 'groups' | 'questions', data: unknown) => {
@@ -131,15 +114,11 @@ const Index = () => {
       <YStack>
         {/* Render search results */}
         <YStack paddingTop='$4' columnGap='$4'>
-          {/* {renderSearchSection('people', peopleSearch.data)} */}
-          {/* {renderSearchSection('groups', groupSearch.data)} */}
-          {/* {renderSearchSection('questions', questionSearch.data)} */}
+          <QuestionSearch />
+          <PersonSearch />
         </YStack>
 
         <SearchHistory />
-        <PersonSearch />
-        <QuestionSearch />
-
       </YStack>
     </MainPage>
   )

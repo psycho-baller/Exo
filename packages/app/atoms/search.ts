@@ -1,3 +1,3 @@
-import { atom, useAtom } from 'jotai'
+import { atom } from 'jotai'
 
 export const queryAtom = atom('')
