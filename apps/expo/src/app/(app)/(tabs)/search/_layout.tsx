@@ -3,14 +3,12 @@ import { Stack } from 'expo-router'
 import { TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '@acme/ui'
-import { SearchInput } from '@acme/app/components/search'
+import { SearchEverything } from '@acme/app/components/search'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useAtom } from 'jotai'
-import { queryAtom } from '@acme/app/atoms/search'
 
 const Layout = () => {
   const theme = useTheme()
-  const [query, setQuery] = useAtom(queryAtom)
+
   return (
     <Stack>
       <Stack.Screen
@@ -20,13 +18,7 @@ const Layout = () => {
           header(props) {
             return (
               <SafeAreaView>
-                <SearchInput
-                  size='$5'
-                  labelText='Search'
-                  focusOnMount={true}
-                  value={query}
-                  onChangeText={setQuery}
-                />
+                <SearchEverything />
               </SafeAreaView>
             )
           },

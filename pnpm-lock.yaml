@@ -365,6 +365,9 @@ importers:
       '@gorhom/bottom-sheet':
         specifier: ^4.6.1
         version: 4.6.1(@types/react@18.2.61)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.3)(react-native@0.73.6)(react@18.2.0)
+      '@orama/orama':
+        specifier: ^2.0.17
+        version: 2.0.17
       '@tamagui/animations-react-native':
         specifier: ^1.90.6
         version: 1.90.16(react-native@0.73.6)(react@18.2.0)
@@ -4139,6 +4142,11 @@ packages:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    dev: false
+
+  /@orama/orama@2.0.17:
+    resolution: {integrity: sha512-RU0oGnV/ieaiLnMhCsVZcJTOT0bo5ne0KndEK7xMHsvA2RDAt8za2XFW57JaMWgBXLDKNX+Q5CHKje72PS6uzw==}
+    engines: {node: '>= 16.0.0'}
     dev: false
 
   /@panva/hkdf@1.1.1:
