@@ -14,13 +14,33 @@ interface Props extends ViewProps {
 
 export const SearchEverything: FC = () => {
   const [query, setQuery] = useAtom(queryAtom)
-  const questionQuery = api.question.all.useQuery()
-  const schema = {
-    question: 'string',
-  }
 
-  const data = questionQuery.data?.map((question) => ({
+  const questionSchema = {
+    id: 'string',
+    question: 'string'
+  }
+  const questionQuery = api.question.all.useQuery()
+  const questions = questionQuery.data?.map((question) => ({
+    id: question.id.toString(),
     question: question.question,
+  })) ?? []
+
+  const personSchema = {
+    id: 'string',
+    firstName: 'string',
+    lastName: 'string',
+    // email: 'string',
+    // phoneNumber: 'string',
+    // reminderDatetime: 'string',
+  }
+  const personQuery = api.person.all.useQuery()
+  const people = personQuery.data?.map((person) => ({
+    id: person.id.toString(),
+    firstName: person.firstName,
+    lastName: person.lastName ?? '',
+    // email: person.email,
+    // phoneNumber: person.phoneNumber,
+    // reminderDatetime: person.reminderDatetime,
   })) ?? []
 
   // const { data: db } = useQuery({
@@ -36,8 +56,18 @@ export const SearchEverything: FC = () => {
   return (
     <SearchInput
       size='$5'
-      data={data}
-      schema={schema}
+      datas={
+        [
+          {
+            schema: questionSchema,
+            data: questions,
+          },
+          {
+            schema: personSchema,
+            data: people,
+          }
+        ]
+      }
       labelText='Search'
       focusOnMount={true}
       query={query}

@@ -2,10 +2,13 @@ import { useEffect, type FC } from 'react';
 import type { InputProps, ViewProps } from '@acme/ui';
 import { MyInput, UnstyledInput, View } from '@acme/ui';
 import { create, insertMultiple, search } from '@orama/orama'
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 interface Props extends Omit<InputProps, 'value'> {
-  data: any[];
-  schema: Record<string, unknown>;
+  datas: {
+    data: any;
+    schema: Record<string, unknown>;
+  }[];
+  // schema: Record<string, unknown>;
   query: string;
 }
 
@@ -19,7 +22,7 @@ const insertData = async (data: any, schema: Record<string, unknown>) => {
   await insertMultiple(db, data)
   return db;
 }
-const awaitSearch = async (db: any, query: string) => {
+export const awaitSearch = async (db: any, query: string) => {
   console.info("searching for", query)
   const searchResult = await search(db, {
     term: query,
@@ -30,28 +33,36 @@ const awaitSearch = async (db: any, query: string) => {
 }
 
 export const SearchInput: FC<Props> = ({
-  size = '$4',
-  data,
-  schema,
   query,
+  datas,
+  size = '$4',
   ...rest
 }) => {
-  const { data: db, error: DBError } = useQuery({
-    queryKey: ['db', data, schema],
-    queryFn: () => insertData(data, schema),
-  })
+  // const queryClient = useQueryClient();
 
-  const { error } = useQuery({
-    queryKey: ['search', db, query],
-    queryFn: () => awaitSearch(db, query),
-    // enabled: !!query,
-  })
-  if (DBError) {
-    console.error(DBError)
+  const dbQueries = useQueries({
+    queries: datas.map((data, index) => ({
+      queryKey: ['db', data.data, data.schema],
+      queryFn: () => insertData(data.data, data.schema),
+    }))
+  });
+
+  const searchQueries = useQueries({
+    queries: dbQueries.map((dbQuery, index) => ({
+      queryKey: ['search', dbQuery.data, query],
+      queryFn: () => awaitSearch(dbQuery.data, query),
+    }))
+  });
+
+  const DBErrors = dbQueries.filter((query) => query.error);
+  const searchErrors = searchQueries.filter((query) => query.error);
+
+  if (DBErrors.length > 0) {
+    console.error(DBErrors);
     // return null
   }
-  if (error) {
-    console.error(error)
+  if (searchErrors.length > 0) {
+    console.error(searchErrors);
     // return null
   }
 

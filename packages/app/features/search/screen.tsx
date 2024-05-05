@@ -13,13 +13,21 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import { Platform } from 'react-native'
 import { useAtom } from 'jotai'
 import { queryAtom } from '../../atoms/search'
-import { SearchEverything } from '../../components/search'
-import { useQuery } from '@tanstack/react-query'
+import { SearchEverything, awaitSearch } from '../../components/search'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-interface SearchResult {
+interface QuestionSearchResult {
   document: {
     id: string;
     question: string;
+  }
+}
+
+interface PersonSearchResult {
+  document: {
+    id: string;
+    firstName: string;
+    lastName: string;
   }
 }
 
@@ -27,21 +35,65 @@ const QuestionSearch = () => {
   const [query, setQuery] = useAtom(queryAtom)
   const questionQuery = api.question.all.useQuery()
   const schema = {
+    id: 'string',
     question: 'string',
   }
 
   const data = questionQuery.data?.map((question) => ({
+    id: question.id.toString(),
     question: question.question,
   })) ?? []
-
-  const { data: searchResult } = useQuery<SearchResult[]>({ queryKey: ['search', data, schema, query] })
-  console.log(searchResult)
+  // const { data: db } = useQuery({
+  //   queryKey: ['db', data, schema]
+  // })
+  const queryClient = useQueryClient();
+  const db = queryClient.getQueryData(['db', data, schema])
+  const searchResult = useQuery<QuestionSearchResult[]>({
+    queryKey: ['search', db, query],
+    enabled: false,
+  })
+  console.log("searchResult", searchResult)
   return (
     <>
       {
-        searchResult?.map((hit) => (
+        searchResult.data?.map((hit) => (
           <LinkButton key={hit.document.id} href={`/questions/${hit.document.id}`}>
             {hit.document.question}
+          </LinkButton>
+        ))
+      }
+    </>
+  )
+}
+
+const PersonSearch = () => {
+  const [query, setQuery] = useAtom(queryAtom)
+  const personQuery = api.person.all.useQuery()
+  const schema = {
+    id: 'string',
+    firstName: 'string',
+    lastName: 'string',
+  }
+
+  const data = personQuery.data?.map((person) => ({
+    id: person.id.toString(),
+    firstName: person.firstName,
+    lastName: person.lastName ?? '',
+  })) ?? []
+
+  const queryClient = useQueryClient();
+  const db = queryClient.getQueryData(['db', data, schema])
+  const searchResult = useQuery<PersonSearchResult[]>({
+    queryKey: ['search', db, query],
+    enabled: false,
+  })
+  console.log("searchResult", searchResult)
+  return (
+    <>
+      {
+        searchResult.data?.map((hit) => (
+          <LinkButton key={hit.document.id} href={`/people/${hit.document.id}`}>
+            {hit.document.firstName}{hit.document.lastName ?? ''}
           </LinkButton>
         ))
       }
@@ -118,6 +170,8 @@ const Index = () => {
 
         <SearchHistory />
         <QuestionSearch />
+        <PersonSearch />
+
       </YStack>
     </MainPage>
   )
