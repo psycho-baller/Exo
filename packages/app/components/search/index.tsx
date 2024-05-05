@@ -1,18 +1,15 @@
-import { useEffect, type FC } from 'react';
-import type { InputProps, ViewProps } from '@acme/ui';
-import { MyInput, UnstyledInput, View } from '@acme/ui';
+import type { FC } from 'react';
+import type { InputProps } from '@acme/ui';
+import { UnstyledInput } from '@acme/ui';
 import { create, insertMultiple, search } from '@orama/orama'
-import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 interface Props extends Omit<InputProps, 'value'> {
-  datas: {
+  datasets: {
     data: any;
     schema: Record<string, unknown>;
   }[];
-  // schema: Record<string, unknown>;
   query: string;
 }
-
-
 
 const insertData = async (data: any, schema: Record<string, unknown>) => {
   console.info("inserting data", data)
@@ -34,14 +31,14 @@ export const awaitSearch = async (db: any, query: string) => {
 
 export const SearchInput: FC<Props> = ({
   query,
-  datas,
+  datasets,
   size = '$4',
   ...rest
 }) => {
   // const queryClient = useQueryClient();
 
   const dbQueries = useQueries({
-    queries: datas.map((data, index) => ({
+    queries: datasets.map((data, index) => ({
       queryKey: ['db', data.data, data.schema],
       queryFn: () => insertData(data.data, data.schema),
     }))

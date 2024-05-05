@@ -1,9 +1,9 @@
 // Index.tsx
-import React, { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-import { MyInput, Text, UnstyledInput, YStack } from '@acme/ui'
+import { Text, YStack } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import LinkButton from '../../components/LinkButton'
@@ -13,41 +13,19 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import { Platform } from 'react-native'
 import { useAtom } from 'jotai'
 import { queryAtom } from '../../atoms/search'
-import { SearchEverything, awaitSearch } from '../../components/search'
+import { SearchEverything } from '../../components/search'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import type { PersonSearchResult, QuestionSearchResult } from '../../utils/search'
+import { filterDataFromSchema, questionSchema, personSchema } from '../../utils/search'
 
-interface QuestionSearchResult {
-  document: {
-    id: string;
-    question: string;
-  }
-}
-
-interface PersonSearchResult {
-  document: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  }
-}
 
 const QuestionSearch = () => {
-  const [query, setQuery] = useAtom(queryAtom)
+  const [query] = useAtom(queryAtom)
   const questionQuery = api.question.all.useQuery()
-  const schema = {
-    id: 'string',
-    question: 'string',
-  }
 
-  const data = questionQuery.data?.map((question) => ({
-    id: question.id.toString(),
-    question: question.question,
-  })) ?? []
-  // const { data: db } = useQuery({
-  //   queryKey: ['db', data, schema]
-  // })
+  const questions = questionQuery.data ? filterDataFromSchema(questionQuery.data, questionSchema) : []
   const queryClient = useQueryClient();
-  const db = queryClient.getQueryData(['db', data, schema])
+  const db = queryClient.getQueryData(['db', questions, questionSchema])
   const searchResult = useQuery<QuestionSearchResult[]>({
     queryKey: ['search', db, query],
     enabled: false,
@@ -67,22 +45,12 @@ const QuestionSearch = () => {
 }
 
 const PersonSearch = () => {
-  const [query, setQuery] = useAtom(queryAtom)
+  const [query] = useAtom(queryAtom)
   const personQuery = api.person.all.useQuery()
-  const schema = {
-    id: 'string',
-    firstName: 'string',
-    lastName: 'string',
-  }
 
-  const data = personQuery.data?.map((person) => ({
-    id: person.id.toString(),
-    firstName: person.firstName,
-    lastName: person.lastName ?? '',
-  })) ?? []
-
+  const people = personQuery.data ? filterDataFromSchema(personQuery.data, personSchema) : []
   const queryClient = useQueryClient();
-  const db = queryClient.getQueryData(['db', data, schema])
+  const db = queryClient.getQueryData(['db', people, personSchema])
   const searchResult = useQuery<PersonSearchResult[]>({
     queryKey: ['search', db, query],
     enabled: false,
@@ -169,8 +137,8 @@ const Index = () => {
         </YStack>
 
         <SearchHistory />
-        <QuestionSearch />
         <PersonSearch />
+        <QuestionSearch />
 
       </YStack>
     </MainPage>
