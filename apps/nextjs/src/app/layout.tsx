@@ -37,7 +37,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang='en'>
       <body className={['font-sans', fontSans.variable].join(' ')}>
         <Providers>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          <TRPCReactProvider><h1>stay tuned 👀</h1></TRPCReactProvider>
         </Providers>
       </body>
     </html>

@@ -105,7 +105,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session?.user) {
-  // throw new TRPCError({ code: 'UNAUTHORIZED' });
+    // throw new TRPCError({ code: 'UNAUTHORIZED' });
     // TODO: THIS IS DANGEROUS, DO NOT DO THIS IN PRODUCTION
     return next({
       ctx: {
