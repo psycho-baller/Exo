@@ -1,6 +1,3 @@
-// Index.tsx
-import { useRef } from 'react'
-
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
 import { Text, YStack } from '@acme/ui'
@@ -15,8 +12,10 @@ import { useAtom } from 'jotai'
 import { queryAtom } from '../../atoms/search'
 import { SearchEverything } from '../../components/search'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import type { UseQueryResult } from '@tanstack/react-query'
 import type { PersonSearchResult, QuestionSearchResult } from '../../utils/search'
 import { filterDataFromSchema, questionSchema, personSchema } from '../../utils/search'
+import { SearchResult } from './SearchResult'
 
 
 const QuestionSearch = () => {
@@ -72,50 +71,32 @@ const PersonSearch = () => {
 const Index = () => {
   const headerHeight = Platform.OS !== 'web' ? useHeaderHeight() : 0
 
-  // Function to render search result section
-  const renderSearchSection = (slug: 'people' | 'groups' | 'questions', data: unknown) => {
-    const singularSlug = getSingularFromPlural(slug)
-    type SingularSlug = typeof singularSlug
-    type Data = RouterOutputs[SingularSlug]['all']
-    const dataTyped = data as Data
-    // give the data a type
-    // capitalize the first letter of the slug
-    const title = slug.charAt(0).toUpperCase() + slug.slice(1)
-
-    if (query && dataTyped && dataTyped.length > 0) {
-      return (
-        <YStack paddingTop='$4' columnGap='$1'>
-          <Text fontWeight='bold'>{title}</Text>
-          {dataTyped.map((item) => (
-            <LinkButton key={item.id} href={`/${slug}/${item.id}`}>
-              {slug === 'people'
-                ? getFullName(item.firstName, item.lastName)
-                : slug === 'groups'
-                  ? item.name
-                  : item.question}
-            </LinkButton>
-          ))}
-        </YStack>
-      )
-    } else if (query && (!dataTyped || dataTyped.length === 0)) {
-      return (
-        <YStack marginTop='$2'>
-          <Text fontWeight='bold'>{title}</Text>
-          <Text color='grey'>No results found</Text>
-        </YStack>
-      )
-    }
-    return null
-  }
-
   return (
     <MainPage paddingTop={headerHeight}>
       {Platform.OS === 'web' && <SearchEverything />}
       <YStack>
         {/* Render search results */}
         <YStack paddingTop='$4' columnGap='$4'>
-          <QuestionSearch />
-          <PersonSearch />
+          <SearchResult<QuestionSearchResult, RouterOutputs['question']['all'][number]>
+            useQueryResult={api.question.all.useQuery as () => UseQueryResult<RouterOutputs['question']['all']>}
+            filterSchema={questionSchema}
+            resultKey="questions"
+            renderHit={(hit: QuestionSearchResult) => (
+              <LinkButton key={hit.document.id} href={`/questions/${hit.document.id}`}>
+                {hit.document.question}
+              </LinkButton>
+            )}
+          />
+          <SearchResult<PersonSearchResult, RouterOutputs['person']['all'][number]>
+            useQueryResult={api.person.all.useQuery as () => UseQueryResult<RouterOutputs['person']['all']>}
+            filterSchema={personSchema}
+            resultKey="people"
+            renderHit={(hit: PersonSearchResult) => (
+              <LinkButton key={hit.document.id} href={`/people/${hit.document.id}`}>
+                {hit.document.firstName}{hit.document.lastName ?? ''}
+              </LinkButton>
+            )}
+          />
         </YStack>
 
         <SearchHistory />
