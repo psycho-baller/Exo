@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, forwardRef } from 'react';
+import { useRef, useMemo, useEffect, forwardRef, useCallback } from 'react';
 import type { FC, RefObject } from 'react';
 import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
@@ -23,10 +23,21 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 		setSheetRef(refWeUse)
 	}, [setSheetRef, refWeUse])
 
+	const renderBackdrop = useCallback(
+		(props: any) => (
+			<BottomSheetBackdrop
+				{...props}
+				disappearsOnIndex={-1}
+				appearsOnIndex={0}
+			/>
+		),
+		[]
+	);
+
 	return (
 		<BottomSheetModal
 			ref={refWeUse}
-			index={0}
+			backdropComponent={renderBackdrop}
 			snapPoints={snapPointsMemo}
 			onChange={(index) => console.log('index', index)}
 			enablePanDownToClose={true}
