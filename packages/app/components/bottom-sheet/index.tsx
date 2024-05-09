@@ -1,41 +1,31 @@
-import { useRef, useMemo, useEffect } from 'react';
-import type { FC } from 'react';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useRef, useMemo, useEffect, forwardRef } from 'react';
+import type { FC, RefObject } from 'react';
+import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import { Button, View, Text, useThemeName } from 'tamagui';
 import { useAtom } from 'jotai';
-import { sheetRefAtom } from '../../atoms/addQuestion';
+import type { PrimitiveAtom } from 'jotai';
 import { BlurView } from 'expo-blur';
 export type BottomSheetModalRef = BottomSheetModal;
 
 interface Props extends Omit<BottomSheetProps, ''> {
+	sheetRefAtom: PrimitiveAtom<RefObject<BottomSheetModalRef> | null>
 }
 
-const CloseBtn = () => {
-	const [sheetRef, setSheetRef] = useAtom(sheetRefAtom)
-
-
-	return <Button onPress={() => {
-		console.log('sheetRef', sheetRef)
-		sheetRef?.current?.close();
-	}}>
-		<Button.Text>Close</Button.Text>
-	</Button>;
-};
-
-export const BottomSheet: FC<Props> = ({ children, snapPoints = ['50%'], ...props }) => {
+export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, sheetRefAtom, snapPoints = ['50%'], ...props }, ref) => {
 	const themeName = useThemeName() as 'light' | 'dark'
 	const [_, setSheetRef] = useAtom(sheetRefAtom)
+	const refIfNotProvided = useRef<BottomSheetModalRef>(null);
+	const refWeUse = ref as RefObject<BottomSheetModalRef> ?? refIfNotProvided;
 
-	const bottomSheetRef = useRef<BottomSheetModalRef>(null);
 	const snapPointsMemo = useMemo(() => snapPoints, [snapPoints]);
 	useEffect(() => {
-		setSheetRef(bottomSheetRef)
-	}, [setSheetRef])
+		setSheetRef(refWeUse)
+	}, [setSheetRef, refWeUse])
 
 	return (
 		<BottomSheetModal
-			ref={bottomSheetRef}
+			ref={refWeUse}
 			index={0}
 			snapPoints={snapPointsMemo}
 			onChange={(index) => console.log('index', index)}
@@ -59,4 +49,4 @@ export const BottomSheet: FC<Props> = ({ children, snapPoints = ['50%'], ...prop
 			</View>
 		</BottomSheetModal>
 	);
-}
+});

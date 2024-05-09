@@ -1,4 +1,4 @@
-import { CheckCircle2, X } from '@tamagui/lucide-icons'
+import { CheckCircle2 } from '@tamagui/lucide-icons'
 import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
@@ -120,7 +120,7 @@ export const AddQuestion: FC = () => {
   }
 
   return (
-    <BottomSheet snapPoints={['30%']} android_keyboardInputMode='adjustResize'>
+    <BottomSheet sheetRefAtom={sheetRefAtom} snapPoints={['30%']} android_keyboardInputMode='adjustResize'>
       <XStack justifyContent='space-between'>
         <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
           QUESTION
