@@ -2,6 +2,7 @@ import { CalendarDays, Tag, User, Users } from '@tamagui/lucide-icons'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
+// @ts-ignore
 import { Button, MyDateTimePicker, ScrollView, Text, YStack } from '@acme/ui'
 
 import { getFullName, splitOutPersonName } from '../../utils/strings'
@@ -14,7 +15,7 @@ import { PeopleSearchInput, GroupSearchInput } from '../../components/SearchInpu
 import { SearchResult } from '../search/SearchResult'
 import { groupSchema, personSchema } from '../../utils/search'
 import type { PersonSearchResult, GroupSearchResult } from '../../utils/search'
-import { peopleQueryAtom, groupQueryAtom } from '../../atoms/search'
+import { peopleQueryAtom, groupsQueryAtom } from '../../atoms/search'
 import type { UseQueryResult } from '@tanstack/react-query'
 
 type Props = RouterOutputs['question']['all'][number]
@@ -103,7 +104,7 @@ export function QuestionProperties({
           </Button>
         )
       }
-      {/* TODO: 2. A list of undefined metadata; Horizontal scroll */}
+      {/* TODO: 2. A list of undefined metadata */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -255,7 +256,7 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
 
 const SearchGroupSheet = ({ questionId }: { questionId: number }) => {
   const [groupSheetRef] = useAtom(groupSheetRefAtom)
-  const [groupQuery, setGroupQuery] = useAtom(groupQueryAtom)
+  const [groupQuery, setGroupQuery] = useAtom(groupsQueryAtom)
   const utils = api.useUtils()
   const { mutate: assignQuestionToGroup } = api.question.assignToGroup.useMutation({
     async onSuccess() {
@@ -297,7 +298,7 @@ const SearchGroupSheet = ({ questionId }: { questionId: number }) => {
         useQueryResult={api.group.all.useQuery as () => UseQueryResult<RouterOutputs['group']['all']>}
         filterSchema={groupSchema}
         resultKey="groups"
-        queryAtom={groupQueryAtom}
+        queryAtom={groupsQueryAtom}
         renderHit={(hit: GroupSearchResult) => (
           // shared component
           <Button key={hit.document.id} onPress={() => assignToGroup(Number.parseInt(hit.document.id))}>
@@ -308,4 +309,15 @@ const SearchGroupSheet = ({ questionId }: { questionId: number }) => {
       />
     </YStack>
   )
+}
+
+// TODO: Implement this when I care enough bout topics
+export const SearchTopicsSheet = ({ questionId }: { questionId: number }) => {
+  const [topicsSheetRef] = useAtom(topicsSheetRefAtom)
+  const utils = api.useUtils()
+  // const { mutate: assignQuestionToTopic } = api.question.assignTopic.useMutation({
+  //   async onSuccess() {
+  //     await utils.question.byId.invalidate({ id: questionId })
+  //   },
+  // })
 }

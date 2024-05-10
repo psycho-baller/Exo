@@ -1,3 +1,12 @@
+/**
+ * This file defines the schema and types for the search functionality.
+ *
+ * To add a new search field, start here, then add it to the search page
+ * and make sure it works there.
+ * Then add it to wherever you want to use it.
+ *
+ */
+
 export function filterDataFromSchema(
   data: Record<string, unknown>[],
   schema: Record<string, unknown>,
@@ -54,4 +63,13 @@ export const groupSchema = {
 export type GroupSchemaType = typeof groupSchema
 export type GroupSearchResult = {
   document: GroupSchemaType
+}
+
+export const topicsSchema = {
+  id: 'string',
+  name: 'string',
+}
+export type TopicsSchemaType = typeof topicsSchema
+export type TopicsSearchResult = {
+  document: TopicsSchemaType
 }

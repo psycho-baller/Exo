@@ -13,8 +13,8 @@ import { queryAtom } from '../../atoms/search'
 import { SearchEverythingInput } from '../../components/SearchInput/SearchEverythingInput'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UseQueryResult } from '@tanstack/react-query'
-import type { GroupSearchResult, PersonSearchResult, QuestionSearchResult } from '../../utils/search'
-import { filterDataFromSchema, questionSchema, personSchema, groupSchema } from '../../utils/search'
+import type { GroupSearchResult, PersonSearchResult, QuestionSearchResult, TopicsSearchResult } from '../../utils/search'
+import { filterDataFromSchema, questionSchema, personSchema, groupSchema, topicsSchema } from '../../utils/search'
 import { SearchResult } from './SearchResult'
 
 
@@ -106,6 +106,17 @@ const Index = () => {
             queryAtom={queryAtom}
             renderHit={(hit: GroupSearchResult) => (
               <LinkButton key={hit.document.id} href={`/groups/${hit.document.id}`}>
+                {hit.document.name}
+              </LinkButton>
+            )}
+          />
+          <SearchResult<TopicsSearchResult, RouterOutputs['topic']['all'][number]>
+            useQueryResult={api.topic.all.useQuery as () => UseQueryResult<RouterOutputs['topic']['all']>}
+            filterSchema={topicsSchema}
+            resultKey="topics"
+            queryAtom={queryAtom}
+            renderHit={(hit: TopicsSearchResult) => (
+              <LinkButton key={hit.document.id} href={`/topics/${hit.document.id}`}>
                 {hit.document.name}
               </LinkButton>
             )}

@@ -17,8 +17,8 @@ export const topicRouter = createTRPCRouter({
     })
   }),
 
-  create: protectedProcedure.input(insertTopicSchema).mutation(({ ctx, input }) => {
-    return ctx.db
+  create: protectedProcedure.input(insertTopicSchema).mutation(async ({ ctx, input }) => {
+    return await ctx.db
       .insert(topics)
       .values({ createdByUserId: ctx.session.user.id, ...input })
       .returning()
