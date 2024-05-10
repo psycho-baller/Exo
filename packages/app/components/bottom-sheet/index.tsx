@@ -55,7 +55,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			// keyboardBlurBehavior='restore'
 			{...props}
 		>
-			<View padding='$3' >
+			<View padding='$3'>
 				{children}
 			</View>
 		</BottomSheetModal>

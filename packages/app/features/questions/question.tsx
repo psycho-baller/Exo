@@ -8,6 +8,7 @@ import { Button, Page } from '@acme/ui'
 
 import { EditQuestionText } from './EditQuestionText'
 import { QuestionProperties } from './QuestionProperties'
+import LinkButton from '../../components/LinkButton'
 
 interface Params {
   id: string
@@ -24,7 +25,7 @@ const QuestionScreen = (): ReactNode => {
   if (!data) return null
 
   return (
-    <Page animation='bouncy' paddingHorizontal='$5' paddingVertical='$2'>
+    <Page animation='bouncy' paddingVertical='$2'>
       {/* <XStack gap={18}>
         <Button iconAfter={Trash2} size='$3' width='5%' variant='outlined'>
         </Button>
@@ -32,9 +33,9 @@ const QuestionScreen = (): ReactNode => {
 
       {/* <Label htmlFor='question' /> */}
       {Platform.OS === 'web' && (
-        <Button {...link} icon={ArrowLeft} size='$3' variant='outlined'>
+        <LinkButton {...link} icon={ArrowLeft} size='$3' variant='outlined'>
           Back
-        </Button>
+        </LinkButton>
       )}
       <EditQuestionText id={data.id} content={data.question} />
       <QuestionProperties {...data} />

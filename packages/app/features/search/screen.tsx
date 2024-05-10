@@ -13,8 +13,8 @@ import { queryAtom } from '../../atoms/search'
 import { SearchEverything } from '../../components/search'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UseQueryResult } from '@tanstack/react-query'
-import type { PersonSearchResult, QuestionSearchResult } from '../../utils/search'
-import { filterDataFromSchema, questionSchema, personSchema } from '../../utils/search'
+import type { GroupSearchResult, PersonSearchResult, QuestionSearchResult } from '../../utils/search'
+import { filterDataFromSchema, questionSchema, personSchema, groupSchema } from '../../utils/search'
 import { SearchResult } from './SearchResult'
 
 
@@ -81,6 +81,7 @@ const Index = () => {
             useQueryResult={api.question.all.useQuery as () => UseQueryResult<RouterOutputs['question']['all']>}
             filterSchema={questionSchema}
             resultKey="questions"
+            queryAtom={queryAtom}
             renderHit={(hit: QuestionSearchResult) => (
               <LinkButton key={hit.document.id} href={`/questions/${hit.document.id}`}>
                 {hit.document.question}
@@ -91,9 +92,21 @@ const Index = () => {
             useQueryResult={api.person.all.useQuery as () => UseQueryResult<RouterOutputs['person']['all']>}
             filterSchema={personSchema}
             resultKey="people"
+            queryAtom={queryAtom}
             renderHit={(hit: PersonSearchResult) => (
               <LinkButton key={hit.document.id} href={`/people/${hit.document.id}`}>
                 {hit.document.firstName}{hit.document.lastName ?? ''}
+              </LinkButton>
+            )}
+          />
+          <SearchResult<GroupSearchResult, RouterOutputs['group']['all'][number]>
+            useQueryResult={api.group.all.useQuery as () => UseQueryResult<RouterOutputs['group']['all']>}
+            filterSchema={groupSchema}
+            resultKey="groups"
+            queryAtom={queryAtom}
+            renderHit={(hit: GroupSearchResult) => (
+              <LinkButton key={hit.document.id} href={`/groups/${hit.document.id}`}>
+                {hit.document.name}
               </LinkButton>
             )}
           />
