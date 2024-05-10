@@ -10,6 +10,7 @@ interface Props {
   itemHeight: number
   listEmptyComponent?: ReactElement
   isPage?: boolean
+  horizontal?: boolean
 }
 
 export function VirtualList<T>({
@@ -18,6 +19,7 @@ export function VirtualList<T>({
   itemHeight,
   listEmptyComponent,
   isPage = false,
+  horizontal = false,
 }: Props): ReactNode {
   const { bottom } = useSafeAreaInsets()
   const headerHeight = useHeaderHeight()
@@ -41,6 +43,7 @@ export function VirtualList<T>({
       }}
       renderItem={render}
       estimatedItemSize={itemHeight}
+      horizontal={horizontal}
     />
   )
 }
