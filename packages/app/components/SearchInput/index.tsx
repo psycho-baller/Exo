@@ -75,4 +75,4 @@ export const SearchInput: FC<Props> = ({
   );
 };
 
-export * from './search-everything'
+export * from './SearchEverything'

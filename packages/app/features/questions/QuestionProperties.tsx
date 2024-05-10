@@ -6,15 +6,15 @@ import { Button, MyDateTimePicker, ScrollView, Text, YStack } from '@acme/ui'
 
 import { getFullName, splitOutPersonName } from '../../utils/strings'
 import TagButton from '../../components/TagButton'
-import { BottomSheet } from '../../components/bottom-sheet'
+import { BottomSheet } from '../../components/BottomSheet'
 import { personSheetRefAtom, groupSheetRefAtom, topicsSheetRefAtom } from '../../atoms/propertiesSheet'
 import { useAtom } from 'jotai'
 import { Property } from '../../components/Property'
-import { SearchPeople } from '../../components/search/search-people'
+import { SearchPeopleInput } from '../../components/SearchInput/SearchPeopleInput'
 import { SearchResult } from '../search/SearchResult'
 import { personSchema } from '../../utils/search'
-import type { PersonSearchResult } from '../../utils/search'
-import { peopleQueryAtom } from '../../atoms/search'
+import type { PersonSearchResult, GroupSearchResult } from '../../utils/search'
+import { peopleQueryAtom, groupQueryAtom } from '../../atoms/search'
 import type { UseQueryResult } from '@tanstack/react-query'
 
 type Props = RouterOutputs['question']['all'][number]
@@ -199,6 +199,7 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
   const { mutate: assignQuestionToPerson } = api.question.assignToPerson.useMutation({
     async onSuccess() {
       await utils.question.byId.invalidate({ id: questionId })
+      setPersonQuery('')
 
     },
   })
@@ -214,7 +215,6 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
       personId,
     })
     personSheetRef?.current?.close()
-    setPersonQuery('')
 
   }
 
@@ -234,13 +234,14 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
 
   return (
     <YStack>
-      <SearchPeople />
+      <SearchPeopleInput />
       <SearchResult<PersonSearchResult, RouterOutputs['person']['all'][number]>
         useQueryResult={api.person.all.useQuery as () => UseQueryResult<RouterOutputs['person']['all']>}
         filterSchema={personSchema}
         resultKey="people"
         queryAtom={peopleQueryAtom}
         renderHit={(hit: PersonSearchResult) => (
+          // shared component
           <Button key={hit.document.id} onPress={() => assignToPerson(Number.parseInt(hit.document.id))}>
             {hit.document.firstName}{hit.document.lastName ?? ''}
           </Button>
@@ -250,3 +251,5 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
     </YStack>
   )
 }
+
+const SearchGroupSheet = () => {

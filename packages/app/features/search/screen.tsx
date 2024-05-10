@@ -10,7 +10,7 @@ import { useHeaderHeight } from '@react-navigation/elements'
 import { Platform } from 'react-native'
 import { useAtom } from 'jotai'
 import { queryAtom } from '../../atoms/search'
-import { SearchEverything } from '../../components/search'
+import { SearchEverythingInput } from '../../components/SearchInput'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { UseQueryResult } from '@tanstack/react-query'
 import type { GroupSearchResult, PersonSearchResult, QuestionSearchResult } from '../../utils/search'
@@ -73,7 +73,7 @@ const Index = () => {
 
   return (
     <MainPage paddingTop={headerHeight}>
-      {Platform.OS === 'web' && <SearchEverything />}
+      {Platform.OS === 'web' && <SearchEverythingInput />}
       <YStack>
         {/* Render search results */}
         <YStack paddingTop='$4' columnGap='$4'>
