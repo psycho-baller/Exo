@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { ViewProps } from '@acme/ui';
-import { SearchInput } from '../search'
+import { SearchInput } from '.'
 import { useAtom } from 'jotai'
 import { queryAtom } from '../../atoms/search'
 import { api } from '@acme/api/utils/trpc'

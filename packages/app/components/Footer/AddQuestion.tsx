@@ -4,7 +4,7 @@ import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
 import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack } from '@acme/ui'
-import { BottomSheet } from '../bottom-sheet'
+import { BottomSheet } from '../BottomSheet'
 
 import type { Topic } from '../../../db/schema/types'
 import { useAddPersonStore } from '../../stores/addQuestion'

@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 
 import type { PersonStore } from '../types/people'
-import type { BottomSheetModalRef } from '../components/bottom-sheet'
+import type { BottomSheetModalRef } from '../components/BottomSheet'
 import type { RefObject } from 'react'
 
 export interface PersonState {
