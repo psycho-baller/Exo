@@ -16,7 +16,7 @@ interface Props {
 
 export const QuestionCard: FC<Props> = (props) => {
   const { question } = props
-  const date = question.createdDatetime
+  const date = question.reminderDatetime
 
   const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
@@ -53,13 +53,13 @@ export const QuestionCard: FC<Props> = (props) => {
               {question.question}
             </Text>
             <XStack gap={18}>
+              <PersonOrGroupForQuestion question={question} />
               {date && (
                 <XStack gap={6} alignItems='center'>
                   <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
                   <Text color='$secondaryColor'>{formatDate(date)}</Text>
                 </XStack>
               )}
-              <PersonOrGroupForQuestion question={question} />
             </XStack>
           </YStack>
         </XStack>

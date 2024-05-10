@@ -1,5 +1,5 @@
 import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons'
-import type { FC } from 'react'
+import { useMemo, type FC } from 'react'
 import { Link } from 'solito/link'
 
 import type { RouterOutputs } from '@acme/api'
@@ -44,7 +44,7 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
   const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id)
   if (!questions) return null
   const questionCount = questions.length
-  const mostRecentQuestion = questions[0]
+  const mostRecentQuestionWithAReminder = useMemo(() => questions.find((q) => q.reminderDatetime), [questions])
 
   return (
     <XStack gap={18}>
@@ -52,13 +52,11 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
         <MessageCircleQuestion size={15} color='$secondaryColor' strokeWidth={2.5} />
         <Text color='$secondaryColor'>{questionCount}</Text>
       </XStack>
-      {mostRecentQuestion && (
+      {mostRecentQuestionWithAReminder?.reminderDatetime && (
         <XStack gap={6} alignItems='center'>
           <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
           <Text color='$secondaryColor'>
-            {mostRecentQuestion.createdDatetime
-              ? formatDate(mostRecentQuestion.createdDatetime)
-              : ''}
+            {formatDate(mostRecentQuestionWithAReminder.reminderDatetime)}
           </Text>
         </XStack>
       )}
