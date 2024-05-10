@@ -17,8 +17,11 @@ export const personRouter = createTRPCRouter({
     })
   }),
 
-  create: protectedProcedure.input(insertPersonSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(people).values({ createdByUserId: ctx.session.user.id, ...input })
+  create: protectedProcedure.input(insertPersonSchema).mutation(async ({ ctx, input }) => {
+    return await ctx.db
+      .insert(people)
+      .values({ createdByUserId: ctx.session.user.id, ...input })
+      .returning({ id: people.id })
   }),
 
   update: protectedProcedure

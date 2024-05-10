@@ -3,16 +3,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 
 import { filterDataFromSchema } from "../../utils/search";
 import { useAtom } from "jotai";
-import { queryAtom } from "../../atoms/search";
+import type { PrimitiveAtom } from "jotai";
+import type { ReactElement } from "react";
 
 interface SearchProps<T, S> {
   useQueryResult: () => UseQueryResult<S[]>;
   filterSchema: Record<string, unknown>;
   resultKey: string;
   renderHit: (hit: T) => JSX.Element;
+  queryAtom: PrimitiveAtom<string>;
+  RenderOnEmpty?: ReactElement
 }
 
-export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, renderHit }: SearchProps<T, S>) {
+export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, renderHit, queryAtom, RenderOnEmpty }: SearchProps<T, S>) {
   const [query] = useAtom(queryAtom)
   const queryResult = useQueryResult()
 
@@ -27,8 +30,9 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   return (
     <>
       {
-        searchResult.data?.map(renderHit)
+        searchResult.data?.map((hit) => renderHit(hit))
       }
+      {RenderOnEmpty && searchResult.data?.length === 0 && RenderOnEmpty}
     </>
   )
 }

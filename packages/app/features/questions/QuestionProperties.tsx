@@ -2,13 +2,20 @@ import { CalendarDays, Tag, User, Users } from '@tamagui/lucide-icons'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-import { MyDateTimePicker, ScrollView, Text, View, XStack, YStack } from '@acme/ui'
+import { Button, MyDateTimePicker, ScrollView, Text, YStack } from '@acme/ui'
 
-import { getFullName } from '../../utils/strings'
+import { getFullName, splitOutPersonName } from '../../utils/strings'
 import TagButton from '../../components/TagButton'
 import { BottomSheet } from '../../components/bottom-sheet'
 import { personSheetRefAtom, groupSheetRefAtom, topicsSheetRefAtom } from '../../atoms/propertiesSheet'
 import { useAtom } from 'jotai'
+import { Property } from '../../components/Property'
+import { SearchPeople } from '../../components/search/search-people'
+import { SearchResult } from '../search/SearchResult'
+import { personSchema } from '../../utils/search'
+import type { PersonSearchResult } from '../../utils/search'
+import { peopleQueryAtom } from '../../atoms/search'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 type Props = RouterOutputs['question']['all'][number]
 
@@ -36,6 +43,9 @@ export function QuestionProperties({
   const [personSheetRef] = useAtom(personSheetRefAtom)
   const [groupSheetRef] = useAtom(groupSheetRefAtom)
   const [topicsSheetRef] = useAtom(topicsSheetRefAtom)
+  const showPersonSheet = () => personSheetRef?.current?.present()
+  const showGroupSheet = () => groupSheetRef?.current?.present()
+  const showTopicsSheet = () => topicsSheetRef?.current?.present()
 
 
   const onChange = async (date: Date) => {
@@ -50,10 +60,10 @@ export function QuestionProperties({
 
   // const undefinedMetadata = [
   return (
-    <YStack gap='$5' padding='$2.5'>
+    <YStack>
       {/*  TODO: 1. A list of defined metadata */}
-      <XStack alignItems='center' columnGap='$5'>
-        <CalendarDays size={20} />
+      <Property>
+        <CalendarDays size='$2' />
         {/* this is prolly platform specific */}
         {reminderDatetime ? (
           <MyDateTimePicker
@@ -61,37 +71,47 @@ export function QuestionProperties({
             onChange={onChange}
           />
         ) : (
-          <Text>
+          <Text fontSize='$5'>
             Set a reminder
           </Text>
         )}
-      </XStack>
-      {personId && (
-        <XStack columnGap='$5'>
-          <User size={20} />
-          {/* TODO: add some indication in the UI that tells the user that they can connect a person to it... this goes against the prev to-do */}
-          <PersonProperty id={personId} />
-        </XStack>
-      )}
-      {groupId && (
-        <XStack columnGap='$5'>
-          <Users size={20} />
-          <View>
-            <GroupProperty id={id} />
-          </View>
-        </XStack>
-      )}
-      {topicsData && topicsData.length > 0 && (
-        <TopicsProperty topicsData={topicsData} />
-      )}
+      </Property>
+      {
+        personId && (
+          <Property onPress={showPersonSheet}>
+            <User size='$2' />
+            {/* TODO: add some indication in the UI that tells the user that they can connect a person to it... this goes against the prev to-do */}
+            <PersonProperty id={personId} />
+
+          </Property>
+        )
+      }
+      {
+        groupId && (
+          <Property columnGap='$5'>
+            <Users size='$2' />
+            <Button unstyled onPress={showGroupSheet}>
+              <GroupProperty id={id} />
+            </Button>
+          </Property>
+        )
+      }
+      {
+        topicsData && topicsData.length > 0 && (
+          <Button unstyled onPress={showTopicsSheet}>
+            <TopicsProperty topicsData={topicsData} />
+          </Button>
+        )
+      }
       {/* TODO: 2. A list of undefined metadata; Horizontal scroll */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        padding='$3'
       >
         {!personId && (
           <TagButton
-            onPress={() => personSheetRef?.current?.present()}
+            onPress={showPersonSheet}
             icon={User}
           // scaleIcon={ }
           >
@@ -100,7 +120,7 @@ export function QuestionProperties({
         )}
         {!groupId && (
           <TagButton
-            onPress={() => groupSheetRef?.current?.present()}
+            onPress={showGroupSheet}
             icon={Users}
           // scaleIcon={ }
           >
@@ -109,7 +129,7 @@ export function QuestionProperties({
         )}
         {topicsData && topicsData.length === 0 && (
           <TagButton
-            onPress={() => topicsSheetRef?.current?.present()}
+            onPress={showTopicsSheet}
             icon={Tag}
           // scaleIcon={ }
           >
@@ -117,8 +137,8 @@ export function QuestionProperties({
           </TagButton>
         )}
       </ScrollView>
-      <Sheets />
-    </YStack>
+      <Sheets questionId={id} />
+    </YStack >
   )
 }
 
@@ -134,18 +154,18 @@ const GroupProperty = ({ id }: { id: number }) => {
 
 const TopicsProperty = ({ topicsData }: { topicsData: RouterOutputs['questionTopic']['getTopicsFromQuestionId'] }) => {
   return (
-    <XStack columnGap='$5'>
+    <Property columnGap='$5'>
       <Tag size={20} />
       <YStack>
         {topicsData.map((topic) => (
           <Text key={topic.id}>{topic.name}</Text>
         ))}
       </YStack>
-    </XStack>
+    </Property>
   )
 }
 
-const Sheets = () => {
+const Sheets = ({ questionId }: { questionId: number }) => {
   // const personRef = useRef<BottomSheetModalRef>(null)
   // const groupRef = useRef<BottomSheetModalRef>(null)
   return (
@@ -154,7 +174,7 @@ const Sheets = () => {
         // ref={personRef}
         sheetRefAtom={personSheetRefAtom}
       >
-        <Text>Person</Text>
+        <SearchPeopleSheet questionId={questionId} />
       </BottomSheet>
       <BottomSheet
         // ref={groupRef}
@@ -169,5 +189,64 @@ const Sheets = () => {
         <Text>Topics</Text>
       </BottomSheet>
     </>
+  )
+}
+
+const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
+  const [personSheetRef] = useAtom(personSheetRefAtom)
+  const [personQuery, setPersonQuery] = useAtom(peopleQueryAtom)
+  const utils = api.useUtils()
+  const { mutate: assignQuestionToPerson } = api.question.assignToPerson.useMutation({
+    async onSuccess() {
+      await utils.question.byId.invalidate({ id: questionId })
+
+    },
+  })
+  const { mutateAsync: createPerson } = api.person.create.useMutation({
+    async onSuccess() {
+      await utils.person.all.invalidate()
+    },
+  })
+
+  const assignToPerson = (personId: number) => {
+    assignQuestionToPerson({
+      questionId,
+      personId,
+    })
+    personSheetRef?.current?.close()
+    setPersonQuery('')
+
+  }
+
+  const createNewPerson = async (input: string) => {
+    const { firstName, lastName } = splitOutPersonName(input)
+    const [person] = await createPerson({
+      firstName,
+      lastName,
+    })
+    console.log('person:', person)
+    if (person) {
+      assignToPerson(person.id)
+    } else {
+      console.error('Failed to create person')
+    }
+  }
+
+  return (
+    <YStack>
+      <SearchPeople />
+      <SearchResult<PersonSearchResult, RouterOutputs['person']['all'][number]>
+        useQueryResult={api.person.all.useQuery as () => UseQueryResult<RouterOutputs['person']['all']>}
+        filterSchema={personSchema}
+        resultKey="people"
+        queryAtom={peopleQueryAtom}
+        renderHit={(hit: PersonSearchResult) => (
+          <Button key={hit.document.id} onPress={() => assignToPerson(Number.parseInt(hit.document.id))}>
+            {hit.document.firstName}{hit.document.lastName ?? ''}
+          </Button>
+        )}
+        RenderOnEmpty={<Button onPress={() => createNewPerson(personQuery)}>Create new person</Button>}
+      />
+    </YStack>
   )
 }

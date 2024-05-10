@@ -46,3 +46,12 @@ export type PersonSchemaType = Omit<typeof personSchema, 'lastName'> & Partial<{
 export type PersonSearchResult = {
   document: PersonSchemaType
 }
+
+export const groupSchema = {
+  id: 'string',
+  name: 'string',
+}
+export type GroupSchemaType = typeof groupSchema
+export type GroupSearchResult = {
+  document: GroupSchemaType
+}
