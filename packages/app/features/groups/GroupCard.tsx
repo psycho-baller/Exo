@@ -17,7 +17,7 @@ interface Props {
 
 export const GroupCard: FC<Props> = (props) => {
   const { group } = props
-  const date = group.createdDatetime
+  const date = group.reminderDatetime
 
   const utils = api.useUtils()
   const { mutate: deleteMutation } = api.group.delete.useMutation({
@@ -38,12 +38,10 @@ export const GroupCard: FC<Props> = (props) => {
       >
         <Link href={`/groups/${group.id.toString()}`}>
           <XStack
-            minHeight='$6'
-            padding={'$3'}
+            paddingHorizontal='$4'
+            paddingVertical='$4'
             alignItems='center'
             justifyContent='space-between'
-            backgroundColor='$background'
-            animation='bouncy'
             hoverStyle={{
               backgroundColor: '$secondaryBackground',
               borderRadius: 10,
@@ -61,6 +59,7 @@ export const GroupCard: FC<Props> = (props) => {
                     <Text color='$secondaryColor'>{formatDate(date)}</Text>
                   </XStack>
                 )}
+                {/* TODO: Fix this when I care about persno n groups */}
                 {/* <PersonOrGroupForGroup group={group} /> */}
               </XStack>
             </YStack>
@@ -119,15 +118,14 @@ function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
       padding='$3'
       alignItems='center'
       justifyContent='center'
-      // style={{
-      //   transform: [
-      //     {
-      //       translateX: Number(trans.toString()),
-      //     },
-      //   ],
-      // }}
+    // style={{
+    //   transform: [
+    //     {
+    //       translateX: Number(trans.toString()),
+    //     },
+    //   ],
+    // }}
     >
-      <Trash2 size={20} color='white' strokeWidth={2.5} />
       <Trash2 size={20} color='white' strokeWidth={2.5} />
     </XStack>
     // </RectButton>

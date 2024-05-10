@@ -11,7 +11,7 @@ import { formatDate } from '../../utils/date'
 interface Props {
   person: RouterOutputs['person']['all'][number]
 }
-
+// TODO: Delete using swipable
 export const PersonCard: FC<Props> = (props) => {
   const { person } = props
 
