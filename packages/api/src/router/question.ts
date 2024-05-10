@@ -59,4 +59,13 @@ export const questionRouter = createTRPCRouter({
         .set({ personId: input.personId })
         .where(eq(questions.id, input.questionId))
     }),
+
+  assignToGroup: protectedProcedure
+    .input(z.object({ questionId: z.number(), groupId: z.number() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db
+        .update(questions)
+        .set({ groupId: input.groupId })
+        .where(eq(questions.id, input.questionId))
+    }),
 })

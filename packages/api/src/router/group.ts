@@ -24,11 +24,11 @@ export const groupRouter = createTRPCRouter({
     })
   }),
 
-  create: protectedProcedure.input(insertGroupSchema).mutation(({ ctx, input }) => {
-    return ctx.db
+  create: protectedProcedure.input(insertGroupSchema).mutation(async ({ ctx, input }) => {
+    return await ctx.db
       .insert(groups)
       .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning()
+      .returning({ id: groups.id })
   }),
 
   update: protectedProcedure

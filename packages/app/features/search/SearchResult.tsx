@@ -5,6 +5,7 @@ import { filterDataFromSchema } from "../../utils/search";
 import { useAtom } from "jotai";
 import type { PrimitiveAtom } from "jotai";
 import type { ReactElement } from "react";
+import { awaitSearch } from "../../components/SearchInput";
 
 interface SearchProps<T, S> {
   useQueryResult: () => UseQueryResult<S[]>;
@@ -20,7 +21,10 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   const queryResult = useQueryResult()
 
   const data = queryResult.data ? filterDataFromSchema(queryResult.data as Record<string, unknown>[], filterSchema) : []
+  console.log("data:", data)
   const queryClient = useQueryClient();
+  // queryClient.clear()
+  console.log("db", ['db', data, filterSchema])
   const db = queryClient.getQueryData<S[]>(['db', data, filterSchema])
   const searchResult = useQuery<T[]>({
     queryKey: ['search', db, query],
@@ -32,6 +36,7 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
       {
         searchResult.data?.map((hit) => renderHit(hit))
       }
+      {/* Gotta handle the case where that's null */}
       {RenderOnEmpty && searchResult.data?.length === 0 && RenderOnEmpty}
     </>
   )

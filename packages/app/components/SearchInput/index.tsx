@@ -39,6 +39,7 @@ export const SearchInput: FC<Props> = ({
 
   const dbQueries = useQueries({
     queries: datasets.map((data, index) => ({
+      enabled: !!data.data,
       queryKey: ['db', data.data, data.schema],
       queryFn: () => insertData(data.data, data.schema),
     }))
@@ -46,6 +47,7 @@ export const SearchInput: FC<Props> = ({
 
   const searchQueries = useQueries({
     queries: dbQueries.map((dbQuery, index) => ({
+      enabled: !!dbQuery.data,
       queryKey: ['search', dbQuery.data, query],
       queryFn: () => awaitSearch(dbQuery.data, query),
     }))
@@ -55,12 +57,12 @@ export const SearchInput: FC<Props> = ({
   const searchErrors = searchQueries.filter((query) => query.error);
 
   if (DBErrors.length > 0) {
-    console.error(DBErrors);
+    console.error("DBErrors", DBErrors);
     // return null
   }
   if (searchErrors.length > 0) {
-    console.error(searchErrors);
-    // return null
+    console.error("searchErrors", searchErrors);
+    return null
   }
 
   return (
@@ -74,5 +76,3 @@ export const SearchInput: FC<Props> = ({
     />
   );
 };
-
-export * from './SearchEverything'

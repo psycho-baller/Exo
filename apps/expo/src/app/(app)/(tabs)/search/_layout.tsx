@@ -3,7 +3,7 @@ import { Stack } from 'expo-router'
 import { TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '@acme/ui'
-import { SearchEverything } from '@acme/app/components/search'
+import { SearchEverythingInput } from '@acme/app/components/SearchInput/SearchEverythingInput'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Layout = () => {
@@ -18,7 +18,7 @@ const Layout = () => {
           header(props) {
             return (
               <SafeAreaView>
-                <SearchEverything />
+                <SearchEverythingInput />
               </SafeAreaView>
             )
           },

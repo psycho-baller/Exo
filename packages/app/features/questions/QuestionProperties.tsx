@@ -10,9 +10,9 @@ import { BottomSheet } from '../../components/BottomSheet'
 import { personSheetRefAtom, groupSheetRefAtom, topicsSheetRefAtom } from '../../atoms/propertiesSheet'
 import { useAtom } from 'jotai'
 import { Property } from '../../components/Property'
-import { SearchPeopleInput } from '../../components/SearchInput/SearchPeopleInput'
+import { PeopleSearchInput, GroupSearchInput } from '../../components/SearchInput/other-search-inputs'
 import { SearchResult } from '../search/SearchResult'
-import { personSchema } from '../../utils/search'
+import { groupSchema, personSchema } from '../../utils/search'
 import type { PersonSearchResult, GroupSearchResult } from '../../utils/search'
 import { peopleQueryAtom, groupQueryAtom } from '../../atoms/search'
 import type { UseQueryResult } from '@tanstack/react-query'
@@ -91,7 +91,7 @@ export function QuestionProperties({
           <Property columnGap='$5'>
             <Users size='$2' />
             <Button unstyled onPress={showGroupSheet}>
-              <GroupProperty id={id} />
+              <GroupProperty id={groupId} />
             </Button>
           </Property>
         )
@@ -180,7 +180,7 @@ const Sheets = ({ questionId }: { questionId: number }) => {
         // ref={groupRef}
         sheetRefAtom={groupSheetRefAtom}
       >
-        <Text>Group</Text>
+        <SearchGroupSheet questionId={questionId} />
       </BottomSheet>
       <BottomSheet
         // ref={groupRef}
@@ -228,13 +228,14 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
     if (person) {
       assignToPerson(person.id)
     } else {
+      // add user-facing error handling here                                                                        
       console.error('Failed to create person')
     }
   }
 
   return (
     <YStack>
-      <SearchPeopleInput />
+      <PeopleSearchInput />
       <SearchResult<PersonSearchResult, RouterOutputs['person']['all'][number]>
         useQueryResult={api.person.all.useQuery as () => UseQueryResult<RouterOutputs['person']['all']>}
         filterSchema={personSchema}
@@ -246,10 +247,65 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
             {hit.document.firstName}{hit.document.lastName ?? ''}
           </Button>
         )}
-        RenderOnEmpty={<Button onPress={() => createNewPerson(personQuery)}>Create new person</Button>}
+        RenderOnEmpty={<Button disabled={!personQuery} style={{}} onPress={() => createNewPerson(personQuery)}>Create new person</Button>}
       />
     </YStack>
   )
 }
 
-const SearchGroupSheet = () => {
+const SearchGroupSheet = ({ questionId }: { questionId: number }) => {
+  const [groupSheetRef] = useAtom(groupSheetRefAtom)
+  const [groupQuery, setGroupQuery] = useAtom(groupQueryAtom)
+  const utils = api.useUtils()
+  const { mutate: assignQuestionToGroup } = api.question.assignToGroup.useMutation({
+    async onSuccess() {
+      await utils.question.byId.invalidate({ id: questionId })
+      setGroupQuery('')
+    },
+  })
+  const { mutateAsync: createGroup } = api.group.create.useMutation({
+    async onSuccess() {
+      await utils.group.all.invalidate()
+    },
+  })
+
+  const assignToGroup = (groupId: number) => {
+    assignQuestionToGroup({
+      questionId,
+      groupId,
+    })
+    groupSheetRef?.current?.close()
+  }
+
+  const createNewGroup = async (input: string) => {
+
+    const [group] = await createGroup({
+      name: input,
+    })
+    if (group) {
+      assignToGroup(group.id)
+    } else {
+      // add user-facing error handling here                                                                        
+      console.error('Failed to create group')
+    }
+  }
+
+  return (
+    <YStack>
+      <GroupSearchInput />
+      <SearchResult<GroupSearchResult, RouterOutputs['group']['all'][number]>
+        useQueryResult={api.group.all.useQuery as () => UseQueryResult<RouterOutputs['group']['all']>}
+        filterSchema={groupSchema}
+        resultKey="groups"
+        queryAtom={groupQueryAtom}
+        renderHit={(hit: GroupSearchResult) => (
+          // shared component
+          <Button key={hit.document.id} onPress={() => assignToGroup(Number.parseInt(hit.document.id))}>
+            {hit.document.name}
+          </Button>
+        )}
+        RenderOnEmpty={<Button onPress={() => createNewGroup(groupQuery)}>Create new group</Button>}
+      />
+    </YStack>
+  )
+}
