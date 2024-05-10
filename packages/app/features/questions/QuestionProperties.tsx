@@ -2,7 +2,6 @@ import { CalendarDays, Tag, User, Users } from '@tamagui/lucide-icons'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-// @ts-ignore
 import { Button, MyDateTimePicker, ScrollView, Text, YStack } from '@acme/ui'
 
 import { getFullName, splitOutPersonName } from '../../utils/strings'
