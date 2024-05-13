@@ -3,7 +3,8 @@ import { dbCredentials } from './utils'
 export default {
   schema: './schema',
   out: './drizzle',
-  driver: 'libsql',
+  dialect: 'sqlite',
+  driver: 'turso',
   tablesFilter: ['*'],
   dbCredentials,
 } satisfies Config

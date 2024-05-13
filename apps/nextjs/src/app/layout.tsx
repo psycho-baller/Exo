@@ -32,12 +32,18 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Layout(_props: { children: React.ReactNode }) {
+export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang='en'>
       <body className={['font-sans', fontSans.variable].join(' ')}>
         <Providers>
-          <TRPCReactProvider><h1>stay tuned 👀</h1></TRPCReactProvider>
+          <TRPCReactProvider>
+            {process.env.NODE_ENV === 'development' ? (
+              <>{props.children}</>
+            ) : (
+              <h1>stay tuned 👀</h1>
+            )}
+          </TRPCReactProvider>
         </Providers>
       </body>
     </html>

@@ -7,6 +7,7 @@
     "clean": "git clean -xdf .next .turbo node_modules .tamagui",
     "upgrade": "pnpm upgrade --latest",
     "dev": "pnpm with-env next dev",
+    "dev:backend": "pnpm with-env next dev",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "start": "pnpm with-env next start",

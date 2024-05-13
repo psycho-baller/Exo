@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm with-env turso dev --db-file local.db",
+    "dev:backend": "pnpm with-env turso dev --db-file local.db",
     "clean": "rm -rf .turbo node_modules",
     "upgrade": "pnpm upgrade --latest",
     "lint": "eslint .",
@@ -32,7 +33,7 @@
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.14",
+    "drizzle-kit": "^0.21.1",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",

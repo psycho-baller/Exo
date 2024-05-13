@@ -9,7 +9,10 @@ interface ConnectionResult {
   client: ReturnType<typeof createClient>
 }
 export const dbCredentials = {
-  url: process.env.TURSO_CONNECTION_URL || 'http://127.0.0.1:8080',
+  url:
+    process.env.production && process.env.TURSO_CONNECTION_URL
+      ? process.env.TURSO_CONNECTION_URL
+      : 'http://127.0.0.1:8080',
   authToken: process.env.TURSO_AUTH_TOKEN,
 }
 export function createConnection(): ConnectionResult {
