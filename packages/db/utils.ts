@@ -10,7 +10,7 @@ interface ConnectionResult {
 }
 export const dbCredentials = {
   url:
-    process.env.production && process.env.TURSO_CONNECTION_URL
+    !(process.env.VERCEL_ENV === 'development') && process.env.TURSO_CONNECTION_URL
       ? process.env.TURSO_CONNECTION_URL
       : 'http://127.0.0.1:8080',
   authToken: process.env.TURSO_AUTH_TOKEN,
