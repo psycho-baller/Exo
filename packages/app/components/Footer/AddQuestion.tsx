@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
-import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack } from '@acme/ui'
+import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack, Text } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
 import type { Topic } from '../../../db/schema/types'
@@ -11,10 +11,12 @@ import { useAddPersonStore } from '../../stores/addQuestion'
 import { AddPerson } from './AddPerson'
 import { sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
+import { SuperchargedInput } from './SuperchargedInput'
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
   const [sheetRef] = useAtom(sheetRefAtom)
+  const { data: allTopics } = api.topic.all.useQuery()
   const createTopicMutation = api.topic.create.useMutation({
     async onSuccess(data) {
       await utils.topic.all.invalidate()
@@ -39,7 +41,7 @@ export const AddQuestion: FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
   const [showTopicSuggestions, setShowTopicSuggestions] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredTopics, setFilteredTopics] = useState<Topic[]>([])
+  const [filteredTopics, setFilteredTopics] = useState<Topic[]>(allTopics ?? [])
 
   // const searchTopics = api.topic.search.useQuery
   // const { data: topics, isLoading } = searchTopics(
@@ -65,17 +67,26 @@ export const AddQuestion: FC = () => {
     //     return;
     //   }
     // }
-    const lastWord = words.slice(-1)[0]
-    if (lastWord?.startsWith('#') || lastWord === '#') {
-      setShowTopicSuggestions(true)
-      setSearchTerm(lastWord.slice(1))
+    const lastWordWithKey = words.slice(-1)[0]
+    if (lastWordWithKey?.startsWith('#')) {
+      const lastWord = lastWordWithKey.slice(1)
+      setSearchTerm(lastWord)
+      // check if the last word is a topic
+      const topic = allTopics?.find((topic) => topic.name === lastWord)
+      // if exists, select it
+      if (topic) {
+        setSelectedTopic(topic)
+      } else {
+        setFilteredTopics(allTopics ? allTopics.filter((topic) => topic.name.includes(searchTerm)) : [])
+        setShowTopicSuggestions(true)
+      }
     } else {
       setShowTopicSuggestions(false)
       setSearchTerm('')
     }
   }, [question])
 
-  const { mutate: mutateQuestion, error } = api.question.create.useMutation({
+  const { mutateAsync: mutateQuestion, error } = api.question.create.useMutation({
     async onSuccess(data) {
       sheetRef?.current?.close()
       const createdQuestion = data[0]
@@ -105,6 +116,7 @@ export const AddQuestion: FC = () => {
     // autocomplete the question with the selected topic
     setQuestion(question.replace(/#[\w]*$/, `#${topic.name}`))
     setSelectedTopic(topic)
+    console.log('selectedTopic', topic)
     setShowTopicSuggestions(false)
   }
 
@@ -113,7 +125,7 @@ export const AddQuestion: FC = () => {
       { name: topicName },
       {
         onSuccess: (topic) => {
-          selectTopic(topic?.[0] ?? { id: 0, name: '', createdByUserId: '' })
+          selectTopic(topic[0] ?? { id: 0, name: '', createdByUserId: '' })
         },
       },
     )
@@ -127,7 +139,7 @@ export const AddQuestion: FC = () => {
         </Label>
       </XStack>
       <XStack alignItems='center'>
-        <BottomSheetInput
+        {/* <BottomSheetInput
           width={800}
           fontSize={'$8'}
           paddingVertical={'$2'}
@@ -136,21 +148,22 @@ export const AddQuestion: FC = () => {
           placeholder='Add Question'
           value={question}
           onChangeText={setQuestion}
-        />
+        /> */}
+        <SuperchargedInput />
       </XStack>
       {showTopicSuggestions && (
-        <YStack padding='$2'>
+        <>
           {filteredTopics.map((topic) => (
             <Button key={topic.id} onPress={() => selectTopic(topic)}>
               {topic.name}
             </Button>
           ))}
-          {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
-            <Button onPress={() => createAndSelectTopic(searchTerm)}>
-              {`Create "${searchTerm}"`}
-            </Button>
-          )}
-        </YStack>
+        </>
+      )}
+      {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
+        <Button onPress={() => createAndSelectTopic(searchTerm)}>
+          {`Create "${searchTerm}"`}
+        </Button>
       )}
       <XStack>
         <AddPerson flex={1} />
