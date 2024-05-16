@@ -57,11 +57,11 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			}
 			{...props}
 		>
-			<BottomSheetView>
-				<View padding='$3'>
-					{children}
-				</View>
-			</BottomSheetView>
+			{/* <BottomSheetView> */}
+			<View padding='$3'>
+				{children}
+			</View>
+			{/* </BottomSheetView> */}
 		</BottomSheetModal>
 	);
 });
