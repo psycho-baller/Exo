@@ -129,8 +129,6 @@ export const AddQuestion: FC = () => {
       <XStack alignItems='center'>
         <BottomSheetInput
           width={800}
-          placeholderTextColor='$secondaryColor'
-          opacity={0.75}
           fontSize={'$8'}
           paddingVertical={'$2'}
           marginBottom={'$4'}
