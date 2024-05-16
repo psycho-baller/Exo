@@ -120,7 +120,7 @@ export const AddQuestion: FC = () => {
   }
 
   return (
-    <BottomSheet sheetRefAtom={sheetRefAtom} snapPoints={['30%']} android_keyboardInputMode='adjustResize'>
+    <BottomSheet sheetRefAtom={sheetRefAtom} snapPoints={['30%']}>
       <XStack justifyContent='space-between'>
         <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
           QUESTION

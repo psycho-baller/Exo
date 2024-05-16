@@ -40,8 +40,11 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			backdropComponent={renderBackdrop}
 			snapPoints={snapPointsMemo}
 			onChange={(index) => console.log('index', index)}
-			android_keyboardInputMode='adjustResize'
+			android_keyboardInputMode='adjustPan'
 			enablePanDownToClose={true}
+			enableHandlePanningGesture
+			keyboardBehavior='interactive'
+			keyboardBlurBehavior='none'
 			handleIndicatorStyle={{ backgroundColor: '#aaa' }}
 			backgroundComponent={({ style }) =>
 				<BlurView
@@ -52,8 +55,6 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 					style={[style, { borderRadius: 20, overflow: "hidden" }]}
 				/>
 			}
-			// backgroundStyle={{ 
-			// keyboardBlurBehavior='restore'
 			{...props}
 		>
 			<BottomSheetView>
