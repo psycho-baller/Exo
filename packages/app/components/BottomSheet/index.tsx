@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect, forwardRef, useCallback } from 'react';
 import type { FC, RefObject } from 'react';
-import { BottomSheetModal, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 import type { BottomSheetProps } from '@gorhom/bottom-sheet';
 import { Button, View, Text, useThemeName } from 'tamagui';
 import { useAtom } from 'jotai';
@@ -40,12 +40,13 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			backdropComponent={renderBackdrop}
 			snapPoints={snapPointsMemo}
 			onChange={(index) => console.log('index', index)}
+			android_keyboardInputMode='adjustResize'
 			enablePanDownToClose={true}
-			handleIndicatorStyle={{ backgroundColor: '#fff' }}
+			handleIndicatorStyle={{ backgroundColor: '#aaa' }}
 			backgroundComponent={({ style }) =>
 				<BlurView
-					tint={themeName}
-					intensity={60}
+					tint={themeName === 'dark' ? 'dark' : 'extraLight'}
+					intensity={themeName === 'dark' ? 60 : 100}
 					blurReductionFactor={3}
 					experimentalBlurMethod="dimezisBlurView"
 					style={[style, { borderRadius: 20, overflow: "hidden" }]}
@@ -55,9 +56,11 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			// keyboardBlurBehavior='restore'
 			{...props}
 		>
-			<View padding='$3'>
-				{children}
-			</View>
+			<BottomSheetView>
+				<View padding='$3'>
+					{children}
+				</View>
+			</BottomSheetView>
 		</BottomSheetModal>
 	);
 });

@@ -44,7 +44,7 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
   const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id)
   if (!questions) return null
   const questionCount = questions.length
-  const mostRecentQuestionWithAReminder = useMemo(() => questions.find((q) => q.reminderDatetime), [questions])
+  const mostRecentQuestionWithAReminder = questions.find((q) => q.reminderDatetime)
 
   return (
     <XStack gap={18}>
