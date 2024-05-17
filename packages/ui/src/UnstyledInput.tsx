@@ -3,6 +3,8 @@ import type { GetProps } from 'tamagui'
 
 export const UnstyledInput = styled(Input, {
   name: 'UnstyledInput',
+  color: '$color',
+  placeholderTextColor: '$secondaryColor',
   p: 0,
   borderWidth: 0,
   backgroundColor: 'transparent',

@@ -38,7 +38,7 @@ export default function Layout(props: { children: React.ReactNode }) {
       <body className={['font-sans', fontSans.variable].join(' ')}>
         <Providers>
           <TRPCReactProvider>
-            {process.env.NODE_ENV === 'development' ? (
+            {process.env.VERCEL_ENV !== 'production' ? (
               <>{props.children}</>
             ) : (
               <h1>stay tuned 👀</h1>

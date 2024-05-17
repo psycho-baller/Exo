@@ -78,8 +78,6 @@ export const AddPerson = (props: YStackProps) => {
         PERSON
       </Label>
       <AutocompleteInput
-        placeholderTextColor='$secondaryColor'
-        opacity={0.75}
         data={personQuery.data ?? []}
         width={200}
         fontSize={'$8'}
