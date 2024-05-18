@@ -1,4 +1,4 @@
-import { UnstyledInput, Text, View } from '@acme/ui';
+import { UnstyledInput, Text, View, XStack } from '@acme/ui';
 import React, { useEffect, useState } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 24,
-    fontSize: 28,
     width: '100%',
   },
   text: {
@@ -58,43 +57,50 @@ export const SuperInput = () => {
     setInputWords(newInputWords);
   };
 
-  const handleChangeText = (newInput: string) => {
-    const inputText = inputWords.map(({ word }) => word).join(' ');
+  // const handleChangeText = (newInput: string) => {
+  //   const inputText = inputWords.map(({ word }) => word).join(' ');
 
-    // Insert new input at current selection position
-    const before = inputText.slice(0, selection.start);
-    const after = inputText.slice(selection.start);
-    const updatedText = before + newInput + after;
+  //   // Insert new input at current selection position
+  //   const before = inputText.slice(0, selection.start);
+  //   const after = inputText.slice(selection.start);
+  //   const updatedText = before + newInput + after;
 
-    const words = updatedText.split(' ');
-    const newInputWords: SuperchargedWord[] = words.map((word, index) => {
-      let reference: ReferenceType = null;
-      if (word.startsWith('@')) {
-        reference = word.startsWith('@@') ? 'group' : 'person';
-      } else if (word.startsWith('#')) {
-        reference = 'topic';
-        // } else if (chrono.parseDate(word)) {
-        // reference = 'date';
-      }
+  //   const words = updatedText.split(' ');
+  //   const newInputWords: SuperchargedWord[] = words.map((word, index) => {
+  //     let reference: ReferenceType = null;
+  //     if (word.startsWith('@')) {
+  //       reference = word.startsWith('@@') ? 'group' : 'person';
+  //     } else if (word.startsWith('#')) {
+  //       reference = 'topic';
+  //       // } else if (chrono.parseDate(word)) {
+  //       // reference = 'date';
+  //     }
 
-      return {
-        word,
-        // TODO: only enabled if there's a match
-        enabled: reference !== null,
-        reference,
-        active: selection.start === index,
-      };
-    });
+  //     return {
+  //       word,
+  //       // TODO: only enabled if there's a match
+  //       enabled: reference !== null,
+  //       reference,
+  //       active: selection.start === index,
+  //     };
+  //   });
 
-    setInputWords(newInputWords);
-  };
+  //   setInputWords(newInputWords);
+  // };
 
   const formatText = (inputWords: SuperchargedWord[]) => {
     return inputWords.map(({ word, reference, enabled }, index) => {
-      if (reference === 'person' || reference === 'group' || reference === 'topic') {
+      if (reference === 'person' || reference === 'group') {
         return (
           <Text unstyled
-            fontSize={28}
+            key={index.toString() + word} style={enabled ? styles.mention : undefined}>
+            {word}
+          </Text>
+        );
+      }
+      if (reference === 'topic') {
+        return (
+          <Text unstyled
             key={index.toString() + word} style={enabled ? styles.mention : undefined}>
             {word}
           </Text>
@@ -104,36 +110,81 @@ export const SuperInput = () => {
     });
   }
 
-  const handleBackspace = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-    if (selection.start <= 0) return; // No action if cursor is at the start
-    const activeWordIndex = inputWords.findIndex(({ active }) => active);
-    setInputWords((prevInputWords) => {
-      const inputText = prevInputWords.map(({ word }) => word).join(' ');
-      const wordIndex = inputText.slice(0, selection.start).split(' ').length - 1;
-      const word = prevInputWords[wordIndex];
+  const handleChangeText = (newInput: string) => {
+    // Insert new input at current selection position
+    const before = inputWords.map(({ word }) => word).join('');
+    const after = inputWords.slice(selection.start).map(({ word }) => word).join('');
+    const updatedText = before + newInput + after;
 
-      if (word?.reference && word?.enabled) {
-        console.log('deleting reference', selection.start, wordIndex);
-        setJustDisabledWord(true);
-        return prevInputWords.map((w, index) =>
-          index === wordIndex ? { ...w, enabled: false } : w
-        );
+    setInputWords(addTextProperties(updatedText));
+  };
+
+  const addTextProperties = (text: string) => {
+    const words = text.split(/(\s+)/)
+    return words.map((word, index) => {
+      let reference: ReferenceType = null;
+      if (word.startsWith('@')) {
+        reference = word.startsWith('@@') ? 'group' : 'person';
+      } else if (word.startsWith('#')) {
+        reference = 'topic';
       }
-      console.log('deleting word', selection.start, wordIndex);
-      const indexToSlice = justDisabledWord ? selection.start + 1 : selection.start;
 
-
-      const newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
-      justDisabledWord && setJustDisabledWord(false)
-      // TODO: 
-      return newInputText.split(' ').map((word) => ({ word, reference: null, active: false }));
+      return {
+        word,
+        enabled: reference !== null,
+        reference,
+        active: false,
+      };
     });
   }
+
+
+  const handleBackspace = () => {
+    if (selection.start <= 0) return; // No action if cursor is at the start
+    // const activeWordIndex = inputWords.findIndex(({ active }) => active);
+    setInputWords((prevInputWords) => {
+      const inputText = prevInputWords.map(({ word }) => word).join('');
+      const activeWordIndex = inputText.slice(0, selection.start).split(/(\s+)/).length - 1;
+      const word = prevInputWords[activeWordIndex];
+      console.log('prevInputWords', prevInputWords);
+
+      if (word?.reference && word?.enabled) {
+        console.log('deleting reference', selection.start, activeWordIndex);
+        setJustDisabledWord(true);
+        return prevInputWords.map((w, index) =>
+          index === activeWordIndex ? { ...w, enabled: false } : w
+        );
+      }
+      console.log('deleting word', selection.start, activeWordIndex);
+      const indexToSlice = justDisabledWord ? selection.start + 1 : selection.start;
+
+      const newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
+      const updatedWord = newInputText.split(/(\s+)/)[activeWordIndex];
+      justDisabledWord && setJustDisabledWord(false)
+      const newInputWords = addTextProperties(newInputText);
+      // if (newInputWords[wordIndex]) {
+      //   newInputWords[wordIndex] = prevInputWords[wordIndex];
+      // }
+      return newInputWords.map((word, index) => {
+        const oldWord = prevInputWords[index];
+        if (index === activeWordIndex && oldWord && updatedWord) {
+          return {
+            ...oldWord,
+            // active: true,
+            // enabled: false,
+            word: updatedWord,
+          };
+        }
+        return word;
+      });
+    });
+  };
 
   return (
     <View style={styles.wrapper}>
       <Text unstyled
         fontSize={28}
+
         style={styles.text}>
         {formatText(inputWords)}
       </Text>
@@ -142,10 +193,10 @@ export const SuperInput = () => {
           fontSize={28}
           onSelectionChange={handleSelectionChange}
           style={styles.input}
-          value={inputWords.map(({ word }) => word).join(' ')}
+          value={inputWords.map(({ word }) => word).join('')}
           onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
             if (e.nativeEvent.key === 'Backspace') {
-              handleBackspace(e);
+              handleBackspace();
             } else if (e.nativeEvent.key.length === 1) {
               handleChangeText(e.nativeEvent.key);
             }
