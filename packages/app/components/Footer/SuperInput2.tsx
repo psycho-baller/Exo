@@ -36,7 +36,7 @@ type SuperchargedWord = {
   word: string;
   enabled?: boolean;
   reference: ReferenceType;
-  active: boolean;
+  // active: boolean;
 };
 
 export const SuperInput = () => {
@@ -48,45 +48,13 @@ export const SuperInput = () => {
     const newSelection = e.nativeEvent.selection;
     setSelection(newSelection);
 
-    const inputText = inputWords.map(({ word }) => word).join(' ');
-    const activeWordIndex = inputText.slice(0, newSelection.start).split(' ').length - 1;
-    const newInputWords = inputWords.map((word, index) => ({
-      ...word,
-      active: index === activeWordIndex,
-    }));
-    setInputWords(newInputWords);
+    // const inputText = inputWords.map(({ word }) => word).join('');
+    // const newInputWords = inputWords.map((word, index) => ({
+    //   ...word,
+    //   // active: index === activeWordIndex,
+    // }));
+    // setInputWords(newInputWords);
   };
-
-  // const handleChangeText = (newInput: string) => {
-  //   const inputText = inputWords.map(({ word }) => word).join(' ');
-
-  //   // Insert new input at current selection position
-  //   const before = inputText.slice(0, selection.start);
-  //   const after = inputText.slice(selection.start);
-  //   const updatedText = before + newInput + after;
-
-  //   const words = updatedText.split(' ');
-  //   const newInputWords: SuperchargedWord[] = words.map((word, index) => {
-  //     let reference: ReferenceType = null;
-  //     if (word.startsWith('@')) {
-  //       reference = word.startsWith('@@') ? 'group' : 'person';
-  //     } else if (word.startsWith('#')) {
-  //       reference = 'topic';
-  //       // } else if (chrono.parseDate(word)) {
-  //       // reference = 'date';
-  //     }
-
-  //     return {
-  //       word,
-  //       // TODO: only enabled if there's a match
-  //       enabled: reference !== null,
-  //       reference,
-  //       active: selection.start === index,
-  //     };
-  //   });
-
-  //   setInputWords(newInputWords);
-  // };
 
   const formatText = (inputWords: SuperchargedWord[]) => {
     return inputWords.map(({ word, reference, enabled }, index) => {
@@ -119,7 +87,7 @@ export const SuperInput = () => {
     setInputWords(addTextProperties(updatedText));
   };
 
-  const addTextProperties = (text: string) => {
+  const addTextProperties: (text: string) => SuperchargedWord[] = (text) => {
     const words = text.split(/(\s+)/)
     return words.map((word, index) => {
       let reference: ReferenceType = null;
@@ -133,7 +101,7 @@ export const SuperInput = () => {
         word,
         enabled: reference !== null,
         reference,
-        active: false,
+        // active: false,
       };
     });
   }
@@ -159,7 +127,6 @@ export const SuperInput = () => {
       const indexToSlice = justDisabledWord ? selection.start + 1 : selection.start;
 
       const newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
-      const updatedWord = newInputText.split(/(\s+)/)[activeWordIndex];
       justDisabledWord && setJustDisabledWord(false)
       const newInputWords = addTextProperties(newInputText);
       // if (newInputWords[wordIndex]) {
@@ -167,7 +134,10 @@ export const SuperInput = () => {
       // }
       return newInputWords.map((word, index) => {
         const oldWord = prevInputWords[index];
-        if (index === activeWordIndex && oldWord && updatedWord) {
+        const isTheModifiedWord = index === activeWordIndex;
+        const updatedWord = newInputText.split(/(\s+)/)[activeWordIndex];
+        const wordExists = oldWord && updatedWord;
+        if (isTheModifiedWord && wordExists) {
           return {
             ...oldWord,
             // active: true,
