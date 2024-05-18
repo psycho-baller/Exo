@@ -12,7 +12,6 @@ import { AddPerson } from './AddPerson'
 import { sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { SuperchargedInput } from './SuperchargedInput'
-import { SuperInput } from './SuperInput2'
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -150,8 +149,7 @@ export const AddQuestion: FC = () => {
           value={question}
           onChangeText={setQuestion}
         /> */}
-        {/* <SuperchargedInput /> */}
-        <SuperInput />
+        <SuperchargedInput />
       </XStack>
       {showTopicSuggestions && (
         <>
