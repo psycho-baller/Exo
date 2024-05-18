@@ -1,5 +1,6 @@
 import { UnstyledInput, Text, View, XStack } from '@acme/ui';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
+import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
 
@@ -38,8 +39,8 @@ type SuperchargedWord = {
   reference: ReferenceType;
   // active: boolean;
 };
-
-export const SuperchargedInput = () => {
+type Props = typeof UnstyledInput.defaultProps;
+export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   const [inputWords, setInputWords] = useState<SuperchargedWord[]>([]);
   const [selection, setSelection] = useState<{ start: number, end: number }>({ start: 0, end: 0 });
   const [justDisabledWord, setJustDisabledWord] = useState(false);
@@ -157,14 +158,13 @@ export const SuperchargedInput = () => {
   return (
     <View style={styles.wrapper}>
       <Text unstyled
-        fontSize={28}
-
+        fontSize={25}
         style={styles.text}>
         {formatText(inputWords)}
       </Text>
       <View style={styles.inputWrapper}>
         <UnstyledInput
-          fontSize={28}
+          fontSize={25}
           onSelectionChange={handleSelectionChange}
           style={styles.input}
           value={inputWords.map(({ word }) => word).join('')}
@@ -176,6 +176,7 @@ export const SuperchargedInput = () => {
               handleChangeText(e.nativeEvent.key);
             }
           }}
+          {...rest}
         />
       </View>
     </View>
