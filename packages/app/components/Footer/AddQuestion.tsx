@@ -149,7 +149,7 @@ export const AddQuestion: FC = () => {
           value={question}
           onChangeText={setQuestion}
         /> */}
-        <SuperchargedInput />
+        <SuperchargedInput placeholder='Add Person' />
       </XStack>
       {showTopicSuggestions && (
         <>
