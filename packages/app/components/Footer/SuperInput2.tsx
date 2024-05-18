@@ -129,24 +129,28 @@ export const SuperInput = () => {
       const newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
       justDisabledWord && setJustDisabledWord(false)
       const newInputWords = addTextProperties(newInputText);
+      return newInputWords.map((newWord, index) => {
+        const oldWord = prevInputWords[index];
+        return oldWord && index === activeWordIndex ? { ...oldWord, word: newWord.word } : newWord;
+      });
       // if (newInputWords[wordIndex]) {
       //   newInputWords[wordIndex] = prevInputWords[wordIndex];
       // }
-      return newInputWords.map((word, index) => {
-        const oldWord = prevInputWords[index];
-        const isTheModifiedWord = index === activeWordIndex;
-        const updatedWord = newInputText.split(/(\s+)/)[activeWordIndex];
-        const wordExists = oldWord && updatedWord;
-        if (isTheModifiedWord && wordExists) {
-          return {
-            ...oldWord,
-            // active: true,
-            // enabled: false,
-            word: updatedWord,
-          };
-        }
-        return word;
-      });
+      // return newInputWords.map((word, index) => {
+      //   const oldWord = prevInputWords[index];
+      //   const isTheModifiedWord = index === activeWordIndex;
+      //   const updatedWord = newInputText.split(/(\s+)/)[activeWordIndex];
+      //   const wordExists = oldWord && updatedWord;
+      //   if (isTheModifiedWord && wordExists) {
+      //     return {
+      //       ...oldWord,
+      //       // active: true,
+      //       // enabled: false,
+      //       word: updatedWord,
+      //     };
+      //   }
+      //   return word;
+      // });
     });
   };
 
@@ -165,9 +169,10 @@ export const SuperInput = () => {
           style={styles.input}
           value={inputWords.map(({ word }) => word).join('')}
           onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+            console.log('key', e.nativeEvent.key);
             if (e.nativeEvent.key === 'Backspace') {
               handleBackspace();
-            } else if (e.nativeEvent.key.length === 1) {
+            } else {
               handleChangeText(e.nativeEvent.key);
             }
           }}
