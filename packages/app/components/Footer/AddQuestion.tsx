@@ -1,18 +1,14 @@
 import { CheckCircle2 } from '@tamagui/lucide-icons'
-import { useEffect, useState } from 'react'
 import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
 import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack, Text } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
-import type { Topic } from '../../../db/schema/types'
-import { AddPerson } from './AddPerson'
 import { sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { SuperchargedInput } from './SuperchargedInput'
-import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
-import { getFullName } from '../../utils/strings'
+import { superchargedInputWordsAtom } from '../../atoms/addQuestion';
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -88,23 +84,6 @@ export const AddQuestion: FC = () => {
           <CheckCircle2 />
         </Button>
       </XStack>
-      {/* {showTopicSuggestions && (
-        <>
-          {filteredTopics.map((topic) => (
-            <Button key={topic.id} onPress={() => selectTopic(topic)}>
-              {topic.name}
-            </Button>
-          ))}
-        </>
-      )}
-      {searchTerm && !filteredTopics.find((topic) => topic.name === searchTerm) && (
-        <Button onPress={() => createAndSelectTopic(searchTerm)}>
-          {`Create "${searchTerm}"`}
-        </Button>
-      )}
-      <XStack>
-        <AddPerson flex={1} />
-      </XStack> */}
       {error?.data?.code === 'UNAUTHORIZED' && (
         <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
       )}
