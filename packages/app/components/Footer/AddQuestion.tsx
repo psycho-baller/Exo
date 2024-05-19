@@ -150,8 +150,11 @@ export const AddQuestion: FC = () => {
           onChangeText={setQuestion}
         /> */}
         <SuperchargedInput placeholder='Add Person' />
+        <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
+          <CheckCircle2 />
+        </Button>
       </XStack>
-      {showTopicSuggestions && (
+      {/* {showTopicSuggestions && (
         <>
           {filteredTopics.map((topic) => (
             <Button key={topic.id} onPress={() => selectTopic(topic)}>
@@ -167,10 +170,7 @@ export const AddQuestion: FC = () => {
       )}
       <XStack>
         <AddPerson flex={1} />
-        <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
-          <CheckCircle2 />
-        </Button>
-      </XStack>
+      </XStack> */}
       {error?.data?.code === 'UNAUTHORIZED' && (
         <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
       )}

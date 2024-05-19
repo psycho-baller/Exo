@@ -1,4 +1,4 @@
-import { UnstyledInput, Text, View, XStack } from '@acme/ui';
+import { UnstyledInput, Text, View, XStack, YStack, BottomSheetInput, Button } from '@acme/ui';
 import { useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
   mention: {
     backgroundColor: 'rgba(0, 150, 255, .5)',
+
   }
 });
 // import chrono from 'chrono-node';
@@ -56,28 +57,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     // }));
     // setInputWords(newInputWords);
   };
-
-  const formatText = (inputWords: SuperchargedWord[]) => {
-    return inputWords.map(({ word, reference, enabled }, index) => {
-      if (reference === 'person' || reference === 'group') {
-        return (
-          <Text unstyled
-            key={index.toString() + word} style={enabled ? styles.mention : undefined}>
-            {word}
-          </Text>
-        );
-      }
-      if (reference === 'topic') {
-        return (
-          <Text unstyled
-            key={index.toString() + word} style={enabled ? styles.mention : undefined}>
-            {word}
-          </Text>
-        );
-      }
-      return word;
-    });
-  }
 
   const handleChangeText = (newInput: string) => {
     // Insert new input at current selection position
@@ -156,17 +135,24 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <Text unstyled
-        fontSize={25}
-        style={styles.text}>
-        {formatText(inputWords)}
-      </Text>
-      <View style={styles.inputWrapper}>
-        <UnstyledInput
+    <YStack width='100%' >
+      <View position='relative'>
+        <Text
           fontSize={25}
+          height={30}
+          position='absolute'
+        // style={styles.text}
+        >
+          <ConnectAndStyleText inputWords={inputWords} />
+        </Text>
+        <BottomSheetInput
+          // @ts-ignore
+          ref={null}
+          fontSize={25}
+          height={30}
+          width='100%'
           onSelectionChange={handleSelectionChange}
-          style={styles.input}
+          color='transparent'
           value={inputWords.map(({ word }) => word).join('')}
           onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
             console.log('key', e.nativeEvent.key);
@@ -179,6 +165,54 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           {...rest}
         />
       </View>
-    </View>
+      <SuggestionDropdown />
+    </YStack>
   );
 };
+
+type ConnectAndStyleTextProps = {
+  inputWords: SuperchargedWord[];
+}
+const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
+
+  return inputWords.map(({ word, reference, enabled }, index) => {
+    if (reference === 'person' || reference === 'group') {
+      return (
+        <Text unstyled
+          key={index.toString() + word} style={enabled ? styles.mention : undefined}>
+          {word}
+        </Text>
+      );
+    }
+    if (reference === 'topic') {
+      return (
+        <Text unstyled
+          key={index.toString() + word} style={enabled ? styles.mention : undefined}>
+          {word}
+        </Text>
+      );
+    }
+    return word;
+  });
+}
+type SuggestionDropdownProps = {
+  currentActiveWord: SuperchargedWord;
+}
+const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWord }) => {
+
+  return (
+    <YStack
+      gap='$1'
+      position='absolute'
+      top='100%'
+      left={0}
+      right={0}
+      padding='$1'
+      borderRadius='$1'
+    >
+      <Button onPress={() => { }}>
+        <Text>Person</Text>
+      </Button>
+    </YStack>
+  );
+}
