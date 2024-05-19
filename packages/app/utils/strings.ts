@@ -1,4 +1,5 @@
 import type { AppRouterKeys } from '@acme/api/src/root'
+import { ReferenceType } from '../atoms/addQuestion'
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {
   return lastName ? `${firstName} ${lastName}` : firstName
@@ -19,5 +20,20 @@ export const getSingularFromPlural = (word: string): singularOptions => {
       return 'person'
     default:
       return word.replace(/s$/, '') as singularOptions
+  }
+}
+
+export const getSymbolFromReference = (reference: ReferenceType | undefined) => {
+  switch (reference) {
+    case 'person':
+      return '@'
+    case 'group':
+      return '@@'
+    case 'topic':
+      return '#'
+    case 'date':
+      return '!'
+    default:
+      return ''
   }
 }

@@ -27,6 +27,7 @@ export const AddQuestion: FC = () => {
   })
   const createQuestionTopicRelation = api.questionTopic.create.useMutation()
   const { data: people } = api.person.all.useQuery();
+  const { data: groups } = api.group.all.useQuery();
 
 
   const [selectedPerson, setPersonSearch,
@@ -94,6 +95,8 @@ export const AddQuestion: FC = () => {
   const { mutateAsync: mutateQuestion, error } = api.question.create.useMutation({
     async onSuccess(data) {
       sheetRef?.current?.close()
+      const topicWord = question.find((word) => word.reference === 'topic')?.word.slice(1).toLowerCase();
+      const selectedTopic = allTopics?.find((topic) => topic.name.toLowerCase() === topicWord);
       const createdQuestion = data[0]
       if (createdQuestion && selectedTopic) {
         createQuestionTopicRelation.mutate({
@@ -115,12 +118,16 @@ export const AddQuestion: FC = () => {
     const personWord = question.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
     const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
 
+    const groupWord = question.find((word) => word.reference === 'group')?.word.slice(2).toLowerCase();
+    const group = groups?.find((group) => group.name.toLowerCase() === groupWord);
+
     const questionText = question
       .filter((word) => !word.reference)
       .map((word) => word.word)
       .join('');
 
     mutateQuestion({
+      groupId: group?.id,
       personId: person?.id,
       question: questionText,
     });
