@@ -190,8 +190,8 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       const newInputWords = prevInputWords.map((word, index) =>
         index === currentActiveWordIndex ? { ...word, word: `${getSymbolFromReference(currentActiveWord?.reference)}${name}` } : word
       );
-      newInputWords.push({ word: ' ', reference: null, enabled: false });
-      return newInputWords;
+      // TODo: Bug: update selection index
+      return [...newInputWords, { word: ' ', reference: null, enabled: false }];
     });
   }
 
@@ -266,8 +266,7 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       return (
         <View key={index.toString() + word} style={personIsSelected ? styles.selectedWordBg : undefined}>
           <Text
-            fontSize={25}
-            fontWeight={personIsSelected ? 'bold' : 'normal'}
+            style={personIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
             {word}
           </Text>
@@ -278,9 +277,8 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       const group = groups?.find((group) => group.name.toLowerCase() === word.slice(2).toLowerCase());
       const groupIsSelected = group && enabled;
       return (
-        <View key={index.toString() + word} style={groupIsSelected ? styles.selectedWordBg : styles.unselectedWord}>
+        <View key={index.toString() + word} style={groupIsSelected ? styles.selectedWordBg : styles.unselectedWordBg}>
           <Text
-            fontSize={25}
             style={groupIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
             {word}
@@ -292,9 +290,8 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       const topic = topics?.find((topic) => topic.name.toLowerCase() === word.slice(1).toLowerCase());
       const topicIsSelected = topic && enabled;
       return (
-        <View key={index.toString() + word} style={topicIsSelected ? styles.selectedWordBg : styles.unselectedWord}>
+        <View key={index.toString() + word} style={topicIsSelected ? styles.selectedWordBg : styles.unselectedWordBg}>
           <Text
-            fontSize={25}
             style={topicIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
             {word}
@@ -318,6 +315,8 @@ const styles = StyleSheet.create({
     marginHorizontal: -3,
     paddingVertical: 2,
     marginVertical: -2,
+  },
+  unselectedWordBg: {
   },
   selectedWord: {
     fontSize: 25,
