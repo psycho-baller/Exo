@@ -1,5 +1,4 @@
 import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
-import { useRef, useCallback, useEffect } from 'react'
 import type { FC } from 'react'
 import { Platform } from 'react-native'
 import { Link } from 'solito/link'
