@@ -96,8 +96,8 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
       const inputText = prevInputWords.map(({ word }) => word).join('');
       const activeWordIndex = inputText.slice(0, selection.start).split(/(\s+)/).length - 1;
       const word = prevInputWords[activeWordIndex];
-      console.log('prevInputWords', prevInputWords);
 
+      // TODO: Handle deleting an enabled word that doesn't exist in the db (e.g. a person/group/topic)
       if (word?.reference && word?.enabled) {
         console.log('deleting reference', selection.start, activeWordIndex);
         setJustDisabledWord(true);
@@ -176,10 +176,37 @@ type SuggestionDropdownProps = {
 
 const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
-  const currentActiveWord = inputWords[currentActiveWordIndex];
   const { data: people } = api.person.all.useQuery();
   const { data: topics } = api.topic.all.useQuery();
   const { data: groups } = api.group.all.useQuery();
+
+  const utils = api.useUtils();
+  const { mutateAsync: createPerson } = api.person.create.useMutation({
+    async onSuccess(data) {
+      await utils.person.all.invalidate();
+      // return data;
+    },
+  });
+  const { mutateAsync: createGroup } = api.group.create.useMutation({
+    async onSuccess(data) {
+      await utils.group.all.invalidate();
+      // return data;
+    },
+  });
+  const { mutateAsync: createTopic } = api.topic.create.useMutation({
+    async onSuccess(data) {
+      await utils.topic.all.invalidate();
+      // return data;
+    },
+  });
+
+  const currentActiveWord = inputWords[currentActiveWordIndex];
+  const currentActiveReference = currentActiveWord?.reference;
+  const dataMap = {
+    person: people,
+    group: groups,
+    topic: topics,
+  } as const;
 
   const getFilteredData = (data: any[] | undefined, reference: string) => {
     return data?.filter((item) => {
@@ -187,10 +214,6 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       return name.toLowerCase().includes(currentActiveWord?.word?.slice(reference.length).toLowerCase() ?? '');
     });
   }
-
-  const filteredPeople = useMemo(() => getFilteredData(people, getSymbolFromReference('person')), [people, getFilteredData]);
-  const filteredGroups = useMemo(() => getFilteredData(groups, getSymbolFromReference('group')), [groups, getFilteredData]);
-  const filteredTopics = useMemo(() => getFilteredData(topics, getSymbolFromReference('topic')), [topics, getFilteredData]);
 
   const handlePress = (name: string) => {
     setInputWords((prevInputWords) => {
@@ -201,8 +224,39 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
     });
   }
 
-  if (!currentActiveWord) return null;
+  const handleAddNew = () => {
+    if (!currentActiveWord?.word) return;
 
+    switch (currentActiveReference) {
+      case 'person': {
+        const personName = currentActiveWord?.word.slice(1);
+        createPerson({ firstName: personName }).then((person) => {
+          handlePress(personName);
+        });
+        break;
+      }
+      case 'group': {
+        const groupName = currentActiveWord?.word.slice(2);
+        createGroup({ name: groupName }).then((group) => {
+          handlePress(groupName);
+        });
+        break;
+      }
+      case 'topic': {
+        const topicName = currentActiveWord?.word.slice(1);
+        createTopic({ name: currentActiveWord?.word.slice(1) }).then((topic) => {
+          handlePress(topicName);
+        });
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
+  if (!currentActiveWord || !currentActiveReference) return null;
+  const filteredData = getFilteredData(dataMap[currentActiveReference], getSymbolFromReference(currentActiveReference))//, [getFilteredData, dataMap, currentActiveReference]);
+  if (!filteredData) return null;
   return (
     <YStack
       gap='$1'
@@ -213,25 +267,18 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       padding='$1'
       borderRadius='$1'
     >
-      {currentActiveWord.reference === 'person' && filteredPeople?.map((person) => (
-        <Button key={person.id} onPress={() => handlePress(person.firstName)}>
-          {person.firstName}
+      {filteredData?.length > 0 ? filteredData?.map((item) => (
+        <Button key={item.id} onPress={() => handlePress(item.firstName || item.name)}>
+          {item.firstName || item.name}
         </Button>
-      ))}
-      {currentActiveWord.reference === 'group' && filteredGroups?.map((group) => (
-        <Button key={group.id} onPress={() => handlePress(group.name)}>
-          {group.name}
+      )) : (
+        <Button onPress={handleAddNew}>
+          <Button.Text>Add new {currentActiveReference}</Button.Text>
         </Button>
-      ))}
-      {currentActiveWord.reference === 'topic' && filteredTopics?.map((topic) => (
-        <Button key={topic.id} onPress={() => handlePress(topic.name)}>
-          {topic.name}
-        </Button>
-      ))}
+      )}
     </YStack>
   );
 }
-
 type ConnectAndStyleTextProps = {
   inputWords: SuperchargedWord[];
 }
