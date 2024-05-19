@@ -124,7 +124,8 @@ export const AddQuestion: FC = () => {
     const questionText = question
       .filter((word) => !word.reference)
       .map((word) => word.word)
-      .join('');
+      .join('')
+      .trim();
 
     mutateQuestion({
       groupId: group?.id,
