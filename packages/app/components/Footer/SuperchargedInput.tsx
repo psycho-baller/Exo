@@ -9,34 +9,6 @@ import { getFullName, getSymbolFromReference } from '../../utils/strings';
 import { useAtom } from 'jotai';
 import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
 
-const styles = StyleSheet.create({
-  wrapper: {
-    width: '100%',
-    height: 24,
-    position: 'relative',
-    alignSelf: 'center',
-  },
-  inputWrapper: {
-    position: 'absolute',
-    top: 0,
-    height: 24,
-    width: '100%',
-  },
-  input: {
-    height: 24,
-    width: '100%',
-  },
-  text: {
-    height: 24,
-    position: 'absolute',
-    top: 0,
-    color: 'transparent',
-  },
-  mention: {
-    backgroundColor: 'rgba(0, 150, 255, .5)',
-    fontWeight: '600',
-  }
-});
 // import chrono from 'chrono-node';
 type Props = UnstyledInputProps;
 export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
@@ -97,14 +69,14 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
       const activeWordIndex = inputText.slice(0, selection.start).split(/(\s+)/).length - 1;
       const word = prevInputWords[activeWordIndex];
 
-      // TODO: Handle deleting an enabled word that doesn't exist in the db (e.g. a person/group/topic)
-      if (word?.reference && word?.enabled) {
-        console.log('deleting reference', selection.start, activeWordIndex);
-        setJustDisabledWord(true);
-        return prevInputWords.map((w, index) =>
-          index === activeWordIndex ? { ...w, enabled: false } : w
-        );
-      }
+      // TODO: Use this for dates
+      // if (word?.reference && word?.enabled) {
+      //   console.log('deleting reference', selection.start, activeWordIndex);
+      //   setJustDisabledWord(true);
+      //   return prevInputWords.map((w, index) =>
+      //     index === activeWordIndex ? { ...w, enabled: false } : w
+      //   );
+      // }
       console.log('deleting word', selection.start, activeWordIndex);
       const indexToSlice = justDisabledWord ? selection.start + 1 : selection.start;
 
@@ -139,14 +111,12 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   return (
     <YStack width='100%' >
       <View position='relative'>
-        <Text
-          fontSize={25}
+        <XStack
           height={30}
           position='absolute'
-        // style={styles.text}
         >
           <ConnectAndStyleText inputWords={inputWords} />
-        </Text>
+        </XStack>
         <BottomSheetInput
           // @ts-ignore
           ref={null}
@@ -220,6 +190,7 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       const newInputWords = prevInputWords.map((word, index) =>
         index === currentActiveWordIndex ? { ...word, word: `${getSymbolFromReference(currentActiveWord?.reference)}${name}` } : word
       );
+      newInputWords.push({ word: ' ', reference: null, enabled: false });
       return newInputWords;
     });
   }
@@ -293,32 +264,65 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       const person = people?.find((person) => person.firstName.toLowerCase() === word.slice(1).toLowerCase());
       const personIsSelected = person && enabled;
       return (
-        <Text unstyled
-          key={index.toString() + word} style={personIsSelected ? styles.mention : undefined}>
-          {word}
-        </Text>
+        <View key={index.toString() + word} style={personIsSelected ? styles.selectedWordBg : undefined}>
+          <Text
+            fontSize={25}
+            fontWeight={personIsSelected ? 'bold' : 'normal'}
+          >
+            {word}
+          </Text>
+        </View>
       );
     }
     if (reference === 'group') {
       const group = groups?.find((group) => group.name.toLowerCase() === word.slice(2).toLowerCase());
       const groupIsSelected = group && enabled;
       return (
-        <Text unstyled
-          key={index.toString() + word} style={groupIsSelected ? styles.mention : undefined}>
-          {word}
-        </Text>
+        <View key={index.toString() + word} style={groupIsSelected ? styles.selectedWordBg : styles.unselectedWord}>
+          <Text
+            fontSize={25}
+            style={groupIsSelected ? styles.selectedWord : styles.unselectedWord}
+          >
+            {word}
+          </Text>
+        </View>
       );
     }
     if (reference === 'topic') {
       const topic = topics?.find((topic) => topic.name.toLowerCase() === word.slice(1).toLowerCase());
       const topicIsSelected = topic && enabled;
       return (
-        <Text unstyled
-          key={index.toString() + word} style={topicIsSelected ? styles.mention : undefined}>
-          {word}
-        </Text>
+        <View key={index.toString() + word} style={topicIsSelected ? styles.selectedWordBg : styles.unselectedWord}>
+          <Text
+            fontSize={25}
+            style={topicIsSelected ? styles.selectedWord : styles.unselectedWord}
+          >
+            {word}
+          </Text>
+        </View>
       );
     }
-    return word;
+    return (
+      <Text key={index.toString() + word} style={styles.unselectedWord}>
+        {word}
+      </Text>
+    );
   });
 }
+
+const styles = StyleSheet.create({
+  selectedWordBg: {
+    backgroundColor: 'rgba(0, 150, 255, .3)',
+    borderRadius: 10,
+    paddingHorizontal: 3,
+    marginHorizontal: -3,
+    paddingVertical: 2,
+    marginVertical: -2,
+  },
+  selectedWord: {
+    fontSize: 25,
+  },
+  unselectedWord: {
+    fontSize: 25,
+  },
+});
