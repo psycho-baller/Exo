@@ -5,6 +5,8 @@ import { Button } from '@acme/ui'
 import type { ButtonProps } from '@acme/ui'
 
 import { useAddPersonStore } from '../../stores/addQuestion'
+import { useAtom } from 'jotai'
+import { sheetRefAtom } from '../../atoms/addQuestion'
 
 type Props = ButtonProps
 
@@ -13,10 +15,10 @@ type Props = ButtonProps
  * linear: https://linear.app/rami-m/issue/CT-16/the-add-button-is-now-a-floating-button-on-the-right
  */
 export const FloatingDropdownBtn: FC<ButtonProps> = () => {
-  const [setDropdownOpen] = useAddPersonStore((state) => [state.setDropdownOpen])
+  const [sheetRef] = useAtom(sheetRefAtom)
 
   function handlePlusClick() {
-    setDropdownOpen(true)
+    sheetRef?.current?.present()
   }
 
   return (
