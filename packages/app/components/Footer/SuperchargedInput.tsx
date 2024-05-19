@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   mention: {
     backgroundColor: 'rgba(0, 150, 255, .5)',
-
+    fontWeight: '600',
   }
 });
 // import chrono from 'chrono-node';
