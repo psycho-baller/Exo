@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
-import { getFullName } from '../../utils/strings';
+import { getFullName, getSymbolFromReference } from '../../utils/strings';
 import { useAtom } from 'jotai';
 import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
 
@@ -173,17 +173,36 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
 type SuggestionDropdownProps = {
   currentActiveWordIndex: number;
 }
+
 const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const currentActiveWord = inputWords[currentActiveWordIndex];
   const { data: people } = api.person.all.useQuery();
+  const { data: topics } = api.topic.all.useQuery();
+  const { data: groups } = api.group.all.useQuery();
 
-  const filteredPeople = useMemo(() => people?.filter((person) => {
-    const fullName = person.firstName // getFullName(person.firstName, person.lastName);
-    return fullName.toLowerCase().includes(currentActiveWord?.word?.slice(1).toLowerCase() ?? '');
-  }), [people, currentActiveWord]);
+  const getFilteredData = (data: any[] | undefined, reference: string) => {
+    return data?.filter((item) => {
+      const name = item.firstName || item.name;
+      return name.toLowerCase().includes(currentActiveWord?.word?.slice(reference.length).toLowerCase() ?? '');
+    });
+  }
+
+  const filteredPeople = useMemo(() => getFilteredData(people, getSymbolFromReference('person')), [people, getFilteredData]);
+  const filteredGroups = useMemo(() => getFilteredData(groups, getSymbolFromReference('group')), [groups, getFilteredData]);
+  const filteredTopics = useMemo(() => getFilteredData(topics, getSymbolFromReference('topic')), [topics, getFilteredData]);
+
+  const handlePress = (name: string) => {
+    setInputWords((prevInputWords) => {
+      const newInputWords = prevInputWords.map((word, index) =>
+        index === currentActiveWordIndex ? { ...word, word: `${getSymbolFromReference(currentActiveWord?.reference)}${name}` } : word
+      );
+      return newInputWords;
+    });
+  }
 
   if (!currentActiveWord) return null;
+
   return (
     <YStack
       gap='$1'
@@ -194,37 +213,32 @@ const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       padding='$1'
       borderRadius='$1'
     >
-      {currentActiveWord.reference === 'person' && filteredPeople?.map((person) => {
-        // One idea for handling full names is by making the space between the first and last name contain the reference of the person, group, or topic.
-        const fullName = person.firstName // getFullName(person.firstName, person.lastName);
-        return (
-          <Button
-            key={person.id}
-            onPress={() => {
-              console.log('currentActiveWord', currentActiveWord);
-              setInputWords((prevInputWords) => {
-                const newInputWords = prevInputWords.map((word, index) =>
-                  index === currentActiveWordIndex ? { ...word, word: `@${fullName}` } : word
-                );
-                return newInputWords;
-              });
-            }}
-          >
-            {fullName}
-          </Button>
-        );
-      })}
-
+      {currentActiveWord.reference === 'person' && filteredPeople?.map((person) => (
+        <Button key={person.id} onPress={() => handlePress(person.firstName)}>
+          {person.firstName}
+        </Button>
+      ))}
+      {currentActiveWord.reference === 'group' && filteredGroups?.map((group) => (
+        <Button key={group.id} onPress={() => handlePress(group.name)}>
+          {group.name}
+        </Button>
+      ))}
+      {currentActiveWord.reference === 'topic' && filteredTopics?.map((topic) => (
+        <Button key={topic.id} onPress={() => handlePress(topic.name)}>
+          {topic.name}
+        </Button>
+      ))}
     </YStack>
   );
 }
-
 
 type ConnectAndStyleTextProps = {
   inputWords: SuperchargedWord[];
 }
 const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
   const { data: people } = api.person.all.useQuery();
+  const { data: topics } = api.topic.all.useQuery();
+  const { data: groups } = api.group.all.useQuery();
 
   return inputWords.map(({ word, reference, enabled }, index) => {
     if (reference === 'person') {
@@ -238,10 +252,22 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
         </Text>
       );
     }
-    if (reference === 'topic') {
+    if (reference === 'group') {
+      const group = groups?.find((group) => group.name.toLowerCase() === word.slice(2).toLowerCase());
+      const groupIsSelected = group && enabled;
       return (
         <Text unstyled
-          key={index.toString() + word} style={enabled ? styles.mention : undefined}>
+          key={index.toString() + word} style={groupIsSelected ? styles.mention : undefined}>
+          {word}
+        </Text>
+      );
+    }
+    if (reference === 'topic') {
+      const topic = topics?.find((topic) => topic.name.toLowerCase() === word.slice(1).toLowerCase());
+      const topicIsSelected = topic && enabled;
+      return (
+        <Text unstyled
+          key={index.toString() + word} style={topicIsSelected ? styles.mention : undefined}>
           {word}
         </Text>
       );
