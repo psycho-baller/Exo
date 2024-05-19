@@ -1,5 +1,5 @@
 import type { AppRouterKeys } from '@acme/api/src/root'
-import { ReferenceType } from '../atoms/addQuestion'
+import type { ReferenceType } from '../atoms/addQuestion'
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {
   return lastName ? `${firstName} ${lastName}` : firstName
@@ -31,8 +31,8 @@ export const getSymbolFromReference = (reference: ReferenceType | undefined) => 
       return '@@'
     case 'topic':
       return '#'
-    case 'date':
-      return '!'
+    // case 'date':
+    //   return '!'
     default:
       return ''
   }
