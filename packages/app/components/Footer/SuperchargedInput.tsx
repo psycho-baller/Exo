@@ -1,8 +1,13 @@
-import { UnstyledInput, Text, View, XStack, YStack, BottomSheetInput, Button } from '@acme/ui';
-import { useState } from 'react';
+import { api } from '@acme/api/utils/trpc';
+import { Text, View, XStack, YStack, BottomSheetInput, Button } from '@acme/ui';
+import type { UnstyledInputProps } from '@acme/ui';
+import { useMemo, useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
+import { getFullName } from '../../utils/strings';
+import { useAtom } from 'jotai';
+import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -33,16 +38,9 @@ const styles = StyleSheet.create({
   }
 });
 // import chrono from 'chrono-node';
-type ReferenceType = 'person' | 'group' | 'topic' | 'date' | null;
-type SuperchargedWord = {
-  word: string;
-  enabled?: boolean;
-  reference: ReferenceType;
-  // active: boolean;
-};
-type Props = typeof UnstyledInput.defaultProps;
+type Props = UnstyledInputProps;
 export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
-  const [inputWords, setInputWords] = useState<SuperchargedWord[]>([]);
+  const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [selection, setSelection] = useState<{ start: number, end: number }>({ start: 0, end: 0 });
   const [justDisabledWord, setJustDisabledWord] = useState(false);
 
@@ -86,6 +84,10 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     });
   }
 
+  const getActiveWordIndexFromSuperchargedWords = (superchargedWords: SuperchargedWord[], cursorPosition = selection.start) => {
+    const inputText = superchargedWords.map(({ word }) => word).join('');
+    return inputText.slice(0, cursorPosition).split(/(\s+)/).length - 1;
+  }
 
   const handleBackspace = () => {
     if (selection.start <= 0) return; // No action if cursor is at the start
@@ -155,7 +157,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           color='transparent'
           value={inputWords.map(({ word }) => word).join('')}
           onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-            console.log('key', e.nativeEvent.key);
             if (e.nativeEvent.key === 'Backspace') {
               handleBackspace();
             } else {
@@ -165,21 +166,74 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           {...rest}
         />
       </View>
-      <SuggestionDropdown />
+      <SuggestionDropdown currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords)} />
     </YStack>
   );
 };
+type SuggestionDropdownProps = {
+  currentActiveWordIndex: number;
+}
+const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex }) => {
+  const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
+  const currentActiveWord = inputWords[currentActiveWordIndex];
+  const { data: people } = api.person.all.useQuery();
+
+  const filteredPeople = useMemo(() => people?.filter((person) => {
+    const fullName = person.firstName // getFullName(person.firstName, person.lastName);
+    return fullName.toLowerCase().includes(currentActiveWord?.word?.slice(1).toLowerCase() ?? '');
+  }), [people, currentActiveWord]);
+
+  if (!currentActiveWord) return null;
+  return (
+    <YStack
+      gap='$1'
+      position='absolute'
+      top='100%'
+      left={0}
+      right={0}
+      padding='$1'
+      borderRadius='$1'
+    >
+      {currentActiveWord.reference === 'person' && filteredPeople?.map((person) => {
+        // One idea for handling full names is by making the space between the first and last name contain the reference of the person, group, or topic.
+        const fullName = person.firstName // getFullName(person.firstName, person.lastName);
+        return (
+          <Button
+            key={person.id}
+            onPress={() => {
+              console.log('currentActiveWord', currentActiveWord);
+              setInputWords((prevInputWords) => {
+                const newInputWords = prevInputWords.map((word, index) =>
+                  index === currentActiveWordIndex ? { ...word, word: `@${fullName}` } : word
+                );
+                return newInputWords;
+              });
+            }}
+          >
+            {fullName}
+          </Button>
+        );
+      })}
+
+    </YStack>
+  );
+}
+
 
 type ConnectAndStyleTextProps = {
   inputWords: SuperchargedWord[];
 }
 const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
+  const { data: people } = api.person.all.useQuery();
 
   return inputWords.map(({ word, reference, enabled }, index) => {
-    if (reference === 'person' || reference === 'group') {
+    if (reference === 'person') {
+      console.log('word', word);
+      const person = people?.find((person) => person.firstName.toLowerCase() === word.slice(1).toLowerCase());
+      const personIsSelected = person && enabled;
       return (
         <Text unstyled
-          key={index.toString() + word} style={enabled ? styles.mention : undefined}>
+          key={index.toString() + word} style={personIsSelected ? styles.mention : undefined}>
           {word}
         </Text>
       );
@@ -194,25 +248,4 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
     }
     return word;
   });
-}
-type SuggestionDropdownProps = {
-  currentActiveWord: SuperchargedWord;
-}
-const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWord }) => {
-
-  return (
-    <YStack
-      gap='$1'
-      position='absolute'
-      top='100%'
-      left={0}
-      right={0}
-      padding='$1'
-      borderRadius='$1'
-    >
-      <Button onPress={() => { }}>
-        <Text>Person</Text>
-      </Button>
-    </YStack>
-  );
 }

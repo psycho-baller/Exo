@@ -12,6 +12,8 @@ import { AddPerson } from './AddPerson'
 import { sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { SuperchargedInput } from './SuperchargedInput'
+import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
+import { getFullName } from '../../utils/strings'
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -24,6 +26,8 @@ export const AddQuestion: FC = () => {
     },
   })
   const createQuestionTopicRelation = api.questionTopic.create.useMutation()
+  const { data: people } = api.person.all.useQuery();
+
 
   const [selectedPerson, setPersonSearch,
     dropdownOpen,
@@ -37,7 +41,8 @@ export const AddQuestion: FC = () => {
     ],
   )
 
-  const [question, setQuestion] = useState('')
+  // const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useAtom(superchargedInputWordsAtom);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
   const [showTopicSuggestions, setShowTopicSuggestions] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
@@ -57,34 +62,34 @@ export const AddQuestion: FC = () => {
   //   }
   // }, [topics, isLoading])
 
-  useEffect(() => {
-    const words = question.includes(' ') ? question.split(' ') : [question]
-    // if any of the words starts with a hashtag, show topic suggestions
-    // for (const word of words) {
-    //   if (word.startsWith('#')) {
-    //     setShowTopicSuggestions(true);
-    //     setSearchTerm(word.slice(1));
-    //     return;
-    //   }
-    // }
-    const lastWordWithKey = words.slice(-1)[0]
-    if (lastWordWithKey?.startsWith('#')) {
-      const lastWord = lastWordWithKey.slice(1)
-      setSearchTerm(lastWord)
-      // check if the last word is a topic
-      const topic = allTopics?.find((topic) => topic.name === lastWord)
-      // if exists, select it
-      if (topic) {
-        setSelectedTopic(topic)
-      } else {
-        setFilteredTopics(allTopics ? allTopics.filter((topic) => topic.name.includes(searchTerm)) : [])
-        setShowTopicSuggestions(true)
-      }
-    } else {
-      setShowTopicSuggestions(false)
-      setSearchTerm('')
-    }
-  }, [question])
+  // useEffect(() => {
+  //   const words = question.includes(' ') ? question.split(' ') : [question]
+  //   // if any of the words starts with a hashtag, show topic suggestions
+  //   // for (const word of words) {
+  //   //   if (word.startsWith('#')) {
+  //   //     setShowTopicSuggestions(true);
+  //   //     setSearchTerm(word.slice(1));
+  //   //     return;
+  //   //   }
+  //   // }
+  //   const lastWordWithKey = words.slice(-1)[0]
+  //   if (lastWordWithKey?.startsWith('#')) {
+  //     const lastWord = lastWordWithKey.slice(1)
+  //     setSearchTerm(lastWord)
+  //     // check if the last word is a topic
+  //     const topic = allTopics?.find((topic) => topic.name === lastWord)
+  //     // if exists, select it
+  //     if (topic) {
+  //       setSelectedTopic(topic)
+  //     } else {
+  //       setFilteredTopics(allTopics ? allTopics.filter((topic) => topic.name.includes(searchTerm)) : [])
+  //       setShowTopicSuggestions(true)
+  //     }
+  //   } else {
+  //     setShowTopicSuggestions(false)
+  //     setSearchTerm('')
+  //   }
+  // }, [question])
 
   const { mutateAsync: mutateQuestion, error } = api.question.create.useMutation({
     async onSuccess(data) {
@@ -97,7 +102,7 @@ export const AddQuestion: FC = () => {
         })
       }
       // reset form
-      setQuestion('')
+      setQuestion([])
       setSelectedTopic(null)
       setDropdownOpen(false)
       setPersonSearch('')
@@ -106,15 +111,24 @@ export const AddQuestion: FC = () => {
   })
 
   function addQuestion() {
+    // find the person id from the selected person
+    const personWord = question.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
+    const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
+
+    const questionText = question
+      .filter((word) => !word.reference)
+      .map((word) => word.word)
+      .join('');
+
     mutateQuestion({
-      personId: selectedPerson?.id,
-      question: question.trim().replace(`#${selectedTopic?.name}`, ''),
-    })
+      personId: person?.id,
+      question: questionText,
+    });
   }
 
   const selectTopic = (topic: Topic) => {
     // autocomplete the question with the selected topic
-    setQuestion(question.replace(/#[\w]*$/, `#${topic.name}`))
+    // setQuestion(question.replace(/#[\w]*$/, `#${topic.name}`))
     setSelectedTopic(topic)
     console.log('selectedTopic', topic)
     setShowTopicSuggestions(false)
