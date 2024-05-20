@@ -23,4 +23,5 @@ export type SuperchargedWord = {
   // active: boolean;
 }
 export const superchargedInputWordsAtom = atom<SuperchargedWord[]>([])
+export const superchargedInputDateAtom = atom<Date | null>(null)
 export const superchargedInputSelectionAtom = atom({ start: 0, end: 0 })

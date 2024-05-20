@@ -4,7 +4,7 @@ import { api } from '@acme/api/utils/trpc'
 import { ErrorText, Label, XStack } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
-import { sheetRefAtom } from '../../atoms/addQuestion'
+import { sheetRefAtom, superchargedInputDateAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { SuperchargedInput } from './SuperchargedInput'
 import { superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
@@ -24,6 +24,7 @@ export const AddQuestion: FC = () => {
 
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [sheetRef] = useAtom(sheetRefAtom)
+  const [inputDate] = useAtom(superchargedInputDateAtom)
 
   const { mutateAsync: mutateQuestion, error } = api.question.create.useMutation({
     async onSuccess(data) {
@@ -61,6 +62,7 @@ export const AddQuestion: FC = () => {
       groupId: group?.id,
       personId: person?.id,
       question: questionText,
+      reminderDatetime: inputDate,
     });
   }
 

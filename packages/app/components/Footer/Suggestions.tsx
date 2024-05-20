@@ -1,10 +1,10 @@
 import { api } from "@acme/api/utils/trpc";
 import { useAtom } from "jotai";
-import { useState, type FC } from "react";
-import { ScrollView, Button, YStack, MyDateTimePicker } from "@acme/ui";
-import { type ReferenceType, superchargedInputWordsAtom } from "../../atoms/addQuestion";
+import type { FC } from "react";
+import { Keyboard } from "react-native";
+import { ScrollView, MyDateTimePicker, TagButton, XStack } from "@acme/ui";
+import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
-import TagButton from "../TagButton";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
 
 type SuggestionDropdownProps = {
@@ -18,79 +18,13 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
 
 
   return (
-    <>
-      {/* <Dialog
-        modal
-        
-        open
-        >
-        <Dialog.Content
-        position='absolute'
-        gap='$1'
-        bottom='100%'
-        zIndex={1000}
-        >
-        {filteredData?.length > 0 ? filteredData?.map((item) => (
-          <Button key={item.id} onPress={() => handlePress(item.firstName || item.name)}>
-          {item.firstName || item.name}
-          </Button>
-        )) : (
-          <Button onPress={handleAddNew}>
-          <Button.Text>Add new {currentActiveReference}</Button.Text>
-          </Button>
-        )}
-        </Dialog.Content>
-      </Dialog> */}
-
-      {/* <Popover
-        allowFlip
-        open
-        modal={false}
-        strategy='absolute'
-        keepChildrenMounted
-        placement='bottom'
-        // offset={100}
-        >
-        <Popover.Content
-        position='absolute'
-        gap='$1'
-        bottom='0'
-        // left={0}
-        // right={0}
-        padding='$1'
-        borderRadius='$1'
-        
-        borderWidth={1}
-        borderColor="$borderColor"
-        enterStyle={{ y: -10, opacity: 0 }}
-        exitStyle={{ y: -10, opacity: 0 }}
-        // elevate
-        animation={[
-          'quick',
-          {
-            opacity: {
-              overshootClamping: true,
-            },
-          },
-        ]}
-        >
-        {filteredData?.length > 0 ? filteredData?.map((item) => (
-          <Button key={item.id} onPress={() => handlePress(item.firstName || item.name)}>
-          {item.firstName || item.name}
-          </Button>
-        )) : (
-          <Button onPress={handleAddNew}>
-          <Button.Text>Add new {currentActiveReference}</Button.Text>
-          </Button>
-        )}
-        </Popover.Content>
-      </Popover> */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        padding='$3'
-        marginLeft='$-2.5'
-      >
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      paddingVertical='$3'
+      marginHorizontal='$-2.5'
+    >
+      <XStack columnGap='$2.5' paddingRight='$3'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}
@@ -98,8 +32,8 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
         ) : (
           <PropertiesSuggestions />
         )}
-      </ScrollView>
-    </>
+      </XStack>
+    </ScrollView>
   );
 }
 
@@ -152,6 +86,8 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
   }
 
   const handleAddNew = () => {
+    Keyboard.dismiss();
+
     if (!currentActiveWord?.word) return;
 
     switch (currentActiveReference) {
@@ -203,7 +139,7 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
         </TagButton>
       )) : (
         <TagButton onPress={handleAddNew}>
-          <Button.Text>Add new {currentActiveReference}</Button.Text>
+          Add new {currentActiveReference}
         </TagButton>
       )}
     </>
@@ -219,11 +155,14 @@ const PropertiesSuggestions: FC = () => {
 
   ] as const;
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
-  // const [date, setDate] = useState(new Date());
+  // const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [date, setDate] = useAtom(superchargedInputDateAtom)
 
   const handlePress = (name: typeof properties[number]['name']) => {
+    Keyboard.dismiss();
     if (name === 'date') {
-      return
+      setDate(new Date());
+      return;
     }
     setInputWords((prevInputWords) => {
       return [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
@@ -232,17 +171,23 @@ const PropertiesSuggestions: FC = () => {
 
   return (
     <>
-      {properties.map(({ name, icon }) => (
+      {date ? (
+        <MyDateTimePicker
+          value={date}
+          onChange={setDate as () => Promise<void>}
+        // showOnMount
+        />
+      ) : (
+        <TagButton icon={properties[0].icon} onPress={() => handlePress(properties[0].name)} >
+          {properties[0].name}
+        </TagButton>
+      )}
+      {properties.slice(1).map(({ name, icon }) => (
         // TODO: Show selected person, group, topic
         <TagButton key={name} icon={icon} onPress={() => handlePress(name)} >
           {name}
-        </TagButton >
+        </TagButton>
       ))}
-      {/* <MyDateTimePicker
-        value={date}
-        onChange={setDate}
-        mode='datetime'
-      /> */}
     </>
   );
 }
