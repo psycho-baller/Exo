@@ -1,5 +1,5 @@
 import type { AppRouterKeys } from '@acme/api/src/root'
-import type { ReferenceType } from '../atoms/addQuestion'
+import type { ReferenceType, SuperchargedWord } from '../atoms/addQuestion'
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {
   return lastName ? `${firstName} ${lastName}` : firstName
@@ -36,4 +36,12 @@ export const getSymbolFromReference = (reference: ReferenceType | undefined) => 
     default:
       return ''
   }
+}
+
+export const getActiveWordIndexFromSuperchargedWords = (
+  superchargedWords: SuperchargedWord[],
+  cursorPosition: number,
+) => {
+  const inputText = superchargedWords.map(({ word }) => word).join('')
+  return inputText.slice(0, cursorPosition).split(/(\s+)/).length - 1
 }

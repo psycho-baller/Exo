@@ -1,19 +1,21 @@
 import { api } from '@acme/api/utils/trpc';
-import { Text, View, XStack, YStack, BottomSheetInput, Button } from '@acme/ui';
+import { Text, View, XStack, YStack, BottomSheetInput, Button, Dialog, ScrollView } from '@acme/ui';
 import type { UnstyledInputProps } from '@acme/ui';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
-import { getFullName, getSymbolFromReference } from '../../utils/strings';
+import { getActiveWordIndexFromSuperchargedWords } from '../../utils/strings';
 import { useAtom } from 'jotai';
-import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom } from '../../atoms/addQuestion';
+import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
+import { parse } from 'chrono-node';
+import { Suggestions } from './Suggestions';
+import { CheckCircle2 } from '@tamagui/lucide-icons';
 
-// import chrono from 'chrono-node';
 type Props = UnstyledInputProps;
 export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
-  const [selection, setSelection] = useState<{ start: number, end: number }>({ start: 0, end: 0 });
+  const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
   const [justDisabledWord, setJustDisabledWord] = useState(false);
 
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
@@ -38,6 +40,7 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   };
 
   const addTextProperties: (text: string) => SuperchargedWord[] = (text) => {
+    const date = parse(text)
     const words = text.split(/(\s+)/)
     return words.map((word, index) => {
       let reference: ReferenceType = null;
@@ -54,11 +57,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
         // active: false,
       };
     });
-  }
-
-  const getActiveWordIndexFromSuperchargedWords = (superchargedWords: SuperchargedWord[], cursorPosition = selection.start) => {
-    const inputText = superchargedWords.map(({ word }) => word).join('');
-    return inputText.slice(0, cursorPosition).split(/(\s+)/).length - 1;
   }
 
   const handleBackspace = () => {
@@ -135,121 +133,18 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           }}
           {...rest}
         />
+        <XStack columnGap='$2' alignItems='center'>
+          <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} />
+          <Button unstyled>
+            <CheckCircle2 />
+          </Button>
+        </XStack>
+
       </View>
-      <SuggestionDropdown currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords)} />
     </YStack>
   );
 };
-type SuggestionDropdownProps = {
-  currentActiveWordIndex: number;
-}
 
-const SuggestionDropdown: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex }) => {
-  const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
-  const { data: people } = api.person.all.useQuery();
-  const { data: topics } = api.topic.all.useQuery();
-  const { data: groups } = api.group.all.useQuery();
-
-  const utils = api.useUtils();
-  const { mutateAsync: createPerson } = api.person.create.useMutation({
-    async onSuccess(data) {
-      await utils.person.all.invalidate();
-      // return data;
-    },
-  });
-  const { mutateAsync: createGroup } = api.group.create.useMutation({
-    async onSuccess(data) {
-      await utils.group.all.invalidate();
-      // return data;
-    },
-  });
-  const { mutateAsync: createTopic } = api.topic.create.useMutation({
-    async onSuccess(data) {
-      await utils.topic.all.invalidate();
-      // return data;
-    },
-  });
-
-  const currentActiveWord = inputWords[currentActiveWordIndex];
-  const currentActiveReference = currentActiveWord?.reference;
-  const dataMap = {
-    person: people,
-    group: groups,
-    topic: topics,
-  } as const;
-
-  const getFilteredData = (data: any[] | undefined, reference: string) => {
-    return data?.filter((item) => {
-      const name = item.firstName || item.name;
-      return name.toLowerCase().includes(currentActiveWord?.word?.slice(reference.length).toLowerCase() ?? '');
-    });
-  }
-
-  const handlePress = (name: string) => {
-    setInputWords((prevInputWords) => {
-      const newInputWords = prevInputWords.map((word, index) =>
-        index === currentActiveWordIndex ? { ...word, word: `${getSymbolFromReference(currentActiveWord?.reference)}${name}` } : word
-      );
-      // TODo: Bug: update selection index
-      return [...newInputWords, { word: ' ', reference: null, enabled: false }];
-    });
-  }
-
-  const handleAddNew = () => {
-    if (!currentActiveWord?.word) return;
-
-    switch (currentActiveReference) {
-      case 'person': {
-        const personName = currentActiveWord?.word.slice(1);
-        createPerson({ firstName: personName }).then((person) => {
-          handlePress(personName);
-        });
-        break;
-      }
-      case 'group': {
-        const groupName = currentActiveWord?.word.slice(2);
-        createGroup({ name: groupName }).then((group) => {
-          handlePress(groupName);
-        });
-        break;
-      }
-      case 'topic': {
-        const topicName = currentActiveWord?.word.slice(1);
-        createTopic({ name: currentActiveWord?.word.slice(1) }).then((topic) => {
-          handlePress(topicName);
-        });
-        break;
-      }
-      default:
-        break;
-    }
-  };
-
-  if (!currentActiveWord || !currentActiveReference) return null;
-  const filteredData = getFilteredData(dataMap[currentActiveReference], getSymbolFromReference(currentActiveReference))//, [getFilteredData, dataMap, currentActiveReference]);
-  if (!filteredData) return null;
-  return (
-    <YStack
-      gap='$1'
-      position='absolute'
-      top='100%'
-      left={0}
-      right={0}
-      padding='$1'
-      borderRadius='$1'
-    >
-      {filteredData?.length > 0 ? filteredData?.map((item) => (
-        <Button key={item.id} onPress={() => handlePress(item.firstName || item.name)}>
-          {item.firstName || item.name}
-        </Button>
-      )) : (
-        <Button onPress={handleAddNew}>
-          <Button.Text>Add new {currentActiveReference}</Button.Text>
-        </Button>
-      )}
-    </YStack>
-  );
-}
 type ConnectAndStyleTextProps = {
   inputWords: SuperchargedWord[];
 }

@@ -1,14 +1,13 @@
-import { CheckCircle2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
-import { Button, ErrorText, Label, BottomSheetInput, XStack, YStack, Text } from '@acme/ui'
+import { ErrorText, Label, XStack } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
 import { sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { SuperchargedInput } from './SuperchargedInput'
-import { superchargedInputWordsAtom } from '../../atoms/addQuestion';
+import { superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -72,18 +71,13 @@ export const AddQuestion: FC = () => {
           QUESTION
         </Label>
       </XStack>
-      <XStack alignItems='center'>
-        <SuperchargedInput
-          // paddingVertical={'$2'}
-          // marginBottom={'$4'}
-          placeholder='Add Question'
-          onSubmitEditing={addQuestion}
-          autoFocus
-        />
-        <Button justifyContent='flex-end' unstyled onPress={addQuestion}>
-          <CheckCircle2 />
-        </Button>
-      </XStack>
+      <SuperchargedInput
+        // paddingVertical={'$2'}
+        // marginBottom={'$4'}
+        placeholder='Add Question'
+        onSubmitEditing={addQuestion}
+        autoFocus
+      />
       {error?.data?.code === 'UNAUTHORIZED' && (
         <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
       )}
