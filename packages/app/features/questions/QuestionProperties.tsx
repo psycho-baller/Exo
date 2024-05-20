@@ -2,10 +2,9 @@ import { CalendarDays, Tag, User, Users } from '@tamagui/lucide-icons'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-import { Button, MyDateTimePicker, ScrollView, Text, YStack } from '@acme/ui'
+import { Button, MyDateTimePicker, ScrollView, Text, XStack, YStack, TagButton } from '@acme/ui'
 
 import { getFullName, splitOutPersonName } from '../../utils/strings'
-import TagButton from '../../components/TagButton'
 import { BottomSheet } from '../../components/BottomSheet'
 import { personSheetRefAtom, groupSheetRefAtom, topicsSheetRefAtom } from '../../atoms/propertiesSheet'
 import { useAtom } from 'jotai'
@@ -66,10 +65,12 @@ export function QuestionProperties({
         <CalendarDays size='$2' />
         {/* this is prolly platform specific */}
         {reminderDatetime ? (
-          <MyDateTimePicker
-            value={reminderDatetime}
-            onChange={onChange}
-          />
+          <XStack columnGap='$2.5'>
+            <MyDateTimePicker
+              value={reminderDatetime}
+              onChange={onChange}
+            />
+          </XStack>
         ) : (
           <Text fontSize='$5'>
             Set a reminder
@@ -109,33 +110,35 @@ export function QuestionProperties({
         showsHorizontalScrollIndicator={false}
         padding='$3'
       >
-        {!personId && (
-          <TagButton
-            onPress={showPersonSheet}
-            icon={User}
-          // scaleIcon={ }
-          >
-            Person
-          </TagButton>
-        )}
-        {!groupId && (
-          <TagButton
-            onPress={showGroupSheet}
-            icon={Users}
-          // scaleIcon={ }
-          >
-            Group
-          </TagButton>
-        )}
-        {topicsData && topicsData.length === 0 && (
-          <TagButton
-            onPress={showTopicsSheet}
-            icon={Tag}
-          // scaleIcon={ }
-          >
-            Topic
-          </TagButton>
-        )}
+        <XStack columnGap='$2.5'>
+          {!personId && (
+            <TagButton
+              onPress={showPersonSheet}
+              icon={User}
+            // scaleIcon={ }
+            >
+              Person
+            </TagButton>
+          )}
+          {!groupId && (
+            <TagButton
+              onPress={showGroupSheet}
+              icon={Users}
+            // scaleIcon={ }
+            >
+              Group
+            </TagButton>
+          )}
+          {topicsData && topicsData.length === 0 && (
+            <TagButton
+              onPress={showTopicsSheet}
+              icon={Tag}
+            // scaleIcon={ }
+            >
+              Topic
+            </TagButton>
+          )}
+        </XStack>
       </ScrollView>
       <Sheets questionId={id} />
     </YStack >
@@ -154,7 +157,7 @@ const GroupProperty = ({ id }: { id: number }) => {
 
 const TopicsProperty = ({ topicsData }: { topicsData: RouterOutputs['questionTopic']['getTopicsFromQuestionId'] }) => {
   return (
-    <Property columnGap='$5'>
+    <Property>
       <Tag size={20} />
       <YStack>
         {topicsData.map((topic) => (
