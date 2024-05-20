@@ -1,12 +1,18 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
-import { Button, XStack, Text } from 'tamagui'
 import type { AndroidNativeProps } from '@react-native-community/datetimepicker'
+import { TagButton } from '../TagButton'
 type Props = Omit<AndroidNativeProps, 'value' | 'onChange'> & {
   value: Date | null
-  onChange: (date: Date) => Promise<void>
+  onChange: (date: Date) => Promise<void>,
+  // showOnMount?: boolean
 }
 
-export const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
+export const MyDateTimePicker = ({
+  value,
+  onChange,
+  // showOnMount = false,
+  ...props
+}: Props) => {
 
   const showMode = (currentMode: 'date' | 'time') => {
     DateTimePickerAndroid.open({
@@ -30,14 +36,24 @@ export const MyDateTimePicker = ({ value, onChange, ...props }: Props) => {
     showMode('time');
   };
 
+  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // useEffect(() => {
+  //   if (showOnMount) {
+  //     showDatepicker()
+  //   }
+  //   return () => {
+  //     DateTimePickerAndroid.dismiss('date')
+  //     DateTimePickerAndroid.dismiss('time')
+  //   }
+  // }, [])
   return (
-    <XStack gap='$1.5' paddingVertical='$0'>
-      <Button fontWeight='100' size='$3' fontSize='$5' borderRadius='$lg' onPress={showDatepicker} >
+    <>
+      <TagButton onPress={showDatepicker} >
         {value?.toLocaleDateString()}
-      </Button>
-      <Button size='$3' fontSize='$5' borderRadius='$lg' onPress={showTimepicker}>
+      </TagButton>
+      <TagButton onPress={showTimepicker}>
         {value?.toLocaleTimeString()?.replace(/:\d+ /, ' ')}
-      </Button>
-    </XStack>
+      </TagButton>
+    </>
   );
 };
