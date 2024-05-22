@@ -77,6 +77,7 @@ turbo
 
 ### Prerequisites
 
+- Unix based terminals (wsl works)
 - [Node.js](https://nodejs.org/en/) (v21.2.0 or higher)
 - [Pnpm](https://pnpm.io)
 - An emulator or physical device for iOS or Android (unless you are using the web)
@@ -122,7 +123,7 @@ pnpm db:push
 
 3. Run `pnpm dev` at the project root folder.
 
-> TIP: It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
+> TIP: It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm -F expo dev` and `pnpm dev:backend` to run each app in a separate terminal window.
 
 ## Troubleshoting
 
