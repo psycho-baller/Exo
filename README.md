@@ -1,5 +1,7 @@
 # Convo Topics
 
+Time spent coding this up: [![wakatime](https://wakatime.com/badge/user/33addb7e-f5e6-470b-a55b-0a8babc62ebb/project/018c177e-bd65-49da-8571-8a45352f6953.svg)](https://wakatime.com/badge/user/33addb7e-f5e6-470b-a55b-0a8babc62ebb/project/018c177e-bd65-49da-8571-8a45352f6953)
+
 ## About
 
 Our project aims to harness technology to foster deeper human connections by enhancing our ability to ask meaningful questions. Unlike social media, which often hinders true connection, we focus on nurturing relationships through thoughtful, personalized inquiries.
