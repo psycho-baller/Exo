@@ -1,5 +1,35 @@
 # Convo Topics
 
+## About
+
+Our project aims to harness technology to foster deeper human connections by enhancing our ability to ask meaningful questions. Unlike social media, which often hinders true connection, we focus on nurturing relationships through thoughtful, personalized inquiries.
+
+### Vision
+
+We believe that genuine bonds and transformative relationships stem from asking the right questions. Whether it’s finding the love of your life, building lifelong friendships, or forging professional connections, the quality of our interactions is shaped by the questions we ask.
+
+### Problem
+
+Often, we come up with brilliant questions that can spark meaningful conversations, but if not recorded, these questions are easily forgotten. The loss of these questions can mean missed opportunities for deeper connections, research insights, or even life-changing relationships.
+
+### Our Solution
+
+We are developing a cross-platform web and mobile application to easily capture and organize these questions. For example, you can connect these questions to certain people (a friend) or groups (your co-workers).
+
+### Inspiration
+
+Influential figures like Tim Ferriss exemplify the power of asking the right questions. By challenging himself and his guests with profound questions, he uncovers valuable insights and drives change. Similarly, we aim to empower individuals to ask and explore deep, thought-provoking questions that can lead to personal and societal transformation.
+
+### Mission
+
+Our mission is to inspire people to seek better questions by providing them with an app that gives them the ability to effortlessly store, connect, and retrieve questions. By doing so, we aim to cultivate a culture of curiosity and deeper understanding of ourselves and one another, ultimately contributing to a more connected and empathetic world (Unlike what social media is doing to us)
+
+You know this quote from Steve Jobs, "The people who are crazy enough to think they can change the world are the ones who do."
+
+Our version of this would be, "The people who come up with revealing deep thought-provoking questions and have the courage to ask it to themselves and the people around them are the ones who change the world
+
+
+
 ## Project structure
 
 This monrepo project structure and tech stack was inspired by [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo) and [tamagui-starter](https://github.com/tamagui/starter-free)
