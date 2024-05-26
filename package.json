@@ -19,6 +19,7 @@
     "db:studio": "pnpm -F db studio",
     "db:seed": "pnpm -F db seed",
     "db:delete": "pnpm -F db delete",
+    "db:migrate": "pnpm -F db migrate",
     "dev": "turbo dev --parallel",
     "dev:backend": "turbo dev:backend --parallel",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
