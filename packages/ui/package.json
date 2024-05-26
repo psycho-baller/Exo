@@ -42,6 +42,7 @@
     "@tamagui/toast": "^1.90.6",
     "@tanstack/react-virtual": "^3.4.0",
     "expo-blur": "~12.9.2",
+    "react-native-material-datetime-picker": "^0.2.1",
     "tamagui": "^1.90.6"
   },
   "devDependencies": {

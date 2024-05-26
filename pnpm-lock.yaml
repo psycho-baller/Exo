@@ -401,6 +401,9 @@ importers:
       burnt:
         specifier: ^0.12.2
         version: 0.12.2(expo@50.0.17)(react-dom@18.2.0)(react-native@0.73.6)(react@18.2.0)
+      chrono-node:
+        specifier: ^2.7.5
+        version: 2.7.5
       expo-constants:
         specifier: ^15.4.6
         version: 15.4.6(expo@50.0.17)
@@ -627,6 +630,9 @@ importers:
       expo-blur:
         specifier: ~12.9.2
         version: 12.9.2(expo@50.0.17)
+      react-native-material-datetime-picker:
+        specifier: ^0.2.1
+        version: 0.2.1(react-native@0.73.6)(react@18.2.0)
       tamagui:
         specifier: ^1.90.6
         version: 1.90.16(@types/react@18.2.61)(react-dom@18.2.0)(react-native-web@0.19.10)(react-native@0.73.6)(react@18.2.0)
@@ -8977,6 +8983,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /chrono-node@2.7.5:
+    resolution: {integrity: sha512-VJWqFN5rWmXVvXAxOD4i0jX8Tb4cLswaslyaAFhxM45zNXPsZleygPbgiaYBD7ORb9fj07zBgJb0Q6eKL+0iJg==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      dayjs: 1.11.10
+    dev: false
+
   /ci-info@2.0.0:
     resolution: {integrity: sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==}
 
@@ -15096,6 +15109,16 @@ packages:
       invariant: 2.2.4
       lodash: 4.17.21
       prop-types: 15.8.1
+      react: 18.2.0
+      react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+    dev: false
+
+  /react-native-material-datetime-picker@0.2.1(react-native@0.73.6)(react@18.2.0):
+    resolution: {integrity: sha512-mSb6bOMjBlHUVwjm2jyV+TJa3+6OKCvRMjYpvUrWNBQaEzdUHwKN5ayXdZ1Rw3HmzoU9qe98LAfF8nHS89GwYA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
       react: 18.2.0
       react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
