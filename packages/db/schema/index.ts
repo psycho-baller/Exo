@@ -13,7 +13,7 @@ export const users = sqliteTable('User', {
   name: text('name'),
   image: text('image'),
   email: text('email').notNull().unique(),
-  emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
+  emailVerified: integer('emailVerified', { mode: 'timestamp' }),
   firstName: text('first_name'), //.notNull(),
   lastName: text('last_name'),
   isPublic: integer('is_public', { mode: 'boolean' }).default(false),
@@ -34,7 +34,7 @@ export const posts = sqliteTable('Post', {
     onDelete: 'cascade',
   }),
   createdDatetime: integer('created_datetime', {
-    mode: 'timestamp_ms',
+    mode: 'timestamp',
   }).defaultNow(),
   question: text('question').notNull(),
 })
@@ -47,7 +47,7 @@ export const searchHistories = sqliteTable(
     createdByUserId: text('created_by_user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
-    datetime: integer('datetime', { mode: 'timestamp_ms' }).defaultNow(),
+    datetime: integer('datetime', { mode: 'timestamp' }).defaultNow(),
   },
   (table) => {
     return {
@@ -75,9 +75,9 @@ export const people = sqliteTable(
     birthday: integer('birthday', { mode: 'timestamp' }),
     email: text('email').unique(),
     phoneNumber: text('phone_number').unique(),
-    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp' }),
     createdDatetime: integer('created_datetime', {
-      mode: 'timestamp_ms',
+      mode: 'timestamp',
     }).defaultNow(),
     createdByUserId: text('created_by_user_id')
       .notNull()
@@ -96,9 +96,9 @@ export const groups = sqliteTable(
   'Grp',
   {
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp' }),
     createdDatetime: integer('created_datetime', {
-      mode: 'timestamp_ms',
+      mode: 'timestamp',
     }).defaultNow(),
     name: text('name').notNull(),
     createdByUserId: text('created_by_user_id')
@@ -135,7 +135,7 @@ export const likes = sqliteTable(
   'Likes',
   {
     createdDatetime: integer('created_datetime', {
-      mode: 'timestamp_ms',
+      mode: 'timestamp',
     }).defaultNow(),
     createdByUserId: text('created_by_user_id')
       .notNull()
@@ -156,7 +156,7 @@ export const comments = sqliteTable(
   'Comments',
   {
     createdDatetime: integer('created_datetime', {
-      mode: 'timestamp_ms',
+      mode: 'timestamp',
     }).defaultNow(),
     comment: text('comment').notNull(),
     createdByUserId: text('created_by_user_id')
@@ -218,9 +218,9 @@ export const questions = sqliteTable('Question', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
   question: text('question').notNull(),
   createdDatetime: integer('created_datetime', {
-    mode: 'timestamp_ms',
+    mode: 'timestamp',
   }).defaultNow(),
-  reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+  reminderDatetime: integer('reminder_datetime', { mode: 'timestamp' }),
   createdByUserId: text('created_by_user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
@@ -277,7 +277,7 @@ export const sessions = sqliteTable('session', {
   userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+  expires: integer('expires', { mode: 'timestamp' }).notNull(),
 })
 
 export const verificationTokens = sqliteTable(
@@ -285,7 +285,7 @@ export const verificationTokens = sqliteTable(
   {
     identifier: text('identifier').notNull(),
     token: text('token').notNull(),
-    expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+    expires: integer('expires', { mode: 'timestamp' }).notNull(),
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),

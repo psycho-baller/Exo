@@ -23,7 +23,7 @@ export function formatDate(inputDate: Date): string {
     return dateWithoutTime.getTime() === today.getTime()
   }
 
-  const getTime = (date: Date): string => {
+  const getTimeString = (date: Date): string => {
     const timeOptions: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
       minute: 'numeric',
@@ -34,7 +34,7 @@ export function formatDate(inputDate: Date): string {
   // Check if the input date is today
   if (isToday(inputDate)) {
     // If the input date is today, format the time and return it
-    return getTime(inputDate)
+    return getTimeString(inputDate)
   }
 
   // Get month abbreviation and day
