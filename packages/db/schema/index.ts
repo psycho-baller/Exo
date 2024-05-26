@@ -9,7 +9,7 @@ export const landingPageOptions = ['questions', 'people', 'discover'] as const
 export const postVisibilityOptions = ['public', 'private', 'followers'] as const
 export const roleOptions = ['admin', 'user'] as const
 export const users = sqliteTable('User', {
-  id: text('id').notNull().primaryKey(),
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
   name: text('name'),
   image: text('image'),
   email: text('email').notNull().unique(),
@@ -250,9 +250,7 @@ export const questionTopics = sqliteTable(
 export const accounts = sqliteTable(
   'account',
   {
-    userId: text('userId')
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+    userId: integer('id', { mode: 'number' }).references(() => users.id, { onDelete: 'cascade' }),
     type: text('type').$type<AdapterAccount['type']>().notNull(),
     provider: text('provider').notNull(),
     providerAccountId: text('providerAccountId').notNull(),
@@ -274,7 +272,7 @@ export const accounts = sqliteTable(
 
 export const sessions = sqliteTable('session', {
   sessionToken: text('sessionToken').notNull().primaryKey(),
-  userId: text('userId')
+  userId: integer('id', { mode: 'number' })
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
@@ -293,154 +291,154 @@ export const verificationTokens = sqliteTable(
 )
 
 // Relations (deprecated)
-export const usersRelations = relations(users, ({ many }) => ({
-  posts: many(posts, { relationName: 'Created by user' }),
-  searchHistories: many(searchHistories, {
-    relationName: 'Search history by user',
-  }),
-  topics: many(topics, { relationName: 'Topics created by user' }),
-  people: many(people, { relationName: 'People created by user' }),
-  groups: many(groups, { relationName: 'Groups created by user' }),
-  accounts: many(accounts),
-}))
+// export const usersRelations = relations(users, ({ many }) => ({
+//   posts: many(posts, { relationName: 'Created by user' }),
+//   searchHistories: many(searchHistories, {
+//     relationName: 'Search history by user',
+//   }),
+//   topics: many(topics, { relationName: 'Topics created by user' }),
+//   people: many(people, { relationName: 'People created by user' }),
+//   groups: many(groups, { relationName: 'Groups created by user' }),
+//   accounts: many(accounts),
+// }))
 
-export const postsRelations = relations(posts, ({ one }) => ({
-  user: one(users, {
-    relationName: 'Created by user',
-    fields: [posts.createdByUserId],
-    references: [users.id],
-  }),
-}))
+// export const postsRelations = relations(posts, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'Created by user',
+//     fields: [posts.createdByUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const searchHistoriesRelations = relations(searchHistories, ({ one }) => ({
-  user: one(users, {
-    relationName: 'Search history by user',
-    fields: [searchHistories.createdByUserId],
-    references: [users.id],
-  }),
-}))
+// export const searchHistoriesRelations = relations(searchHistories, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'Search history by user',
+//     fields: [searchHistories.createdByUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const topicsRelations = relations(topics, ({ one }) => ({
-  user: one(users, {
-    relationName: 'Topics created by user',
-    fields: [topics.createdByUserId],
-    references: [users.id],
-  }),
-}))
+// export const topicsRelations = relations(topics, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'Topics created by user',
+//     fields: [topics.createdByUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const peopleRelations = relations(people, ({ one }) => ({
-  user: one(users, {
-    relationName: 'People created by user',
-    fields: [people.createdByUserId],
-    references: [users.id],
-  }),
-}))
+// export const peopleRelations = relations(people, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'People created by user',
+//     fields: [people.createdByUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const groupsRelations = relations(groups, ({ one }) => ({
-  user: one(users, {
-    relationName: 'Groups created by user',
-    fields: [groups.createdByUserId],
-    references: [users.id],
-  }),
-}))
+// export const groupsRelations = relations(groups, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'Groups created by user',
+//     fields: [groups.createdByUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
-  group: one(groups, {
-    relationName: 'Groups associated with person',
-    fields: [groupsOfPeople.groupId],
-    references: [groups.id],
-  }),
-  person: one(people, {
-    relationName: 'People associated with group',
-    fields: [groupsOfPeople.personId],
-    references: [people.id],
-  }),
-}))
+// export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
+//   group: one(groups, {
+//     relationName: 'Groups associated with person',
+//     fields: [groupsOfPeople.groupId],
+//     references: [groups.id],
+//   }),
+//   person: one(people, {
+//     relationName: 'People associated with group',
+//     fields: [groupsOfPeople.personId],
+//     references: [people.id],
+//   }),
+// }))
 
-export const likesRelations = relations(likes, ({ one }) => ({
-  user: one(users, {
-    relationName: 'User who liked post',
-    fields: [likes.createdByUserId],
-    references: [users.id],
-  }),
-  post: one(posts, {
-    relationName: 'Post liked by user',
-    fields: [likes.postId],
-    references: [posts.id],
-  }),
-}))
+// export const likesRelations = relations(likes, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'User who liked post',
+//     fields: [likes.createdByUserId],
+//     references: [users.id],
+//   }),
+//   post: one(posts, {
+//     relationName: 'Post liked by user',
+//     fields: [likes.postId],
+//     references: [posts.id],
+//   }),
+// }))
 
-export const commentsRelations = relations(comments, ({ one }) => ({
-  user: one(users, {
-    relationName: 'User who commented on post',
-    fields: [comments.createdByUserId],
-    references: [users.id],
-  }),
-  post: one(posts, {
-    relationName: 'Post commented on by user',
-    fields: [comments.postId],
-    references: [posts.id],
-  }),
-}))
+// export const commentsRelations = relations(comments, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'User who commented on post',
+//     fields: [comments.createdByUserId],
+//     references: [users.id],
+//   }),
+//   post: one(posts, {
+//     relationName: 'Post commented on by user',
+//     fields: [comments.postId],
+//     references: [posts.id],
+//   }),
+// }))
 
-export const postTopicsRelations = relations(postTopics, ({ one }) => ({
-  post: one(posts, {
-    relationName: 'Post associated with topic',
-    fields: [postTopics.postId],
-    references: [posts.id],
-  }),
-  topic: one(topics, {
-    relationName: 'Topic associated with post',
-    fields: [postTopics.topicId],
-    references: [topics.id],
-  }),
-}))
+// export const postTopicsRelations = relations(postTopics, ({ one }) => ({
+//   post: one(posts, {
+//     relationName: 'Post associated with topic',
+//     fields: [postTopics.postId],
+//     references: [posts.id],
+//   }),
+//   topic: one(topics, {
+//     relationName: 'Topic associated with post',
+//     fields: [postTopics.topicId],
+//     references: [topics.id],
+//   }),
+// }))
 
-export const followsRelations = relations(follows, ({ one }) => ({
-  follower: one(users, {
-    relationName: 'User following',
-    fields: [follows.followingUserId],
-    references: [users.id],
-  }),
-  followed: one(users, {
-    relationName: 'User being followed',
-    fields: [follows.followedUserId],
-    references: [users.id],
-  }),
-}))
+// export const followsRelations = relations(follows, ({ one }) => ({
+//   follower: one(users, {
+//     relationName: 'User following',
+//     fields: [follows.followingUserId],
+//     references: [users.id],
+//   }),
+//   followed: one(users, {
+//     relationName: 'User being followed',
+//     fields: [follows.followedUserId],
+//     references: [users.id],
+//   }),
+// }))
 
-export const questionsRelations = relations(questions, ({ one }) => ({
-  user: one(users, {
-    relationName: 'User who asked question',
-    fields: [questions.createdByUserId],
-    references: [users.id],
-  }),
-  post: one(posts, {
-    relationName: 'Post associated with question',
-    fields: [questions.postId],
-    references: [posts.id],
-  }),
-  group: one(groups, {
-    relationName: 'Group associated with question',
-    fields: [questions.groupId, questions.createdByUserId],
-    references: [groups.id, groups.createdByUserId],
-  }),
-  person: one(people, {
-    relationName: 'Person associated with question',
-    fields: [questions.createdByUserId, questions.personId],
-    references: [people.createdByUserId, people.id],
-  }),
-}))
+// export const questionsRelations = relations(questions, ({ one }) => ({
+//   user: one(users, {
+//     relationName: 'User who asked question',
+//     fields: [questions.createdByUserId],
+//     references: [users.id],
+//   }),
+//   post: one(posts, {
+//     relationName: 'Post associated with question',
+//     fields: [questions.postId],
+//     references: [posts.id],
+//   }),
+//   group: one(groups, {
+//     relationName: 'Group associated with question',
+//     fields: [questions.groupId, questions.createdByUserId],
+//     references: [groups.id, groups.createdByUserId],
+//   }),
+//   person: one(people, {
+//     relationName: 'Person associated with question',
+//     fields: [questions.createdByUserId, questions.personId],
+//     references: [people.createdByUserId, people.id],
+//   }),
+// }))
 
-export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
-  topic: one(topics, {
-    relationName: 'Topic associated with question',
-    fields: [questionTopics.topicId],
-    references: [topics.id],
-  }),
-  question: one(questions, {
-    relationName: 'Question associated with topic',
-    fields: [questionTopics.questionId],
-    references: [questions.id],
-  }),
-}))
+// export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
+//   topic: one(topics, {
+//     relationName: 'Topic associated with question',
+//     fields: [questionTopics.topicId],
+//     references: [topics.id],
+//   }),
+//   question: one(questions, {
+//     relationName: 'Question associated with topic',
+//     fields: [questionTopics.questionId],
+//     references: [questions.id],
+//   }),
+// }))
