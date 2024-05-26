@@ -12,21 +12,21 @@ import { TRPCProvider } from './trpc';
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
     <TamaguiThemeProvider>
-      <SafeAreaProvider>
-        <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
-          <TRPCProvider>
-            <TamaguiProvider>
-              <GestureHandlerRootView style={{ flex: 1 }}>
+      <TamaguiProvider>
+        <SafeAreaProvider>
+          <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <TRPCProvider>
                 <BottomSheetModalProvider>
                   {children}
                 </BottomSheetModalProvider>
-              </GestureHandlerRootView>
+              </TRPCProvider>
               <CustomToast />
-              <ToastViewport />
-            </TamaguiProvider>
-          </TRPCProvider>
-        </ToastProvider>
-      </SafeAreaProvider>
+              {/* <ToastViewport /> */}
+            </GestureHandlerRootView>
+          </ToastProvider>
+        </SafeAreaProvider>
+      </TamaguiProvider>
     </TamaguiThemeProvider>
   )
 }
