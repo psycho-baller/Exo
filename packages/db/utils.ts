@@ -1,4 +1,4 @@
-import { createClient } from '@libsql/client'
+import { createClient, type Config } from '@libsql/client'
 import { drizzle } from 'drizzle-orm/libsql'
 
 import * as schema from './schema'
@@ -8,7 +8,7 @@ interface ConnectionResult {
   db: Database
   client: ReturnType<typeof createClient>
 }
-export const dbCredentials = {
+export const dbCredentials: Config = {
   url:
     !(process.env.NODE_ENV === 'development') && process.env.TURSO_CONNECTION_URL
       ? process.env.TURSO_CONNECTION_URL
