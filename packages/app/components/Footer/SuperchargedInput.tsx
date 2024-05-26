@@ -8,7 +8,7 @@ import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelecti
 import { getActiveWordIndexFromSuperchargedWords } from '../../utils/strings';
 import { useAtom } from 'jotai';
 import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
-import { parse } from 'chrono-node';
+// import { parse } from 'chrono-node';
 import { Suggestions } from './Suggestions';
 import { CheckCircle2 } from '@tamagui/lucide-icons';
 
@@ -40,7 +40,7 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   };
 
   const addTextProperties: (text: string) => SuperchargedWord[] = (text) => {
-    const date = parse(text)
+    // const date = parse(text)
     const words = text.split(/(\s+)/)
     return words.map((word, index) => {
       let reference: ReferenceType = null;
