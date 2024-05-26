@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=21.2.0"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules pnpm-lock.yaml",
@@ -13,19 +13,29 @@
     "reset": "pnpm clean:workspaces && pnpm clean && pnpm i",
     "upgrade:workspaces": "turbo upgrade",
     "postinstall": "pnpm lint:ws",
+    "db:generate": "pnpm -F db generate",
     "db:push": "pnpm -F db push",
     "db:drop": "pnpm -F db drop",
     "db:studio": "pnpm -F db studio",
+    "db:seed": "pnpm -F db seed",
+    "db:delete": "pnpm -F db delete",
     "dev": "turbo dev --parallel",
+    "dev:backend": "turbo dev:backend --parallel",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "log:android": "cd apps/expo && pnpm log:android",
+    "log:ios": "cd apps/expo && pnpm log:ios",
+    "build:android": "cd apps/expo && pnpm build:android",
+    "build:android:local": "cd apps/expo && pnpm build:android:local",
+    "build:ios": "cd apps/expo && pnpm build:ios"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",
+    "@biomejs/biome": "1.7.0",
     "@turbo/gen": "^1.12.4",
     "prettier": "^3.2.5",
     "turbo": "^1.12.4",

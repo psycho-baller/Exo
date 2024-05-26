@@ -1,5 +1,5 @@
-const createEnv = require('@t3-oss/env-nextjs').createEnv;
-const z = require('zod').z;
+const createEnv = require('@t3-oss/env-nextjs').createEnv
+const z = require('zod').z
 
 const env = createEnv({
   server: {
@@ -23,6 +23,6 @@ const env = createEnv({
     AUTH_URL: process.env.AUTH_URL,
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
-});
+})
 
-module.exports = env;
+module.exports = env

@@ -1,28 +1,31 @@
-import type { FC } from 'react';
-import { FlashList } from '@shopify/flash-list';
+import { api } from '@acme/api/utils/trpc'
+import { Text, VirtualList } from '@acme/ui'
 
-import { api } from '@acme/api/utils/trpc';
+import { MainPage } from '../../components/Footer/MainPage'
+import { CARD_HEIGHT } from '../../utils/constants'
+import { PersonCard } from './PersonCard'
 
-import { PageWithNavFooter } from '../../shared/components/Footer/PageWithNavFooter';
-import PersonCard from './PersonCard';
+const Component = () => {
+  const { isLoading, error, data } = api.person.all.useQuery()
 
-const Component: FC = () => {
-  const personQuery = api.person.all.useQuery();
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+  if (error) {
+    return <Text>Error: {error.message}</Text>
+  }
 
   return (
-    <PageWithNavFooter>
-      <FlashList
-        data={personQuery.data}
-        estimatedItemSize={20}
-        keyExtractor={(item) => item.id.toString()}
-        // ItemSeparatorComponent={() => <Separator />}
-        renderItem={(p) => (
-          <PersonCard person={p.item} />
-          // <Text>{p.item.text}</Text>
-        )}
+    <MainPage>
+      <VirtualList
+        data={data}
+        itemHeight={CARD_HEIGHT}
+        renderItem={(p) => <PersonCard person={p} />}
+        listEmptyComponent={<Text>No data</Text>}
+        isPage
       />
-    </PageWithNavFooter>
-  );
-};
+    </MainPage>
+  )
+}
 
-export default Component;
+export default Component

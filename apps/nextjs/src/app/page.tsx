@@ -1,14 +1,15 @@
-'use client';
+// import ErrorPage from "@/components/ErrorPage";
+import { redirect } from 'next/navigation'
 
-import { Suspense } from 'react';
+import { auth } from '@acme/auth'
 
-import Index from '@acme/app/features/home/screen';
-
-import { AuthShowcase } from './_components/auth-showcase';
-import { CreateQuestionForm, PostCardSkeleton, PostList } from './_components/posts';
-
-// export const runtime = "edge";
-
-export default function HomePage() {
-  return <Index />;
+export default async function Home() {
+  const session = await auth()
+  // const isAuthSkip = process.env.AUTH_SKIP === 'true'
+  if (session?.user ?? process.env.NODE_ENV === 'development') {
+    redirect('/questions')
+  } else {
+    redirect('/settings')
+    // return <ErrorPage error='User not found' />;
+  }
 }

@@ -1,27 +1,27 @@
-import type { FC } from 'react';
-import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons';
-import { Link } from 'solito/link';
+import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons'
+import { useMemo, type FC } from 'react'
+import { Link } from 'solito/link'
 
-import type { RouterOutputs } from '@acme/api';
-import { api } from '@acme/api/utils/trpc';
-import { Text, XStack, YStack } from '@acme/ui';
+import type { RouterOutputs } from '@acme/api'
+import { api } from '@acme/api/utils/trpc'
+import { Text, XStack, YStack } from '@acme/ui'
 
-import { formatDate } from '../../lib/utils/date';
+import { formatDate } from '../../utils/date'
 
 interface Props {
-  person: RouterOutputs['person']['all'][number];
+  person: RouterOutputs['person']['all'][number]
 }
+// TODO: Delete using swipable
+export const PersonCard: FC<Props> = (props) => {
+  const { person } = props
 
-export const Component: FC<Props> = (props) => {
-  const { person } = props;
-
-  const utils = api.useUtils();
+  const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: () => utils.question.all.invalidate(),
-  });
+  })
 
   return (
-    <Link href={`/people/${person.id.toString()}`}>
+    <Link href={`/people/${String(person.id)}`}>
       <XStack
         paddingHorizontal='$4'
         paddingVertical='$4'
@@ -37,14 +37,14 @@ export const Component: FC<Props> = (props) => {
         {/* topics */}
       </XStack>
     </Link>
-  );
-};
+  )
+}
 
 function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][number] }) {
-  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id);
-  if (!questions) return null;
-  const questionCount = questions.length;
-  const mostRecentQuestion = questions[0];
+  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id)
+  if (!questions) return null
+  const questionCount = questions.length
+  const mostRecentQuestionWithAReminder = questions.find((q) => q.reminderDatetime)
 
   return (
     <XStack gap={18}>
@@ -52,18 +52,14 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
         <MessageCircleQuestion size={15} color='$secondaryColor' strokeWidth={2.5} />
         <Text color='$secondaryColor'>{questionCount}</Text>
       </XStack>
-      {mostRecentQuestion && (
+      {mostRecentQuestionWithAReminder?.reminderDatetime && (
         <XStack gap={6} alignItems='center'>
           <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
           <Text color='$secondaryColor'>
-            {mostRecentQuestion.createdDatetime
-              ? formatDate(mostRecentQuestion.createdDatetime)
-              : ''}
+            {formatDate(mostRecentQuestionWithAReminder.reminderDatetime)}
           </Text>
         </XStack>
       )}
     </XStack>
-  );
+  )
 }
-
-export default Component;

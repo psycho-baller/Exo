@@ -1,32 +1,55 @@
-import React from 'react';
-import { Stack } from 'expo-router';
+import { useFonts } from 'expo-font'
+import { SplashScreen, Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import React, { useEffect } from 'react'
 
-// import { StatusBar } from "expo-status-bar";
-import { Provider } from '@acme/app/provider';
+import { Provider } from '@acme/app/provider'
 
-import { TRPCProvider } from '~/utils/api';
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from 'expo-router'
 
-// This is the main layout of the app
-// It wraps your pages with the providers they need
 const RootLayout = () => {
+  const [loaded, error] = useFonts({
+    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  })
+
+  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  useEffect(() => {
+    if (error) throw error
+  }, [error])
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync()
+    }
+  }, [loaded])
+
+  if (!loaded) {
+    return null
+  }
+
   return (
-    <TRPCProvider>
       <Provider>
         {/*
           The Stack component displays the current page.
-          It also allows you to configure your screens 
+          It also allows you to configure your screens
         */}
         <Stack
-        // screenOptions={{
-        //   headerStyle: {
-
-        //   },
-        // }}
-        />
-        {/* <StatusBar /> */}
+          screenOptions={{
+            // headerTransparent: true,
+            headerShown: false,
+            navigationBarColor: 'transparent',
+          }}
+        >
+          <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
+          <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
+        </Stack>
+        <StatusBar />
       </Provider>
-    </TRPCProvider>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

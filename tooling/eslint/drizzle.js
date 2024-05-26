@@ -1,17 +1,13 @@
 /** @type {import('eslint').Linter.Config} */
 const config = {
   root: true,
-  extends: [
-    "plugin:drizzle/all",
-  ],
+  extends: ['plugin:drizzle/all'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
   },
-  plugins: [
-    'drizzle',
-  ],
+  plugins: ['drizzle'],
   rules: {},
-};
+}
 
-module.exports = config;
+module.exports = config

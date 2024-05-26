@@ -1,367 +1,348 @@
-import { relations } from 'drizzle-orm';
-import {
-  boolean,
-  date,
-  datetime,
-  int,
-  mysqlEnum,
-  primaryKey,
-  serial,
-  text,
-  timestamp,
-  unique,
-  varchar,
-} from 'drizzle-orm/mysql-core';
-import { z } from 'zod';
+import type { AdapterAccount } from '@auth/core/adapters'
+import { relations } from 'drizzle-orm'
+import { index, integer, primaryKey, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
 
-import { mySqlTable } from './_table';
+// import { sqliteTable } from './_table';
 
 // User
-const landingPageOptions = ['questions', 'people', 'discover'] as const;
-export type LandingPageOptions = (typeof landingPageOptions)[number];
-export const defaultLandingPage = mysqlEnum('default_landing_page', landingPageOptions);
-const postVisibilityOptions = ['public', 'private', 'followers'] as const;
-export type PostVisibilityOptions = (typeof postVisibilityOptions)[number];
-export const defaultPostVisibility = mysqlEnum('default_post_visibility', postVisibilityOptions);
-const roleOptions = ['admin', 'user'] as const;
-export type RoleOptions = (typeof roleOptions)[number];
-export const role = mysqlEnum('role', roleOptions);
-export const users = mySqlTable('User', {
-  username: varchar('username', { length: 31 }).notNull().primaryKey(),
-  firstName: varchar('first_name', { length: 31 }).notNull(),
-  lastName: varchar('last_name', { length: 31 }),
-  isPublic: boolean('is_public').default(false),
-  defaultLandingPage: defaultLandingPage,
-  defaultPostVisibility: defaultPostVisibility,
-  role: role.notNull().default('user'),
-  email: varchar('email', { length: 31 }).notNull().unique(),
-  phone: varchar('phone', { length: 15 }),
-});
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
-export const userZod = z.object({
-  username: z.string().min(1).max(31),
-  firstName: z.string().min(1).max(31),
-  lastName: z.string().min(1).max(31),
-  isPublic: z.boolean().optional(),
-  defaultLandingPage: z.enum(landingPageOptions).optional(),
-  defaultPostVisibility: z.enum(postVisibilityOptions).optional(),
-  role: z.enum(roleOptions).optional(),
-  email: z.string().email(),
-  phone: z.string().min(10).max(15).optional(),
-});
+export const landingPageOptions = ['questions', 'people', 'discover'] as const
+export const postVisibilityOptions = ['public', 'private', 'followers'] as const
+export const roleOptions = ['admin', 'user'] as const
+export const users = sqliteTable('User', {
+  id: text('id').notNull().primaryKey(),
+  name: text('name'),
+  image: text('image'),
+  email: text('email').notNull().unique(),
+  emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
+  firstName: text('first_name'), //.notNull(),
+  lastName: text('last_name'),
+  isPublic: integer('is_public', { mode: 'boolean' }).default(false),
+  defaultLandingPage: text('default_landing_page', {
+    enum: landingPageOptions,
+  }).default('questions'),
+  defaultPostVisibility: text('default_post_visibility', {
+    enum: postVisibilityOptions,
+  }).default('public'),
+  role: text('role', { enum: roleOptions }).default('user'),
+  phone: text('phone'),
+})
 
 // Post
-export const posts = mySqlTable('Post', {
-  id: serial('id').primaryKey(),
-  createdDatetime: timestamp('created_datetime').defaultNow(),
+export const posts = sqliteTable('Post', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdByUserId: text('created_by_user_id').references(() => users.id, {
+    onDelete: 'cascade',
+  }),
+  createdDatetime: integer('created_datetime', {
+    mode: 'timestamp_ms',
+  }).defaultNow(),
   question: text('question').notNull(),
-  createdByUsername: varchar('created_by_username', { length: 31 }),
-});
-export type Post = typeof posts.$inferSelect;
-export type NewPost = typeof posts.$inferInsert;
-export const postZod = z.object({
-  id: z.number().optional(),
-  createdDatetime: z.string().optional(),
-  question: z.string().min(1),
-  createdByUsername: z.string().min(1).max(31),
-});
+})
 
 // SearchHistory
-export const searchHistories = mySqlTable(
+export const searchHistories = sqliteTable(
   'Search_history',
   {
-    query: varchar('query', { length: 255 }).notNull(),
-    fromUsername: varchar('from_username', { length: 31 }).notNull(),
-    datetime: timestamp('datetime').defaultNow(),
+    query: text('query').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    datetime: integer('datetime', { mode: 'timestamp_ms' }).defaultNow(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.query, table.fromUsername] }),
-    };
+      pk: primaryKey({ columns: [table.query, table.createdByUserId] }),
+    }
   },
-);
-export type SearchHistory = typeof searchHistories.$inferSelect;
-export type NewSearchHistory = typeof searchHistories.$inferInsert;
+)
 
 // Topic
-export const topics = mySqlTable('Topic', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-});
-export type Topic = typeof topics.$inferSelect;
-export type NewTopic = typeof topics.$inferInsert;
-export const topicZod = z.object({
-  id: z.number().optional(),
-  name: z.string().min(1).max(255),
-  createdByUsername: z.string().min(1).max(31),
-});
+export const topics = sqliteTable('Topic', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  createdByUserId: text('created_by_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+})
 
 // Person
-export const people = mySqlTable(
+export const people = sqliteTable(
   'Person',
   {
-    id: serial('id').primaryKey(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    firstName: varchar('first_name', { length: 31 }).notNull(),
-    lastName: varchar('last_name', { length: 31 }),
-    birthday: date('birthday'),
-    email: varchar('email', { length: 31 }).unique(),
-    phoneNumber: varchar('phone_number', { length: 15 }).unique(),
-    reminderDatetime: datetime('reminder_datetime'),
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    associatedUsername: varchar('associated_username', { length: 31 }),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    firstName: text('first_name').notNull(),
+    lastName: text('last_name'),
+    birthday: integer('birthday', { mode: 'timestamp' }),
+    email: text('email').unique(),
+    phoneNumber: text('phone_number').unique(),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    associatedUserId: text('associated_user_id').references(() => users.id),
   },
   (table) => {
     return {
       unique: unique().on(table.firstName, table.lastName, table.birthday),
-    };
+    }
   },
-);
-export type Person = typeof people.$inferSelect;
-export type NewPerson = typeof people.$inferInsert;
-export const personZod = z.object({
-  id: z.number().optional(),
-  createdByUsername: z.string().min(1).max(31),
-  firstName: z.string().min(1).max(31),
-  lastName: z.string().min(1).max(31).optional(),
-  birthday: z.date().optional(),
-  email: z.string().email().optional(),
-  phoneNumber: z.string().min(10).max(15).optional(),
-  reminderDatetime: z.date().optional(),
-  createdDatetime: z.date().optional(),
-  associatedUsername: z
-    .string()
-    .min(1)
-    .max(31)
-    .optional()
-    .describe(
-      'If this person is a real user, and we are following them, this will be populated with their username.',
-    ),
-});
+)
+
 // Group
-export const groups = mySqlTable(
+export const groups = sqliteTable(
   'Grp',
   {
-    id: serial('id').primaryKey(),
-    reminderDatetime: datetime('reminder_datetime'),
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    name: varchar('name', { length: 63 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
+    name: text('name').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      unique: unique().on(table.name, table.createdByUsername),
-    };
+      unique: unique().on(table.name, table.createdByUserId),
+    }
   },
-);
-export type Group = typeof groups.$inferSelect;
-export type NewGroup = typeof groups.$inferInsert;
-export const groupZod = z.object({
-  id: z.number().optional(),
-  reminderDatetime: z.date().optional(),
-  createdDatetime: z.date().optional(),
-  name: z.string().min(1).max(63),
-  createdByUsername: z.string().min(1).max(31),
-});
+)
 
 // groupsOfPeople
-export const groupsOfPeople = mySqlTable(
+export const groupsOfPeople = sqliteTable(
   'Groups_of_people',
   {
-    groupId: int('group_id').notNull(),
-    personId: int('person_id').notNull(),
+    groupId: integer('group_id')
+      .notNull()
+      .references(() => groups.id, { onDelete: 'cascade' }),
+    personId: integer('person_id')
+      .notNull()
+      .references(() => people.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
       pk: primaryKey({ columns: [table.groupId, table.personId] }),
-    };
+    }
   },
-);
-export type GroupsOfPeople = typeof groupsOfPeople.$inferSelect;
-export type NewGroupsOfPeople = typeof groupsOfPeople.$inferInsert;
-export const groupsOfPeopleZod = z.object({
-  groupId: z.number(),
-  personId: z.number(),
-});
+)
 
 // Likes
-export const likes = mySqlTable(
+export const likes = sqliteTable(
   'Likes',
   {
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-    postId: int('post_id').notNull(),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    postId: integer('post_id')
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.createdByUsername, table.postId] }),
-    };
+      pk: primaryKey({ columns: [table.createdByUserId, table.postId] }),
+    }
   },
-);
-export type Like = typeof likes.$inferSelect;
-export type NewLike = typeof likes.$inferInsert;
-export const likeZod = z.object({
-  createdDatetime: z.date().optional(),
-  createdByUsername: z.string().min(1).max(31),
-  postId: z.number(),
-});
+)
 
 // Comments
-export const comments = mySqlTable(
+export const comments = sqliteTable(
   'Comments',
   {
-    createdDatetime: timestamp('created_datetime').defaultNow(),
-    comment: varchar('comment', { length: 255 }).notNull(),
-    createdByUsername: varchar('created_by_username', { length: 31 }),
-    postId: int('post_id'),
+    createdDatetime: integer('created_datetime', {
+      mode: 'timestamp_ms',
+    }).defaultNow(),
+    comment: text('comment').notNull(),
+    createdByUserId: text('created_by_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    postId: integer('post_id').references(() => posts.id, {
+      onDelete: 'cascade',
+    }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.createdByUsername, table.postId, table.createdDatetime] }),
-    };
+      pk: primaryKey({
+        columns: [table.createdByUserId, table.postId, table.createdDatetime],
+      }),
+    }
   },
-);
-export type Comment = typeof comments.$inferSelect;
-export type NewComment = typeof comments.$inferInsert;
-export const commentZod = z.object({
-  createdDatetime: z.date().optional(),
-  comment: z.string().min(1).max(255),
-  createdByUsername: z.string().min(1).max(31).optional(),
-  postId: z.number().optional(),
-});
+)
 
 // PostTopics
-export const postTopics = mySqlTable(
+export const postTopics = sqliteTable(
   'Post_topics',
   {
-    postId: int('post_id').notNull(),
-    topicId: int('topic_id').notNull(),
+    postId: integer('post_id')
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade' }),
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
       pk: primaryKey({ columns: [table.postId, table.topicId] }),
-    };
+    }
   },
-);
-export type PostTopics = typeof postTopics.$inferSelect;
-export type NewPostTopics = typeof postTopics.$inferInsert;
-export const postTopicZod = z.object({
-  postId: z.number(),
-  topicId: z.number(),
-});
+)
 
 // Follows
-export const follows = mySqlTable(
+export const follows = sqliteTable(
   'Follows',
   {
-    followingUsername: varchar('following_username', { length: 31 }).notNull(),
-    followedUsername: varchar('followed_username', { length: 31 }).notNull(),
+    followingUserId: text('following_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    followedUserId: text('followed_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.followingUsername, table.followedUsername] }),
-    };
+      pk: primaryKey({
+        columns: [table.followingUserId, table.followedUserId],
+      }),
+    }
   },
-);
-export type Follow = typeof follows.$inferSelect;
-export type NewFollow = typeof follows.$inferInsert;
-export const followZod = z.object({
-  followingUsername: z.string().min(1).max(31),
-  followedUsername: z.string().min(1).max(31),
-});
+)
 
 // Question
-export const questions = mySqlTable('Question', {
-  id: serial('id').primaryKey(),
-  createdByUsername: varchar('created_by_username', { length: 31 }).notNull(),
-  question: varchar('question', { length: 255 }).notNull(),
-  createdDatetime: timestamp('created_datetime').defaultNow(),
-  reminderDatetime: datetime('reminder_datetime'),
-  postId: int('post_id'),
-  groupId: int('group_id'),
-  personId: int('person_id'),
-});
-export type Question = typeof questions.$inferSelect;
-export type NewQuestion = typeof questions.$inferInsert;
-export const questionZod = z.object({
-  createdByUsername: z.string().min(1).max(31),
-  question: z.string().min(1).max(255),
-  createdDatetime: z.date().optional(),
-  reminderDatetime: z.date().optional(),
-  postId: z.number().optional().describe('The post the question is associated with'),
-  groupId: z.number().optional().describe('The group the user wants to ask the question to'),
-  personId: z.number().optional().describe('The person the user wants to ask the question to'),
-});
+export const questions = sqliteTable('Question', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  question: text('question').notNull(),
+  createdDatetime: integer('created_datetime', {
+    mode: 'timestamp_ms',
+  }).defaultNow(),
+  reminderDatetime: integer('reminder_datetime', { mode: 'timestamp_ms' }),
+  createdByUserId: text('created_by_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  groupId: integer('group_id').references(() => groups.id),
+  personId: integer('person_id').references(() => people.id),
+  postId: integer('post_id').references(() => posts.id),
+})
 
 // QuestionTopics
-export const questionTopics = mySqlTable(
+export const questionTopics = sqliteTable(
   'Question_topics',
   {
-    topicId: int('topic_id').notNull(),
-    questionId: int('question_id').notNull(),
+    questionId: integer('question_id')
+      .notNull()
+      .references(() => questions.id, { onDelete: 'cascade' }),
+    topicId: integer('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
   },
   (table) => {
     return {
       pk: primaryKey({ columns: [table.topicId, table.questionId] }),
-    };
+    }
   },
-);
-export type QuestionTopics = typeof questionTopics.$inferSelect;
-export type NewQuestionTopics = typeof questionTopics.$inferInsert;
-export const questionTopicZod = z.object({
-  topicId: z.number(),
-  questionId: z.number(),
-});
-// Relations
+)
+
+export const accounts = sqliteTable(
+  'account',
+  {
+    userId: text('userId')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    type: text('type').$type<AdapterAccount['type']>().notNull(),
+    provider: text('provider').notNull(),
+    providerAccountId: text('providerAccountId').notNull(),
+    refresh_token: text('refresh_token'),
+    access_token: text('access_token'),
+    expires_at: integer('expires_at'),
+    token_type: text('token_type'),
+    scope: text('scope'),
+    id_token: text('id_token'),
+    session_state: text('session_state'),
+  },
+  (account) => ({
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
+    userIdIdx: index('userId_idx').on(account.userId),
+  }),
+)
+
+export const sessions = sqliteTable('session', {
+  sessionToken: text('sessionToken').notNull().primaryKey(),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+})
+
+export const verificationTokens = sqliteTable(
+  'verificationToken',
+  {
+    identifier: text('identifier').notNull(),
+    token: text('token').notNull(),
+    expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+  }),
+)
+
+// Relations (deprecated)
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),
-  searchHistories: many(searchHistories, { relationName: 'Search history by user' }),
+  searchHistories: many(searchHistories, {
+    relationName: 'Search history by user',
+  }),
   topics: many(topics, { relationName: 'Topics created by user' }),
   people: many(people, { relationName: 'People created by user' }),
   groups: many(groups, { relationName: 'Groups created by user' }),
-}));
+  accounts: many(accounts),
+}))
 
 export const postsRelations = relations(posts, ({ one }) => ({
   user: one(users, {
     relationName: 'Created by user',
-    fields: [posts.createdByUsername],
-    references: [users.username],
+    fields: [posts.createdByUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const searchHistoriesRelations = relations(searchHistories, ({ one }) => ({
   user: one(users, {
     relationName: 'Search history by user',
-    fields: [searchHistories.fromUsername],
-    references: [users.username],
+    fields: [searchHistories.createdByUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const topicsRelations = relations(topics, ({ one }) => ({
   user: one(users, {
     relationName: 'Topics created by user',
-    fields: [topics.createdByUsername],
-    references: [users.username],
+    fields: [topics.createdByUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const peopleRelations = relations(people, ({ one }) => ({
   user: one(users, {
     relationName: 'People created by user',
-    fields: [people.createdByUsername],
-    references: [users.username],
+    fields: [people.createdByUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const groupsRelations = relations(groups, ({ one }) => ({
   user: one(users, {
     relationName: 'Groups created by user',
-    fields: [groups.createdByUsername],
-    references: [users.username],
+    fields: [groups.createdByUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
   group: one(groups, {
@@ -374,33 +355,33 @@ export const groupsOfPeopleRelations = relations(groupsOfPeople, ({ one }) => ({
     fields: [groupsOfPeople.personId],
     references: [people.id],
   }),
-}));
+}))
 
 export const likesRelations = relations(likes, ({ one }) => ({
   user: one(users, {
     relationName: 'User who liked post',
-    fields: [likes.createdByUsername],
-    references: [users.username],
+    fields: [likes.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post liked by user',
     fields: [likes.postId],
     references: [posts.id],
   }),
-}));
+}))
 
 export const commentsRelations = relations(comments, ({ one }) => ({
   user: one(users, {
     relationName: 'User who commented on post',
-    fields: [comments.createdByUsername],
-    references: [users.username],
+    fields: [comments.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post commented on by user',
     fields: [comments.postId],
     references: [posts.id],
   }),
-}));
+}))
 
 export const postTopicsRelations = relations(postTopics, ({ one }) => ({
   post: one(posts, {
@@ -413,26 +394,26 @@ export const postTopicsRelations = relations(postTopics, ({ one }) => ({
     fields: [postTopics.topicId],
     references: [topics.id],
   }),
-}));
+}))
 
 export const followsRelations = relations(follows, ({ one }) => ({
   follower: one(users, {
     relationName: 'User following',
-    fields: [follows.followingUsername],
-    references: [users.username],
+    fields: [follows.followingUserId],
+    references: [users.id],
   }),
   followed: one(users, {
     relationName: 'User being followed',
-    fields: [follows.followedUsername],
-    references: [users.username],
+    fields: [follows.followedUserId],
+    references: [users.id],
   }),
-}));
+}))
 
 export const questionsRelations = relations(questions, ({ one }) => ({
   user: one(users, {
     relationName: 'User who asked question',
-    fields: [questions.createdByUsername],
-    references: [users.username],
+    fields: [questions.createdByUserId],
+    references: [users.id],
   }),
   post: one(posts, {
     relationName: 'Post associated with question',
@@ -441,15 +422,15 @@ export const questionsRelations = relations(questions, ({ one }) => ({
   }),
   group: one(groups, {
     relationName: 'Group associated with question',
-    fields: [questions.groupId, questions.createdByUsername],
-    references: [groups.id, groups.createdByUsername],
+    fields: [questions.groupId, questions.createdByUserId],
+    references: [groups.id, groups.createdByUserId],
   }),
   person: one(people, {
     relationName: 'Person associated with question',
-    fields: [questions.createdByUsername, questions.personId],
-    references: [people.createdByUsername, people.id],
+    fields: [questions.createdByUserId, questions.personId],
+    references: [people.createdByUserId, people.id],
   }),
-}));
+}))
 
 export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
   topic: one(topics, {
@@ -462,4 +443,4 @@ export const questionTopicsRelations = relations(questionTopics, ({ one }) => ({
     fields: [questionTopics.questionId],
     references: [questions.id],
   }),
-}));
+}))

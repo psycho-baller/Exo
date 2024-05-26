@@ -1,4 +1,4 @@
-import type { ConfigContext, ExpoConfig } from 'expo/config';
+import type { ConfigContext, ExpoConfig } from 'expo/config'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'com.convo_topics',
+    bundleIdentifier: 'com.convo-topics',
     supportsTablet: true,
   },
   android: {
@@ -42,4 +42,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   plugins: ['expo-router'],
-});
+})

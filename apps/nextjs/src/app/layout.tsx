@@ -1,22 +1,20 @@
-import { cache } from 'react';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { headers } from 'next/headers';
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 
-import { TamaguiProvider } from './TamaguiProvider';
-import { TRPCReactProvider } from './TRPCProviders';
+import { Providers } from './Providers'
+import { TRPCReactProvider } from './TRPCProviders'
 
 const fontSans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
-});
+})
 
 /**
  * Since we're passing `headers()` to the `TRPCReactProvider` we need to
  * make the entire app dynamic. You can move the `TRPCReactProvider` further
  * down the tree (e.g. /dashboard and onwards) to make part of the app statically rendered.
  */
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Create T3 Turbo',
@@ -32,27 +30,22 @@ export const metadata: Metadata = {
     site: '@jullerino',
     creator: '@jullerino',
   },
-};
-
-// Lazy load headers
-const getHeaders = cache(async () => headers());
+}
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            // avoid flash of entered elements before enter animations run:
-            __html: `document.documentElement.classList.add('t_unmounted')`,
-          }}
-        />
-      </head>
       <body className={['font-sans', fontSans.variable].join(' ')}>
-        <TRPCReactProvider headersPromise={getHeaders()}>
-          <TamaguiProvider>{props.children}</TamaguiProvider>
-        </TRPCReactProvider>
+        <Providers>
+          <TRPCReactProvider>
+            {process.env.VERCEL_ENV !== 'production' ? (
+              <>{props.children}</>
+            ) : (
+              <h1>stay tuned 👀</h1>
+            )}
+          </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
-  );
+  )
 }

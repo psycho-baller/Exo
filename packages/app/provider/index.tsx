@@ -1,47 +1,32 @@
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import type { TamaguiProviderProps } from '@acme/ui'
+import { CustomToast, ToastProvider } from '@acme/ui'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import type { TamaguiProviderProps } from '@acme/ui';
-import { CustomToast, TamaguiProvider, ToastProvider } from '@acme/ui';
-
-import { loadFonts } from '../lib/utils/loadFonts';
-import config from '../tamagui.config';
-import { ToastViewport } from './ToastViewport';
+import { SafeAreaProvider } from './safe-area'
+import { TamaguiProvider } from './tamagui'
+import { TamaguiThemeProvider } from './theme'
+import { ToastViewport } from './toast-viewport'
+import { BottomSheetModalProvider } from './bottom-sheet-modal'
+import { TRPCProvider } from './trpc';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
-  const scheme = useColorScheme();
-  const loaded = loadFonts();
-  useEffect(() => {
-    if (loaded) {
-      // can hide splash screen here
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
   return (
-    <TamaguiProvider
-      config={config}
-      disableInjectCSS
-      defaultTheme={scheme === 'dark' ? 'dark' : 'light'}
-      {...rest}
-    >
-      <ToastProvider
-        swipeDirection='horizontal'
-        duration={6000}
-        native={
-          [
-            /* uncomment the next line to do native toasts on mobile. NOTE: it'll require you making a dev build and won't work with Expo Go */
-            // 'mobile'
-          ]
-        }
-      >
-        {children}
-        <CustomToast />
-        <ToastViewport />
-      </ToastProvider>
-    </TamaguiProvider>
-  );
+    <TamaguiThemeProvider>
+      <TamaguiProvider>
+        <SafeAreaProvider>
+          <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <TRPCProvider>
+                <BottomSheetModalProvider>
+                  {children}
+                </BottomSheetModalProvider>
+              </TRPCProvider>
+              <CustomToast />
+              {/* <ToastViewport /> */}
+            </GestureHandlerRootView>
+          </ToastProvider>
+        </SafeAreaProvider>
+      </TamaguiProvider>
+    </TamaguiThemeProvider>
+  )
 }

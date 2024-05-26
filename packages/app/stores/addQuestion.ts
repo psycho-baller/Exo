@@ -1,19 +1,19 @@
-import { devtools } from 'zustand/middleware';
-import { shallow } from 'zustand/shallow';
-import { createWithEqualityFn } from 'zustand/traditional';
+import { devtools } from 'zustand/middleware'
+import { shallow } from 'zustand/shallow'
+import { createWithEqualityFn } from 'zustand/traditional'
 
-import { PersonStore } from '../types/people';
+import type { PersonStore } from '../types/people'
 
 export interface PersonState {
-  personSearch: string;
-  selectedPerson: PersonStore | null;
-  dropdownOpen: boolean;
+  personSearch: string
+  selectedPerson: PersonStore | null
+  dropdownOpen: boolean
 }
 
 export interface PersonActions {
-  setPersonSearch: (search: string) => void;
-  setSelectedPerson: (person: PersonStore | null) => void;
-  setDropdownOpen: (open: boolean) => void;
+  setPersonSearch: (search: string) => void
+  setSelectedPerson: (person: PersonStore | null) => void
+  setDropdownOpen: (open: boolean) => void
 }
 
 export const useAddPersonStore = createWithEqualityFn<PersonState & PersonActions>()(
@@ -32,4 +32,4 @@ export const useAddPersonStore = createWithEqualityFn<PersonState & PersonAction
     },
   ),
   shallow,
-);
+)

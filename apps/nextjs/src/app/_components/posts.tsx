@@ -1,37 +1,41 @@
-'use client';
+/* eslint-disable */
+'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { api } from '~/utils/api';
-import type { RouterOutputs } from '~/utils/api';
+import { auth } from '@acme/auth'
 
-export function CreateQuestionForm() {
-  const context = api.useContext();
+import { api } from '~/utils/api'
+import type { RouterOutputs } from '~/utils/api'
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+export async function CreateQuestionForm() {
+  const context = api.useContext()
+  const session = await auth()
+
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
   const { mutateAsync: createQuestion, error } = api.question.create.useMutation({
     async onSuccess() {
-      setTitle('');
-      setContent('');
-      await context.user.all.invalidate();
+      setTitle('')
+      setContent('')
+      await context.user.all.invalidate()
     },
-  });
+  })
 
   return (
     <form
       className='flex w-full max-w-2xl flex-col'
       onSubmit={async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
           await createQuestion({
             text: title,
-            createdByUserId: 1,
-          });
-          setTitle('');
-          setContent('');
-          await context.question.all.invalidate();
+            createdByUserId: session?.user.id,
+          })
+          setTitle('')
+          setContent('')
+          await context.question.all.invalidate()
         } catch {
           // noop
         }
@@ -63,11 +67,11 @@ export function CreateQuestionForm() {
         <span className='mt-2 text-red-500'>You must be logged in to post</span>
       )}
     </form>
-  );
+  )
 }
 
 export function PostList() {
-  const [questions] = api.question.all.useSuspenseQuery();
+  const [questions] = api.question.all.useSuspenseQuery()
 
   if (questions.length === 0) {
     return (
@@ -80,21 +84,23 @@ export function PostList() {
           <p className='text-2xl font-bold text-white'>No questions yet</p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <div className='flex w-full flex-col gap-4'>
       {questions.map((q) => {
-        return <PostCard key={q.id} question={q} />;
+        return <PostCard key={q.id} question={q} />
       })}
     </div>
-  );
+  )
 }
 
-export function PostCard(props: { question: RouterOutputs['question']['all'][number] }) {
-  const context = api.useContext();
-  const deleteQuestion = api.question.delete.useMutation();
+export function PostCard(props: {
+  question: RouterOutputs['question']['all'][number]
+}) {
+  const context = api.useContext()
+  const deleteQuestion = api.question.delete.useMutation()
 
   return (
     <div className='flex flex-row rounded-lg bg-white/10 p-4 transition-all hover:scale-[101%]'>
@@ -106,19 +112,19 @@ export function PostCard(props: { question: RouterOutputs['question']['all'][num
         <button
           className='cursor-pointer text-sm font-bold uppercase text-pink-400'
           onClick={async () => {
-            await deleteQuestion.mutateAsync(props.question.id);
-            await context.question.all.invalidate();
+            await deleteQuestion.mutateAsync(props.question.id)
+            await context.question.all.invalidate()
           }}
         >
           Delete
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 export function PostCardSkeleton(props: { pulse?: boolean }) {
-  const { pulse = true } = props;
+  const { pulse = true } = props
   return (
     <div className='flex flex-row rounded-lg bg-white/10 p-4 transition-all hover:scale-[101%]'>
       <div className='flex-grow'>
@@ -130,5 +136,5 @@ export function PostCardSkeleton(props: { pulse?: boolean }) {
         </p>
       </div>
     </div>
-  );
+  )
 }

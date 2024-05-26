@@ -1,9 +1,9 @@
-import { config } from '@acme/ui';
+import { config } from '@acme/ui'
 
-export type Conf = typeof config;
+export type Conf = typeof config
 
 declare module 'tamagui' {
-  type TamaguiCustomConfig = Conf;
+  type TamaguiCustomConfig = Conf
 }
 
-export default config;
+export default config

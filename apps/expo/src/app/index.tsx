@@ -1,42 +1,11 @@
-import { Stack } from 'expo-router';
+import { Redirect } from 'expo-router'
+import type { ComponentPropsWithoutRef, FC } from 'react'
 
-import HomeScreen from '@acme/app/features/home/screen';
-import { Button, Text, useTheme } from '@acme/ui';
+// If I wanna have an AuthProvider instead: https://github.com/fredrikburmester/expo-router-3-tab-example-with-auth/blob/main/context/AuthProvider.tsx
+interface Props extends ComponentPropsWithoutRef<'div'> {}
 
-export default function Screen() {
-  const theme = useTheme();
-  return (
-    <>
-      <Stack.Screen
-        // name="Home"
-        options={{
-          // headerStatusBarHeight:0,
-          title: 'Home',
-          // headerShown: false,
-          headerStyle: {
-            // backgroundColor: '$primary',
-            // height: 100,
-          },
-          // I can have sort, profile, archive, and title
-          // header: () => (
-          //   <Button
-          //     onPress={() => alert('This is a button!')}
-          //     color="#0f0"
-
-          //   />
-          // ),
-          // headerTitle: props => <Text color='blue' {...props}>hi</Text>,
-          // headerRight: () => (
-          //   <Button
-          //     onPress={() => alert('This is a button!')}
-          //     color="#0f0"
-          //   />
-          // ),
-          // headerTransparent: true,
-          // headerStyle: {
-        }}
-      />
-      <HomeScreen />
-    </>
-  );
+const Component: FC<Props> = (props) => {
+  return <Redirect href='/(app)/(tabs)/questions' />
 }
+
+export default Component

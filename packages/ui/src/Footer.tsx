@@ -1,14 +1,14 @@
-import { BlurView } from 'expo-blur';
-import { Button, Footer, View, XStack } from 'tamagui';
-import type { GetProps } from 'tamagui';
+import { BlurView } from 'expo-blur'
+import { Button, Footer, type View, XStack } from 'tamagui'
+import type { GetProps } from 'tamagui'
 
 interface Props extends GetProps<typeof View> {
-  stackProps?: GetProps<typeof XStack>;
-  blurIntensity?: number;
+  stackProps?: GetProps<typeof XStack>
+  blurIntensity?: number
 }
 
 export const FloatingFooter = (props: Props) => {
-  const { children, stackProps, blurIntensity = 0, ...rest } = props;
+  const { children, stackProps, blurIntensity = 0, ...rest } = props
   // https://www.youtube.com/watch?v=w9gPW_cXWHo
   return (
     <Footer position='absolute' l={20} r={20} b={20} zIndex={1} {...rest}>
@@ -21,5 +21,5 @@ export const FloatingFooter = (props: Props) => {
         </XStack>
       </BlurView>
     </Footer>
-  );
-};
+  )
+}

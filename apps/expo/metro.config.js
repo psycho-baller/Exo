@@ -1,14 +1,10 @@
 // Learn more: https://docs.expo.dev/guides/monorepos/
-const { getDefaultConfig } = require("expo/metro-config");
-const { FileStore } = require("metro-cache");
+const { getDefaultConfig } = require('expo/metro-config')
+const { FileStore } = require('metro-cache')
 
-const path = require("path");
+const path = require('path')
 
-module.exports = withTurborepoManagedCache(
-  withMonorepoPaths(
-    getDefaultConfig(__dirname),
-  ),
-);
+module.exports = withTurborepoManagedCache(withMonorepoPaths(getDefaultConfig(__dirname)))
 
 /**
  * Add the monorepo paths to the Metro config.
@@ -19,19 +15,19 @@ module.exports = withTurborepoManagedCache(
  * @returns {import('expo/metro-config').MetroConfig}
  */
 function withMonorepoPaths(config) {
-  const projectRoot = __dirname;
-  const workspaceRoot = path.resolve(projectRoot, "../..");
+  const projectRoot = __dirname
+  const workspaceRoot = path.resolve(projectRoot, '../..')
 
   // #1 - Watch all files in the monorepo
-  config.watchFolders = [workspaceRoot];
+  config.watchFolders = [workspaceRoot]
 
   // #2 - Resolve modules within the project's `node_modules` first, then all monorepo modules
   config.resolver.nodeModulesPaths = [
-    path.resolve(projectRoot, "node_modules"),
-    path.resolve(workspaceRoot, "node_modules"),
-  ];
+    path.resolve(projectRoot, 'node_modules'),
+    path.resolve(workspaceRoot, 'node_modules'),
+  ]
 
-  return config;
+  return config
 }
 
 /**
@@ -44,8 +40,6 @@ function withMonorepoPaths(config) {
  * @returns {import('expo/metro-config').MetroConfig}
  */
 function withTurborepoManagedCache(config) {
-  config.cacheStores = [
-    new FileStore({ root: path.join(__dirname, "node_modules/.cache/metro") }),
-  ];
-  return config;
+  config.cacheStores = [new FileStore({ root: path.join(__dirname, 'node_modules/.cache/metro') })]
+  return config
 }

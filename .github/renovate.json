@@ -9,5 +9,6 @@
   ],
   "updateInternalDeps": true,
   "rangeStrategy": "bump",
-  "automerge": true
+  "automerge": true,
+  "includeForks": true
 }

@@ -26,6 +26,10 @@
       "persistent": true,
       "cache": false
     },
+    "dev:backend": {
+      "persistent": true,
+      "cache": false
+    },
     "format": {
       "outputs": [
         "node_modules/.cache/.prettiercache"

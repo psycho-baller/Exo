@@ -1,7 +1,7 @@
-import { createConnection } from './utils';
+import { createConnection } from './utils'
 
-export const { db } = createConnection();
+export const { db } = createConnection()
 
-export { mySqlTable as tableCreator } from './schema/_table';
+export { sqliteTable as tableCreator } from './schema/_table'
 
-export * from 'drizzle-orm';
+export * from 'drizzle-orm'

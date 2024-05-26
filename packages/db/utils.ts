@@ -1,30 +1,23 @@
-import { Client } from '@planetscale/database';
-import { drizzle } from 'drizzle-orm/planetscale-serverless';
+import { createClient } from '@libsql/client'
+import { drizzle } from 'drizzle-orm/libsql'
 
-import * as schema from './schema';
-import type { Database } from './schema/_table';
+import * as schema from './schema'
+import type { Database } from './schema/_table'
 
 interface ConnectionResult {
-  db: Database;
-  client: Client;
+  db: Database
+  client: ReturnType<typeof createClient>
 }
-
+export const dbCredentials = {
+  url:
+    !(process.env.NODE_ENV === 'development') && process.env.TURSO_CONNECTION_URL
+      ? process.env.TURSO_CONNECTION_URL
+      : 'http://127.0.0.1:8080',
+  authToken: process.env.TURSO_AUTH_TOKEN,
+}
 export function createConnection(): ConnectionResult {
-  const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) {
-    throw new Error('DATABASE_URL is not set');
-  }
-  const client = new Client({
-    url: databaseUrl,
-  });
-  // export const connection = await mysql.createConnection({
-  //   host: process.env.DB_HOST,
-  //   user: process.env.DB_USER,
-  //   password: process.env.DB_PASSWORD,
-  //   database: process.env.DB_NAME,
-  //   multipleStatements: true,
-  // });
-  const db = drizzle(client, { schema });
+  const client = createClient(dbCredentials)
+  const db = drizzle(client, { schema })
 
   return {
     db,
@@ -34,31 +27,31 @@ export function createConnection(): ConnectionResult {
     //   console.log("🧨 Closing the database connection...");
     //   await pg.end();
     // },
-  };
+  }
 }
 
 export function generateRandomId(length: number): number {
-  const id = Math.random() * Math.pow(10, length);
-  return Math.floor(id);
+  const id = Math.random() * 10 ** length
+  return Math.floor(id)
 }
 
-export function generateRandomUsername(): string {
-  const base = 'seeded_user_';
-  const randomNumber = generateRandomId(3).toString();
-  const username = base + randomNumber;
-  return username;
+export function generateRandomUserId(): string {
+  const base = 'seeded_user_'
+  const randomNumber = generateRandomId(3).toString()
+  const username = base + randomNumber
+  return username
 }
 
 export function generateRandomFirstName(): string {
-  const base = 'seeded_first_name_';
-  const randomNumber = generateRandomId(3).toString();
-  const firstName = base + randomNumber;
-  return firstName;
+  const base = 'seeded_first_name_'
+  const randomNumber = generateRandomId(3).toString()
+  const firstName = base + randomNumber
+  return firstName
 }
 
 export function generateRandomLastName(): string {
-  const base = 'seeded_last_name_';
-  const randomNumber = generateRandomId(3).toString();
-  const lastName = base + randomNumber;
-  return lastName;
+  const base = 'seeded_last_name_'
+  const randomNumber = generateRandomId(3).toString()
+  const lastName = base + randomNumber
+  return lastName
 }

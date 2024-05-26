@@ -3,6 +3,7 @@
   "name": "@acme/app",
   "private": true,
   "license": "MIT",
+  "main": "index.ts",
   "sideEffects": [
     "*.css"
   ],
@@ -15,7 +16,8 @@
   },
   "dependencies": {
     "@acme/ui": "workspace:*",
-    "@shopify/flash-list": "1.6.3",
+    "@gorhom/bottom-sheet": "^4.6.1",
+    "@orama/orama": "^2.0.17",
     "@tamagui/animations-react-native": "^1.90.6",
     "@tamagui/colors": "^1.90.6",
     "@tamagui/font-inter": "^1.90.6",
@@ -27,11 +29,13 @@
     "@trpc/react-query": "next",
     "@trpc/server": "next",
     "burnt": "^0.12.2",
-    "expo-constants": "^15.4.5",
+    "expo-constants": "^15.4.6",
     "expo-font": "^11.10.3",
     "expo-linking": "^6.2.2",
+    "jotai": "^2.8.0",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-mmkv": "^2.12.2",
     "react-native-reanimated": "~3.6.3",
     "react-native-safe-area-context": "~4.8.2",
     "solito": "^4.2.1",
@@ -43,6 +47,7 @@
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:*",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@types/react": "^18.2.58",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3"

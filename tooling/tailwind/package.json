@@ -4,9 +4,7 @@
   "private": true,
   "main": "index.ts",
   "license": "MIT",
-  "files": [
-    "index.ts"
-  ],
+  "files": ["index.ts"],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "upgrade": "pnpm upgrade --latest",
@@ -28,9 +26,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@acme/eslint-config/base"
-    ]
+    "extends": ["@acme/eslint-config/base"]
   },
   "prettier": "@acme/prettier-config"
 }

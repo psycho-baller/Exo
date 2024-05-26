@@ -1,29 +1,38 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client';
-import { createTRPCReact } from '@trpc/react-query';
-import SuperJSON from 'superjson';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
+import { useState } from 'react'
+import SuperJSON from 'superjson'
 
-import { api } from '@acme/api/utils/trpc.web';
+import { api } from '@acme/api/utils/trpc'
 
-export function TRPCReactProvider(props: {
-  children: React.ReactNode;
-  headersPromise: Promise<Headers>;
-}) {
-  const queryClientPersistCacheConfig = {
-    defaultOptions: {
-      queries: {
-        gcTime: 1000 * 60 * 60 * 24, // 24 hours
-      },
+const queryClientPersistCacheConfig = {
+  defaultOptions: {
+    queries: {
+      gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      // With SSR, we usually want to set some default staleTime
+      // above 0 to avoid refetching immediately on the client
+      staleTime: 30 * 1000,
     },
-  };
+  },
+};
+const createQueryClient = () => new QueryClient(queryClientPersistCacheConfig)
+let clientQueryClientSingleton: QueryClient | undefined = undefined
+const getQueryClient = () => {
+  if (typeof window === 'undefined') {
+    // Server: always make a new query client
+    return createQueryClient()
+  }
+  // Browser: use singleton pattern to keep the same query client
 
-  const [queryClient] = useState(() => new QueryClient(queryClientPersistCacheConfig));
+  // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+  return (clientQueryClientSingleton ??= createQueryClient())
+}
+export function TRPCReactProvider(props: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
   const [trpcClient] = useState(() =>
     api.createClient({
-      transformer: SuperJSON,
       links: [
         loggerLink({
           enabled: (op) =>
@@ -31,16 +40,17 @@ export function TRPCReactProvider(props: {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          url: getBaseUrl() + '/api/trpc',
-          async headers() {
-            const headers = new Map(await props.headersPromise);
-            headers.set('x-trpc-source', 'nextjs-react');
-            return Object.fromEntries(headers);
+          transformer: SuperJSON,
+          url: `${getBaseUrl()}/api/trpc`,
+          headers() {
+            const headers = new Headers()
+            headers.set('x-trpc-source', 'nextjs-react')
+            return headers
           },
         }),
       ],
     }),
-  );
+  )
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -48,11 +58,11 @@ export function TRPCReactProvider(props: {
         {props.children}
       </api.Provider>
     </QueryClientProvider>
-  );
+  )
 }
 
 function getBaseUrl() {
-  if (typeof window !== 'undefined') return window.location.origin;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
+  if (typeof window !== 'undefined') return window.location.origin
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return `http://localhost:${process.env.PORT ?? 3000}`
 }

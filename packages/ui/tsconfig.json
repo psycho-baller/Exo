@@ -3,8 +3,8 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     // "composite": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
-  "include": ["src", "../app/components/PageWithNavFooter.tsx"],
-  "exclude": ["node_modules"],
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

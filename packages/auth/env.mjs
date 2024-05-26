@@ -1,5 +1,5 @@
-import { createEnv } from '@t3-oss/env-nextjs';
-import { z } from 'zod';
+import { createEnv } from '@t3-oss/env-nextjs'
+import { z } from 'zod'
 
 const env = createEnv({
   server: {
@@ -23,6 +23,6 @@ const env = createEnv({
     AUTH_URL: process.env.AUTH_URL,
   },
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
-});
+})
 
-module.exports = env;
+module.exports = env
