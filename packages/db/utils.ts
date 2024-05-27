@@ -1,4 +1,5 @@
-import { useMigrations, db } from '.'
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator'
+import { db } from '.'
 import migrations from './drizzle/migrations'
 import * as schema from './schema'
 import type { Database } from './schema/_table'
