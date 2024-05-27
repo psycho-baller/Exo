@@ -18,14 +18,17 @@ interface SearchProps<T, S> {
 
 export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, renderHit, queryAtom, RenderOnEmpty }: SearchProps<T, S>) {
   const [query] = useAtom(queryAtom)
-  const queryResult = useQueryResult()
-
-  const data = queryResult.data ? filterDataFromSchema(queryResult.data as Record<string, unknown>[], filterSchema) : []
-  console.log("data:", data)
+  const { data: queryData, isLoading } = useQueryResult()
   const queryClient = useQueryClient();
+
+  if (isLoading) {
+    return null
+  }
+  const queryDatadata = queryData ? filterDataFromSchema(queryData as Record<string, unknown>[], filterSchema) : []
+  console.log("data:", queryData)
   // queryClient.clear()
-  console.log("db", ['db', data, filterSchema])
-  const db = queryClient.getQueryData<S[]>(['db', data, filterSchema])
+  console.log("db", ['db', queryData, filterSchema])
+  const db = queryClient.getQueryData<S[]>(['db', queryData, filterSchema])
   const searchResult = useQuery<T[]>({
     queryKey: ['search', db, query],
     enabled: false,

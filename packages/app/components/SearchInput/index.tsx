@@ -39,7 +39,7 @@ export const SearchInput: FC<Props> = ({
 
   const dbQueries = useQueries({
     queries: datasets.map((data, index) => ({
-      enabled: !!data.data,
+      enabled: !!data.data && data.data.length > 0,
       queryKey: ['db', data.data, data.schema],
       queryFn: () => insertData(data.data, data.schema),
     }))
