@@ -9,7 +9,7 @@ import { getQuestions } from '../queries/question'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const questionRouter = {
-  all: { useQuery: () => useQuery(getQuestions) },
+  all: { useQuery: () => useQuery({ queryKey: ['questions', 'all'], queryFn: getQuestions }) },
 
   // byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
   //   return ctx.db.query.questions.findFirst({

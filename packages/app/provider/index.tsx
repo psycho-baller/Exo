@@ -7,6 +7,8 @@ import { TamaguiProvider } from './tamagui'
 import { TamaguiThemeProvider } from './theme'
 import { BottomSheetModalProvider } from './bottom-sheet-modal'
 import { ExpoSQLiteProvider } from './expo-sqlite';
+import { QueryClientProvider } from './query-client';
+import { ToastViewport } from './toast-viewport';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
@@ -16,14 +18,16 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
           <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               {/* <TRPCProvider> */}
-              <ExpoSQLiteProvider>
-                <BottomSheetModalProvider>
-                  {children}
-                </BottomSheetModalProvider>
-              </ExpoSQLiteProvider>
+              <QueryClientProvider>
+                <ExpoSQLiteProvider>
+                  <BottomSheetModalProvider>
+                    {children}
+                  </BottomSheetModalProvider>
+                </ExpoSQLiteProvider>
+              </QueryClientProvider>
               {/* </TRPCProvider> */}
-              {/* <CustomToast /> */}
-              {/* <ToastViewport /> */}
+              <CustomToast />
+              <ToastViewport />
             </GestureHandlerRootView>
           </ToastProvider>
         </SafeAreaProvider>

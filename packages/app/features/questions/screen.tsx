@@ -7,7 +7,7 @@ import { MainPage } from '../../components/Footer/MainPage'
 
 const Index = () => {
   console.log('api:', api)
-  // const { isLoading, error, data } = api.question.all.useQuery()
+  const { isLoading, error, data } = api.question.all.useQuery()
   console.log('data:', data)
   if (isLoading) {
     return <Text>Loading...</Text>
