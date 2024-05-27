@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import type { PrimitiveAtom } from "jotai";
 import type { ReactElement } from "react";
 import { awaitSearch } from "../../components/SearchInput";
+import { Text } from "@acme/ui"
 
 interface SearchProps<T, S> {
   useQueryResult: () => UseQueryResult<S[]>;
@@ -22,13 +23,13 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   const queryClient = useQueryClient();
 
   if (isLoading) {
-    return null
+    return <Text>loading...</Text>
   }
-  const queryDatadata = queryData ? filterDataFromSchema(queryData as Record<string, unknown>[], filterSchema) : []
+  const filteredData = queryData ? filterDataFromSchema(queryData as Record<string, unknown>[], filterSchema) : []
   console.log("data:", queryData)
   // queryClient.clear()
-  console.log("db", ['db', queryData, filterSchema])
-  const db = queryClient.getQueryData<S[]>(['db', queryData, filterSchema])
+  console.log("db", ['db', filteredData, filterSchema])
+  const db = queryClient.getQueryData<S[]>(['db', filteredData, filterSchema])
   const searchResult = useQuery<T[]>({
     queryKey: ['search', db, query],
     enabled: false,
