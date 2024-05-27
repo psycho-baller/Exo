@@ -43,14 +43,14 @@ export function TRPCProvider(props: { children: ReactNode }) {
   const storage = new MMKV();
 
   const clientStorage = {
-    setItem: (key, value) => {
+    setItem: (key: string, value: string | number | boolean | Uint8Array) => {
       storage.set(key, value);
     },
-    getItem: (key) => {
+    getItem: (key: string) => {
       const value = storage.getString(key);
       return value === undefined ? null : value;
     },
-    removeItem: (key) => {
+    removeItem: (key: string) => {
       storage.delete(key);
     },
   };
@@ -65,7 +65,9 @@ export function TRPCProvider(props: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient(queryClientPersistCacheConfig));
   const persister = createAsyncStoragePersister({
     storage: clientStorage,
+    // @ts-ignore
     serialize: superjson.serialize,
+    // @ts-ignore
     deserialize: superjson.deserialize,
   });
   const [trpcClient] = useState(() =>
