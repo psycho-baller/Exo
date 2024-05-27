@@ -1,9 +1,12 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { httpBatchLink, loggerLink } from '@trpc/client'
-import Constants from 'expo-constants'
-import type { ReactNode } from 'react'
-import { useState } from 'react'
-import superjson from 'superjson'
+import type { ReactNode } from 'react';
+import { useState } from 'react';
+import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { httpBatchLink, loggerLink } from '@trpc/client';
+import superjson from 'superjson';
 
 import { api } from '@acme/api/utils/trpc'
 
@@ -36,7 +39,18 @@ const getBaseUrl = () => {
  */
 
 export function TRPCProvider(props: { children: ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient())
+  const queryClientPersistCacheConfig = {
+    defaultOptions: {
+      queries: {
+        gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  };
+
+  const [queryClient] = useState(() => new QueryClient(queryClientPersistCacheConfig));
+  const persister = createAsyncStoragePersister({
+    storage: AsyncStorage,
+  });
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -61,7 +75,9 @@ export function TRPCProvider(props: { children: ReactNode }) {
 
   return (
     <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{props.children}</QueryClientProvider>
+      <PersistQueryClientProvider persistOptions={{ persister }} client={queryClient}>
+        {props.children}
+      </PersistQueryClientProvider>
     </api.Provider>
   )
 }

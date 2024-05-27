@@ -7,16 +7,17 @@ import SuperJSON from 'superjson'
 
 import { api } from '@acme/api/utils/trpc'
 
-const createQueryClient = () =>
-  new QueryClient({
-    defaultOptions: {
-      queries: {
-        // With SSR, we usually want to set some default staleTime
-        // above 0 to avoid refetching immediately on the client
-        staleTime: 30 * 1000,
-      },
+const queryClientPersistCacheConfig = {
+  defaultOptions: {
+    queries: {
+      gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      // With SSR, we usually want to set some default staleTime
+      // above 0 to avoid refetching immediately on the client
+      staleTime: 30 * 1000,
     },
-  })
+  },
+};
+const createQueryClient = () => new QueryClient(queryClientPersistCacheConfig)
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
   if (typeof window === 'undefined') {
