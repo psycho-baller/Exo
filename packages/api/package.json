@@ -15,6 +15,7 @@
   "dependencies": {
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
+    "@tanstack/react-query": "^5.24.1",
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
@@ -31,7 +32,10 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["@acme/eslint-config/base", "@acme/eslint-config/drizzle"]
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/drizzle"
+    ]
   },
   "prettier": "@acme/prettier-config"
 }

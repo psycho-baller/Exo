@@ -23,8 +23,8 @@
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",
     "@acme/ui": "workspace:*",
-    "@react-native-async-storage/async-storage": "^1.23.1",
     "@gorhom/bottom-sheet": "^4.6.1",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/datetimepicker": "8.0.0",
     "@shopify/flash-list": "1.6.3",
     "@tanstack/query-async-storage-persister": "^5.28.6",
@@ -33,6 +33,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "babel-plugin-inline-import": "^3.0.0",
     "expo": "^50.0.17",
     "expo-blur": "~12.9.2",
     "expo-constants": "^15.4.6",

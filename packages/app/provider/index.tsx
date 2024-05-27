@@ -5,9 +5,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from './safe-area'
 import { TamaguiProvider } from './tamagui'
 import { TamaguiThemeProvider } from './theme'
-import { ToastViewport } from './toast-viewport'
 import { BottomSheetModalProvider } from './bottom-sheet-modal'
-import { TRPCProvider } from './trpc';
+import { ExpoSQLiteProvider } from './expo-sqlite';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
@@ -16,12 +15,14 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
         <SafeAreaProvider>
           <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <TRPCProvider>
+              {/* <TRPCProvider> */}
+              <ExpoSQLiteProvider>
                 <BottomSheetModalProvider>
                   {children}
                 </BottomSheetModalProvider>
-              </TRPCProvider>
-              <CustomToast />
+              </ExpoSQLiteProvider>
+              {/* </TRPCProvider> */}
+              {/* <CustomToast /> */}
               {/* <ToastViewport /> */}
             </GestureHandlerRootView>
           </ToastProvider>

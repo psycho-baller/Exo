@@ -1,33 +1,31 @@
-import { createClient, type Config } from '@libsql/client'
-import { drizzle } from 'drizzle-orm/libsql'
-
+import { useMigrations, db } from '.'
+import migrations from './drizzle/migrations'
 import * as schema from './schema'
 import type { Database } from './schema/_table'
-
+import { drizzle } from 'drizzle-orm/expo-sqlite'
+import { openDatabaseSync } from 'expo-sqlite/next'
 interface ConnectionResult {
   db: Database
-  client: ReturnType<typeof createClient>
-}
-export const dbCredentials: Config = {
-  url:
-    !(process.env.NODE_ENV === 'development') && process.env.TURSO_CONNECTION_URL
-      ? process.env.TURSO_CONNECTION_URL
-      : 'http://127.0.0.1:8080',
-  authToken: process.env.TURSO_AUTH_TOKEN,
 }
 export function createConnection(): ConnectionResult {
-  const client = createClient(dbCredentials)
-  const db = drizzle(client, { schema })
+  const expo = openDatabaseSync('local.db', {
+    // enableCRSQLite: true,
+  })
+  const db = drizzle(expo, {
+    schema,
+  })
 
   return {
     db,
-    client,
     // if we want to use the "using" keyword in the future
     // [Symbol.asyncDispose]: async () => {
     //   console.log("🧨 Closing the database connection...");
     //   await pg.end();
     // },
   }
+}
+export const useMigrationHelper = () => {
+  return useMigrations(db, migrations)
 }
 
 export function generateRandomId(length: number): number {

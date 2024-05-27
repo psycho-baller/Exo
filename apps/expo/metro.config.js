@@ -27,6 +27,9 @@ function withMonorepoPaths(config) {
     path.resolve(workspaceRoot, 'node_modules'),
   ]
 
+  // for expo-sqlite
+  config.resolver.sourceExts.push('sql');
+
   return config
 }
 

@@ -15,10 +15,12 @@ module.exports = (api) => {
             },
           ],
         ]),
+      'jotai/babel/plugin-react-refresh',
+      // for expo-sqlite
+      ['inline-import', { extensions: ['.sql'] }],
       // if you want reanimated support
       // '@babel/plugin-transform-export-namespace-from',
       // 'react-native-reanimated/plugin',
-      'jotai/babel/plugin-react-refresh',
     ],
   }
 }

@@ -1,6 +1,3 @@
-import { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-
 export function formatDate(inputDate: Date): string {
   const getYear = (date: Date): string => {
     const currentYear: number = new Date().getFullYear()

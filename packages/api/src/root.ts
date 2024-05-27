@@ -9,17 +9,17 @@ import { topicRouter } from './router/topic'
 import { userRouter } from './router/user'
 import { createTRPCRouter } from './trpc'
 
-export const appRouter = createTRPCRouter({
-  auth: authRouter,
-  user: userRouter,
-  person: personRouter,
+export const appRouter = {
+  // auth: authRouter,
+  // user: userRouter,
+  // person: personRouter,
   question: questionRouter,
-  topic: topicRouter,
-  questionTopic: questionTopicRouter,
-  group: groupRouter,
-  searchHistory: searchHistoryRouter,
-  groupsOfPeople: groupsOfPeopleRouter,
-})
+  // topic: topicRouter,
+  // questionTopic: questionTopicRouter,
+  // group: groupRouter,
+  // searchHistory: searchHistoryRouter,
+  // groupsOfPeople: groupsOfPeopleRouter,
+}
 
 // export type definition of API
 export type AppRouter = typeof appRouter

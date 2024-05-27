@@ -2,12 +2,13 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
-import { CARD_HEIGHT } from '../../utils/constants'
-import { QuestionCard } from './QuestionCard'
+// import { CARD_HEIGHT } from '../../utils/constants'
+// import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
-  const { isLoading, error, data } = api.question.all.useQuery()
-
+  console.log('api:', api)
+  // const { isLoading, error, data } = api.question.all.useQuery()
+  console.log('data:', data)
   if (isLoading) {
     return <Text>Loading...</Text>
   }
@@ -17,13 +18,13 @@ const Index = () => {
 
   return (
     <MainPage>
-      <VirtualList
+      {/* <VirtualList
         data={data}
         itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
         listEmptyComponent={<Text>No data</Text>}
         isPage
-      />
+      /> */}
     </MainPage>
   )
 }

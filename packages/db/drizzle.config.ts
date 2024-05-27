@@ -1,10 +1,9 @@
 import type { Config } from 'drizzle-kit'
-import { dbCredentials } from './utils'
+
 export default {
   schema: './schema',
   out: './drizzle',
   dialect: 'sqlite',
-  driver: 'turso',
+  driver: 'expo',
   tablesFilter: ['*'],
-  dbCredentials,
 } satisfies Config
