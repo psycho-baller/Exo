@@ -15,7 +15,7 @@
   "dependencies": {
     "@acme/auth": "workspace:^0.1.0",
     "@acme/db": "workspace:^0.1.0",
-    "@tanstack/react-query": "^5.24.1",
+    "@tanstack/react-query": "^5.39.0",
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",

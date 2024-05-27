@@ -32,8 +32,8 @@
     "watch": "tamagui-build --watch"
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "8.0.0",
-    "@shopify/flash-list": "1.6.3",
+    "@react-native-community/datetimepicker": "8.0.1",
+    "@shopify/flash-list": "1.6.4",
     "@tamagui/animations-moti": "^1.90.6",
     "@tamagui/font-inter": "^1.90.6",
     "@tamagui/react-native-media-driver": "^1.90.6",
@@ -41,7 +41,7 @@
     "@tamagui/themes": "^1.90.6",
     "@tamagui/toast": "^1.90.6",
     "@tanstack/react-virtual": "^3.4.0",
-    "expo-blur": "~12.9.2",
+    "expo-blur": "~13.0.2",
     "tamagui": "^1.90.6"
   },
   "devDependencies": {
