@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import Constants from 'expo-constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
@@ -93,7 +92,9 @@ export function TRPCProvider(props: { children: ReactNode }) {
 
   return (
     <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{props.children}</QueryClientProvider>
+      <PersistQueryClientProvider persistOptions={{ persister }} client={queryClient}>
+        {props.children}
+      </PersistQueryClientProvider>
     </api.Provider>
   )
 }

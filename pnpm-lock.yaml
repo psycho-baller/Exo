@@ -74,15 +74,24 @@ importers:
       '@gorhom/bottom-sheet':
         specifier: ^4.6.1
         version: 4.6.1(@types/react@18.2.61)(react-native-gesture-handler@2.14.1)(react-native-reanimated@3.6.3)(react-native@0.73.6)(react@18.2.0)
+      '@react-native-async-storage/async-storage':
+        specifier: ^1.23.1
+        version: 1.23.1(react-native@0.73.6)
       '@react-native-community/datetimepicker':
         specifier: 8.0.0
         version: 8.0.0(react-native@0.73.6)(react@18.2.0)
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.6)(react@18.2.0)
+      '@tanstack/query-async-storage-persister':
+        specifier: ^5.28.6
+        version: 5.38.0
       '@tanstack/react-query':
         specifier: ^5.24.1
         version: 5.24.6(react@18.2.0)
+      '@tanstack/react-query-persist-client':
+        specifier: ^5.28.6
+        version: 5.39.0(@tanstack/react-query@5.24.6)(react@18.2.0)
       '@trpc/client':
         specifier: next
         version: 11.0.0-next-beta.305(@trpc/server@11.0.0-next-beta.305)
@@ -4920,7 +4929,6 @@ packages:
     dependencies:
       merge-options: 3.0.4
       react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
-    dev: true
 
   /@react-native-community/cli-clean@12.3.6:
     resolution: {integrity: sha512-gUU29ep8xM0BbnZjwz9MyID74KKwutq9x5iv4BCr2im6nly4UMf1B1D+V225wR7VcDGzbgWjaezsJShLLhC5ig==}
@@ -7203,6 +7211,12 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
+  /@tanstack/query-async-storage-persister@5.38.0:
+    resolution: {integrity: sha512-3krPC0oqZstsnJFIYqCqw7m+UbefSAILHO6Zt96APyhWCDIwKX0jSwCMYM0+IWC3ccriTRNei95rABNlJTWvRQ==}
+    dependencies:
+      '@tanstack/query-persist-client-core': 5.38.0
+    dev: false
+
   /@tanstack/query-core@5.24.6:
     resolution: {integrity: sha512-xYhxiMUPh1JzamVK8VwwkBpIBXVYRyIBW9gjSN+/BB4kL1nS86gnRWeW8L+sacCj1RiyEsysJe3GSvtbIpHdWw==}
     dev: false
@@ -7211,8 +7225,18 @@ packages:
     resolution: {integrity: sha512-hNlfCiqZevr3GRVPXS3MhaGW5hjcxvCsIQ4q6ff7EPlvFwYZaS+0d9EIIgofnegDaU2BbCDlyURoYfRl5rmzow==}
     dev: false
 
+  /@tanstack/query-core@5.38.0:
+    resolution: {integrity: sha512-QtkoxvFcu52mNpp3+qOo9H265m3rt83Dgbw5WnNyJvr83cegrQ7zT8haHhL4Rul6ZQkeovxyWbXVW9zI0WYx6g==}
+    dev: false
+
   /@tanstack/query-devtools@5.24.0:
     resolution: {integrity: sha512-pThim455t69zrZaQKa7IRkEIK8UBTS+gHVAdNfhO72Xh4rWpMc63ovRje5/n6iw63+d6QiJzVadsJVdPoodSeQ==}
+    dev: false
+
+  /@tanstack/query-persist-client-core@5.38.0:
+    resolution: {integrity: sha512-3sCUUte4d6xJbguWCjy6r/loQTgDQLFIBxz0WRn1MFlDHtHsDKXRQeV+kBWsyLkng+bltB33g7DUBnH7MmlMpA==}
+    dependencies:
+      '@tanstack/query-core': 5.38.0
     dev: false
 
   /@tanstack/react-query-devtools@5.24.6(@tanstack/react-query@5.24.6)(react@18.2.0):
@@ -7235,6 +7259,17 @@ packages:
     dependencies:
       '@tanstack/react-query': 5.24.6(react@18.2.0)
       next: 14.1.1(@babel/core@7.24.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@tanstack/react-query-persist-client@5.39.0(@tanstack/react-query@5.24.6)(react@18.2.0):
+    resolution: {integrity: sha512-Imd2L3x4I+5VVCrSrS0czzxBfgh78FzSkronBT9NVxZ36g21zT/BMWYV8Yh0znKJm1mwPk5+e3jqJU4VYIQIOA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.39.0
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-persist-client-core': 5.38.0
+      '@tanstack/react-query': 5.24.6(react@18.2.0)
       react: 18.2.0
     dev: false
 
@@ -12307,7 +12342,6 @@ packages:
   /is-plain-obj@2.1.0:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
     engines: {node: '>=8'}
-    dev: true
 
   /is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
@@ -13318,7 +13352,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       is-plain-obj: 2.1.0
-    dev: true
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
