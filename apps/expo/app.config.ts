@@ -24,6 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     package: 'com.convo_topics',
+    googleServicesFile: './android/app/google-services.json',
     adaptiveIcon: {
       foregroundImage: './assets/icon.png',
       backgroundColor: '#0D23FF',
