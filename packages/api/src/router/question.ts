@@ -5,29 +5,50 @@ import { questions } from '@acme/db/schema'
 import type { NewQuestion, Question } from '@acme/db/schema/types'
 
 // import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createQuestion, getQuestions } from '../queries/question'
+import { createQuestion, getQuestions, getQuestionById } from '../queries/question'
 import {
   type UseMutationOptions,
   type UseQueryOptions,
   useMutation,
   useQuery,
+  QueryClient,
 } from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
+
+const all = ['questions', 'all'] as const
+const create = ['questions', 'create'] as const
+
 export const questionRouter = {
+  useUtils() {
+    return {
+      all: {
+        invalidate: () => {
+          return queryClient.invalidateQueries({ queryKey: all })
+        },
+      },
+    }
+  },
   all: {
     useQuery: (options: UseQueryOptions<Question[]>) =>
-      useQuery({ ...options, queryKey: ['questions', 'all'], queryFn: getQuestions }),
+      useQuery({ ...options, queryKey: all, queryFn: getQuestions }),
   },
 
-  // byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-  //   return ctx.db.query.questions.findFirst({
-  //     where: eq(questions.id, input.id),
-  //   })
-  // }),
+  byId: {
+    useQuery: ({
+      id,
+      ...options
+    }: { id: number } & Partial<UseQueryOptions<Question | undefined>>) =>
+      useQuery({
+        ...options,
+        queryKey: ['questions', 'byId', id],
+        queryFn: () => getQuestionById(id),
+      }),
+  },
 
   create: {
     useMutation: (options: UseMutationOptions<Question[], unknown, NewQuestion>) =>
-      useMutation({ ...options, mutationKey: ['questions', 'create'], mutationFn: createQuestion }),
+      useMutation({ ...options, mutationKey: create, mutationFn: createQuestion }),
   },
 
   // delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {

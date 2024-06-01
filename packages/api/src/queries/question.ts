@@ -9,7 +9,7 @@ export async function getQuestions() {
   return await db.query.questions.findMany({ orderBy: desc(questions.id) })
 }
 
-export async function getQuestionById(id: number) {
+export async function getQuestionById(id: number): Promise<Question | undefined> {
   return await db.query.questions.findFirst({
     where: eq(questions.id, id),
   })

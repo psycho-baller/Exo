@@ -14,7 +14,9 @@ const Index = () => {
     },
   })
 
-  const { isLoading, error, data } = api.question.all.useQuery()
+  const { isLoading, error, data } = api.question.byId.useQuery({
+    id: 1,
+  })
   console.log('data:', data)
   if (isLoading) {
     return <Text>Loading...</Text>
