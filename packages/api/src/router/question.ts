@@ -17,6 +17,7 @@ import {
 const queryClient = new QueryClient()
 
 const all = ['questions', 'all'] as const
+const byId = ['questions', 'byId'] as const
 const create = ['questions', 'create'] as const
 
 export const questionRouter = {
@@ -41,7 +42,7 @@ export const questionRouter = {
     }: { id: number } & Partial<UseQueryOptions<Question | undefined>>) =>
       useQuery({
         ...options,
-        queryKey: ['questions', 'byId', id],
+        queryKey: [...byId, id],
         queryFn: () => getQuestionById(id),
       }),
   },
