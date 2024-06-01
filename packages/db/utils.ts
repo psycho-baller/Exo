@@ -9,7 +9,7 @@ interface ConnectionResult {
   db: Database
 }
 export function createConnection(): ConnectionResult {
-  const expo = openDatabaseSync('local.db', {
+  const expo = openDatabaseSync('db.db', {
     // enableCRSQLite: true,
   })
   const db = drizzle(expo, {

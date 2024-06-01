@@ -540,7 +540,7 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1(drizzle-orm@0.29.4)(zod@3.22.4)
       expo-sqlite:
-        specifier: ^14.0.3
+        specifier: ~14.0.3
         version: 14.0.3(expo@51.0.8)
     devDependencies:
       '@acme/eslint-config':

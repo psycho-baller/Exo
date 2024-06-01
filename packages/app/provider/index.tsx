@@ -27,7 +27,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
               </QueryClientProvider>
               {/* </TRPCProvider> */}
               <CustomToast />
-              <ToastViewport />
+              {/* <ToastViewport /> */}
             </GestureHandlerRootView>
           </ToastProvider>
         </SafeAreaProvider>

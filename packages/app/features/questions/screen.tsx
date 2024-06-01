@@ -2,7 +2,7 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
-// import { CARD_HEIGHT } from '../../utils/constants'
+import { CARD_HEIGHT } from '../../utils/constants'
 // import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
@@ -18,13 +18,16 @@ const Index = () => {
 
   return (
     <MainPage>
-      {/* <VirtualList
+      <VirtualList
         data={data}
         itemHeight={CARD_HEIGHT}
-        renderItem={(q) => <QuestionCard question={q} />}
+        renderItem={(q) => <Text>
+          {q.question}
+        </Text>
+        }
         listEmptyComponent={<Text>No data</Text>}
         isPage
-      /> */}
+      />
     </MainPage>
   )
 }

@@ -2,11 +2,11 @@ import { z } from 'zod'
 
 import { desc, eq, like } from '@acme/db'
 import { questions } from '@acme/db/schema'
-import { insertQuestionSchema } from '@acme/db/schema/types'
+import type { NewQuestion } from '@acme/db/schema/types'
 
 // import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { getQuestions } from '../queries/question'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { createQuestion, getQuestions } from '../queries/question'
+import { type UseMutationOptions, useMutation, useQuery } from '@tanstack/react-query'
 
 export const questionRouter = {
   all: { useQuery: () => useQuery({ queryKey: ['questions', 'all'], queryFn: getQuestions }) },
@@ -17,12 +17,10 @@ export const questionRouter = {
   //   })
   // }),
 
-  // create: protectedProcedure.input(insertQuestionSchema).mutation(async ({ ctx, input }) => {
-  //   return await ctx.db
-  //     .insert(questions)
-  //     .values({ createdByUserId: ctx.session.user.id, ...input })
-  //     .returning()
-  // }),
+  create: {
+    useMutation: (options: UseMutationOptions<NewQuestion>) =>
+      useMutation({ mutationKey: ['questions', 'create'], mutationFn: createQuestion, ...options }),
+  },
 
   // delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
   //   return ctx.db.delete(questions).where(eq(questions.id, input))
