@@ -2,14 +2,22 @@ import { z } from 'zod'
 
 import { desc, eq, like } from '@acme/db'
 import { questions } from '@acme/db/schema'
-import type { NewQuestion } from '@acme/db/schema/types'
+import type { NewQuestion, Question } from '@acme/db/schema/types'
 
 // import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
 import { createQuestion, getQuestions } from '../queries/question'
-import { type UseMutationOptions, useMutation, useQuery } from '@tanstack/react-query'
+import {
+  type UseMutationOptions,
+  type UseQueryOptions,
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query'
 
 export const questionRouter = {
-  all: { useQuery: () => useQuery({ queryKey: ['questions', 'all'], queryFn: getQuestions }) },
+  all: {
+    useQuery: (options: UseQueryOptions<Question[]>) =>
+      useQuery({ ...options, queryKey: ['questions', 'all'], queryFn: getQuestions }),
+  },
 
   // byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
   //   return ctx.db.query.questions.findFirst({
@@ -18,8 +26,8 @@ export const questionRouter = {
   // }),
 
   create: {
-    useMutation: (options: UseMutationOptions<NewQuestion>) =>
-      useMutation({ mutationKey: ['questions', 'create'], mutationFn: createQuestion, ...options }),
+    useMutation: (options: UseMutationOptions<Question[], unknown, NewQuestion>) =>
+      useMutation({ ...options, mutationKey: ['questions', 'create'], mutationFn: createQuestion }),
   },
 
   // delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {

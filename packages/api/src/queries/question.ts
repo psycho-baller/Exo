@@ -23,7 +23,7 @@ export async function getQuestionsForPerson(personId: number) {
 }
 
 // CREATE
-export async function createQuestion(input: NewQuestion) {
+export async function createQuestion(input: NewQuestion): Promise<Question[]> {
   insertQuestionSchema.parse(input)
   return await db.insert(questions).values(input).returning()
 }
