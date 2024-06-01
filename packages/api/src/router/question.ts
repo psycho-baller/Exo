@@ -20,6 +20,12 @@ const all = ['questions', 'all'] as const
 const byId = ['questions', 'byId'] as const
 const create = ['questions', 'create'] as const
 
+type MyUseQueryOptions<TData> = Omit<UseQueryOptions<TData>, 'queryKey' | 'queryFn'>
+type MyUseMutationOptions<TData, TVariables> = Omit<
+  UseMutationOptions<TData, unknown, TVariables>,
+  'mutationKey' | 'mutationFn'
+>
+
 export const questionRouter = {
   useUtils() {
     return {
@@ -31,15 +37,12 @@ export const questionRouter = {
     }
   },
   all: {
-    useQuery: (options: UseQueryOptions<Question[]>) =>
+    useQuery: (options: MyUseQueryOptions<Question[]>) =>
       useQuery({ ...options, queryKey: all, queryFn: getQuestions }),
   },
 
   byId: {
-    useQuery: ({
-      id,
-      ...options
-    }: { id: number } & Partial<UseQueryOptions<Question | undefined>>) =>
+    useQuery: ({ id, ...options }: { id: number } & MyUseQueryOptions<Question | undefined>) =>
       useQuery({
         ...options,
         queryKey: [...byId, id],
@@ -48,7 +51,7 @@ export const questionRouter = {
   },
 
   create: {
-    useMutation: (options: UseMutationOptions<Question[], unknown, NewQuestion>) =>
+    useMutation: (options: MyUseMutationOptions<Question[], NewQuestion>) =>
       useMutation({ ...options, mutationKey: create, mutationFn: createQuestion }),
   },
 
