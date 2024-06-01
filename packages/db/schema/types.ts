@@ -19,6 +19,7 @@ import {
   topics,
   users,
 } from '.'
+import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 
 // User
 export type LandingPageOptions = (typeof landingPageOptions)[number]
@@ -115,3 +116,16 @@ export const insertQuestionSchema = createInsertSchema(questions, {
 export type QuestionTopics = typeof questionTopics.$inferSelect
 export type NewQuestionTopics = typeof questionTopics.$inferInsert
 export const insertQuestionTopicSchema = createInsertSchema(questionTopics)
+
+// Reusable types
+export type WithId = { id: number }
+export type UpdateTable<Table> = Partial<
+  Omit<Table, 'id' | 'createdByUserId' | 'createdDatetime'>
+> &
+  WithId
+
+export type MyUseQueryOptions<TData> = Omit<UseQueryOptions<TData>, 'queryKey' | 'queryFn'>
+export type MyUseMutationOptions<TData, TVariables> = Omit<
+  UseMutationOptions<TData, unknown, TVariables>,
+  'mutationKey' | 'mutationFn'
+>

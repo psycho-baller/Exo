@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 
 const Index = () => {
   console.log('api:', api)
-  const { mutateAsync } = api.question.create.useMutation({
+  const { mutateAsync: create } = api.question.create.useMutation({
     async onSuccess() {
       // await api.question.all.invalidate()
     },
@@ -17,6 +17,9 @@ const Index = () => {
   const { isLoading, error, data } = api.question.byId.useQuery({
     id: 1,
   })
+
+  const { mutateAsync: deleteQuestion } = api.question.delete.useMutation()
+  const { mutateAsync: updateQuestion } = api.question.update.useMutation()
   console.log('data:', data)
   if (isLoading) {
     return <Text>Loading...</Text>
@@ -26,8 +29,10 @@ const Index = () => {
   }
 
   useEffect(() => {
+    // updateQuestion({ })
+    deleteQuestion({ id: 1 })
     const createQuestion = async () => {
-      const newQuestion = await mutateAsync({
+      const newQuestion = await create({
         question: 'What is the meaning of life?',
         createdByUserId: '69420'
       })

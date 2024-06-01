@@ -5,7 +5,7 @@ import { UnstyledInput } from '@acme/ui'
 
 export function EditQuestionText({ id, content }: { id: number; content: string }) {
   const utils = api.useUtils()
-  const { mutate: updateQuestion } = api.question.updateQuestion.useMutation({
+  const { mutate: updateQuestion } = api.question.updateText.useMutation({
     async onSuccess() {
       await utils.question.all.invalidate()
     },

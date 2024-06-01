@@ -1,48 +1,39 @@
-import { z } from 'zod'
-
-import { desc, eq, like } from '@acme/db'
-import { questions } from '@acme/db/schema'
-import type { NewQuestion, Question } from '@acme/db/schema/types'
+import type {
+  MyUseMutationOptions,
+  MyUseQueryOptions,
+  NewQuestion,
+  Question,
+  UpdateTable,
+  WithId,
+} from '@acme/db/schema/types'
+import type { SQLiteRunResult } from 'expo-sqlite'
 
 // import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createQuestion, getQuestions, getQuestionById } from '../queries/question'
 import {
-  type UseMutationOptions,
-  type UseQueryOptions,
-  useMutation,
-  useQuery,
-  QueryClient,
-} from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+  createQuestion,
+  getQuestions,
+  getQuestionById,
+  deleteQuestion,
+  getQuestionsForPerson,
+  updateQuestion,
+  updateQuestionText,
+  assignQuestionToPerson,
+  assignQuestionToGroup,
+} from '../queries/question'
+import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
 const all = ['questions', 'all'] as const
 const byId = ['questions', 'byId'] as const
 const create = ['questions', 'create'] as const
 
-type MyUseQueryOptions<TData> = Omit<UseQueryOptions<TData>, 'queryKey' | 'queryFn'>
-type MyUseMutationOptions<TData, TVariables> = Omit<
-  UseMutationOptions<TData, unknown, TVariables>,
-  'mutationKey' | 'mutationFn'
->
-
 export const questionRouter = {
-  useUtils() {
-    return {
-      all: {
-        invalidate: () => {
-          return queryClient.invalidateQueries({ queryKey: all })
-        },
-      },
-    }
-  },
   all: {
-    useQuery: (options: MyUseQueryOptions<Question[]>) =>
+    useQuery: (options?: MyUseQueryOptions<Question[]>) =>
       useQuery({ ...options, queryKey: all, queryFn: getQuestions }),
   },
 
   byId: {
-    useQuery: ({ id, ...options }: { id: number } & MyUseQueryOptions<Question | undefined>) =>
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Question | undefined>) =>
       useQuery({
         ...options,
         queryKey: [...byId, id],
@@ -51,51 +42,94 @@ export const questionRouter = {
   },
 
   create: {
-    useMutation: (options: MyUseMutationOptions<Question[], NewQuestion>) =>
+    useMutation: (options?: MyUseMutationOptions<Question[], NewQuestion>) =>
       useMutation({ ...options, mutationKey: create, mutationFn: createQuestion }),
   },
 
-  // delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-  //   return ctx.db.delete(questions).where(eq(questions.id, input))
-  // }),
+  delete: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questions', 'delete'],
+        mutationFn: deleteQuestion,
+      })
+    },
+  },
 
-  // getQuestionsForPerson: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-  //   return ctx.db.query.questions.findMany({
-  //     where: eq(questions.personId, input),
-  //     orderBy: desc(questions.createdDatetime),
-  //   })
-  // }),
+  getQuestionsForPerson: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Question[]>) =>
+      useQuery({
+        ...options,
+        queryKey: ['questions', 'forPerson', id],
+        queryFn: () => getQuestionsForPerson(id),
+      }),
+  },
 
-  // update: protectedProcedure
-  //   .input(z.intersection(z.optional(insertQuestionSchema), z.object({ id: z.number() })))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db.update(questions).set(input).where(eq(questions.id, input.id))
-  //   }),
+  update: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, UpdateTable<NewQuestion>>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questions', 'update'],
+        mutationFn: updateQuestion,
+      })
+    },
+  },
 
-  // updateQuestion: protectedProcedure
-  //   .input(z.object({ id: z.number(), question: z.string() }))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db
-  //       .update(questions)
-  //       .set({ question: input.question })
-  //       .where(eq(questions.id, input.id))
-  //   }),
+  updateText: {
+    useMutation: (
+      options?: MyUseMutationOptions<SQLiteRunResult, { id: number; question: string }>,
+    ) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questions', 'updateText'],
+        mutationFn: updateQuestionText,
+      })
+    },
+  },
 
-  // assignToPerson: protectedProcedure
-  //   .input(z.object({ questionId: z.number(), personId: z.number() }))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db
-  //       .update(questions)
-  //       .set({ personId: input.personId })
-  //       .where(eq(questions.id, input.questionId))
-  //   }),
+  assignToPerson: {
+    useMutation: (
+      options?: MyUseMutationOptions<SQLiteRunResult, { questionId: number; personId: number }>,
+    ) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questions', 'assignToPerson'],
+        mutationFn: assignQuestionToPerson,
+      })
+    },
+  },
 
-  // assignToGroup: protectedProcedure
-  //   .input(z.object({ questionId: z.number(), groupId: z.number() }))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db
-  //       .update(questions)
-  //       .set({ groupId: input.groupId })
-  //       .where(eq(questions.id, input.questionId))
-  //   }),
+  assignToGroup: {
+    useMutation: (
+      options?: MyUseMutationOptions<SQLiteRunResult, { questionId: number; groupId: number }>,
+    ) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questions', 'assignToGroup'],
+        mutationFn: assignQuestionToGroup,
+      })
+    },
+  },
+}
+
+const queryClient = new QueryClient()
+
+export const questionInvalidators = {
+  question: {
+    all: {
+      invalidate: () => {
+        return queryClient.invalidateQueries({ queryKey: all })
+      },
+    },
+    byId: {
+      invalidate: (id: number) => {
+        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
+      },
+    },
+    forPerson: {
+      invalidate: (id: number) => {
+        return queryClient.invalidateQueries({ queryKey: ['questions', 'forPerson', id] })
+      },
+    },
+  },
 }
