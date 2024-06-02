@@ -5,13 +5,15 @@ import * as schema from './schema'
 import type { Database } from './schema/_table'
 import { drizzle } from 'drizzle-orm/expo-sqlite'
 import { openDatabaseSync } from 'expo-sqlite/next'
+import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
+
 interface ConnectionResult {
   db: Database
 }
+export const expo = openDatabaseSync('db.db', {
+  // enableCRSQLite: true,
+})
 export function createConnection(): ConnectionResult {
-  const expo = openDatabaseSync('db.db', {
-    // enableCRSQLite: true,
-  })
   const db = drizzle(expo, {
     schema,
   })
@@ -27,6 +29,10 @@ export function createConnection(): ConnectionResult {
 }
 export const useMigrationHelper = () => {
   return useMigrations(db, migrations)
+}
+
+export const useDrizzleStudioHelper = () => {
+  return useDrizzleStudio(expo)
 }
 
 export function generateRandomId(length: number): number {

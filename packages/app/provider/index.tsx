@@ -9,6 +9,7 @@ import { BottomSheetModalProvider } from './bottom-sheet-modal'
 import { ExpoSQLiteProvider } from './expo-sqlite';
 import { QueryClientProvider } from './query-client';
 import { ToastViewport } from './toast-viewport';
+import { ExpoDrizzleStudio } from './expo-drizzle-studio';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   return (
@@ -20,9 +21,11 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
               {/* <TRPCProvider> */}
               <QueryClientProvider>
                 <ExpoSQLiteProvider>
-                  <BottomSheetModalProvider>
-                    {children}
-                  </BottomSheetModalProvider>
+                  <ExpoDrizzleStudio>
+                    <BottomSheetModalProvider>
+                      {children}
+                    </BottomSheetModalProvider>
+                  </ExpoDrizzleStudio>
                 </ExpoSQLiteProvider>
               </QueryClientProvider>
               {/* </TRPCProvider> */}
@@ -32,6 +35,6 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
           </ToastProvider>
         </SafeAreaProvider>
       </TamaguiProvider>
-    </TamaguiThemeProvider>
+    </TamaguiThemeProvider >
   )
 }
