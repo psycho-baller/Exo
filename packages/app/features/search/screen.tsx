@@ -123,7 +123,8 @@ const Index = () => {
           />
         </YStack>
 
-        <SearchHistory />
+        {/* Add this when needed */}
+        {/* <SearchHistory /> */}
       </YStack>
     </MainPage>
   )

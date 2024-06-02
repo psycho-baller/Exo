@@ -3,24 +3,11 @@ import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import { useEffect } from 'react'
-// import { CARD_HEIGHT } from '../../utils/constants'
-// import { QuestionCard } from './QuestionCard'
+import { CARD_HEIGHT } from '../../utils/constants'
+import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
-  console.log('api:', api)
-  const { mutateAsync: create } = api.question.create.useMutation({
-    async onSuccess() {
-      // await api.question.all.invalidate()
-    },
-  })
-
-  const { isLoading, error, data } = api.question.byId.useQuery({
-    id: 1,
-  })
-
-  const { mutateAsync: deleteQuestion } = api.question.delete.useMutation()
-  const { mutateAsync: updateQuestion } = api.question.update.useMutation()
-  console.log('data:', data)
+  const { isLoading, error, data } = api.question.all.useQuery()
   if (isLoading) {
     return <Text>Loading...</Text>
   }
@@ -28,28 +15,15 @@ const Index = () => {
     return <Text>Error: {error.message}</Text>
   }
 
-  useEffect(() => {
-    // updateQuestion({ })
-    deleteQuestion({ id: 1 })
-    const createQuestion = async () => {
-      const newQuestion = await create({
-        question: 'What is the meaning of life?',
-        createdByUserId: '69420'
-      })
-      console.log('newQuestion:', newQuestion)
-    }
-    createQuestion()
-  }, [])
-
   return (
     <MainPage>
-      {/* <VirtualList
+      <VirtualList
         data={data}
         itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
         listEmptyComponent={<Text>No data</Text>}
         isPage
-      /> */}
+      />
     </MainPage>
   )
 }
