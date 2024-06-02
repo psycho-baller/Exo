@@ -2,27 +2,58 @@ import { z } from 'zod'
 
 import { eq } from '@acme/db'
 import { groupsOfPeople, people } from '@acme/db/schema'
-import { insertGroupsOfPeopleSchema } from '@acme/db/schema/types'
+import type {
+  Group,
+  GroupsOfPeople,
+  MyUseMutationOptions,
+  MyUseQueryOptions,
+  NewGroup,
+  NewGroupsOfPeople,
+  Person,
+  WithId,
+} from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
+import {
+  getGroupsOfPeople,
+  getPeopleFromGroupId,
+  createGroupsOfPeople,
+} from '../queries/groupsOfPeople'
+import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
-export const groupsOfPeopleRouter = createTRPCRouter({
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.groupsOfPeople.findMany()
-  }),
+const all = ['groupsOfPeople', 'all'] as const
+const byId = ['groupsOfPeople', 'byId'] as const
+const create = ['groupsOfPeople', 'create'] as const
+export const groupsOfPeopleRouter = {
+  // READ
+  all: {
+    useQuery: (options?: MyUseQueryOptions<GroupsOfPeople[]>) =>
+      useQuery({ ...options, queryKey: all, queryFn: getGroupsOfPeople }),
+  },
 
-  getPeopleFromGroupId: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.db
-      .select({ people })
-      .from(groupsOfPeople)
-      .innerJoin(people, eq(groupsOfPeople.groupId, people.id))
-      .where(eq(groupsOfPeople.groupId, input))
-  }),
+  getPeopleFromGroupId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Person[]>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byId, id],
+        queryFn: () => getPeopleFromGroupId(id),
+      }),
+  },
 
-  create: protectedProcedure.input(insertGroupsOfPeopleSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(groupsOfPeople).values({
-      groupId: input.groupId,
-      personId: input.personId,
-    })
-  }),
-})
+  // CREATE
+  create: {
+    useMutation: (options?: MyUseMutationOptions<GroupsOfPeople[], NewGroupsOfPeople>) =>
+      useMutation({ ...options, mutationKey: create, mutationFn: createGroupsOfPeople }),
+  },
+}
+
+const queryClient = new QueryClient()
+
+export const groupsOfPeopleInvalidators = {
+  groupsOfPeople: {
+    all: { invalidate: () => queryClient.invalidateQueries({ queryKey: all }) },
+    byId: {
+      invalidate: (id: number) => queryClient.invalidateQueries({ queryKey: [...byId, id] }),
+    },
+  },
+}

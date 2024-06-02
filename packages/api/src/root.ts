@@ -1,18 +1,19 @@
 import { authRouter } from './router/auth'
-import { groupRouter } from './router/group'
-import { groupsOfPeopleRouter } from './router/groupsOfPeople'
+import { groupRouter, groupInvalidators } from './router/group'
+import { groupsOfPeopleRouter, groupsOfPeopleInvalidators } from './router/groupsOfPeople'
 import { personRouter, personInvalidators } from './router/person'
 import { questionRouter, questionInvalidators } from './router/question'
 import { questionTopicRouter } from './router/questionTopic'
 import { searchHistoryRouter } from './router/searchHistory'
 import { topicRouter } from './router/topic'
 import { userRouter } from './router/user'
-import { createTRPCRouter } from './trpc'
 
 export const appRouter = {
   useUtils: () => ({
     ...questionInvalidators,
     ...personInvalidators,
+    ...groupInvalidators,
+    ...groupsOfPeopleInvalidators,
   }),
 
   // auth: authRouter,
@@ -21,9 +22,9 @@ export const appRouter = {
   question: questionRouter,
   // topic: topicRouter,
   // questionTopic: questionTopicRouter,
-  // group: groupRouter,
+  group: groupRouter,
   // searchHistory: searchHistoryRouter,
-  // groupsOfPeople: groupsOfPeopleRouter,
+  groupsOfPeople: groupsOfPeopleRouter,
 }
 
 // export type definition of API
