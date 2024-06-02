@@ -1,37 +1,78 @@
-import { z } from 'zod'
+import type {
+  MyUseMutationOptions,
+  MyUseQueryOptions,
+  NewTopic,
+  Topic,
+  UpdateTable,
+  WithId,
+} from '@acme/db/schema/types'
+import type { SQLiteRunResult } from 'expo-sqlite'
 
-import { desc, eq, like } from '@acme/db'
-import { topics } from '@acme/db/schema'
-import { insertTopicSchema } from '@acme/db/schema/types'
+import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '../queries/topics'
+import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
+const all = ['topics', 'all'] as const
+const byId = ['topics', 'byId'] as const
+const create = ['topics', 'create'] as const
 
-export const topicRouter = createTRPCRouter({
-  all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.topics.findMany({ orderBy: desc(topics.id) })
-  }),
+export const topicRouter = {
+  // READ
+  all: {
+    useQuery: (options?: MyUseQueryOptions<Topic[]>) =>
+      useQuery({ ...options, queryKey: all, queryFn: getTopics }),
+  },
 
-  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.topics.findFirst({
-      where: eq(topics.id, input.id),
-    })
-  }),
+  byId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Topic | undefined>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byId, id],
+        queryFn: () => getTopicById(id),
+      }),
+  },
 
-  create: protectedProcedure.input(insertTopicSchema).mutation(async ({ ctx, input }) => {
-    return await ctx.db
-      .insert(topics)
-      .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning()
-  }),
+  // CREATE
+  create: {
+    useMutation: (options?: MyUseMutationOptions<Topic[], NewTopic>) =>
+      useMutation({ ...options, mutationKey: create, mutationFn: createTopic }),
+  },
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(topics).where(eq(topics.id, input))
-  }),
+  // DELETE
+  delete: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['topics', 'delete'],
+        mutationFn: deleteTopic,
+      })
+    },
+  },
 
-  // search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
-  //   return ctx.db.query.topics.findMany({
-  //     where: like(topics.name, `%${input.query}%`),
-  //     orderBy: desc(topics.id),
-  //   })
-  // }),
-})
+  // UPDATE
+  update: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, UpdateTable<NewTopic>>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['topics', 'update'],
+        mutationFn: updateTopic,
+      })
+    },
+  },
+}
+
+const queryClient = new QueryClient()
+
+export const topicInvalidators = {
+  topic: {
+    all: {
+      invalidate: () => {
+        return queryClient.invalidateQueries({ queryKey: all })
+      },
+    },
+    byId: {
+      invalidate: (id: number) => {
+        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
+      },
+    },
+  },
+}

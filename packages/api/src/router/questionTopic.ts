@@ -1,65 +1,81 @@
-import { z } from 'zod'
+import type {
+  MyUseMutationOptions,
+  MyUseQueryOptions,
+  NewQuestionTopics,
+  QuestionTopics,
+  Topic,
+  WithId,
+} from '@acme/db/schema/types'
+import type { SQLiteRunResult } from 'expo-sqlite'
 
-import { and, eq } from '@acme/db'
-import { questionTopics, topics } from '@acme/db/schema'
-import { insertQuestionTopicSchema } from '@acme/db/schema/types'
+import {
+  createQuestionTopic,
+  getQuestionTopics,
+  getTopicsFromQuestionId,
+  deleteQuestionTopic,
+} from '../queries/questionTopic'
+import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
-import { createTRPCRouter, protectedProcedure } from '../trpc'
+const all = ['questionTopics', 'all'] as const
+const byQuestionId = ['questionTopics', 'byQuestionId'] as const
+const create = ['questionTopics', 'create'] as const
 
-export const questionTopicRouter = createTRPCRouter({
+export const questionTopicRouter = {
   // READ
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.questionTopics.findMany()
-  }),
+  all: {
+    useQuery: (options?: MyUseQueryOptions<QuestionTopics[]>) =>
+      useQuery({ ...options, queryKey: all, queryFn: getQuestionTopics }),
+  },
 
-  getTopicsFromQuestionId: protectedProcedure
-    .input(z.object({ questionId: z.number() }))
-    .query(({ ctx, input }) => {
-      return ctx.db
-        .select({ id: topics.id, name: topics.name })
-        .from(questionTopics)
-        .innerJoin(topics, eq(questionTopics.topicId, topics.id))
-        .where(eq(questionTopics.questionId, input.questionId))
-    }),
+  byQuestionId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Topic[]>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byQuestionId, id],
+        queryFn: () => getTopicsFromQuestionId(id),
+      }),
+  },
+
+  getTopicsFromQuestionId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Topic[]>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byQuestionId, id],
+        queryFn: () => getTopicsFromQuestionId(id),
+      }),
+  },
 
   // CREATE
-  create: protectedProcedure.input(insertQuestionTopicSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(questionTopics).values({
-      topicId: input.topicId,
-      questionId: input.questionId,
-    })
-  }),
+  create: {
+    useMutation: (options?: MyUseMutationOptions<QuestionTopics[], NewQuestionTopics>) =>
+      useMutation({ ...options, mutationKey: create, mutationFn: createQuestionTopic }),
+  },
 
   // DELETE
-  delete: protectedProcedure
-    .input(z.object({ questionId: z.number(), topicId: z.number() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db
-        .delete(questionTopics)
-        .where(
-          and(
-            eq(questionTopics.questionId, input.questionId),
-            eq(questionTopics.topicId, input.topicId),
-          ),
-        )
-    }),
+  delete: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['questionTopics', 'delete'],
+        mutationFn: deleteQuestionTopic,
+      })
+    },
+  },
+}
 
-  // UPDATE
-  // update: protectedProcedure
-  //   .input(z.object({ questionId: z.number(), topicId: z.number() }))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db
-  //       .update(questionTopics)
-  //       .set({ topicId: input.topicId })
-  //       .where(eq(questionTopics.questionId, input.questionId))
-  //   }),
+const queryClient = new QueryClient()
 
-  // assignQuestionToTopic: protectedProcedure
-  //   .input(z.object({ questionId: z.number(), topicId: z.number() }))
-  //   .mutation(({ ctx, input }) => {
-  //     return ctx.db
-  //       .update(questionTopics)
-  //       .set({ topicId: input.topicId })
-  //       .where(eq(questionTopics.questionId, input.questionId))
-  //   }),
-})
+export const questionTopicInvalidators = {
+  questionTopics: {
+    all: {
+      invalidate: () => {
+        return queryClient.invalidateQueries({ queryKey: all })
+      },
+    },
+    byQuestionId: {
+      invalidate: ({ id }: WithId) => {
+        return queryClient.invalidateQueries({ queryKey: [...byQuestionId, id] })
+      },
+    },
+  },
+}
