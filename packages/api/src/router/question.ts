@@ -19,6 +19,7 @@ import {
   updateQuestionText,
   assignQuestionToPerson,
   assignQuestionToGroup,
+  getQuestionsForGroup,
 } from '../queries/question'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
@@ -48,6 +49,15 @@ export const questionRouter = {
         ...options,
         queryKey: ['questions', 'forPerson', id],
         queryFn: () => getQuestionsForPerson(id),
+      }),
+  },
+
+  getQuestionsForGroup: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Question[]>) =>
+      useQuery({
+        ...options,
+        queryKey: ['groups', 'forGroup', id],
+        queryFn: () => getQuestionsForGroup(id),
       }),
   },
 

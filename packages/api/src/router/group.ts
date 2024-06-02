@@ -87,7 +87,7 @@ export const groupInvalidators = {
       },
     },
     byId: {
-      invalidate: ({id}: WithId) => {
+      invalidate: ({ id }: WithId) => {
         return queryClient.invalidateQueries({ queryKey: [...byId, id] })
       },
     },

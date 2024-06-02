@@ -33,9 +33,13 @@ export async function updatePerson(input: UpdateTable<NewPerson>) {
   return await db.update(people).set(input).where(eq(people.id, input.id))
 }
 
-export async function updatePersonName(input: { id: number; firstName: string; lastName: string }) {
+export async function updatePersonName(input: {
+  id: number
+  firstName: string
+  lastName?: string
+}) {
   const { id, firstName, lastName } = z
-    .object({ id: z.number(), firstName: z.string(), lastName: z.string() })
+    .object({ id: z.number(), firstName: z.string(), lastName: z.string().optional() })
     .parse(input)
   return await db.update(people).set({ firstName, lastName }).where(eq(people.id, id))
 }

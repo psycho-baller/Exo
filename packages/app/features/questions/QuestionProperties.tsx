@@ -51,7 +51,7 @@ export function QuestionProperties({
     update({
       id,
       reminderDatetime: date,
-      createdByUserId,
+      // createdByUserId,
       question,
     })
     await utils.question.byId.invalidate({ id: id })

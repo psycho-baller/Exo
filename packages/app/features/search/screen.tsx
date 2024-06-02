@@ -69,7 +69,8 @@ const PersonSearch = () => {
 }
 
 const Index = () => {
-  const headerHeight = Platform.OS !== 'web' ? useHeaderHeight() : 0
+  const headerHeightHook = useHeaderHeight()
+  const headerHeight = Platform.OS !== 'web' ? headerHeightHook : 0
 
   return (
     <MainPage paddingTop={headerHeight}>

@@ -50,7 +50,7 @@ const GroupScreen = (): ReactNode => {
 }
 
 const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
-  const questions = api.group.getQuestionsForGroup.useQuery(groupId)
+  const questions = api.question.getQuestionsForGroup.useQuery({ id: groupId })
   return (
     <YStack flex={1}>
       <VirtualList
@@ -63,7 +63,7 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
 }
 
 const PeopleInGroup = ({ groupId }: { groupId: number }) => {
-  const { data } = api.groupsOfPeople.getPeopleFromGroupId.useQuery(groupId)
+  const { data } = api.groupsOfPeople.getPeopleFromGroupId.useQuery({ id: groupId })
   return (
     <YStack flex={1}>
       <VirtualList

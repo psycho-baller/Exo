@@ -22,6 +22,13 @@ export async function getQuestionsForPerson(personId: number) {
   })
 }
 
+export async function getQuestionsForGroup(groupId: number) {
+  return await db.query.questions.findMany({
+    where: eq(questions.groupId, groupId),
+    orderBy: desc(questions.createdDatetime),
+  })
+}
+
 // CREATE
 export async function createQuestion(input: NewQuestion): Promise<Question[]> {
   insertQuestionSchema.parse(input)

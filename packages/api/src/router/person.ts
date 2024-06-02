@@ -70,7 +70,7 @@ export const personRouter = {
     useMutation: (
       options?: MyUseMutationOptions<
         SQLiteRunResult,
-        { firstName: string; lastName: string } & WithId
+        { firstName: string; lastName?: string } & WithId
       >,
     ) => {
       return useMutation({
