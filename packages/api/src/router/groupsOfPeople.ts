@@ -53,7 +53,7 @@ export const groupsOfPeopleInvalidators = {
   groupsOfPeople: {
     all: { invalidate: () => queryClient.invalidateQueries({ queryKey: all }) },
     byId: {
-      invalidate: (id: number) => queryClient.invalidateQueries({ queryKey: [...byId, id] }),
+      invalidate: ({ id }: WithId) => queryClient.invalidateQueries({ queryKey: [...byId, id] }),
     },
   },
 }

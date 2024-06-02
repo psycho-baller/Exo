@@ -70,7 +70,7 @@ export const topicInvalidators = {
       },
     },
     byId: {
-      invalidate: (id: number) => {
+      invalidate: ({ id }: WithId) => {
         return queryClient.invalidateQueries({ queryKey: [...byId, id] })
       },
     },

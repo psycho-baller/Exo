@@ -126,12 +126,12 @@ export const questionInvalidators = {
       },
     },
     byId: {
-      invalidate: (id: number) => {
+      invalidate: ({ id }: WithId) => {
         return queryClient.invalidateQueries({ queryKey: [...byId, id] })
       },
     },
     forPerson: {
-      invalidate: (id: number) => {
+      invalidate: ({ id }: WithId) => {
         return queryClient.invalidateQueries({ queryKey: ['questions', 'forPerson', id] })
       },
     },

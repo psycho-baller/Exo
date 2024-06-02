@@ -35,7 +35,7 @@ export function QuestionProperties({
   })
 
   const topics = api.questionTopic.getTopicsFromQuestionId.useQuery({
-    questionId: id,
+    id,
   })
   const topicsData = topics.data
 
