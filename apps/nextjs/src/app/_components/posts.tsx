@@ -59,7 +59,6 @@ export async function CreateQuestionForm() {
       {error?.data?.zodError?.fieldErrors.content && (
         <span className='mb-2 text-red-500'>{error.data.zodError.fieldErrors.content}</span>
       )}
-      {}
       <button type='submit' className='rounded bg-pink-400 p-2 font-bold'>
         Create
       </button>
@@ -112,7 +111,7 @@ export function PostCard(props: {
         <button
           className='cursor-pointer text-sm font-bold uppercase text-pink-400'
           onClick={async () => {
-            await deleteQuestion.mutateAsync(props.question.id)
+            await deleteQuestion.mutateAsync({ id: props.question.id })
             await context.question.all.invalidate()
           }}
         >

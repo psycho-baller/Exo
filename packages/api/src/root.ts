@@ -1,7 +1,7 @@
 import { authRouter } from './router/auth'
 import { groupRouter } from './router/group'
 import { groupsOfPeopleRouter } from './router/groupsOfPeople'
-import { personRouter } from './router/person'
+import { personRouter, personInvalidators } from './router/person'
 import { questionRouter, questionInvalidators } from './router/question'
 import { questionTopicRouter } from './router/questionTopic'
 import { searchHistoryRouter } from './router/searchHistory'
@@ -12,11 +12,12 @@ import { createTRPCRouter } from './trpc'
 export const appRouter = {
   useUtils: () => ({
     ...questionInvalidators,
+    ...personInvalidators,
   }),
 
   // auth: authRouter,
   // user: userRouter,
-  // person: personRouter,
+  person: personRouter,
   question: questionRouter,
   // topic: topicRouter,
   // questionTopic: questionTopicRouter,
