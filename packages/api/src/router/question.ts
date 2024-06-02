@@ -27,6 +27,7 @@ const byId = ['questions', 'byId'] as const
 const create = ['questions', 'create'] as const
 
 export const questionRouter = {
+  // READ
   all: {
     useQuery: (options?: MyUseQueryOptions<Question[]>) =>
       useQuery({ ...options, queryKey: all, queryFn: getQuestions }),
@@ -41,11 +42,22 @@ export const questionRouter = {
       }),
   },
 
+  getQuestionsForPerson: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Question[]>) =>
+      useQuery({
+        ...options,
+        queryKey: ['questions', 'forPerson', id],
+        queryFn: () => getQuestionsForPerson(id),
+      }),
+  },
+
+  // CREATE
   create: {
     useMutation: (options?: MyUseMutationOptions<Question[], NewQuestion>) =>
       useMutation({ ...options, mutationKey: create, mutationFn: createQuestion }),
   },
 
+  // DELETE
   delete: {
     useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
       return useMutation({
@@ -56,15 +68,7 @@ export const questionRouter = {
     },
   },
 
-  getQuestionsForPerson: {
-    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Question[]>) =>
-      useQuery({
-        ...options,
-        queryKey: ['questions', 'forPerson', id],
-        queryFn: () => getQuestionsForPerson(id),
-      }),
-  },
-
+  // UPDATE
   update: {
     useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, UpdateTable<NewQuestion>>) => {
       return useMutation({
@@ -77,7 +81,7 @@ export const questionRouter = {
 
   updateText: {
     useMutation: (
-      options?: MyUseMutationOptions<SQLiteRunResult, { id: number; question: string }>,
+      options?: MyUseMutationOptions<SQLiteRunResult, { question: string } & WithId>,
     ) => {
       return useMutation({
         ...options,
