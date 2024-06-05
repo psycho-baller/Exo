@@ -55,7 +55,7 @@ export const MainPage: FC<Props> = ({ children, ...props }) => {
         cursor='pointer'
         icon={<Plus size={'$3'} />}
       /> */}
-      {/* <AddQuestion /> */}
+      <AddQuestion />
     </Page>
   )
 }
