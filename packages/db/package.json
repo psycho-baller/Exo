@@ -33,6 +33,7 @@
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.21.1",
     "eslint": "^8.57.0",
+    "expo-drizzle-studio-plugin": "^0.0.2",
     "prettier": "^3.2.5",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
