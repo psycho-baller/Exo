@@ -10,7 +10,7 @@ import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
 interface ConnectionResult {
   db: Database
 }
-export const expo = openDatabaseSync('db.db', {
+export const expo = openDatabaseSync('db2.db', {
   // enableCRSQLite: true,
 })
 export function createConnection(): ConnectionResult {
@@ -27,6 +27,17 @@ export function createConnection(): ConnectionResult {
     // },
   }
 }
+
+export const takeUniqueOrThrow = <T extends any[]>(values: T): T[number] => {
+  if (values.length !== 1) throw new Error('Found non unique or inexistent value')
+  return values[0]
+}
+
+export const takeUnique = <T extends any[]>(values: T): T[number] | undefined => {
+  if (values.length !== 1) return undefined
+  return values[0]
+}
+
 export const useMigrationHelper = () => {
   return useMigrations(db, migrations)
 }
