@@ -5,6 +5,7 @@ import type {
   Group,
   UpdateTable,
   WithId,
+  InsertGroupSchema,
 } from '@acme/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
@@ -17,6 +18,7 @@ import {
   updateGroupName,
 } from '../queries/group'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { getDeviceId } from '../../utils/device'
 
 const all = ['groups', 'all'] as const
 const byId = ['groups', 'byId'] as const
@@ -40,8 +42,13 @@ export const groupRouter = {
 
   // CREATE
   create: {
-    useMutation: (options?: MyUseMutationOptions<Group[], NewGroup>) =>
-      useMutation({ ...options, mutationKey: create, mutationFn: createGroup }),
+    useMutation: (options?: MyUseMutationOptions<Group[], InsertGroupSchema>) =>
+      useMutation({
+        ...options,
+        mutationKey: create,
+        mutationFn: async (input) =>
+          createGroup({ ...input, createdByUserId: await getDeviceId() }),
+      }),
   },
 
   // DELETE

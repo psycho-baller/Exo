@@ -1,4 +1,5 @@
 import type {
+  InsertPersonSchema,
   MyUseMutationOptions,
   MyUseQueryOptions,
   NewPerson,
@@ -17,6 +18,7 @@ import {
   updatePersonName,
 } from '../queries/person'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { getDeviceId } from '../../utils/device'
 
 const all = ['people', 'all'] as const
 const byId = ['people', 'byId'] as const
@@ -40,8 +42,13 @@ export const personRouter = {
 
   // CREATE
   create: {
-    useMutation: (options?: MyUseMutationOptions<Person[], NewPerson>) =>
-      useMutation({ ...options, mutationKey: create, mutationFn: createPerson }),
+    useMutation: (options?: MyUseMutationOptions<Person[], InsertPersonSchema>) =>
+      useMutation({
+        ...options,
+        mutationKey: create,
+        mutationFn: async (input) =>
+          createPerson({ ...input, createdByUserId: await getDeviceId() }),
+      }),
   },
 
   // DELETE

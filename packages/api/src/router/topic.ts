@@ -1,4 +1,5 @@
 import type {
+  InsertTopicSchema,
   MyUseMutationOptions,
   MyUseQueryOptions,
   NewTopic,
@@ -10,6 +11,7 @@ import type { SQLiteRunResult } from 'expo-sqlite'
 
 import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '../queries/topics'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { getDeviceId } from '../../utils/device'
 
 const all = ['topics', 'all'] as const
 const byId = ['topics', 'byId'] as const
@@ -33,8 +35,14 @@ export const topicRouter = {
 
   // CREATE
   create: {
-    useMutation: (options?: MyUseMutationOptions<Topic[], NewTopic>) =>
-      useMutation({ ...options, mutationKey: create, mutationFn: createTopic }),
+    useMutation: (options?: MyUseMutationOptions<Topic[], InsertTopicSchema>) =>
+      useMutation({
+        ...options,
+        mutationKey: create,
+        mutationFn: async (input) => {
+          return createTopic({ ...input, createdByUserId: await getDeviceId() })
+        },
+      }),
   },
 
   // DELETE

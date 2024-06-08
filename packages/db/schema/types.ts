@@ -1,6 +1,5 @@
 import { createInsertSchema } from 'drizzle-zod'
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import {
   comments,
   follows,
@@ -19,6 +18,8 @@ import {
   topics,
   users,
 } from '.'
+
+import type { z } from 'zod'
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 
 // User
@@ -40,6 +41,7 @@ export type NewPost = typeof posts.$inferInsert
 export const insertPostSchema = createInsertSchema(posts, {
   createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
 })
+export type InsertPostSchema = z.infer<typeof insertPostSchema>
 
 // SearchHistory
 export type SearchHistory = typeof searchHistories.$inferSelect
@@ -47,6 +49,7 @@ export type NewSearchHistory = typeof searchHistories.$inferInsert
 export const insertSearchHistoryhSchema = createInsertSchema(searchHistories, {
   createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
 })
+export type InsertSearchHistorySchema = z.infer<typeof insertSearchHistoryhSchema>
 
 // Topic
 export type Topic = typeof topics.$inferSelect
@@ -55,6 +58,7 @@ export const insertTopicSchema = createInsertSchema(topics, {
   createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   name: ({ name }) => name.min(1).max(31),
 })
+export type InsertTopicSchema = z.infer<typeof insertTopicSchema>
 
 // Person
 export type Person = typeof people.$inferSelect
@@ -65,6 +69,7 @@ export const insertPersonSchema = createInsertSchema(people, {
   lastName: ({ lastName }) => lastName.min(1).max(31),
   phoneNumber: ({ phoneNumber }) => phoneNumber.min(10).max(15),
 })
+export type InsertPersonSchema = z.infer<typeof insertPersonSchema>
 
 // Group
 export type Group = typeof groups.$inferSelect
@@ -73,7 +78,7 @@ export const insertGroupSchema = createInsertSchema(groups, {
   createdByUserId: ({ createdByUserId }) => createdByUserId.optional(),
   name: ({ name }) => name.min(1).max(63),
 })
-
+export type InsertGroupSchema = z.infer<typeof insertGroupSchema>
 // groupsOfPeople
 export type GroupsOfPeople = typeof groupsOfPeople.$inferSelect
 export type NewGroupsOfPeople = typeof groupsOfPeople.$inferInsert
@@ -111,6 +116,7 @@ export const insertQuestionSchema = createInsertSchema(questions, {
   groupId: ({ groupId }) => groupId.describe('The group the user wants to ask the question to'),
   personId: ({ personId }) => personId.describe('The person the user wants to ask the question to'),
 })
+export type InsertQuestionSchema = z.infer<typeof insertQuestionSchema>
 
 // QuestionTopics
 export type QuestionTopics = typeof questionTopics.$inferSelect

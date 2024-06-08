@@ -17,6 +17,7 @@ import {
   updateSearchHistory,
 } from '../queries/searchHistory'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { getDeviceId } from '../../utils/device'
 
 const all = ['searchHistories', 'all'] as const
 const byId = ['searchHistories', 'byId'] as const
@@ -39,12 +40,13 @@ export const searchHistoryRouter = {
   },
 
   getSearchHistoriesForUser: {
-    useQuery: (options: MyUseQueryOptions<SearchHistory[]>) =>
+    useQuery: (options: MyUseQueryOptions<SearchHistory[]>) => {
       useQuery({
         ...options,
-        queryKey: ['searchHistories', 'forUser', '69420'],
-        queryFn: () => getSearchHistoriesForUser('69420'),
-      }),
+        queryKey: ['searchHistories', 'forUser'],
+        queryFn: async () => getSearchHistoriesForUser(await getDeviceId()),
+      })
+    },
   },
 
   // CREATE

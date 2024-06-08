@@ -1,4 +1,5 @@
 import type {
+  InsertQuestionSchema,
   MyUseMutationOptions,
   MyUseQueryOptions,
   NewQuestion,
@@ -22,6 +23,7 @@ import {
   getQuestionsForGroup,
 } from '../queries/question'
 import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { getDeviceId } from '../../utils/device'
 
 const all = ['questions', 'all'] as const
 const byId = ['questions', 'byId'] as const
@@ -63,8 +65,13 @@ export const questionRouter = {
 
   // CREATE
   create: {
-    useMutation: (options?: MyUseMutationOptions<Question[], NewQuestion>) =>
-      useMutation({ ...options, mutationKey: create, mutationFn: createQuestion }),
+    useMutation: (options?: MyUseMutationOptions<Question[], InsertQuestionSchema>) =>
+      useMutation({
+        ...options,
+        mutationKey: create,
+        mutationFn: async (input) =>
+          createQuestion({ ...input, createdByUserId: await getDeviceId() }),
+      }),
   },
 
   // DELETE
