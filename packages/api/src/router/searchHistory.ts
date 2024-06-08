@@ -1,30 +1,101 @@
-import { z } from 'zod'
+import type {
+  MyUseMutationOptions,
+  MyUseQueryOptions,
+  NewSearchHistory,
+  SearchHistory,
+  UpdateTable,
+  WithId,
+} from '@acme/db/schema/types'
+import type { SQLiteRunResult } from 'expo-sqlite'
 
-import { desc, eq } from '@acme/db'
-import { searchHistories } from '@acme/db/schema'
-import { insertSearchHistoryhSchema } from '@acme/db/schema/types'
+import {
+  createSearchHistory,
+  getSearchHistories,
+  getSearchHistoryById,
+  deleteSearchHistory,
+  getSearchHistoriesForUser,
+  updateSearchHistory,
+} from '../queries/searchHistory'
+import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
 
-import { createTRPCRouter, protectedProcedure } from '../trpc'
+const all = ['searchHistories', 'all'] as const
+const byId = ['searchHistories', 'byId'] as const
+const create = ['searchHistories', 'create'] as const
 
-export const searchHistoryRouter = createTRPCRouter({
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.searchHistories.findMany({
-      orderBy: desc(searchHistories.datetime),
-    })
-  }),
+export const searchHistoryRouter = {
+  // READ
+  all: {
+    useQuery: (options?: MyUseQueryOptions<SearchHistory[]>) =>
+      useQuery({ ...options, queryKey: all, queryFn: getSearchHistories }),
+  },
 
-  byCurrentUserId: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.searchHistories.findMany({
-      where: eq(searchHistories.createdByUserId, ctx.session.user.id),
-      orderBy: desc(searchHistories.datetime),
-    })
-  }),
+  byId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<SearchHistory | undefined>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byId, id],
+        queryFn: () => getSearchHistoryById(id),
+      }),
+  },
 
-  create: protectedProcedure.input(insertSearchHistoryhSchema).mutation(({ ctx, input }) => {
-    return ctx.db.insert(searchHistories).values({ createdByUserId: ctx.session.user.id, ...input })
-  }),
+  getSearchHistoriesForUser: {
+    useQuery: (options: MyUseQueryOptions<SearchHistory[]>) =>
+      useQuery({
+        ...options,
+        queryKey: ['searchHistories', 'forUser', '69420'],
+        queryFn: () => getSearchHistoriesForUser('69420'),
+      }),
+  },
 
-  delete: protectedProcedure.input(z.object({ userId: z.string() })).mutation(({ ctx, input }) => {
-    return ctx.db.delete(searchHistories).where(eq(searchHistories.createdByUserId, input.userId))
-  }),
-})
+  // CREATE
+  create: {
+    useMutation: (options?: MyUseMutationOptions<SearchHistory[], NewSearchHistory>) =>
+      useMutation({ ...options, mutationKey: create, mutationFn: createSearchHistory }),
+  },
+
+  // DELETE
+  delete: {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['searchHistories', 'delete'],
+        mutationFn: deleteSearchHistory,
+      })
+    },
+  },
+
+  // UPDATE
+  update: {
+    useMutation: (
+      options?: MyUseMutationOptions<SQLiteRunResult, UpdateTable<NewSearchHistory>>,
+    ) => {
+      return useMutation({
+        ...options,
+        mutationKey: ['searchHistories', 'update'],
+        mutationFn: updateSearchHistory,
+      })
+    },
+  },
+}
+
+const queryClient = new QueryClient()
+
+export const searchHistoryInvalidators = {
+  searchHistory: {
+    all: {
+      invalidate: () => {
+        return queryClient.invalidateQueries({ queryKey: all })
+      },
+    },
+    byId: {
+      invalidate: (id: string) => {
+        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
+      },
+    },
+    forUser: {
+      invalidate: (id: string) => {
+        return queryClient.invalidateQueries({ queryKey: ['searchHistories', 'forUser', id] })
+      },
+    },
+  },
+}
