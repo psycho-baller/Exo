@@ -4,7 +4,7 @@ import { groupsOfPeopleRouter, groupsOfPeopleInvalidators } from './router/group
 import { personRouter, personInvalidators } from './router/person'
 import { questionRouter, questionInvalidators } from './router/question'
 import { questionTopicRouter, questionTopicInvalidators } from './router/questionTopic'
-import { searchHistoryRouter } from './router/searchHistory'
+import { searchHistoryRouter, searchHistoryInvalidators } from './router/searchHistory'
 import { topicRouter, topicInvalidators } from './router/topic'
 import { userRouter } from './router/user'
 
@@ -16,6 +16,7 @@ export const appRouter = {
     ...groupsOfPeopleInvalidators,
     ...questionTopicInvalidators,
     ...topicInvalidators,
+    ...searchHistoryInvalidators,
   }),
 
   // auth: authRouter,
@@ -25,7 +26,7 @@ export const appRouter = {
   topic: topicRouter,
   questionTopic: questionTopicRouter,
   group: groupRouter,
-  // searchHistory: searchHistoryRouter,
+  searchHistory: searchHistoryRouter,
   groupsOfPeople: groupsOfPeopleRouter,
 }
 
