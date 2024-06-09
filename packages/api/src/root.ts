@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { authRouter } from './router/auth'
 import { groupRouter, groupInvalidators } from './router/group'
 import { groupsOfPeopleRouter, groupsOfPeopleInvalidators } from './router/groupsOfPeople'
@@ -9,15 +10,18 @@ import { topicRouter, topicInvalidators } from './router/topic'
 import { userRouter } from './router/user'
 
 export const appRouter = {
-  useUtils: () => ({
-    ...questionInvalidators,
-    ...personInvalidators,
-    ...groupInvalidators,
-    ...groupsOfPeopleInvalidators,
-    ...questionTopicInvalidators,
-    ...topicInvalidators,
-    ...searchHistoryInvalidators,
-  }),
+  useUtils: () => {
+    const queryClient = useQueryClient()
+    return {
+      question: questionInvalidators(queryClient),
+      person: personInvalidators(queryClient),
+      group: groupInvalidators(queryClient),
+      groupsOfPeople: groupsOfPeopleInvalidators(queryClient),
+      questionTopic: questionTopicInvalidators(queryClient),
+      topic: topicInvalidators(queryClient),
+      searchHistory: searchHistoryInvalidators(queryClient),
+    }
+  },
 
   // auth: authRouter,
   // user: userRouter,

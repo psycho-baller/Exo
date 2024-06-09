@@ -10,7 +10,7 @@ import type {
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '../queries/topics'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 
 const all = ['topics', 'all'] as const
@@ -68,19 +68,15 @@ export const topicRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const topicInvalidators = {
-  topic: {
-    all: {
-      invalidate: () => {
-        return queryClient.invalidateQueries({ queryKey: all })
-      },
-    },
-    byId: {
-      invalidate: ({ id }: WithId) => {
-        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
-      },
+export const topicInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+    },
+  },
+})

@@ -9,7 +9,6 @@ import type {
 } from '@acme/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
-// import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
 import {
   createQuestion,
   getQuestions,
@@ -22,7 +21,7 @@ import {
   assignQuestionToGroup,
   getQuestionsForGroup,
 } from '../queries/question'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, type QueryClient } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 
 const all = ['questions', 'all'] as const
@@ -133,24 +132,20 @@ export const questionRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const questionInvalidators = {
-  question: {
-    all: {
-      invalidate: () => {
-        return queryClient.invalidateQueries({ queryKey: all })
-      },
-    },
-    byId: {
-      invalidate: ({ id }: WithId) => {
-        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
-      },
-    },
-    forPerson: {
-      invalidate: ({ id }: WithId) => {
-        return queryClient.invalidateQueries({ queryKey: ['questions', 'forPerson', id] })
-      },
+export const questionInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+    },
+  },
+  forPerson: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: ['questions', 'forPerson', id] })
+    },
+  },
+})

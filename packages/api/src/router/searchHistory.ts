@@ -16,7 +16,7 @@ import {
   getSearchHistoriesForUser,
   updateSearchHistory,
 } from '../queries/searchHistory'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 
 const all = ['searchHistories', 'all'] as const
@@ -80,24 +80,20 @@ export const searchHistoryRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const searchHistoryInvalidators = {
-  searchHistory: {
-    all: {
-      invalidate: () => {
-        return queryClient.invalidateQueries({ queryKey: all })
-      },
-    },
-    byId: {
-      invalidate: (id: string) => {
-        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
-      },
-    },
-    forUser: {
-      invalidate: (id: string) => {
-        return queryClient.invalidateQueries({ queryKey: ['searchHistories', 'forUser', id] })
-      },
+export const searchHistoryInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byId: {
+    invalidate: async (id: string) => {
+      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+    },
+  },
+  forUser: {
+    invalidate: async (id: string) => {
+      await queryClient.invalidateQueries({ queryKey: ['searchHistories', 'forUser', id] })
+    },
+  },
+})

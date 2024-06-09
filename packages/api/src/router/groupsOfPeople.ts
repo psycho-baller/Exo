@@ -13,13 +13,12 @@ import type {
   WithId,
 } from '@acme/db/schema/types'
 
-import { createTRPCRouter, protectedProcedure } from '../trpc'
 import {
   getGroupsOfPeople,
   getPeopleFromGroupId,
   createGroupsOfPeople,
 } from '../queries/groupsOfPeople'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['groupsOfPeople', 'all'] as const
 const byId = ['groupsOfPeople', 'byId'] as const
@@ -47,13 +46,15 @@ export const groupsOfPeopleRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const groupsOfPeopleInvalidators = {
-  groupsOfPeople: {
-    all: { invalidate: () => queryClient.invalidateQueries({ queryKey: all }) },
-    byId: {
-      invalidate: ({ id }: WithId) => queryClient.invalidateQueries({ queryKey: [...byId, id] }),
+export const groupsOfPeopleInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+    },
+  },
+})

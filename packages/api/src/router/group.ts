@@ -17,7 +17,7 @@ import {
   updateGroup,
   updateGroupName,
 } from '../queries/group'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 
 const all = ['groups', 'all'] as const
@@ -84,19 +84,15 @@ export const groupRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const groupInvalidators = {
-  group: {
-    all: {
-      invalidate: () => {
-        return queryClient.invalidateQueries({ queryKey: all })
-      },
-    },
-    byId: {
-      invalidate: ({ id }: WithId) => {
-        return queryClient.invalidateQueries({ queryKey: [...byId, id] })
-      },
+export const groupInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+    },
+  },
+})

@@ -14,7 +14,7 @@ import {
   getTopicsFromQuestionId,
   deleteQuestionTopic,
 } from '../queries/questionTopic'
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query'
+import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['questionTopics', 'all'] as const
 const byQuestionId = ['questionTopics', 'byQuestionId'] as const
@@ -63,19 +63,15 @@ export const questionTopicRouter = {
   },
 }
 
-const queryClient = new QueryClient()
-
-export const questionTopicInvalidators = {
-  questionTopics: {
-    all: {
-      invalidate: () => {
-        return queryClient.invalidateQueries({ queryKey: all })
-      },
-    },
-    byQuestionId: {
-      invalidate: ({ id }: WithId) => {
-        return queryClient.invalidateQueries({ queryKey: [...byQuestionId, id] })
-      },
+export const questionTopicInvalidators = (queryClient: QueryClient) => ({
+  all: {
+    invalidate: async () => {
+      await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-}
+  byQuestionId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byQuestionId, id] })
+    },
+  },
+})
