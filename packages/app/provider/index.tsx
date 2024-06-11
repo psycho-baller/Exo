@@ -26,25 +26,25 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
   return (
     <TamaguiThemeProvider>
       <TamaguiProvider>
-        {/* <SafeAreaProvider> */}
-        <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            {/* <TRPCProvider> */}
-            <QueryClientProvider>
-              <ExpoSQLiteProvider>
-                <ExpoDrizzleStudio>
-                  <BottomSheetModalProvider>
-                    {children}
-                  </BottomSheetModalProvider>
-                </ExpoDrizzleStudio>
-              </ExpoSQLiteProvider>
-            </QueryClientProvider>
-            {/* </TRPCProvider> */}
-            <CustomToast />
-            {/* <ToastViewport /> */}
-          </GestureHandlerRootView>
-        </ToastProvider>
-        {/* </SafeAreaProvider> */}
+        <SafeAreaProvider>
+          <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              {/* <TRPCProvider> */}
+              <QueryClientProvider>
+                <ExpoSQLiteProvider>
+                  <ExpoDrizzleStudio>
+                    <BottomSheetModalProvider>
+                      {children}
+                    </BottomSheetModalProvider>
+                  </ExpoDrizzleStudio>
+                </ExpoSQLiteProvider>
+              </QueryClientProvider>
+              {/* </TRPCProvider> */}
+              <CustomToast />
+              {/* <ToastViewport /> */}
+            </GestureHandlerRootView>
+          </ToastProvider>
+        </SafeAreaProvider>
       </TamaguiProvider>
     </TamaguiThemeProvider >
   )

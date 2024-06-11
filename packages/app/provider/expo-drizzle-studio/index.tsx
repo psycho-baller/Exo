@@ -1,6 +1,6 @@
-import { useDrizzleStudioHelper } from "../../../db/utils";
+// import { useDrizzleStudioHelper } from "../../../db/utils";
 
 export const ExpoDrizzleStudio = ({ children }: { children: React.ReactNode }): React.ReactNode => {
-  useDrizzleStudioHelper();
+  // useDrizzleStudioHelper();
   return <>{children}</>;
 }
