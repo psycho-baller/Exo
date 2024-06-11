@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "db3f02b5-da3f-4d26-9eae-272ad543bebc",
+  "id": "5aad35f9-24fa-4425-a64a-ed01cf3e6bbc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -865,6 +865,13 @@
     "Search_history": {
       "name": "Search_history",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
         "query": {
           "name": "query",
           "type": "text",
@@ -904,15 +911,7 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {
-        "Search_history_query_created_by_user_id_pk": {
-          "columns": [
-            "created_by_user_id",
-            "query"
-          ],
-          "name": "Search_history_query_created_by_user_id_pk"
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "session": {

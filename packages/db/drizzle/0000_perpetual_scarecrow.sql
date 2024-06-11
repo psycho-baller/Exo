@@ -113,10 +113,10 @@ CREATE TABLE `Question` (
 );
 --> statement-breakpoint
 CREATE TABLE `Search_history` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`query` text NOT NULL,
 	`created_by_user_id` text NOT NULL,
 	`datetime` integer DEFAULT (cast((julianday('now') - 2440587.5)*86400000 as integer)),
-	PRIMARY KEY(`created_by_user_id`, `query`),
 	FOREIGN KEY (`created_by_user_id`) REFERENCES `User`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
