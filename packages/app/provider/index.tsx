@@ -6,13 +6,10 @@ import { SafeAreaProvider } from './safe-area'
 import { TamaguiProvider } from './tamagui'
 import { TamaguiThemeProvider } from './theme'
 import { BottomSheetModalProvider } from './bottom-sheet-modal'
-import { ExpoSQLiteProvider } from './expo-sqlite';
-import { QueryClientProvider } from './query-client';
-import { ToastViewport } from './toast-viewport';
-import { ExpoDrizzleStudio } from './expo-drizzle-studio';
 import { useEffect } from 'react';
 import { getDeviceId } from '@acme/api/utils/device';
 import { ensureUserExistsInDB } from '@acme/api/src/queries/user';
+import { BackendProvider } from './backend';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
   useEffect(() => {
@@ -30,22 +27,17 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
           <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               {/* <TRPCProvider> */}
-              <QueryClientProvider>
-                <ExpoSQLiteProvider>
-                  <ExpoDrizzleStudio>
-                    <BottomSheetModalProvider>
-                      {children}
-                    </BottomSheetModalProvider>
-                  </ExpoDrizzleStudio>
-                </ExpoSQLiteProvider>
-              </QueryClientProvider>
-              {/* </TRPCProvider> */}
+              <BackendProvider>
+                <BottomSheetModalProvider>
+                  {children}
+                </BottomSheetModalProvider>
+              </BackendProvider>
               <CustomToast />
               {/* <ToastViewport /> */}
             </GestureHandlerRootView>
           </ToastProvider>
         </SafeAreaProvider>
-      </TamaguiProvider>
+      </TamaguiProvider >
     </TamaguiThemeProvider >
   )
 }

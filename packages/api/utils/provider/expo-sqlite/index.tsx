@@ -1,5 +1,5 @@
-import { View, Text } from "@acme/ui";
-import { useMigrationHelper } from "../../../db/utils";
+import { View, Text } from "react-native";
+import { useMigrationHelper } from "@acme/db/utils";
 
 
 export const ExpoSQLiteProvider = ({ children }: { children: React.ReactNode }): React.ReactNode => {

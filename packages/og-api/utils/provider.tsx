@@ -8,7 +8,7 @@ import { httpBatchLink, loggerLink } from '@trpc/client';
 import superjson from 'superjson';
 import { MMKV } from "react-native-mmkv"
 
-import { api } from '@acme/api/utils/trpc'
+import { api } from './trpc'
 
 /**
  * Extend this function when going to production by
@@ -38,7 +38,7 @@ const getBaseUrl = () => {
  * Use only in _app.tsx
  */
 
-export function TRPCProvider(props: { children: ReactNode }) {
+export function Provider(props: { children: ReactNode }) {
 
   const storage = new MMKV();
 
