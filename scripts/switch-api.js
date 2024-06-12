@@ -3,11 +3,13 @@
 const fs = require('fs');
 const path = require('path');
 
+const ROOT_DIR = path.join(__dirname, '..');
+
 // Define the paths to the four util packages
-const localApiPath = path.join(__dirname, 'packages', 'local-api', 'package.json');
-const serverApiPath = path.join(__dirname, 'packages', 'server-api', 'package.json');
-const localDbPath = path.join(__dirname, 'packages', 'local-db', 'package.json');
-const serverDbPath = path.join(__dirname, 'packages', 'server-db', 'package.json');
+const localApiPath = path.join(ROOT_DIR, 'packages', 'local-api', 'package.json');
+const serverApiPath = path.join(ROOT_DIR, 'packages', 'server-api', 'package.json');
+const localDbPath = path.join(ROOT_DIR, 'packages', 'local-db', 'package.json');
+const serverDbPath = path.join(ROOT_DIR, 'packages', 'server-db', 'package.json');
 
 // Define the desired package names
 const defaultLocalApiName = '@acme/local-api';
