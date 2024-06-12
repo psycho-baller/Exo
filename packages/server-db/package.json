@@ -1,0 +1,50 @@
+{
+  "name": "@acme/server-db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "pnpm with-env turso dev --db-file local.db",
+    "dev:backend": "pnpm with-env turso dev --db-file local.db",
+    "clean": "rm -rf .turbo node_modules",
+    "upgrade": "pnpm upgrade --latest",
+    "lint": "eslint .",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "generate": "pnpm with-env drizzle-kit generate",
+    "drop": "pnpm with-env drizzle-kit drop",
+    "push": "pnpm with-env drizzle-kit push",
+    "studio": "pnpm with-env drizzle-kit studio",
+    "migrate": "pnpm with-env drizzle-kit migrate",
+    "seed": "pnpm with-env tsx ./scripts/seed/insert.ts",
+    "delete": "pnpm with-env tsx ./scripts/seed/delete.ts",
+    "drop:tables": "source ../../.env && ./scripts/drop_all_tables.sh",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.5.6",
+    "drizzle-orm": "^0.29.4",
+    "drizzle-zod": "^0.5.1"
+  },
+  "devDependencies": {
+    "@acme/eslint-config": "workspace:^0.2.0",
+    "@acme/prettier-config": "workspace:^0.1.0",
+    "@acme/tsconfig": "workspace:^0.1.0",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.21.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/drizzle"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
+}
