@@ -44,3 +44,31 @@ if (scriptArg === 'local') {
   updatePackageJson(localDbPath, defaultLocalDbName);
   updatePackageJson(serverDbPath, defaultDbName);
 }
+
+
+// // Define the path to the pnpm-lock.yaml file
+// const lockFilePath = path.join(ROOT_DIR, 'pnpm-lock.yaml');
+
+// // Define the strings to replace
+// const localApi = 'local-api';
+// const serverApi = 'server-api';
+// const localDb = 'local-db';
+// const serverDb = 'server-db';
+
+// // Function to update the pnpm-lock.yaml file
+// function updateLockFile(filePath) {
+//   let fileContent = fs.readFileSync(filePath, 'utf8');
+
+//   if (scriptArg === 'local') {
+//     fileContent = fileContent.replace(new RegExp(serverApi, 'g'), localApi);
+//     fileContent = fileContent.replace(new RegExp(serverDb, 'g'), localDb);
+//   } else {
+//     fileContent = fileContent.replace(new RegExp(localApi, 'g'), serverApi);
+//     fileContent = fileContent.replace(new RegExp(localDb, 'g'), serverDb);
+//   }
+
+//   fs.writeFileSync(filePath, fileContent);
+//   console.log(`Updated ${filePath}`);
+// }
+
+// updateLockFile(lockFilePath);
