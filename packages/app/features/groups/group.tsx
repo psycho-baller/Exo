@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list'
 import { ArrowLeft } from '@tamagui/lucide-icons'
 import type { ReactNode } from 'react'
 import { Platform } from 'react-native'
@@ -6,7 +5,7 @@ import { useLink, useParams } from 'solito/navigation'
 import { Button } from 'tamagui'
 
 import { api } from '@acme/api/utils/trpc'
-import { Page, Text, VirtualList, YStack } from '@acme/ui'
+import { Page, VirtualList, YStack } from '@acme/ui'
 
 import { CARD_HEIGHT } from '../../utils/constants'
 import { PersonCard } from '../people/PersonCard'

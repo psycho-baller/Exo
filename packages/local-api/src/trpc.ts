@@ -12,7 +12,7 @@ import { ZodError } from 'zod'
 
 import { auth } from '@acme/auth'
 import type { Session } from '@acme/auth'
-import { db } from '../../local-db'
+import { db } from '@acme/db'
 
 /**
  * 1. CONTEXT
