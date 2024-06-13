@@ -1,12 +1,7 @@
-import { db, desc, eq } from '../../../local-db'
-import { searchHistories } from '../../../local-db/schema'
-import type {
-  NewSearchHistory,
-  SearchHistory,
-  UpdateTable,
-  WithId,
-} from '../../../local-db/schema/types'
-import { insertSearchHistoryhSchema } from '../../../local-db/schema/types'
+import { db, desc, eq } from '@acme/db'
+import { searchHistories } from '@acme/db/schema'
+import type { NewSearchHistory, SearchHistory, UpdateTable, WithId } from '@acme/db/schema/types'
+import { insertSearchHistoryhSchema } from '@acme/db/schema/types'
 import { z } from 'zod'
 
 // READ

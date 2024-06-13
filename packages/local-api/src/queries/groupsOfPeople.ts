@@ -1,6 +1,6 @@
-import { db, eq } from '../../../local-db'
-import { groupsOfPeople, people } from '../../../local-db/schema'
-import type { NewGroupsOfPeople } from '../../../local-db/schema/types'
+import { db, eq } from '@acme/db'
+import { groupsOfPeople, people } from '@acme/db/schema'
+import type { NewGroupsOfPeople } from '@acme/db/schema/types'
 
 // READ
 export async function getGroupsOfPeople() {

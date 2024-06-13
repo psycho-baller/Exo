@@ -5,7 +5,7 @@ import type {
   SearchHistory,
   UpdateTable,
   WithId,
-} from '../../../local-db/schema/types'
+} from '@acme/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import {

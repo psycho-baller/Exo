@@ -1,7 +1,7 @@
-import { db, desc, eq } from '../../../local-db'
-import { groups } from '../../../local-db/schema'
-import type { NewGroup, Group, UpdateTable, WithId } from '../../../local-db/schema/types'
-import { insertGroupSchema } from '../../../local-db/schema/types'
+import { db, desc, eq } from '@acme/db'
+import { groups } from '@acme/db/schema'
+import type { NewGroup, Group, UpdateTable, WithId } from '@acme/db/schema/types'
+import { insertGroupSchema } from '@acme/db/schema/types'
 import { z } from 'zod'
 
 // READ

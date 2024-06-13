@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { and, eq } from '../../../local-db'
-import { questionTopics, topics } from '../../../local-db/schema'
-import { insertQuestionTopicSchema } from '../../../local-db/schema/types'
+import { and, eq } from '@acme/db'
+import { questionTopics, topics } from '@acme/db/schema'
+import { insertQuestionTopicSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 
@@ -13,13 +13,13 @@ export const questionTopicRouter = createTRPCRouter({
   }),
 
   getTopicsFromQuestionId: protectedProcedure
-    .input(z.object({ questionId: z.number() }))
+    .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.db
         .select({ id: topics.id, name: topics.name })
         .from(questionTopics)
         .innerJoin(topics, eq(questionTopics.topicId, topics.id))
-        .where(eq(questionTopics.questionId, input.questionId))
+        .where(eq(questionTopics.questionId, input.id))
     }),
 
   // CREATE

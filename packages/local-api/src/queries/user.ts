@@ -1,10 +1,10 @@
-import { eq } from '../../../local-db'
-import { users } from '../../../local-db/schema'
-import { db } from '../../../local-db'
-import type { Database } from '../../../local-db/schema/_table'
-import type { NewUser } from '../../../local-db/schema/types'
+import { eq } from '@acme/db'
+import { users } from '@acme/db/schema'
+import { db } from '@acme/db'
+import type { Database } from '@acme/db/schema/_table'
+import type { NewUser } from '@acme/db/schema/types'
 import { deviceName } from 'expo-device'
-import { takeUnique } from '../../../local-db/utils'
+import { takeUnique } from '@acme/db/utils'
 
 export async function ensureUserExistsInDB(userId: string) {
   const user = await db.select().from(users).where(eq(users.id, userId)).then(takeUnique)

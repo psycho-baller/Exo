@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { desc, eq, like } from '../../../local-db'
-import { groups, groupsOfPeople, people, questions } from '../../../local-db/schema'
-import { insertGroupSchema } from '../../../local-db/schema/types'
+import { desc, eq, like } from '@acme/db'
+import { groups, groupsOfPeople, people, questions } from '@acme/db/schema'
+import { insertGroupSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 

@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { desc, eq, like } from '../../../local-db'
-import { questions } from '../../../local-db/schema'
-import { insertQuestionSchema } from '../../../local-db/schema/types'
+import { desc, eq, like } from '@acme/db'
+import { questions } from '@acme/db/schema'
+import { insertQuestionSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
 
@@ -28,12 +28,14 @@ export const questionRouter = createTRPCRouter({
     return ctx.db.delete(questions).where(eq(questions.id, input))
   }),
 
-  getQuestionsForPerson: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.db.query.questions.findMany({
-      where: eq(questions.personId, input),
-      orderBy: desc(questions.createdDatetime),
-    })
-  }),
+  getQuestionsForPerson: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.query.questions.findMany({
+        where: eq(questions.personId, input.id),
+        orderBy: desc(questions.createdDatetime),
+      })
+    }),
 
   update: protectedProcedure
     .input(z.intersection(z.optional(insertQuestionSchema), z.object({ id: z.number() })))

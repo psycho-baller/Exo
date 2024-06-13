@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { desc, eq } from '../../../local-db'
-import { searchHistories } from '../../../local-db/schema'
-import { insertSearchHistoryhSchema } from '../../../local-db/schema/types'
+import { desc, eq } from '@acme/db'
+import { searchHistories } from '@acme/db/schema'
+import { insertSearchHistoryhSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 

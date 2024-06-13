@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { eq } from '../../../local-db'
-import { groupsOfPeople, people } from '../../../local-db/schema'
+import { eq } from '@acme/db'
+import { groupsOfPeople, people } from '@acme/db/schema'
 import type {
   Group,
   GroupsOfPeople,
@@ -11,7 +11,7 @@ import type {
   NewGroupsOfPeople,
   Person,
   WithId,
-} from '../../../local-db/schema/types'
+} from '@acme/db/schema/types'
 
 import {
   getGroupsOfPeople,
