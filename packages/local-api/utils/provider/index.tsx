@@ -4,7 +4,7 @@ import { QueryClientProvider } from './query-client';
 import { ExpoDrizzleStudio } from './expo-drizzle-studio';
 import { useEffect } from 'react';
 import { getDeviceId } from '../device';
-import { ensureUserExistsInDB } from '../../src/queries/user';
+import { ensureUserExistsInDB } from '../../../queries/src/user';
 
 export function Provider({ children }: { children: React.ReactNode }) {
   useEffect(() => {

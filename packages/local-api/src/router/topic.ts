@@ -9,7 +9,13 @@ import type {
 } from '@acme/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
-import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '../queries/topics'
+import {
+  createTopic,
+  getTopics,
+  getTopicById,
+  deleteTopic,
+  updateTopic,
+} from '../../../queries/src/topics'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

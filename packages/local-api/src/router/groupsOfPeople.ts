@@ -17,7 +17,7 @@ import {
   getGroupsOfPeople,
   getPeopleFromGroupId,
   createGroupsOfPeople,
-} from '../queries/groupsOfPeople'
+} from '../../../queries/src/groupsOfPeople'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['groupsOfPeople', 'all'] as const
