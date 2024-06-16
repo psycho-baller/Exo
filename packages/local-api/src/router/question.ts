@@ -20,7 +20,7 @@ import {
   assignQuestionToPerson,
   assignQuestionToGroup,
   getQuestionsForGroup,
-} from '../../../queries/src/question'
+} from '@acme/queries'
 import { useMutation, useQuery, type QueryClient } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

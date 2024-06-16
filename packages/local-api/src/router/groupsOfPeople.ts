@@ -13,11 +13,7 @@ import type {
   WithId,
 } from '@acme/db/schema/types'
 
-import {
-  getGroupsOfPeople,
-  getPeopleFromGroupId,
-  createGroupsOfPeople,
-} from '../../../queries/src/groupsOfPeople'
+import { getGroupsOfPeople, getPeopleFromGroupId, createGroupsOfPeople } from '@acme/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['groupsOfPeople', 'all'] as const

@@ -1,72 +1,52 @@
 import { z } from 'zod'
-
-import { desc, eq, like } from '@acme/db'
-import { questions } from '@acme/db/schema'
 import { insertQuestionSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
+import {
+  assignQuestionToGroup,
+  assignQuestionToPerson,
+  createQuestion,
+  deleteQuestion,
+  getQuestionById,
+  getQuestions,
+  getQuestionsForPerson,
+  updateQuestion,
+} from '@acme/queries'
 
 export const questionRouter = createTRPCRouter({
-  all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.questions.findMany({ orderBy: desc(questions.id) })
-  }),
+  all: publicProcedure.query(({ ctx }) => getQuestions()),
 
-  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.questions.findFirst({
-      where: eq(questions.id, input.id),
-    })
-  }),
+  byId: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getQuestionById(input.id)),
 
-  create: protectedProcedure.input(insertQuestionSchema).mutation(async ({ ctx, input }) => {
-    return await ctx.db
-      .insert(questions)
-      .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning()
-  }),
+  create: protectedProcedure
+    .input(insertQuestionSchema)
+    .mutation(async ({ ctx, input }) =>
+      createQuestion({ ...input, createdByUserId: ctx.session.user.id }),
+    ),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(questions).where(eq(questions.id, input))
-  }),
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(({ ctx, input }) => deleteQuestion({ id: input })),
 
   getQuestionsForPerson: publicProcedure
     .input(z.object({ id: z.number() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.query.questions.findMany({
-        where: eq(questions.personId, input.id),
-        orderBy: desc(questions.createdDatetime),
-      })
-    }),
+    .query(({ ctx, input }) => getQuestionsForPerson(input.id)),
 
   update: protectedProcedure
     .input(z.intersection(z.optional(insertQuestionSchema), z.object({ id: z.number() })))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(questions).set(input).where(eq(questions.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updateQuestion(input)),
 
   updateQuestion: protectedProcedure
     .input(z.object({ id: z.number(), question: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db
-        .update(questions)
-        .set({ question: input.question })
-        .where(eq(questions.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updateQuestion(input)),
 
   assignToPerson: protectedProcedure
     .input(z.object({ questionId: z.number(), personId: z.number() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db
-        .update(questions)
-        .set({ personId: input.personId })
-        .where(eq(questions.id, input.questionId))
-    }),
+    .mutation(({ ctx, input }) => assignQuestionToPerson(input)),
 
   assignToGroup: protectedProcedure
     .input(z.object({ questionId: z.number(), groupId: z.number() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db
-        .update(questions)
-        .set({ groupId: input.groupId })
-        .where(eq(questions.id, input.questionId))
-    }),
+    .mutation(({ ctx, input }) => assignQuestionToGroup(input)),
 })

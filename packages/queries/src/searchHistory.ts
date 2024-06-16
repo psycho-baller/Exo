@@ -34,6 +34,10 @@ export async function deleteSearchHistory(input: WithId) {
   return await db.delete(searchHistories).where(eq(searchHistories.id, id))
 }
 
+// export async function deleteSearchHistoryForUser(userId: string) {
+//   return await db.delete(searchHistories).where(eq(searchHistories.createdByUserId, userId))
+// }
+
 // UPDATE
 export async function updateSearchHistory(input: UpdateTable<NewSearchHistory>) {
   z.intersection(z.optional(insertSearchHistoryhSchema), z.object({ id: z.string() })).parse(input)

@@ -15,7 +15,7 @@ import {
   deleteSearchHistory,
   getSearchHistoriesForUser,
   updateSearchHistory,
-} from '../../../queries/src/searchHistory'
+} from '@acme/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

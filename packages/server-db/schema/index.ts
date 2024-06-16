@@ -40,21 +40,14 @@ export const posts = sqliteTable('Post', {
 })
 
 // SearchHistory
-export const searchHistories = sqliteTable(
-  'Search_history',
-  {
-    query: text('query').notNull(),
-    createdByUserId: text('created_by_user_id')
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
-    datetime: integer('datetime', { mode: 'timestamp' }).defaultNow(),
-  },
-  (table) => {
-    return {
-      pk: primaryKey({ columns: [table.query, table.createdByUserId] }),
-    }
-  },
-)
+export const searchHistories = sqliteTable('Search_history', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  query: text('query').notNull(),
+  createdByUserId: text('created_by_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  datetime: integer('datetime', { mode: 'timestamp' }).defaultNow(),
+})
 
 // Topic
 export const topics = sqliteTable('Topic', {

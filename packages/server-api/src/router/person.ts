@@ -1,34 +1,23 @@
 import { z } from 'zod'
-
-import { desc, eq, like, or } from '@acme/db'
-import { people } from '@acme/db/schema'
 import { insertPersonSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
+import { createPerson, deletePerson, getPeople, getPersonById, updatePerson } from '@acme/queries'
 
 export const personRouter = createTRPCRouter({
-  all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.people.findMany({ orderBy: desc(people.id) })
-  }),
+  all: publicProcedure.query(({ ctx }) => getPeople()),
 
-  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.people.findFirst({
-      where: eq(people.id, input.id),
-    })
-  }),
+  byId: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getPersonById(input.id)),
 
-  create: protectedProcedure.input(insertPersonSchema).mutation(async ({ ctx, input }) => {
-    return await ctx.db
-      .insert(people)
-      .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning({ id: people.id })
-  }),
+  create: protectedProcedure
+    .input(insertPersonSchema)
+    .mutation(({ ctx, input }) => createPerson({ ...input, createdByUserId: ctx.session.user.id })),
 
   update: protectedProcedure
     .input(z.intersection(z.optional(insertPersonSchema), z.object({ id: z.number() })))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(people).set(input).where(eq(people.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updatePerson(input)),
 
   updatePerson: protectedProcedure
     .input(
@@ -38,11 +27,9 @@ export const personRouter = createTRPCRouter({
         lastName: z.string().optional(),
       }),
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(people).set(input).where(eq(people.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updatePerson(input)),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(people).where(eq(people.id, input))
-  }),
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(({ ctx, input }) => deletePerson({ id: input })),
 })

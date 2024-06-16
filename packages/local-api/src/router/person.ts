@@ -16,7 +16,7 @@ import {
   deletePerson,
   updatePerson,
   updatePersonName,
-} from '../../../queries/src/person'
+} from '@acme/queries'
 import { useMutation, useQuery, type QueryClient } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

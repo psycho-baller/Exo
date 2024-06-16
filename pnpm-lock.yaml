@@ -502,6 +502,9 @@ importers:
       '@acme/db':
         specifier: workspace:^0.1.0
         version: link:../server-db
+      '@acme/queries':
+        specifier: workspace:^0.1.0
+        version: link:../queries
       '@tanstack/react-query':
         specifier: ^5.39.0
         version: 5.45.0(react@18.2.0)
@@ -607,6 +610,9 @@ importers:
       '@acme/db':
         specifier: workspace:^0.1.0
         version: link:../server-db
+      '@acme/queries':
+        specifier: workspace:^0.1.0
+        version: link:../queries
       '@trpc/client':
         specifier: next
         version: 11.0.0-rc.402(@trpc/server@11.0.0-rc.402)

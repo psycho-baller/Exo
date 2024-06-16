@@ -1,1 +1,9 @@
-export const name = 'queries';
+export const name = 'queries'
+export * from './group'
+export * from './groupsOfPeople'
+export * from './questionTopic'
+export * from './user'
+export * from './question'
+export * from './topics'
+export * from './person'
+export * from './searchHistory'

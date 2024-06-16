@@ -5,28 +5,24 @@ import { topics } from '@acme/db/schema'
 import { insertTopicSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
+import { createTopic, deleteTopic, getTopicById, getTopics } from '@acme/queries'
 
 export const topicRouter = createTRPCRouter({
-  all: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.topics.findMany({ orderBy: desc(topics.id) })
-  }),
+  all: publicProcedure.query(({ ctx }) => getTopics()),
 
-  byId: publicProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.topics.findFirst({
-      where: eq(topics.id, input.id),
-    })
-  }),
+  byId: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getTopicById(input.id)),
 
-  create: protectedProcedure.input(insertTopicSchema).mutation(async ({ ctx, input }) => {
-    return await ctx.db
-      .insert(topics)
-      .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning()
-  }),
+  create: protectedProcedure
+    .input(insertTopicSchema)
+    .mutation(async ({ ctx, input }) =>
+      createTopic({ ...input, createdByUserId: ctx.session.user.id }),
+    ),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(topics).where(eq(topics.id, input))
-  }),
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(({ ctx, input }) => deleteTopic({ id: input })),
 
   // search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
   //   return ctx.db.query.topics.findMany({

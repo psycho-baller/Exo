@@ -16,7 +16,7 @@ import {
   deleteGroup,
   updateGroup,
   updateGroupName,
-} from '../../../queries/src/group'
+} from '@acme/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

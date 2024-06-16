@@ -1,49 +1,41 @@
 import { z } from 'zod'
-
-import { desc, eq, like } from '@acme/db'
-import { groups, groupsOfPeople, people, questions } from '@acme/db/schema'
 import { insertGroupSchema } from '@acme/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
+import {
+  createGroup,
+  deleteGroup,
+  getGroupById,
+  getGroups,
+  getQuestionsForGroup,
+  updateGroup,
+  updateGroupName,
+} from '@acme/queries'
 
 export const groupRouter = createTRPCRouter({
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.groups.findMany()
-  }),
+  all: protectedProcedure.query(({ ctx }) => getGroups()),
 
-  byId: protectedProcedure.input(z.object({ id: z.number() })).query(({ ctx, input }) => {
-    return ctx.db.query.groups.findFirst({
-      where: eq(groups.id, input.id),
-    })
-  }),
+  byId: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getGroupById(input.id)),
 
-  getQuestionsForGroup: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.db.query.questions.findMany({
-      where: eq(questions.groupId, input),
-      orderBy: desc(questions.createdDatetime),
-    })
-  }),
+  getQuestionsForGroup: protectedProcedure
+    .input(z.number())
+    .query(({ ctx, input }) => getQuestionsForGroup(input)),
 
-  create: protectedProcedure.input(insertGroupSchema).mutation(async ({ ctx, input }) => {
-    return await ctx.db
-      .insert(groups)
-      .values({ createdByUserId: ctx.session.user.id, ...input })
-      .returning({ id: groups.id })
-  }),
+  create: protectedProcedure
+    .input(insertGroupSchema)
+    .mutation(({ ctx, input }) => createGroup({ createdByUserId: ctx.session.user.id, ...input })),
 
   update: protectedProcedure
     .input(z.intersection(z.optional(insertGroupSchema), z.object({ id: z.number() })))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(groups).set(input).where(eq(groups.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updateGroup(input)),
 
   updateName: protectedProcedure
     .input(z.object({ id: z.number(), name: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(groups).set(input).where(eq(groups.id, input.id))
-    }),
+    .mutation(({ ctx, input }) => updateGroupName(input)),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(groups).where(eq(groups.id, input))
-  }),
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(({ ctx, input }) => deleteGroup({ id: input })),
 })

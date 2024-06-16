@@ -13,7 +13,7 @@ import {
   getQuestionTopics,
   getTopicsFromQuestionId,
   deleteQuestionTopic,
-} from '../../../queries/src/questionTopic'
+} from '@acme/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['questionTopics', 'all'] as const
