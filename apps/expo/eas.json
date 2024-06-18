@@ -29,6 +29,9 @@
       },
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "GOOGLE_SERVICES_JSON": "google-services.json"
       }
     },
     "production": {

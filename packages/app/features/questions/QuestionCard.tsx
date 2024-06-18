@@ -26,7 +26,7 @@ export const QuestionCard: FC<Props> = (props) => {
   return (
     <Swipeable
       renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
-      onSwipeableOpen={() => deleteQuestionMutation.mutate(question.id)}
+      onSwipeableOpen={() => deleteQuestionMutation.mutate({ id: question.id })}
       enabled={true}
       overshootRight={false}
       overshootLeft={false}

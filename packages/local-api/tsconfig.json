@@ -1,0 +1,18 @@
+{
+  "extends": "@acme/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": [
+    ".",
+    "../queries/src/group.ts",
+    "../queries/src/groupsOfPeople.ts",
+    "../queries/src/person.ts",
+    "../queries/src/question.ts",
+    "../queries/src/questionTopic.ts",
+    "../queries/src/searchHistory.ts",
+    "../queries/src/topics.ts",
+    "../queries/src/user.ts"
+  ],
+  "exclude": ["node_modules"]
+}

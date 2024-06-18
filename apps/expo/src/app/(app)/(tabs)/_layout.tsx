@@ -22,7 +22,7 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             intensity={60}
-			      experimentalBlurMethod="dimezisBlurView"
+            experimentalBlurMethod="dimezisBlurView"
             tint={themeName === 'dark' ? 'dark' : 'extraLight'}
             style={{
               flex: 1,

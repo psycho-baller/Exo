@@ -41,7 +41,7 @@ export const PersonCard: FC<Props> = (props) => {
 }
 
 function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][number] }) {
-  const { data: questions } = api.question.getQuestionsForPerson.useQuery(person.id)
+  const { data: questions } = api.question.getQuestionsForPerson.useQuery({ id: person.id })
   if (!questions) return null
   const questionCount = questions.length
   const mostRecentQuestionWithAReminder = questions.find((q) => q.reminderDatetime)

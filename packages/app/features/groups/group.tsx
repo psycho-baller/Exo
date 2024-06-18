@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list'
 import { ArrowLeft } from '@tamagui/lucide-icons'
 import type { ReactNode } from 'react'
 import { Platform } from 'react-native'
@@ -6,7 +5,7 @@ import { useLink, useParams } from 'solito/navigation'
 import { Button } from 'tamagui'
 
 import { api } from '@acme/api/utils/trpc'
-import { Page, Text, VirtualList, YStack } from '@acme/ui'
+import { Page, VirtualList, YStack } from '@acme/ui'
 
 import { CARD_HEIGHT } from '../../utils/constants'
 import { PersonCard } from '../people/PersonCard'
@@ -50,7 +49,7 @@ const GroupScreen = (): ReactNode => {
 }
 
 const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
-  const questions = api.group.getQuestionsForGroup.useQuery(groupId)
+  const questions = api.question.getQuestionsForGroup.useQuery({ id: groupId })
   return (
     <YStack flex={1}>
       <VirtualList
@@ -63,7 +62,7 @@ const QuestionsForGroup = ({ groupId }: { groupId: number }) => {
 }
 
 const PeopleInGroup = ({ groupId }: { groupId: number }) => {
-  const { data } = api.groupsOfPeople.getPeopleFromGroupId.useQuery(groupId)
+  const { data } = api.groupsOfPeople.getPeopleFromGroupId.useQuery({ id: groupId })
   return (
     <YStack flex={1}>
       <VirtualList

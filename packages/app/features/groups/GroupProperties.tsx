@@ -21,7 +21,7 @@ export function GroupProperties({ id, reminderDatetime, name, createdByUserId }:
     update({
       id,
       reminderDatetime: date,
-      createdByUserId,
+      // createdByUserId,
       name: name,
     })
     await utils.question.byId.invalidate({ id: id })
@@ -60,7 +60,7 @@ const GroupProperty = ({ id }: { id: number }) => {
 
 const TopicsProperty = ({ questionId }: { questionId: number }) => {
   const topics = api.questionTopic.getTopicsFromQuestionId.useQuery({
-    questionId,
+    id: questionId,
   })
 
   return (

@@ -32,7 +32,9 @@
     "log:ios": "cd apps/expo && pnpm log:ios",
     "build:android": "cd apps/expo && pnpm build:android",
     "build:android:local": "cd apps/expo && pnpm build:android:local",
-    "build:ios": "cd apps/expo && pnpm build:ios"
+    "build:ios": "cd apps/expo && pnpm build:ios",
+    "switch": "./scripts/switch-api.js && pnpm reset",
+    "switch:local": "./scripts/switch-api.js local && pnpm reset"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^",

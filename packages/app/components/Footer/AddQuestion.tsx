@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { api } from '@acme/api/utils/trpc'
-import { ErrorText, Label, XStack } from '@acme/ui'
+import { Label, XStack } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
 import { sheetRefAtom, superchargedInputDateAtom } from '../../atoms/addQuestion'
@@ -80,12 +80,13 @@ export const AddQuestion: FC = () => {
         onSubmitEditing={addQuestion}
         autoFocus
       />
-      {error?.data?.code === 'UNAUTHORIZED' && (
+      {/* TODO find a way to make it work for both tRPC and vanilla react-query */}
+      {/* {error?.data?.code === 'UNAUTHORIZED' && (
         <ErrorText textAlign='center'>You need to be logged in to ask a question</ErrorText>
       )}
       {error?.data?.zodError?.fieldErrors.text && (
         <ErrorText textAlign='center'>{error.data.zodError.fieldErrors.text}</ErrorText>
-      )}
+      )} */}
     </BottomSheet>
   )
 }

@@ -48,7 +48,7 @@ const PersonScreen = (): ReactNode => {
 }
 
 const QuestionsForPerson = ({ personId }: { personId: number }) => {
-  const { data } = api.question.getQuestionsForPerson.useQuery(personId)
+  const { data } = api.question.getQuestionsForPerson.useQuery({ id: personId })
   return (
     <YStack flex={1}>
       <VirtualList

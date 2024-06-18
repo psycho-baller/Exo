@@ -5,7 +5,7 @@ import { UnstyledInput } from '@acme/ui'
 
 export function EditPersonText({ id, content }: { id: number; content: string }) {
   const utils = api.useUtils()
-  const { mutate: updatePerson } = api.person.updatePerson.useMutation({
+  const { mutate: updateName } = api.person.updateName.useMutation({
     async onSuccess() {
       await utils.person.all.invalidate()
     },
@@ -17,13 +17,13 @@ export function EditPersonText({ id, content }: { id: number; content: string })
     const [firstName, lastName] = person.split(' ', 2)
     if (!firstName) return
     const timer = setTimeout(() => {
-      updatePerson({ id: id, firstName: firstName, lastName: lastName })
+      updateName({ id: id, firstName: firstName, lastName: lastName })
     }, 2000)
 
     return () => {
       clearTimeout(timer)
     }
-  }, [id, person, updatePerson])
+  }, [id, person, updateName])
 
   return (
     <UnstyledInput

@@ -2,12 +2,12 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, VirtualList } from '@acme/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
+import { useEffect } from 'react'
 import { CARD_HEIGHT } from '../../utils/constants'
 import { QuestionCard } from './QuestionCard'
 
 const Index = () => {
   const { isLoading, error, data } = api.question.all.useQuery()
-
   if (isLoading) {
     return <Text>Loading...</Text>
   }

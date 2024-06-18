@@ -22,9 +22,6 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   const { data: queryData, isLoading } = useQueryResult()
   const queryClient = useQueryClient();
 
-  if (isLoading) {
-    return <Text>loading...</Text>
-  }
   const filteredData = queryData ? filterDataFromSchema(queryData as Record<string, unknown>[], filterSchema) : []
   console.log("data:", queryData)
   // queryClient.clear()
@@ -35,6 +32,9 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
     enabled: false,
   })
   console.log("searchResult", searchResult)
+  if (isLoading) {
+    return <Text>loading...</Text>
+  }
   return (
     <>
       {
