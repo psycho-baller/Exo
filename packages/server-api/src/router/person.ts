@@ -30,6 +30,6 @@ export const personRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => updatePerson(input)),
 
   delete: protectedProcedure
-    .input(z.number())
-    .mutation(({ ctx, input }) => deletePerson({ id: input })),
+    .input(z.object({ id: z.number() }))
+    .mutation(({ ctx, input }) => deletePerson(input)),
 })

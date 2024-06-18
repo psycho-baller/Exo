@@ -8,8 +8,8 @@ export const groupsOfPeopleRouter = createTRPCRouter({
   all: protectedProcedure.query(({ ctx }) => getGroupsOfPeople()),
 
   getPeopleFromGroupId: protectedProcedure
-    .input(z.number())
-    .query(({ ctx, input }) => getPeopleFromGroupId(input)),
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getPeopleFromGroupId(input.id)),
 
   create: protectedProcedure
     .input(insertGroupsOfPeopleSchema)

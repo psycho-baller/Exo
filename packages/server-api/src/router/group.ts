@@ -7,7 +7,6 @@ import {
   deleteGroup,
   getGroupById,
   getGroups,
-  getQuestionsForGroup,
   updateGroup,
   updateGroupName,
 } from '@acme/queries'
@@ -18,10 +17,6 @@ export const groupRouter = createTRPCRouter({
   byId: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => getGroupById(input.id)),
-
-  getQuestionsForGroup: protectedProcedure
-    .input(z.number())
-    .query(({ ctx, input }) => getQuestionsForGroup(input)),
 
   create: protectedProcedure
     .input(insertGroupSchema)
@@ -36,6 +31,6 @@ export const groupRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => updateGroupName(input)),
 
   delete: protectedProcedure
-    .input(z.number())
-    .mutation(({ ctx, input }) => deleteGroup({ id: input })),
+    .input(z.object({ id: z.number() }))
+    .mutation(({ ctx, input }) => deleteGroup(input)),
 })

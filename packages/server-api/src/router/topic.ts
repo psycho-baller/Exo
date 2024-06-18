@@ -21,8 +21,8 @@ export const topicRouter = createTRPCRouter({
     ),
 
   delete: protectedProcedure
-    .input(z.number())
-    .mutation(({ ctx, input }) => deleteTopic({ id: input })),
+    .input(z.object({ id: z.number() }))
+    .mutation(({ ctx, input }) => deleteTopic(input)),
 
   // search: publicProcedure.input(z.object({ query: z.string() })).query(({ ctx, input }) => {
   //   return ctx.db.query.topics.findMany({

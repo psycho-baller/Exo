@@ -9,6 +9,7 @@ import {
   deleteQuestion,
   getQuestionById,
   getQuestions,
+  getQuestionsForGroup,
   getQuestionsForPerson,
   updateQuestion,
 } from '@acme/queries'
@@ -20,6 +21,10 @@ export const questionRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => getQuestionById(input.id)),
 
+  getQuestionsForGroup: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => getQuestionsForGroup(input.id)),
+
   create: protectedProcedure
     .input(insertQuestionSchema)
     .mutation(async ({ ctx, input }) =>
@@ -27,8 +32,8 @@ export const questionRouter = createTRPCRouter({
     ),
 
   delete: protectedProcedure
-    .input(z.number())
-    .mutation(({ ctx, input }) => deleteQuestion({ id: input })),
+    .input(z.object({ id: z.number() }))
+    .mutation(({ ctx, input }) => deleteQuestion(input)),
 
   getQuestionsForPerson: publicProcedure
     .input(z.object({ id: z.number() }))
@@ -38,7 +43,7 @@ export const questionRouter = createTRPCRouter({
     .input(z.intersection(z.optional(insertQuestionSchema), z.object({ id: z.number() })))
     .mutation(({ ctx, input }) => updateQuestion(input)),
 
-  updateQuestion: protectedProcedure
+  updateText: protectedProcedure
     .input(z.object({ id: z.number(), question: z.string() }))
     .mutation(({ ctx, input }) => updateQuestion(input)),
 
