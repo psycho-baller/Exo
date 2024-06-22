@@ -7,7 +7,7 @@
   "packageManager": "pnpm@9.1.0",
   "scripts": {
     "build": "turbo build",
-    "clean": "git clean -xdf node_modules pnpm-lock.yaml",
+    "clean": "rm -rf node_modules pnpm-lock.yaml",
     "upgrade": "pnpm upgrade --latest",
     "clean:workspaces": "turbo clean",
     "reset": "pnpm clean:workspaces && pnpm clean && pnpm i",
