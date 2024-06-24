@@ -18,7 +18,7 @@ Often, we come up with brilliant questions that can spark meaningful conversatio
 
 ### Our Solution
 
-We are developing a cross-platform web and mobile application to easily capture and organize these questions. For example, you can connect these questions to certain people (a friend) or groups (your co-workers).
+We are developing a cross-platform web and mobile application to easily capture and organize these questions. For example, you can connect these questions to certain a certain person (a friend) or group (your co-workers).
 
 ### Inspiration
 
