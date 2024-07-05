@@ -23,6 +23,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       showsHorizontalScrollIndicator={false}
       paddingVertical='$3'
       marginHorizontal='$-2.5'
+      keyboardShouldPersistTaps='always'
     >
       <XStack columnGap='$2.5' paddingRight='$3'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
@@ -133,6 +134,7 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
 
   return (
     <>
+
       {filteredData?.length > 0 ? filteredData?.map((item) => (
         <TagButton key={item.id} onPress={() => handlePress(item.firstName || item.name)}>
           {item.firstName || item.name}
@@ -171,6 +173,7 @@ const PropertiesSuggestions: FC = () => {
 
   return (
     <>
+
       {date ? (
         <MyDateTimePicker
           value={date}
