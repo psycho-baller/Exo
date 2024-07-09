@@ -31,9 +31,12 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   };
 
   const handleChangeText = (newInput: string) => {
-    // Insert new input at current selection position
-    const before = inputWords.map(({ word }) => word).join('');
-    const after = inputWords.slice(selection.start).map(({ word }) => word).join('');
+    // const indexOfActiveWord = before.split(/(\s+)/).length - 1;
+    // const indexOfCursorInActiveWord = selection.start - before.split(/(\s+)/).slice(0, indexOfActiveWord).join('').length;
+    const before = inputWords.map(({ word }) => word).join('').slice(0, selection.start);
+    const after = inputWords.map(({ word }) => word).join('').slice(selection.start);
+    console.log('before', before);
+    console.log('after', after);
     const updatedText = before + newInput + after;
 
     setInputWords(addTextProperties(updatedText));
@@ -78,8 +81,14 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
       console.log('deleting word', selection.start, activeWordIndex);
       const indexToSlice = justDisabledWord ? selection.start + 1 : selection.start;
 
-      const newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
-      justDisabledWord && setJustDisabledWord(false)
+      let newInputText: string;
+      const isSingleCursor = selection.start === selection.end;
+      if (isSingleCursor) {
+        newInputText = inputText.slice(0, indexToSlice - 1) + inputText.slice(indexToSlice);
+        justDisabledWord && setJustDisabledWord(false)
+      } else {
+        newInputText = inputText.slice(0, selection.start) + inputText.slice(selection.end);
+      }
       const newInputWords = addTextProperties(newInputText);
       return newInputWords.map((newWord, index) => {
         const oldWord = prevInputWords[index];
@@ -149,9 +158,13 @@ type ConnectAndStyleTextProps = {
   inputWords: SuperchargedWord[];
 }
 const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
-  const { data: people } = api.person.all.useQuery();
-  const { data: topics } = api.topic.all.useQuery();
-  const { data: groups } = api.group.all.useQuery();
+  // This might be the thing that's slowing shit down
+  // const { data: people } = api.person.all.useQuery();
+  // const { data: topics } = api.topic.all.useQuery();
+  // const { data: groups } = api.group.all.useQuery();
+  const people = []
+  const topics = []
+  const groups = []
 
   return inputWords.map(({ word, reference, enabled }, index) => {
     if (reference === 'person') {
