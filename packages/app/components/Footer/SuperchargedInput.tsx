@@ -125,7 +125,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           <ConnectAndStyleText inputWords={inputWords} />
         </XStack>
         <BottomSheetInput
-          // @ts-ignore
           ref={null}
           fontSize={25}
           height={30}
@@ -133,13 +132,16 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           onSelectionChange={handleSelectionChange}
           color='transparent'
           value={inputWords.map(({ word }) => word).join('')}
-          onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-            if (e.nativeEvent.key === 'Backspace') {
-              handleBackspace();
-            } else {
-              handleChangeText(e.nativeEvent.key);
-            }
+          onChangeText={(newText) => {
+            setInputWords(addTextProperties(newText));
           }}
+          // onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+          //   if (e.nativeEvent.key === 'Backspace') {
+          // handleBackspace();
+          // } else {
+          // handleChangeText(e.nativeEvent.key);
+          // }
+          // }}
           {...rest}
         />
         <XStack columnGap='$2' alignItems='center'>
@@ -159,12 +161,9 @@ type ConnectAndStyleTextProps = {
 }
 const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
   // This might be the thing that's slowing shit down
-  // const { data: people } = api.person.all.useQuery();
-  // const { data: topics } = api.topic.all.useQuery();
-  // const { data: groups } = api.group.all.useQuery();
-  const people = []
-  const topics = []
-  const groups = []
+  const { data: people } = api.person.all.useQuery();
+  const { data: topics } = api.topic.all.useQuery();
+  const { data: groups } = api.group.all.useQuery();
 
   return inputWords.map(({ word, reference, enabled }, index) => {
     if (reference === 'person') {
