@@ -119,15 +119,20 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     <YStack width='100%' >
       <View position='relative'>
         <XStack
-          height={30}
+          // height={30}
           position='absolute'
+          flexWrap='wrap'
         >
           <ConnectAndStyleText inputWords={inputWords} />
         </XStack>
         <BottomSheetInput
           ref={null}
+          returnKeyType='done'
+          returnKeyLabel='Add'
+          blurOnSubmit
           fontSize={25}
-          height={30}
+          // whiteSpace='pre-wrap'
+          lineHeight={30}
           width='100%'
           onSelectionChange={handleSelectionChange}
           color='transparent'
@@ -135,13 +140,15 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           onChangeText={(newText) => {
             setInputWords(addTextProperties(newText));
           }}
-          // onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-          //   if (e.nativeEvent.key === 'Backspace') {
-          // handleBackspace();
-          // } else {
-          // handleChangeText(e.nativeEvent.key);
-          // }
-          // }}
+          // numberOfLines={4}
+          multiline
+          onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+            //   if (e.nativeEvent.key === 'Backspace') {
+            // handleBackspace();
+            // } else {
+            // handleChangeText(e.nativeEvent.key);
+            // }
+          }}
           {...rest}
         />
         <XStack columnGap='$2' alignItems='center'>
@@ -150,7 +157,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
             <CheckCircle2 />
           </Button>
         </XStack>
-
       </View>
     </YStack>
   );
