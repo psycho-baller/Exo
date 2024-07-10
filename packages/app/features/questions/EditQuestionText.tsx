@@ -27,7 +27,10 @@ export function EditQuestionText({ id, content }: { id: number; content: string 
     <UnstyledInput
       // width='full'
       placeholderTextColor='$secondaryColor'
-      opacity={0.75}
+      multiline
+      blurOnSubmit
+      returnKeyType='done'
+      returnKeyLabel='Done'
       fontSize={'$8'}
       paddingVertical={'$2'}
       marginBottom={'$4'}
