@@ -53,7 +53,8 @@ export const QuestionCard: FC<Props> = (props) => {
               {question.question}
             </Text>
             <XStack gap={18}>
-              <PersonOrGroupForQuestion question={question} />
+              <PersonForQuestion question={question} />
+              <GroupForQuestion question={question} />
               {date && (
                 <XStack gap={6} alignItems='center'>
                   <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
@@ -68,7 +69,7 @@ export const QuestionCard: FC<Props> = (props) => {
   )
 }
 
-function PersonOrGroupForQuestion(props: {
+function PersonForQuestion(props: {
   question: RouterOutputs['question']['all'][number]
 }) {
   const { question } = props
@@ -92,6 +93,34 @@ function PersonOrGroupForQuestion(props: {
     <XStack gap={6} alignItems='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
       <Text color='$secondaryColor'>{person.firstName}</Text>
+    </XStack>
+  )
+}
+
+function GroupForQuestion(props: {
+  question: RouterOutputs['question']['all'][number]
+}) {
+  const { question } = props
+  if (question.groupId === null) {
+    return null
+  }
+  const groupQuery = api.group.byId.useQuery({
+    id: question.groupId,
+  })
+  if (groupQuery.isLoading) {
+    return <Text>Loading...</Text>
+  }
+  if (groupQuery.error) {
+    return <Text>Error: {groupQuery.error.message}</Text>
+  }
+  const { data: group } = groupQuery
+  if (!group) {
+    return null
+  }
+  return (
+    <XStack gap={6} alignItems='center'>
+      <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
+      <Text color='$secondaryColor'>{group.name}</Text>
     </XStack>
   )
 }
