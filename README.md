@@ -30,7 +30,7 @@ Our mission is to inspire people to seek better questions by providing them with
 
 You know this quote from Steve Jobs, "The people who are crazy enough to think they can change the world are the ones who do."
 
-Our version of this would be, "The people who come up with revealing deep thought-provoking questions and have the courage to ask it to themselves and the people around them are the ones who change the world
+Our version of this would be, "The people who come up with revealing deep thought-provoking questions and have the courage to ask it to themselves and the people around them are the ones who change the world"
 
 
 
