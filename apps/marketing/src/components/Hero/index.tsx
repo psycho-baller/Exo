@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { siteConfig } from "~config/site";
 import { cn, buttonVariants } from "~lib/utils";
-import DownloadExtensionButton from "./DownloadExtensionButton";
+import SecondaryButtonLink from "../../shared/components/SecondaryButtonLink";
 import { useStore } from "~stores/website";
+import styles from "./styles.module.css";
+
 
 const Hero = () => {
   const heroTextRef = useStore((state) => state.heroTextRef);
@@ -20,17 +22,17 @@ const Hero = () => {
           >
             Follow along on Twitter
           </Link> */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl">{siteConfig.hero}</h1>
+        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl">{siteConfig.hero}</h1>
         <p className="max-w-[42rem] leading-normal sm:text-xl sm:leading-8">{siteConfig.description}</p>
         <div className="space-x-4">
-          <DownloadExtensionButton />
+          <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Server</SecondaryButtonLink>
           <Link
-            href={siteConfig.links.github}
+            href={siteConfig.links.waitlist}
             target="_blank"
             rel="noreferrer"
             className={cn(buttonVariants({ size: "lg" }))}
           >
-            GitHub
+            Join Waitlist
           </Link>
         </div>
       </div>

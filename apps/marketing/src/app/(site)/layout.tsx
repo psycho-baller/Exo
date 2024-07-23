@@ -12,6 +12,7 @@ import { TailwindIndicator } from '~components/TailwindIndicator';
 // import ToasterContext from "../context/ToastContext";
 import '../globals.css';
 import Script from 'next/script';
+import { TRPCReactProvider } from '~components/TRPCProviders';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -104,7 +105,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Lines />
           <Header />
           {/* <ToasterContext /> */}
-          {children}
+          <TRPCReactProvider>
+            {children}
+          </TRPCReactProvider>
           <Footer />
           <ScrollToTop />
           <TailwindIndicator />

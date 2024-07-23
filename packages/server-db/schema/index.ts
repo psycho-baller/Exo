@@ -285,6 +285,11 @@ export const verificationTokens = sqliteTable(
   }),
 )
 
+export const waitlistEmails = sqliteTable('waitlistEmail', {
+  email: text('email').notNull().unique(),
+  createdAt: integer('createdAt', { mode: 'timestamp' }).defaultNow(),
+})
+
 // Relations (deprecated)
 export const usersRelations = relations(users, ({ many }) => ({
   posts: many(posts, { relationName: 'Created by user' }),

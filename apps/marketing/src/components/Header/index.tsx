@@ -9,7 +9,7 @@ import ThemeToggler from "./ThemeToggler";
 import Navigation from "./Navigation";
 import { Logo } from "../Logo";
 
-interface Props extends ComponentPropsWithoutRef<"header"> {}
+interface Props extends ComponentPropsWithoutRef<"header"> { }
 
 const Header: FC<Props> = (props) => {
   const { ...rest } = props;
@@ -34,7 +34,7 @@ const Header: FC<Props> = (props) => {
       <div className="container mx-auto px-8 pt-8 z-50">
         <div className="lg:flex items-center justify-between hidden">
           <Logo
-            width={200}
+            width={0}
             className="cursor-pointer"
             onClick={(e) => {
               if (window.location.pathname === "/") {

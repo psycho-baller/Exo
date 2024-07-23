@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { siteConfig } from "~config/site";
 import Link from "next/link";
 import useBrowserName from "~hooks/use-browser-name";
+import WaitlistForm from "~components/WaitlistForm";
 
 const CTA = () => {
   const browserName = useBrowserName();
@@ -66,26 +67,7 @@ const CTA = () => {
                   alt="Saly"
                   className="hidden xl:block"
                 />
-                <Link
-                  href={siteConfig.links[browserName]}
-                  className="inline-flex items-center gap-2.5 font-medium text-white dark:text-black bg-black dark:bg-white rounded-full py-3 px-6 hover:opacity-90"
-                >
-                  <span>Download Now</span>
-                  <Image
-                    width={20}
-                    height={20}
-                    src="./images/icon/icon-arrow-dark.svg"
-                    alt="Arrow"
-                    className="dark:hidden"
-                  />
-                  <Image
-                    width={20}
-                    height={20}
-                    src="./images/icon/icon-arrow-light.svg"
-                    alt="Arrow"
-                    className="hidden dark:block"
-                  />
-                </Link>
+                <WaitlistForm />
               </div>
             </motion.div>
           </div>
