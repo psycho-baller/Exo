@@ -1,0 +1,24 @@
+/* Just positioning here */
+/* svg {
+	padding-top: 10vh;
+	margin: 0px auto;
+	display: block;
+} */
+/* This animates the circle when it switches to play */
+svg #circle {
+	transition: stroke-dashoffset 300ms ease-in;
+	stroke-dashoffset: 0;
+	fill: none;
+  stroke-width:2px;stroke:white;
+}
+svg #circle.play {
+	stroke-dashoffset: 314;
+}
+
+svg #line1 {
+  strokeWidth:4px;stroke:white;strokeLinecap: round;
+}
+
+svg .line2 {
+  strokeWidth:4px;stroke:white;fill:white;strokeLinejoin: round;strokeLinecap: round;
+}
