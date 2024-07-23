@@ -7,6 +7,7 @@ import { questionTopicRouter } from './router/questionTopic'
 import { searchHistoryRouter } from './router/searchHistory'
 import { topicRouter } from './router/topic'
 import { userRouter } from './router/user'
+import { waitlistRouter } from './router/waitlist'
 import { createTRPCRouter } from './trpc'
 
 export const appRouter = createTRPCRouter({
@@ -19,6 +20,7 @@ export const appRouter = createTRPCRouter({
   group: groupRouter,
   searchHistory: searchHistoryRouter,
   groupsOfPeople: groupsOfPeopleRouter,
+  waitlist: waitlistRouter,
 })
 
 // export type definition of API

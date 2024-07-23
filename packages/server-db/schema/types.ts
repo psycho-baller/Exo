@@ -1,3 +1,4 @@
+import { waitlistEmails } from './index'
 import { createInsertSchema } from 'drizzle-zod'
 
 import {
@@ -122,6 +123,14 @@ export type InsertQuestionSchema = z.infer<typeof insertQuestionSchema>
 export type QuestionTopics = typeof questionTopics.$inferSelect
 export type NewQuestionTopics = typeof questionTopics.$inferInsert
 export const insertQuestionTopicSchema = createInsertSchema(questionTopics)
+
+// Email Waitlist
+export type WaitlistEmails = typeof waitlistEmails.$inferSelect
+export type NewWaitlistEmail = typeof waitlistEmails.$inferInsert
+export const insertWaitlistEmailSchema = createInsertSchema(waitlistEmails, {
+  email: ({ email }) => email.min(5).max(31),
+  // createdAt: ({ createdAt }) => createdAt.optional(),
+})
 
 // Reusable types
 export type WithId = { id: number }

@@ -17,6 +17,8 @@ export type SiteConfig = {
     youtube: string
     instagram: string
     portfolio: string
+    waitlist: string
+    discord: string
   }
 }
 

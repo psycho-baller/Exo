@@ -1,24 +1,24 @@
-import type { Header } from "~types/config";
+import type { Header } from '~types/config'
 
 export const headerRoutes: Header[] = [
   {
     id: 1,
-    title: "Home",
+    title: 'Home',
     newTab: false,
-    path: "/",
+    path: '/',
   },
   {
     id: 2,
-    title: "Features",
+    title: 'Features',
     newTab: false,
-    path: "/#features",
+    path: '/#features',
   },
-  {
-    id: 3,
-    title: "Demo",
-    newTab: false,
-    path: "/#demo",
-  },
+  // {
+  //   id: 3,
+  //   title: "Demo",
+  //   newTab: false,
+  //   path: "/#demo",
+  // },
   // {
   //   id: 2.1,
   //   title: "Blog",
@@ -77,8 +77,8 @@ export const headerRoutes: Header[] = [
 
   {
     id: 4,
-    title: "Contact",
+    title: 'Contact',
     newTab: false,
-    path: "/contact",
+    path: '/contact',
   },
-];
+]

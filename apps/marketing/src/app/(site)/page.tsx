@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       <Feature />
       <CTA />
-      <OpenSource />
+      {/* <OpenSource /> */}
     </main>
   );
 }
