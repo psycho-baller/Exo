@@ -1,0 +1,26 @@
+{
+  "extends": "plasmo/templates/tsconfig.base",
+  "exclude": ["node_modules", ".next", "dist", "build", ".vscode", ".github", "docs", "api", "venv"],
+  "include": [
+    ".plasmo/index.d.ts",
+    "next-env.d.ts",
+    "./**/*.ts",
+    "./**/*.tsx",
+    ".next/types/**/*.ts",
+    "next.config.js"
+  ],
+  "compilerOptions": {
+    "paths": {
+      "~*": ["./src/*"],
+      "@/*": ["./src/app/*"]
+      // "react": ["./node_modules/@types/react"]
+    },
+    "baseUrl": ".",
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  }
+}
