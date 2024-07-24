@@ -5,7 +5,7 @@ import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
 import { useState } from 'react'
 import SuperJSON from 'superjson'
 
-import { api } from '@acme/api/utils/trpc'
+import { api } from '../../../../packages/server-api/utils/trpc'
 
 const queryClientPersistCacheConfig = {
   defaultOptions: {
@@ -40,7 +40,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          transformer: SuperJSON,
+          // transformer: SuperJSON,
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
             const headers = new Headers()
@@ -62,7 +62,6 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 }
 
 function getBaseUrl() {
-  if (typeof window !== 'undefined') return window.location.origin
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return `http://localhost:${process.env.PORT ?? 3000}`
+  if (process.env.BACKEND_URL) return `https://${process.env.BACKEND_URL}`
+  return `http://localhost:${process.env.BACKEND_PORT ?? 3000}`
 }
