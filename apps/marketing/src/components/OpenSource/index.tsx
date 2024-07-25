@@ -5,11 +5,11 @@ import SectionHeader from "~components/Common/SectionHeader";
 import { motion } from "framer-motion";
 import AnimateOnView from "~components/shared/AnimateOnView";
 
-interface Props {}
+interface Props { }
 
 async function getGitHubStars(): Promise<string | null> {
   try {
-    const response = await fetch("https://api.github.com/repos/psycho-baller/SnipTube", {
+    const response = await fetch("https://api.github.com/repos/psycho-baller/convo-topics", {
       headers: {
         Accept: "application/vnd.github+json",
         Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
@@ -33,7 +33,7 @@ async function getGitHubStars(): Promise<string | null> {
 
 const openSource: FC<Props> = async (props) => {
   const stars = await getGitHubStars();
-  const {} = props;
+  const { } = props;
 
   return (
     <section

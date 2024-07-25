@@ -27,9 +27,7 @@ const Hero = () => {
         <div className="space-x-4">
           <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Server</SecondaryButtonLink>
           <Link
-            href={siteConfig.links.waitlist}
-            target="_blank"
-            rel="noreferrer"
+            href="/#waitlist"
             className={cn(buttonVariants({ size: "lg" }))}
           >
             Join Waitlist

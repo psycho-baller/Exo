@@ -12,7 +12,9 @@ const CTA = () => {
   return (
     <>
       {/* <!-- ===== CTA Start ===== --> */}
-      <section className="py-20 lg:py-25 xl:py-30 px-4 md:px-8 2xl:px-0 overflow-hidden">
+      <section
+        id="waitlist"
+        className="py-20 lg:py-25 xl:py-30 px-4 md:px-8 2xl:px-0 overflow-hidden">
         <div className="mx-auto max-w-c-1390 px-7.5 md:px-12.5 xl:px-17.5 py-12.5 xl:py-0 rounded-lg bg-gradient-to-t from-[#F8F9FF] to-[#DEE7FF] dark:bg-gradient-to-t dark:from-transparent dark:to-transparent dark:bg-blacksection dark:stroke-strokedark">
           <div className="flex flex-wrap md:flex-nowrap md:items-center md:justify-between gap-8 md:gap-0">
             <motion.div
@@ -36,10 +38,7 @@ const CTA = () => {
               <h2 className="text-black dark:text-white text-3xl xl:text-sectiontitle4 font-bold mb-4 w-11/12">
                 Be an Early Adopter and Make a Difference!
               </h2>
-              <p>
-                Don't miss the chance to revolutionize your YouTube experience. Download SnipTube now and take control
-                of your favorite moments like never before!
-              </p>
+              <p>I am committed to providing you with the best experience possible, which is why I am continually updating and enhancing Rooots. I strive to make it the ultimate social companion for all users ready to help you cultivate meaningful conversations with others</p>
             </motion.div>
             <motion.div
               variants={{

@@ -16,8 +16,8 @@ const Feature = () => {
           {/* <!-- Section Title Start --> */}
           <SectionHeader
             headerInfo={{
-              title: "SNIPTUBE FEATURES",
-              subtitle: "Core Features of SnipTube",
+              title: "ROOOTS FEATURES",
+              subtitle: "Core Features of ROOOTS",
               description: "",
             }}
           />
