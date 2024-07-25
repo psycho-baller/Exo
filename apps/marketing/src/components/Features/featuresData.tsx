@@ -2,44 +2,39 @@ import type { Feature } from "~types/feature";
 
 const featuresData: Feature[] = [
   {
-    id: 1,
-    icon: "https://img.icons8.com/pastel-glyph/64/ffffff/brain-3--v2.png",
-    title: "Intelligent Summarization",
+    icon: "/images/icon/icon-03.svg",
+    title: "Conversation Topics Library",
     description:
-      "SnipTube harnesses the power of advanced AI algorithms to automatically generate concise summaries for each snip. Say goodbye to the hassle of rewatching entire videos to find that one crucial detail - SnipTube will have it neatly summarized for you!",
+      "You can explore a huge collection of thought-provoking questions & topics designed to spark meaningful conversations. We call these seeds",
   },
   {
-    id: 2,
+    icon: "/images/icon/icon-03.svg",
+    title: "Personal Conversation Topics Vault",
+    description:
+      "You can create & save your favorite seeds in your personal vault. These seeds will be easily accessible for you to use in your conversations",
+  },
+  {
     icon: "/images/icon/organize.svg",
     title: "Organize and Tag",
     description:
-      "Keep your snips neatly organized and easily searchable by assigning custom tags and annotations to each snip. Whether it's for educational purposes, research, or personal entertainment, SnipTube makes it effortless to navigate through your collection and recall important context for each snip",
+      "Keep your seeds organized and easily searchable by assigning custom tags and even specific people or groups you're planning to talk to",
   },
   {
-    id: 3,
-    icon: "/images/icon/icon-03.svg",
-    title: "A Collection of Your YouTube Gems",
-    description:
-      "Build an exquisite collection of your most cherished YouTube moments that you can revisit anytime, all in one place. No more digging through lengthy videos to find that one valuable piece of information!",
-  },
-  {
-    id: 4,
-    icon: "/images/icon/export.svg",
-    title: "Export with Ease",
-    description:
-      "Need to take your snips on the go? No problem! With a simple click of a button, you can easily export individual snips or the entire collection in Markdown format. Seamlessly import them into your favorite note-taking app and continue your learning journey",
-  },
-  {
-    id: 5,
     icon: "/images/icon/users.svg",
-    title: "Perfect for All Users",
-    description: "SnipTube caters to everyone, whether you're a student looking to ace your exams, a researcher seeking profound insights, or simply a casual YouTube enthusiast. Say goodbye to wasting time searching for that elusive moment in a video",
+    title: "Relationship Manager",
+    description: "This feature helps you keep track of your interactions with friends, peers, and colleagues. Through the power of linking specific seeds to individuals or groups, it makes it easy to remember important details and follow up on past discussions",
   },
   {
-    id: 6,
-    icon: "https://img.icons8.com/fluency-systems-filled/48/ffffff/positive-dynamic.png",
-    title: "Constantly Evolving",
-    description: "I am committed to providing you with the best experience possible, which is why I am continually updating and enhancing SnipTube. I strive to make it the ultimate YouTube companion for all users, and I am always open to feedback and suggestions",
+    icon: "https://img.icons8.com/pastel-glyph/64/ffffff/brain-3--v2.png",
+    title: "Daily Question Prompt",
+    description:
+      "Rooots sends you a daily (or any recurring frequency you prefer) notification with a thought-provoking question to encourage regular reflection and conversation",
+  },
+  {
+    icon: "/images/icon/export.svg",
+    title: "Event Integration",
+    description:
+      "You can integrate Rooots with your calendar apps to get relevant questions for upcoming events or meetings. It's perfect for preparing for social or professional interactions by selecting and reviewing questions beforehand.",
   },
 ];
 
