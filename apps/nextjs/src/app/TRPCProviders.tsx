@@ -5,7 +5,7 @@ import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
 import { useState } from 'react'
 import SuperJSON from 'superjson'
 
-import { api } from '@acme/api/utils/trpc'
+import { api } from '../../../../packages/server-api/utils/trpc'
 
 const queryClientPersistCacheConfig = {
   defaultOptions: {
