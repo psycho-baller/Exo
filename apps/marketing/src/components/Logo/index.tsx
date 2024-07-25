@@ -1,10 +1,17 @@
 import * as React from "react";
 import { type SVGProps, memo } from "react";
+import { cn } from "~lib/utils";
 const LogoComponent = (props: SVGProps<SVGSVGElement>) => {
   const { className, ...restOfProps } = props;
   return (
     <>
-      <svg
+      <h1
+        className={cn("text-5xl font-bold dark:text-white", className)}
+        {...restOfProps}
+      >
+        Rooots
+      </h1>
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 168.75 37.5"
@@ -145,7 +152,7 @@ const LogoComponent = (props: SVGProps<SVGSVGElement>) => {
             transform="translate(39.829 4.026) scale(.23684)"
           />
         </g>
-      </svg>
+      </svg> */}
     </>
   );
 };

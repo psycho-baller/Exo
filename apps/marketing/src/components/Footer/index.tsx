@@ -32,7 +32,7 @@ const Footer = () => {
             href={siteConfig.links.portfolio}
             className="text-sm leading-6 hover:text-primary"
           >
-            About the creator
+            About the founder
           </Link>
           <Link
             href="/contact"

@@ -23,7 +23,7 @@ const Hero = () => {
             Follow along on Twitter
           </Link> */}
         <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl">{siteConfig.hero}</h1>
-        <p className="max-w-[42rem] leading-normal sm:text-xl sm:leading-8">{siteConfig.description}</p>
+        <p className="max-w-[42rem] !text-manatee leading-normal sm:text-xl sm:leading-8">{siteConfig.description}</p>
         <div className="space-x-4">
           <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Server</SecondaryButtonLink>
           <Link
