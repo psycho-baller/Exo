@@ -62,6 +62,6 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 }
 
 function getBaseUrl() {
-  if (process.env.BACKEND_URL) return `https://${process.env.BACKEND_URL}`
+  if (process.env.NEXT_PUBLIC_BACKEND_URL) return `https://${process.env.NEXT_PUBLIC_BACKEND_URL}`
   return `http://localhost:${process.env.BACKEND_PORT ?? 3000}`
 }
