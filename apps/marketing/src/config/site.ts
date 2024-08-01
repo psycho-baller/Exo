@@ -12,7 +12,7 @@ export const siteConfig = {
     // twitter: "https://twitter.com/",
     github: 'https://github.com/psycho-baller/convo-topics',
     waitlist: 'https://survey.typeform.com/to/erptGdCr',
-    discord: 'https://discord.gg/m8GM7bHp',
+    discord: 'https://discord.gg/phWq2MsS9e',
     kofi: 'https://ko-fi.com/ramimaalouf',
     linkedin: 'https://www.linkedin.com/in/rami--maalouf/',
     youtube: 'https://youtube.com/@ramimaalouf',
