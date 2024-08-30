@@ -16,9 +16,9 @@
     "ios": "expo run:ios",
     "log:android": "npx react-native log-android",
     "log:ios": "npx react-native log-ios",
-    "build:android": "eas build --profile preview --platform android",
-    "build:android:local": "eas build --profile preview --platform android --local",
-    "build:ios": "eas build --profile development --platform ios"
+    "build:android": "scripts/build-android.sh com.convo_topics",
+    "build:android:dev": "scripts/build-android.sh com.convo_topics dev",
+    "build:ios": "scripts/build-ios.sh com.convo-topics"
   },
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",
