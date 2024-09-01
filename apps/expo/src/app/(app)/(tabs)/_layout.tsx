@@ -5,6 +5,7 @@ import { Tabs, useSegments } from 'expo-router'
 import { useThemeName } from '@acme/ui'
 import { sheetRefAtom } from '@acme/app/atoms/addQuestion'
 import { useAtom } from 'jotai'
+import { StyleSheet } from 'react-native'
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -22,17 +23,17 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             intensity={60}
-            experimentalBlurMethod="dimezisBlurView"
+            // experimentalBlurMethod="dimezisBlurView"
             tint={themeName === 'dark' ? 'dark' : 'extraLight'}
             style={{
-              flex: 1,
               overflow: 'hidden',
-              left: 10,
-              right: 10,
-              bottom: 17.5,
-              top: -5,
-              position: 'absolute',
+              // left: 10,
+              // right: 10,
+              // top: -5,
+              // position: 'absolute',
               borderRadius: 999,
+              ...StyleSheet.absoluteFillObject,
+              // bottom: 17.5,
             }}
           />
         ),
@@ -41,13 +42,15 @@ export default function TabLayout() {
           // transform: [{ translateY: segments[3] === '[id]' ? 100 : 0 }],
           // transformOrigin: 'bottom',
           backgroundColor: 'transparent',
-          borderTopWidth: 0,
+          // borderTopWidth: 0,
           position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          elevation: 0,
-          height: 85,
+          borderRadius: 999,
+
+          // bottom: 0,
+          // left: 0,
+          // right: 0,
+          // elevation: 0,
+          // height: 65,
         },
       }}
     >

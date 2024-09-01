@@ -13,20 +13,20 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
   return (
     <TamaguiThemeProvider>
       <TamaguiProvider>
-        {/* <SafeAreaProvider> */}
-        <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <BackendProvider>
-              <BottomSheetModalProvider>
-                {children}
-              </BottomSheetModalProvider>
-            </BackendProvider>
-            <CustomToast />
-            {/* <ToastViewport /> */}
-          </GestureHandlerRootView>
-        </ToastProvider>
-        {/* </SafeAreaProvider> */}
-      </TamaguiProvider >
-    </TamaguiThemeProvider >
+        <SafeAreaProvider >
+          <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <BackendProvider>
+                <BottomSheetModalProvider>
+                  {children}
+                </BottomSheetModalProvider>
+              </BackendProvider>
+              <CustomToast />
+              {/* <ToastViewport /> */}
+            </GestureHandlerRootView>
+          </ToastProvider>
+        </SafeAreaProvider>
+      </TamaguiProvider>
+    </TamaguiThemeProvider>
   )
 }

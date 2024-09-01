@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
+import { setPositionAsync, setBackgroundColorAsync, setButtonStyleAsync } from 'expo-navigation-bar';
 
 import { Provider } from '@acme/app/provider'
 
@@ -11,44 +12,54 @@ export {
 } from 'expo-router'
 
 const RootLayout = () => {
-  const [loaded, error] = useFonts({
-    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
-    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
-  })
+  // const [loaded, error] = useFonts({
+  //   Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+  //   InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  // })
+
+  useEffect(() => {
+    // enables edge-to-edge mode
+    setPositionAsync('absolute')
+    // transparent backgrounds to see through
+    // setBackgroundColorAsync('#000')
+    // changes the color of the button icons "dark||light"
+    // setButtonStyleAsync("light");
+  }, [])
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error
-  }, [error])
+  // useEffect(() => {
+  //   if (error) throw error
+  // }, [error])
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [loaded])
+  // useEffect(() => {
+  //   if (loaded) {
+  //     // SplashScreen.hideAsync()
+  //   }
+  // }, [loaded])
 
-  if (!loaded) {
-    return null
-  }
+  // if (!loaded) {
+  //   return null
+  // }
 
   return (
-      <Provider>
-        {/*
+    <Provider>
+      {/*
           The Stack component displays the current page.
           It also allows you to configure your screens
         */}
-        <Stack
-          screenOptions={{
-            // headerTransparent: true,
-            headerShown: false,
-            navigationBarColor: 'transparent',
-          }}
-        >
-          <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
-          <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
-        </Stack>
-        <StatusBar />
-      </Provider>
+      <Stack
+        screenOptions={{
+          // headerTransparent: true,
+          headerShown: false,
+          // navigationBarColor: 'transparent',
+          // navigationBarHidden: true,
+        }}
+      >
+        <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
+        <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
+      </Stack>
+      <StatusBar translucent />
+    </Provider>
   )
 }
 
