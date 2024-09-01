@@ -10,7 +10,7 @@ BUNDLE_IDENTIFIER=$1
 
 # Step 1: Generate the tar.gz build file and capture the build name
 echo "Generating the tar.gz build file..."
-BUILD_OUTPUT=$(eas build -p ios --local -e preview 2>&1)
+BUILD_OUTPUT=$(eas build -p ios --local -e development 2>&1)
 BUILD_NAME=$(echo "$BUILD_OUTPUT" | grep -oE '[^ ]+\.tar\.gz' | tail -n 1)
 
 if [ -z "$BUILD_NAME" ]; then

@@ -17,8 +17,8 @@
     "log:android": "npx react-native log-android",
     "log:ios": "npx react-native log-ios",
     "build:android": "scripts/build-android.sh com.convo_topics",
-    "build:android:dev": "scripts/build-android.sh com.convo_topics dev",
-    "build:ios": "scripts/build-ios.sh com.convo-topics"
+    "build:android:dev": "scripts/build_android.sh com.convo_topics dev",
+    "build:ios": "scripts/build_ios.sh com.convo-topics"
   },
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",

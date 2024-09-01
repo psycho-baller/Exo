@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Check if package name is provided
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
