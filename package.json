@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=21.2.0"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "build": "turbo build",
     "clean": "rm -rf node_modules pnpm-lock.yaml",
