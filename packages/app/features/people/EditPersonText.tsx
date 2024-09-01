@@ -8,22 +8,10 @@ export function EditPersonText({ id, content }: { id: number; content: string })
   const { mutate: updateName } = api.person.updateName.useMutation({
     async onSuccess() {
       await utils.person.all.invalidate()
+      await utils.person.byId.invalidate({ id })
     },
   })
   const [person, setPerson] = useState(content)
-
-  // debounce the input
-  useEffect(() => {
-    const [firstName, lastName] = person.split(' ', 2)
-    if (!firstName) return
-    const timer = setTimeout(() => {
-      updateName({ id: id, firstName: firstName, lastName: lastName })
-    }, 2000)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [id, person, updateName])
 
   return (
     <UnstyledInput
@@ -31,11 +19,12 @@ export function EditPersonText({ id, content }: { id: number; content: string })
       placeholderTextColor='$secondaryColor'
       opacity={0.75}
       fontSize={'$8'}
-      paddingVertical={'$2'}
-      marginBottom={'$4'}
+      padding={'$3'}
       placeholder='Add person'
       value={person}
       onChangeText={setPerson}
+      onBlur={() => updateName({ id: id, firstName: person })}
+      onSubmitEditing={() => updateName({ id: id, firstName: person })}
     />
   )
 }

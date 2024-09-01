@@ -8,20 +8,10 @@ export function EditGroupText({ id, content }: { id: number; content: string }) 
   const { mutate: updateName } = api.group.updateName.useMutation({
     async onSuccess() {
       await utils.group.all.invalidate()
+      await utils.group.byId.invalidate({ id })
     },
   })
   const [group, setGroup] = useState(content)
-
-  // debounce the input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      updateName({ id: id, name: content })
-    }, 2000)
-
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [id, updateName, content])
 
   return (
     <UnstyledInput
@@ -34,6 +24,8 @@ export function EditGroupText({ id, content }: { id: number; content: string }) 
       placeholder='Add group'
       value={group}
       onChangeText={setGroup}
+      onBlur={() => updateName({ id: id, name: group })}
+      onSubmitEditing={() => updateName({ id: id, name: group })}
     />
   )
 }

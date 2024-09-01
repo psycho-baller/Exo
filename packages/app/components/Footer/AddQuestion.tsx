@@ -38,9 +38,12 @@ export const AddQuestion: FC = () => {
           topicId: selectedTopic.id,
         })
       }
+      if (createdQuestion?.personId) {
+        await utils.question.forPerson.invalidate({ id: createdQuestion.personId })
+      }
+      await utils.question.all.invalidate()
       // reset form
       setInputWords([])
-      await utils.question.all.invalidate()
     },
   })
 
