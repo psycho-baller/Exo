@@ -20,7 +20,10 @@ export const QuestionCard: FC<Props> = (props) => {
 
   const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
+    onSettled: async () => {
+      await utils.question.all.invalidate()
+      await utils.question.forPerson.invalidate({ id: question.personId })
+    }
   })
 
   return (
