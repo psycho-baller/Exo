@@ -27,8 +27,8 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 		(props: any) => (
 			<BottomSheetBackdrop
 				{...props}
-				disappearsOnIndex={-1}
-				appearsOnIndex={0}
+			// disappearsOnIndex={-1}
+			// appearsOnIndex={0}
 			/>
 		),
 		[]
@@ -57,11 +57,11 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			}
 			{...props}
 		>
-			{/* <BottomSheetView> */}
-			<View padding='$3'>
-				{children}
-			</View>
-			{/* </BottomSheetView> */}
+			<BottomSheetView>
+				<View padding='$3'>
+					{children}
+				</View>
+			</BottomSheetView>
 		</BottomSheetModal>
 	);
 });
