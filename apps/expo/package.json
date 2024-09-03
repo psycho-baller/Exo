@@ -16,7 +16,7 @@
     "ios": "expo run:ios",
     "log:android": "npx react-native log-android",
     "log:ios": "npx react-native log-ios",
-    "build:android": "scripts/build-android.sh com.convo_topics",
+    "build:android": "scripts/build_android.sh com.convo_topics",
     "build:android:dev": "scripts/build_android.sh com.convo_topics dev",
     "build:ios": "scripts/build_ios.sh com.convo-topics"
   },
