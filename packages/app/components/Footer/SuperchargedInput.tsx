@@ -17,6 +17,7 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
   const [justDisabledWord, setJustDisabledWord] = useState(false);
+  const [autoCapitalize, setAutoCapitalize] = useState<'none' | 'sentences' | 'words' | 'characters'>('sentences');
 
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
     const newSelection = e.nativeEvent.selection;
@@ -42,25 +43,6 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     setInputWords(addTextProperties(updatedText));
   };
 
-  const addTextProperties: (text: string) => SuperchargedWord[] = (text) => {
-    // const date = parse(text)
-    const words = text.split(/(\s+)/)
-    return words.map((word, index) => {
-      let reference: ReferenceType = null;
-      if (word.startsWith('@')) {
-        reference = word.startsWith('@@') ? 'group' : 'person';
-      } else if (word.startsWith('#')) {
-        reference = 'topic';
-      }
-
-      return {
-        word,
-        enabled: reference !== null,
-        reference,
-        // active: false,
-      };
-    });
-  }
 
   const handleBackspace = () => {
     if (selection.start <= 0) return; // No action if cursor is at the start
@@ -115,6 +97,35 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     });
   };
 
+  const addTextProperties: (text: string) => SuperchargedWord[] = (text) => {
+    // const date = parse(text)
+    const words = text.split(/(\s+)/)
+
+    const lastWord = words.at(-1);
+    console.log('lastWord', lastWord);
+    // check if the final character is an '@'. If it is, set autoCapitalize to 'characters', if not, or it's a double '@', set it to 'sentences'(default)
+    if (lastWord?.at(-1) === '@' && lastWord?.at(-2) !== '@') {
+      setAutoCapitalize('characters')
+    } else if (autoCapitalize !== 'sentences') {
+      setAutoCapitalize('sentences')
+    }
+    return words.map((word, index) => {
+      let reference: ReferenceType = null;
+      if (word.startsWith('@')) {
+        reference = word.startsWith('@@') ? 'group' : 'person';
+      } else if (word.startsWith('#')) {
+        reference = 'topic';
+      }
+
+      return {
+        word,
+        enabled: reference !== null,
+        reference,
+        // active: false,
+      };
+    });
+  }
+
   return (
     <YStack width='100%' >
       <View position='relative'>
@@ -140,6 +151,7 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           onChangeText={(newText) => {
             setInputWords(addTextProperties(newText));
           }}
+          autoCapitalize={autoCapitalize}
           // numberOfLines={4}
           multiline
           onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
