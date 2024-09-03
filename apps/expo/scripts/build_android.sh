@@ -48,7 +48,7 @@ echo "Launching the app on the emulator..."
 adb shell monkey -p "${PACKAGE_NAME}" -c android.intent.category.LAUNCHER 1
 
 # Step 4: Conditional Cleanup - Delete the APK file only if profile is 'preview'
-if [ "$PROFILE" = "preview" ]; then
+if [ "$PROFILE" = "development" ]; then
   echo "Cleaning up..."
   rm -f "${APK_NAME}"
 fi
