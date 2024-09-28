@@ -1,4 +1,4 @@
-import { CalendarDays, MessageCircleQuestion } from '@tamagui/lucide-icons'
+import { CalendarDays, MessageCircleQuestion, Trash2 } from '@tamagui/lucide-icons'
 import { useMemo, type FC } from 'react'
 import { Link } from 'solito/link'
 
@@ -7,36 +7,50 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, XStack, YStack } from '@acme/ui'
 
 import { formatDate } from '../../utils/date'
+import { SwipeableRow } from '../../components/SwipeableRow'
+import { withHaptics } from '../../utils/haptics'
 
 interface Props {
   person: RouterOutputs['person']['all'][number]
 }
-// TODO: Delete using swipable
+
 export const PersonCard: FC<Props> = (props) => {
   const { person } = props
 
   const utils = api.useUtils()
-  const deleteQuestionMutation = api.question.delete.useMutation({
-    onSettled: () => utils.question.all.invalidate(),
+  const deletePersonMutation = api.person.delete.useMutation({
+    onSettled: async () => {
+      await utils.person.all.invalidate()
+    },
   })
 
   return (
-    <Link href={`/people/${String(person.id)}`}>
-      <XStack
-        paddingHorizontal='$4'
-        paddingVertical='$4'
-        alignItems='center'
-        justifyContent='space-between'
-      >
-        <YStack gap={6}>
-          <Text fontSize={20} fontWeight='bold'>
-            {person.firstName}
-          </Text>
-          <QuestionMetadata person={person} />
-        </YStack>
-        {/* topics */}
-      </XStack>
-    </Link>
+    <SwipeableRow
+      rightActions={[
+        {
+          color: 'red',
+          icon: <Trash2 size={20} color='white' strokeWidth={2.5} />,
+          onPress: () => withHaptics(() => deletePersonMutation.mutate({ id: person.id })),
+        },
+      ]}
+    >
+      <Link href={`/people/${String(person.id)}`}>
+        <XStack
+          paddingHorizontal='$4'
+          paddingVertical='$4'
+          alignItems='center'
+          justifyContent='space-between'
+        >
+          <YStack gap={6}>
+            <Text fontSize={20} fontWeight='bold'>
+              {person.firstName}
+            </Text>
+            <QuestionMetadata person={person} />
+          </YStack>
+          {/* topics */}
+        </XStack>
+      </Link>
+    </SwipeableRow>
   )
 }
 

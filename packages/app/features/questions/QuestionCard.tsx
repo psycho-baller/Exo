@@ -3,12 +3,15 @@ import type { FC } from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
 import { Link } from 'solito/link'
+import * as Haptics from 'expo-haptics';
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
 import { Text, XStack, YStack } from '@acme/ui'
 
 import { formatDate } from '../../utils/date'
+import { SwipeableRow } from '../../components/SwipeableRow'
+import { withHaptics } from '../../utils/haptics'
 
 interface Props {
   question: RouterOutputs['question']['all'][number]
@@ -27,15 +30,26 @@ export const QuestionCard: FC<Props> = (props) => {
   })
 
   return (
-    <Swipeable
-      renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
-      onSwipeableOpen={() => deleteQuestionMutation.mutate({ id: question.id })}
-      enabled={true}
-      overshootRight={false}
-      overshootLeft={false}
-      friction={2}
-      leftThreshold={40}
-      rightThreshold={40}
+    <SwipeableRow
+      rightActions={[
+        {
+          color: 'red',
+          icon: <Trash2 size={30} color='white' strokeWidth={2.5} />,
+          onPress: () => withHaptics(() => deleteQuestionMutation.mutate({ id: question.id })),
+        },
+        // {
+        //   color: 'green',
+        //   icon: <CalendarDays size={20} color='white' strokeWidth={2.5} />,
+        //   onPress: () => withHaptics(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)),
+        // }
+      ]}
+    // renderRightActions={swipeRight}
+    // enabled={true}
+    // overshootRight={false}
+    // overshootLeft={false}
+    // friction={2}
+    // leftThreshold={40}
+    // rightThreshold={40}
     >
       <Link href={`/questions/${question.id.toString()}`}>
         <XStack
@@ -68,7 +82,7 @@ export const QuestionCard: FC<Props> = (props) => {
           </YStack>
         </XStack>
       </Link>
-    </Swipeable>
+    </SwipeableRow >
   )
 }
 
@@ -128,37 +142,38 @@ function GroupForQuestion(props: {
   )
 }
 
-function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
-  // progressAnimatedValue: AnimatedInterpolation<string | number>, dragAnimatedValue: AnimatedInterpolation<string | number>, swipeable: Swipeable
-  // const dragX = dragAnimatedValue;
-  // console.log('dragX', dragX);
-  // console.log('progressAnimatedValue', progressAnimatedValue);
-  // const trans = interpolate(progressAnimatedValue, [0, 50, 100, 101], [-20, 0, 0, 1]);
-  // console.log(trans);
-  return (
-    // <Animated.View style={{
-    //   transform: [{
-    //     translateX: Number(trans.toString()) || 0,
-    //   }]
-    // }}>
-    // <RectButton>
-    <XStack
-      animation='bouncy'
-      backgroundColor='$red'
-      padding='$3'
-      alignItems='center'
-      justifyContent='center'
-    // style={{
-    //   transform: [
-    //     {
-    //       translateX: Number(trans.toString()),
-    //     },
-    //   ],
-    // }}
-    >
-      <Trash2 size={20} color='white' strokeWidth={2.5} />
-    </XStack>
-    // </RectButton>
-    // </Animated.View>
-  )
-}
+
+// function swipeRight(progressAnimatedValue: any, dragAnimatedValue: any) {
+//   // progressAnimatedValue: AnimatedInterpolation<string | number>, dragAnimatedValue: AnimatedInterpolation<string | number>, swipeable: Swipeable
+//   // const dragX = dragAnimatedValue;
+//   // console.log('dragX', dragX);
+//   // console.log('progressAnimatedValue', progressAnimatedValue);
+//   // const trans = interpolate(progressAnimatedValue, [0, 50, 100, 101], [-20, 0, 0, 1]);
+//   // console.log(trans);
+//   return (
+//     // <Animated.View style={{
+//     //   transform: [{
+//     //     translateX: Number(trans.toString()) || 0,
+//     //   }]
+//     // }}>
+//     // <RectButton>
+//     <XStack
+//       animation='bouncy'
+//       backgroundColor='$red'
+//       padding='$3'
+//       alignItems='center'
+//       justifyContent='center'
+//     // style={{
+//     //   transform: [
+//     //     {
+//     //       translateX: Number(trans.toString()),
+//     //     },
+//     //   ],
+//     // }}
+//     >
+//       <Trash2 size={20} color='white' strokeWidth={2.5} />
+//     </XStack>
+//     // </RectButton>
+//     // </Animated.View>
+//   )
+// }

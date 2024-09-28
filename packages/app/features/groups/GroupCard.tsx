@@ -1,6 +1,5 @@
 import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
 import { Link } from 'solito/link'
@@ -10,6 +9,8 @@ import { api } from '@acme/api/utils/trpc'
 import { Text, XStack, YStack } from '@acme/ui'
 
 import { formatDate } from '../../utils/date'
+import { SwipeableRow } from '../../components/SwipeableRow'
+import { withHaptics } from '../../utils/haptics'
 
 interface Props {
   group: RouterOutputs['group']['all'][number]
@@ -25,48 +26,52 @@ export const GroupCard: FC<Props> = (props) => {
   })
 
   return (
-    <GestureHandlerRootView>
-      <Swipeable
-        renderRightActions={(progress, dragX) => swipeRight(progress, dragX)}
-        onSwipeableOpen={() => deleteMutation(group.id)}
-        enabled={true}
-        overshootRight={false}
-        overshootLeft={false}
-        friction={2}
-        leftThreshold={40}
-        rightThreshold={40}
-      >
-        <Link href={`/groups/${group.id.toString()}`}>
-          <XStack
-            paddingHorizontal='$4'
-            paddingVertical='$4'
-            alignItems='center'
-            justifyContent='space-between'
-            hoverStyle={{
-              backgroundColor: '$secondaryBackground',
-              borderRadius: 10,
-            }}
-          >
-            <YStack gap={6}>
-              {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
-              <Text fontSize={18} fontWeight='bold'>
-                {group.name}
-              </Text>
-              <XStack gap={18}>
-                {date && (
-                  <XStack gap={6} alignItems='center'>
-                    <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
-                    <Text color='$secondaryColor'>{formatDate(date)}</Text>
-                  </XStack>
-                )}
-                {/* TODO: Fix this when I care about persno n groups */}
-                {/* <PersonOrGroupForGroup group={group} /> */}
-              </XStack>
-            </YStack>
-          </XStack>
-        </Link>
-      </Swipeable>
-    </GestureHandlerRootView>
+    <SwipeableRow
+      rightActions={[
+        {
+          color: 'red',
+          icon: <Trash2 size={30} color='white' strokeWidth={2.5} />,
+          onPress: () => withHaptics(() => deleteMutation({ id: group.id })),
+        }
+      ]}
+    // renderRightActions={swipeRight}
+    // enabled={true}
+    // overshootRight={false}
+    // overshootLeft={false}
+    // friction={2}
+    // leftThreshold={40}
+    // rightThreshold={40}
+    >
+      <Link href={`/groups/${group.id.toString()}`}>
+        <XStack
+          paddingHorizontal='$4'
+          paddingVertical='$4'
+          alignItems='center'
+          justifyContent='space-between'
+          hoverStyle={{
+            backgroundColor: '$secondaryBackground',
+            borderRadius: 10,
+          }}
+        >
+          <YStack gap={6}>
+            {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
+            <Text fontSize={18} fontWeight='bold'>
+              {group.name}
+            </Text>
+            <XStack gap={18}>
+              {date && (
+                <XStack gap={6} alignItems='center'>
+                  <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
+                  <Text color='$secondaryColor'>{formatDate(date)}</Text>
+                </XStack>
+              )}
+              {/* TODO: Fix this when I care about persno n groups */}
+              {/* <PersonOrGroupForGroup group={group} /> */}
+            </XStack>
+          </YStack>
+        </XStack>
+      </Link>
+    </SwipeableRow>
   )
 }
 
