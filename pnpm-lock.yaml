@@ -66,6 +66,9 @@ importers:
       '@acme/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@config-plugins/react-native-ble-plx':
+        specifier: ^7.0.0
+        version: 7.0.0(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       '@gorhom/bottom-sheet':
         specifier: ^5.0.0-alpha.11
         version: 5.0.0-alpha.11(@types/react@18.3.10)(react-native-gesture-handler@2.19.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0))(react-native-reanimated@3.10.1(@babel/core@7.25.2)(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
@@ -95,19 +98,25 @@ importers:
         version: 5.56.2(@tanstack/react-query@5.56.2(react@18.2.0))(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
+        version: 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.544
+        version: 11.0.0-rc.552
       babel-plugin-inline-import:
         specifier: ^3.0.0
         version: 3.0.0
       expo:
         specifier: ^51.0.32
         version: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      expo-background-fetch:
+        specifier: ~12.0.1
+        version: 12.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-bluetooth:
+        specifier: ^0.0.0
+        version: 0.0.0
       expo-blur:
         specifier: ~13.0.2
         version: 13.0.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -129,6 +138,9 @@ importers:
       expo-navigation-bar:
         specifier: ~3.0.7
         version: 3.0.7(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-network:
+        specifier: ~6.0.1
+        version: 6.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-notifications:
         specifier: ~0.28.4
         version: 0.28.17(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -144,6 +156,9 @@ importers:
       expo-status-bar:
         specifier: ^1.12.1
         version: 1.12.1
+      expo-task-manager:
+        specifier: ~11.8.2
+        version: 11.8.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-updates:
         specifier: ~0.25.15
         version: 0.25.25(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -159,6 +174,9 @@ importers:
       react-native:
         specifier: 0.74.5
         version: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0)
+      react-native-ble-plx:
+        specifier: ^3.2.1
+        version: 3.2.1(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
       react-native-gesture-handler:
         specifier: ~2.19.0
         version: 2.19.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
@@ -349,16 +367,16 @@ importers:
         version: 5.39.0(@tanstack/react-query@5.56.2(react@18.2.0))(next@14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
+        version: 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
       '@trpc/next':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/react-query@11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.544)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/react-query@11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.552)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.544
+        version: 11.0.0-rc.552
       next:
         specifier: ^14.1.0
         version: 14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4)
@@ -449,16 +467,22 @@ importers:
         version: 5.56.2(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
+        version: 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.544
+        version: 11.0.0-rc.552
       burnt:
         specifier: ^0.12.2
         version: 0.12.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))(react-dom@18.2.0(react@18.2.0))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
+      expo-background-fetch:
+        specifier: ~12.0.1
+        version: 12.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-bluetooth:
+        specifier: ^0.0.0
+        version: 0.0.0
       expo-constants:
         specifier: ^16.0.1
         version: 16.0.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -471,9 +495,18 @@ importers:
       expo-linking:
         specifier: ^6.3.1
         version: 6.3.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-network:
+        specifier: ~6.0.1
+        version: 6.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      expo-task-manager:
+        specifier: ~11.8.2
+        version: 11.8.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       jotai:
         specifier: ^2.8.0
         version: 2.10.0(@types/react@18.3.10)(react@18.2.0)
+      react-native-ble-plx:
+        specifier: ^3.2.1
+        version: 3.2.1(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
       react-native-element-dropdown:
         specifier: ^2.10.1
         version: 2.12.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0)
@@ -589,13 +622,13 @@ importers:
         version: 5.56.2(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
+        version: 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.544
+        version: 11.0.0-rc.552
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -694,13 +727,13 @@ importers:
         version: link:../queries
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
+        version: 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.544
+        version: 11.0.0-rc.552
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -1789,6 +1822,12 @@ packages:
   '@cloudflare/kv-asset-handler@0.3.4':
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
     engines: {node: '>=16.13'}
+
+  '@config-plugins/react-native-ble-plx@7.0.0':
+    resolution: {integrity: sha512-HgUc/Ya+UynufgQf5Q6d7ltc/wWQCruaYBCdWOM7CWSOxoyUXL0Htdxw5qRiul1wb3GO61EVk37KRiK7aT9seg==}
+    deprecated: react-native-ble-plx@>=3.1.1 now ships with an Expo config plugin.
+    peerDependencies:
+      expo: ^49
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -5468,18 +5507,18 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.544':
-    resolution: {integrity: sha512-VympvY3/j597XUNEm8ywcH9Q78rC8f7qvLRpfU6u7Bjm7YgWLNaWlBYLpnOjhej0gXjFQjRLsnF1Ffek8KDtZg==}
+  '@trpc/client@11.0.0-rc.552':
+    resolution: {integrity: sha512-jFDclTMI4QLcLNMmEZdAXOZWTXlaSzfdOqhvj0FQLDu38T/Wt6F2EWUY51ALYv6WU0u7dIpH/yi1/XbULz4LUg==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.544+f8e8d1715
+      '@trpc/server': 11.0.0-rc.552+268308497
 
-  '@trpc/next@11.0.0-rc.544':
-    resolution: {integrity: sha512-hSneXAUgapL17RXyTdN9G5ZeN73B/bZ0j2XqduATfD/UgwvTaUuS4uYybgBy3RMLnaOnjr9lxcrYAf4ysiKxCg==}
+  '@trpc/next@11.0.0-rc.552':
+    resolution: {integrity: sha512-7JzIcXbUBDqqTNaI4wpz8vt1lOw+9vPo6cBZl8pyBBw+Jy64L2dRoLfBa2r3/RljDWBfPvV0kHNuZx8Ky8vshA==}
     peerDependencies:
       '@tanstack/react-query': ^5.54.1
-      '@trpc/client': 11.0.0-rc.544+f8e8d1715
-      '@trpc/react-query': 11.0.0-rc.544+f8e8d1715
-      '@trpc/server': 11.0.0-rc.544+f8e8d1715
+      '@trpc/client': 11.0.0-rc.552+268308497
+      '@trpc/react-query': 11.0.0-rc.552+268308497
+      '@trpc/server': 11.0.0-rc.552+268308497
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -5489,17 +5528,17 @@ packages:
       '@trpc/react-query':
         optional: true
 
-  '@trpc/react-query@11.0.0-rc.544':
-    resolution: {integrity: sha512-lieAIbIdbwWsQcZuyUUzIGMB+ouMfkiPoK/H7N864eftiAmZgIuvtaarnO/7wTtLGsJoMOTzTJLE503UvEu0FA==}
+  '@trpc/react-query@11.0.0-rc.552':
+    resolution: {integrity: sha512-E2mV9kdAPcUlFKK0HHW5LuPthuobI+ooN7eg0+KJAI2nr+yzERcreF9kXQiOtXPFDDob8hS+2zJ/H/rGYz4lHA==}
     peerDependencies:
       '@tanstack/react-query': ^5.54.1
-      '@trpc/client': 11.0.0-rc.544+f8e8d1715
-      '@trpc/server': 11.0.0-rc.544+f8e8d1715
+      '@trpc/client': 11.0.0-rc.552+268308497
+      '@trpc/server': 11.0.0-rc.552+268308497
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
 
-  '@trpc/server@11.0.0-rc.544':
-    resolution: {integrity: sha512-Hv7w6PV9MQgD+TzX1LI1P1E2siweQaf4fS/xW+b6NCC15REgcYuWNPu69YFFpwcdkl3PuAkh+DL/0NPUpHdiHg==}
+  '@trpc/server@11.0.0-rc.552':
+    resolution: {integrity: sha512-3t8jOfs6EmZXQtwRD+FliAZW9WJmG1wC3SlFj/0hBMjwHqYtLttM/gmR1qKEeFmL5VdUhMojfaLQiGg5fxQEZw==}
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -7522,6 +7561,14 @@ packages:
     peerDependencies:
       expo: '*'
 
+  expo-background-fetch@12.0.1:
+    resolution: {integrity: sha512-8915rCoRKWBwCkhSSowv2+kH+QV6YYR7ES8r+yWAUPQ0vq+26NojeWAZtR0vCyTW+QLsQrYVV5Eh0brpZIMS7w==}
+    peerDependencies:
+      expo: '*'
+
+  expo-bluetooth@0.0.0:
+    resolution: {integrity: sha512-6OqEmPJ6yHkV6lLrkXHesE8DtzoHy5hW51LJ+PRju5ZivjUN9sHOSCnRLGf2+DQ8ozyyVyjTGPd/+04rASWyHA==}
+
   expo-blur@13.0.2:
     resolution: {integrity: sha512-t2p7BChO3Reykued++QJRMZ/og6J3aXtSQ+bU31YcBeXhZLkHwjWEhiPKPnJka7J2/yTs4+jOCNDY0kCZmcE3w==}
     peerDependencies:
@@ -7613,6 +7660,11 @@ packages:
     peerDependencies:
       expo: '*'
 
+  expo-network@6.0.1:
+    resolution: {integrity: sha512-WXXvkt1H75ojHVa263Jq+qjIyMzCfaoRzHKzOBMuSyDDcma9WpvKJpR1YpEQZH/zDhSfkKvh7Q3wRGOJr1J+dQ==}
+    peerDependencies:
+      expo: '*'
+
   expo-notifications@0.28.17:
     resolution: {integrity: sha512-tuhc/X385O1gLSBEsPpXSqmmBK6Ve6zG8u6YFa1kXILbyy83DHJuHB5ELJKo/HZdstlYeFjkDCei4haOuxCLCQ==}
     peerDependencies:
@@ -7658,6 +7710,11 @@ packages:
 
   expo-structured-headers@3.8.0:
     resolution: {integrity: sha512-R+gFGn0x5CWl4OVlk2j1bJTJIz4KO8mPoCHpRHmfqMjmrMvrOM0qQSY3V5NHXwp1yT/L2v8aUmFQsBRIdvi1XA==}
+
+  expo-task-manager@11.8.2:
+    resolution: {integrity: sha512-Uhy3ol5gYeZOyeRFddYjLI1B2DGRH1gjp/YC8Hpn5p5MVENviySoKNF+wd98rRvOAokzrzElyDBHSTfX+C3tpg==}
+    peerDependencies:
+      expo: '*'
 
   expo-updates-interface@0.16.2:
     resolution: {integrity: sha512-929XBU70q5ELxkKADj1xL0UIm3HvhYhNAOZv5DSk7rrKvLo7QDdPyl+JVnwZm9LrkNbH4wuE2rLoKu1KMgZ+9A==}
@@ -10407,6 +10464,13 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
+  react-native-ble-plx@3.2.1:
+    resolution: {integrity: sha512-cot4pu6qXh7DLcYh91n4BNI5Wm9/oMUSDj24G1tQ86F8sCFJ292AneKxRHkTH2+VxIGQuU2FVvWY1iY6ob0KZQ==}
+    engines: {node: '>= 18.0.0'}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   react-native-element-dropdown@2.12.1:
     resolution: {integrity: sha512-Z3uWNFBoezDEsy9AZJxoDc9DxoAdfeprUjaInmbuzYOk6R0Y0UZ659JIalX20XNvrNRWJUfSZwbM94jWYNsIyw==}
     engines: {node: '>= 16.0.0'}
@@ -11686,6 +11750,9 @@ packages:
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
+
+  unimodules-app-loader@4.6.0:
+    resolution: {integrity: sha512-FRNIlx7sLBDVPG117JnEBhnzZkTIgZTEwYW2rzrY9HdvLBTpRN+k0dxY50U/CAhFHW3zMD0OP5JAlnSQRhx5HA==}
 
   unimport@3.13.1:
     resolution: {integrity: sha512-nNrVzcs93yrZQOW77qnyOVHtb68LegvhYFwxFMfuuWScmwQmyVCG/NBuN8tYsaGzgQUVYv34E/af+Cc9u4og4A==}
@@ -13259,6 +13326,10 @@ snapshots:
   '@cloudflare/kv-asset-handler@0.3.4':
     dependencies:
       mime: 3.0.0
+
+  '@config-plugins/react-native-ble-plx@7.0.0(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))':
+    dependencies:
+      expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -17840,30 +17911,30 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544)':
+  '@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.544
+      '@trpc/server': 11.0.0-rc.552
 
-  '@trpc/next@11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/react-query@11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.544)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@trpc/next@11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/react-query@11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.552)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@trpc/client': 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
-      '@trpc/server': 11.0.0-rc.544
+      '@trpc/client': 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
+      '@trpc/server': 11.0.0-rc.552
       next: 14.2.13(@babel/core@7.25.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.79.4)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     optionalDependencies:
       '@tanstack/react-query': 5.56.2(react@18.2.0)
-      '@trpc/react-query': 11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@trpc/react-query': 11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
-  '@trpc/react-query@11.0.0-rc.544(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.544(@trpc/server@11.0.0-rc.544))(@trpc/server@11.0.0-rc.544)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@trpc/react-query@11.0.0-rc.552(@tanstack/react-query@5.56.2(react@18.2.0))(@trpc/client@11.0.0-rc.552(@trpc/server@11.0.0-rc.552))(@trpc/server@11.0.0-rc.552)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@tanstack/react-query': 5.56.2(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.544(@trpc/server@11.0.0-rc.544)
-      '@trpc/server': 11.0.0-rc.544
+      '@trpc/client': 11.0.0-rc.552(@trpc/server@11.0.0-rc.552)
+      '@trpc/server': 11.0.0-rc.552
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@trpc/server@11.0.0-rc.544': {}
+  '@trpc/server@11.0.0-rc.552': {}
 
   '@trysound/sax@0.2.0': {}
 
@@ -20366,6 +20437,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  expo-background-fetch@12.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
+    dependencies:
+      expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      expo-task-manager: 11.8.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+
+  expo-bluetooth@0.0.0: {}
+
   expo-blur@13.0.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:
       expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
@@ -20505,6 +20583,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  expo-network@6.0.1(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
+    dependencies:
+      expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+
   expo-notifications@0.28.17(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:
       '@expo/image-utils': 0.5.1
@@ -20578,6 +20660,11 @@ snapshots:
   expo-status-bar@1.12.1: {}
 
   expo-structured-headers@3.8.0: {}
+
+  expo-task-manager@11.8.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
+    dependencies:
+      expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      unimodules-app-loader: 4.6.0
 
   expo-updates-interface@0.16.2(expo@51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:
@@ -23753,6 +23840,20 @@ snapshots:
 
   react-is@18.3.1: {}
 
+  react-native-ble-plx@3.2.1(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@expo/config-plugins': 8.0.9
+      expo: 51.0.34(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@babel/preset-env'
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+
   react-native-element-dropdown@2.12.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.3.10)(react@18.2.0))(react@18.2.0):
     dependencies:
       lodash: 4.17.21
@@ -25289,6 +25390,8 @@ snapshots:
   unicode-property-aliases-ecmascript@2.1.0: {}
 
   unicorn-magic@0.1.0: {}
+
+  unimodules-app-loader@4.6.0: {}
 
   unimport@3.13.1(rollup@4.22.5)(webpack-sources@3.2.3):
     dependencies:
