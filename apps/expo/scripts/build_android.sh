@@ -41,14 +41,14 @@ echo "APK file generated: ${APK_NAME}"
 
 # Step 2: Install the APK on the emulator
 echo "Installing the APK on the emulator..."
-adb install -r "${APK_NAME}"
+INSTALL_RESULT=$(adb install -r "${APK_NAME}")
 
 # Step 3: Launch the app on the emulator
 echo "Launching the app on the emulator..."
 adb shell monkey -p "${PACKAGE_NAME}" -c android.intent.category.LAUNCHER 1
 
-# Step 4: Conditional Cleanup - Delete the APK file only if profile is 'preview'
-if [ "$PROFILE" = "development" ]; then
+# Step 4: Conditional Cleanup - Delete the APK file only if it was successfully installed and in development mode
+if [[ $INSTALL_RESULT == *"Success"* ]] && [ "$PROFILE" = "development" ]; then
   echo "Cleaning up..."
   rm -f "${APK_NAME}"
 fi

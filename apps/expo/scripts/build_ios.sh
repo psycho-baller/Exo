@@ -36,13 +36,18 @@ echo "Found app folder: ${APP_FOLDER}"
 
 # Step 4: Install the app on the simulator
 echo "Installing the app on the simulator..."
-xcrun simctl install booted "${APP_FOLDER}"
+IS_INSTALLED=$(xcrun simctl install booted "${APP_FOLDER}")
+
+if [ -z "$IS_INSTALLED" ]; then
+  echo "Error: Could not install the app on the simulator."
+  exit 1
+fi
 
 # Step 5: Launch the app on the simulator
 echo "Launching the app on the simulator..."
 xcrun simctl launch booted "${BUNDLE_IDENTIFIER}"
 
-# Step 6: Cleanup - Delete the tar.gz file and the .app folder
+# Step 6: Cleanup - Delete the tar.gz file and the .app folder if the app was successfully installed
 echo "Cleaning up..."
 rm -f "${BUILD_NAME}"
 rm -rf "${APP_FOLDER}"
