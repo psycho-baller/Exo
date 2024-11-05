@@ -9,8 +9,8 @@ const requestAndroid31Permissions = async () => {
     // biome-ignore lint/style/noNonNullAssertion: <explanation>
     PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN!,
     {
-      title: 'Location Permission',
-      message: 'Bluetooth Low Energy requires Location',
+      title: 'Bluetooth Scan Permission',
+      message: 'This app requires Bluetooth scanning to find devices.',
       buttonPositive: 'OK',
     },
   )
@@ -18,8 +18,17 @@ const requestAndroid31Permissions = async () => {
     // biome-ignore lint/style/noNonNullAssertion: <explanation>
     PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT!,
     {
-      title: 'Location Permission',
-      message: 'Bluetooth Low Energy requires Location',
+      title: 'Bluetooth Connect Permission',
+      message: 'This app requires Bluetooth connection to connect to devices.',
+      buttonPositive: 'OK',
+    },
+  )
+  const bluetoothAdvertisePermission = await PermissionsAndroid.request(
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE!,
+    {
+      title: 'Bluetooth Advertise Permission',
+      message: 'This app requires Bluetooth advertising to broadcast its presence.',
       buttonPositive: 'OK',
     },
   )
@@ -28,7 +37,7 @@ const requestAndroid31Permissions = async () => {
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION!,
     {
       title: 'Location Permission',
-      message: 'Bluetooth Low Energy requires Location',
+      message: 'Bluetooth Low Energy requires Location.',
       buttonPositive: 'OK',
     },
   )
@@ -36,18 +45,20 @@ const requestAndroid31Permissions = async () => {
     // biome-ignore lint/style/noNonNullAssertion: <explanation>
     PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION!,
     {
-      title: 'Location Permission',
-      message: 'Bluetooth Low Energy requires Location',
+      title: 'Background Location Permission',
+      message: 'This app requires background location access for Bluetooth.',
       buttonPositive: 'OK',
     },
   )
   return (
     bluetoothScanPermission === 'granted' &&
     bluetoothConnectPermission === 'granted' &&
+    bluetoothAdvertisePermission === 'granted' &&
     fineLocationPermission === 'granted' &&
     backgroundLocationPermission === 'granted'
   )
 }
+
 export const requestPermissions = async () => {
   if (Platform.OS === 'android') {
     if ((ExpoDevice.platformApiLevel ?? -1) < 31) {
@@ -56,7 +67,7 @@ export const requestPermissions = async () => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION!,
         {
           title: 'Location Permission',
-          message: 'Bluetooth Low Energy requires Location',
+          message: 'Bluetooth Low Energy requires Location.',
           buttonPositive: 'OK',
         },
       )
