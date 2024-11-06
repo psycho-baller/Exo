@@ -13,3 +13,4 @@ credentials.json
 .expo
 dist/
 web-build/
+*.app
