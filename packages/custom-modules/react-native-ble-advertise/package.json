@@ -1,0 +1,28 @@
+{
+  "name": "react-native-ble-advertise",
+  "version": "0.7.0",
+  "description": "A BLE advertising module for react native.",
+  "main": "BleAdvertise",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barakataboujreich/react-native-ble-advertise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barakataboujreich/react-native-ble-advertise/issues"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "ios",
+    "ble",
+    "bluetooth",
+    "low energy"
+  ],
+  "license": "Apache-2.0",
+  "author": {
+    "name": "barakat abou jreich",
+    "url": "https://github.com/barakataboujreich"
+  },
+  "devDependencies": {}
+}
