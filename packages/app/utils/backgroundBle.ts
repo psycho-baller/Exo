@@ -1,37 +1,96 @@
 import * as BackgroundFetch from 'expo-background-fetch'
 import * as TaskManager from 'expo-task-manager'
-import { BleManager, type Device } from 'react-native-ble-plx'
+import { type BleError, BleManager, type Device, State } from 'react-native-ble-plx'
 import { storage } from '../provider/kv'
-import { proximityDetectionEnabledKey, useProximityDetectionEnabled } from '../atoms/ble'
+import { proximityDetectionEnabledKey } from '../atoms/ble'
 import { requestPermissions } from './permissions'
 import { sendLocalNotification } from '../hooks/usePushNotifications'
-import { AppState } from 'react-native'
+import { AppState, Platform } from 'react-native'
+import { broadcast, setCompanyId, stopBroadcast } from 'react-native-ble-advertise';
+import { getAndroidId, getIosIdForVendorAsync } from 'expo-application'
 
-const BACKGROUND_FETCH_TASK = 'background-ble-scan'
-
+const SCAN_TIMEOUT = 10000 // 10 seconds
+const RETRY_INTERVAL = 60000 // 1 minute
+const BACKGROUND_BLE_TASK = 'background-ble-scan'
 const bleManager = new BleManager()
-// const [isEnabled, setEnabled] = useProximityDetectionEnabled()
 
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  console.log(
-    'Running background BLE scan',
-    // await storage.getString(proximityDetectionEnabledKey),
-  )
-  const isEnabled = true //JSON.parse((await storage.getString(proximityDetectionEnabledKey)) || 'true')
-  console.log('Background BLE scan enabled:', isEnabled)
-  if (!isEnabled) {
-    return BackgroundFetch.BackgroundFetchResult.NoData
+const isDuplicateDevice = (devices: Device[], nextDevice: Device) =>
+  devices.findIndex((device) => nextDevice.id === device.id) > -1
+const alreadyFound = (arr: Device[], device: Device) => arr.find((d) => d.id === device.id)
+const handleScanError = (error: BleError) => {
+  console.error('BLE Scan Error:', error)
+  console.error('Error Code:', error.errorCode)
+  console.error('Error Message:', error.message)
+  console.error('Error Reason:', error.reason)
+  sendLocalNotification('BLE Scan Error', `${error.message}. Retrying in 1 minute.`)
+
+  if (error.errorCode === 600) {
+    // Schedule a retry after RETRY_INTERVAL
+    setTimeout(async () => {
+      const friendDeviceIds: number[] = [] //await getFriendDeviceIds()
+      const devices = await scanForDevices(friendDeviceIds)
+    }, RETRY_INTERVAL)
   }
-  sendLocalNotification('Background BLE scan', 'Found')
+}
+const requestBLEPermissions = async () => {
+  const permissionsGranted = await requestPermissions()
+  if (!permissionsGranted) {
+    return false
+  }
+  return true
+}
+
+TaskManager.defineTask(BACKGROUND_BLE_TASK, async () => {
   try {
-    const devices = await scanForDevices()
+    console.log('Starting background BLE scan')
+    const friendDeviceIds: number[] = [] //await getFriendDeviceIds()
+    const scanResults = await scanForDevices(friendDeviceIds)
+    const devices = scanResults.filter((d) => d.id)
+
     console.log('Found devices:', devices)
     sendLocalNotification(
       'Background BLE scan',
-      `Found ${devices.length} devices, ${devices.map((d) => d.name).join(', ')}, ${devices.map(
-        (d) => d.id,
-      )}`,
+      `Found ${devices.length} devices: ${devices.map((d) => d.name || 'Unknown').join(', ')}`,
     )
+    // const myDevice = devices.find((d) => d.name === 'Muter')
+    const devicesWithNames = devices.filter((d) => d.name || d.localName)
+
+    for (const d of devicesWithNames) {
+      console.error(
+        'Device:',
+        `Found device: ${d.id}
+      name: ${d.name}
+      localName: ${d.localName}
+      rssi: ${d.rssi}
+      serviceUUIDs: ${d.serviceUUIDs}
+      manufacturerData: ${d.manufacturerData}
+      serviceData: ${d.serviceData}
+      mtu: ${d.mtu}
+      txPowerLevel: ${d.txPowerLevel}
+      isConnectable: ${d.isConnectable}
+      solicitedServiceUUIDs: ${d.solicitedServiceUUIDs}
+      overflowServiceUUIDs: ${d.overflowServiceUUIDs}`,
+      )
+    }
+
+    // Uncomment and modify if you want to send notifications for each device
+    // for (const d of devicesWithNames) {
+    //   sendLocalNotification(
+    //     d.name || 'Unknown Device',
+    //     `Found device: ${d.id}
+    //     name: ${d.name}
+    //   localName: ${d?.localName}
+    //   rssi: ${d?.rssi}
+    //   serviceUUIDs: ${d?.serviceUUIDs}
+    //   manufacturerData: ${d?.manufacturerData}
+    //   serviceData: ${d?.serviceData}
+    //   mtu: ${d?.mtu}
+    //   txPowerLevel: ${d?.txPowerLevel}
+    //   isConnectable: ${d?.isConnectable}
+    //   solicitedServiceUUIDs: ${d?.solicitedServiceUUIDs}
+    //   overflowServiceUUIDs: ${d?.overflowServiceUUIDs}
+    //   isConnectable: ${d?.isConnectable}`,
+    // )
     // Process the found devices (e.g., store in local storage, send to server, etc.)
     return BackgroundFetch.BackgroundFetchResult.NewData
   } catch (error) {
@@ -40,91 +99,133 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   }
 })
 
-async function scanForDevices(): Promise<Device[]> {
-  console.log('requestingg potato')
+async function scanForDevices(friendDeviceIds: number[]): Promise<Device[]> {
   const permissionsGranted = await requestPermissions()
-  console.log('permissionsGranted:', permissionsGranted)
   if (!permissionsGranted) {
-    console.log('Bluetooth permissions not granted')
     throw new Error('Bluetooth permissions not granted')
   }
-
   const devices: Device[] = []
-  const scanDuration = 10000 // 10 seconds
-
-  console.log('Starting device scan...')
-  bleManager.startDeviceScan(null, null, (error, device) => {
-    if (error) {
-      console.error('Error scanning for devices:', error)
-      return
+  let isScanning = false
+  try {
+    if (Platform.OS === 'android') {
+      const state = await bleManager.state()
+      if (state !== State.PoweredOn) {
+        sendLocalNotification('BLE Error', `Bluetooth is not powered on. Current state: ${state}`)
+        return devices
+      }
     }
-    if (device) {
-      devices.push(device)
-    }
+    isScanning = true
 
-    console.log('Scanning for devices...', devices)
-    // Stop scanning after 10 seconds
-    // setTimeout(() => {
-    console.log('Stopping device scan...')
-    bleManager.stopDeviceScan()
-    console.log('Stopped device scan...')
-    // resolve(devices)
+    return new Promise<Device[]>((resolve) => {
+      bleManager.startDeviceScan(
+        null,
+        {
+          // legacyScan: false,
+          // scanMode: ScanMode.LowLatency,
+        },
+        (error, device) => {
+          if (error) {
+            handleScanError(error)
+            isScanning = false
+            resolve(devices)
+            return
+          }
+          if (device && !isDuplicateDevice(devices, device) && !alreadyFound(devices, device)) {
+            devices.push(device)
+            // setScannedDevices((prevDevices) => [...prevDevices, device])
+          }
+          // if (device) {
+          //   setScannedDevices((prevState: Device[]) => {
+          //     if (!isDuplicateDevice(prevState, device) && !alreadyFound) {
+          //       return [...prevState, device]
+          //     }
+          //     return prevState
+          //   })
+          // }
+        },
+      )
 
-    // }, 10000)
-  })
-  return devices
+      // Stop scan after SCAN_TIMEOUT
+      setTimeout(() => {
+        if (isScanning) {
+          bleManager.stopDeviceScan()
+          isScanning = false
+          console.log('Scan completed. Found devices:', devices.length)
+          resolve(devices)
+        }
+      }, SCAN_TIMEOUT)
+    })
+  } catch (error) {
+    console.error('Error starting BLE scan:', error)
+    sendLocalNotification('BLE Error', `Failed to start BLE scan: ${error}`)
+    return devices
+  }
 }
 
-export async function registerBackgroundFetch() {
+export async function registerBackgroundBleTask() {
   try {
-    await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 60, // 15 minutes in seconds
+    await BackgroundFetch.registerTaskAsync(BACKGROUND_BLE_TASK, {
+      minimumInterval: 60,
       stopOnTerminate: false,
       startOnBoot: true,
     })
-    console.log('Background fetch registered')
-    BackgroundFetch.getStatusAsync().then((status) => {
-      console.log('Background fetch status:', status)
-    })
-
-    // Manually trigger the task once to ensure it's working
-    // await BackgroundFetch.scheduleTaskAsync(BACKGROUND_FETCH_TASK)
+    console.log('Background BLE task registered')
   } catch (err) {
-    console.error('Background fetch failed to register:', err)
+    console.error('Background BLE task failed to register:', err)
   }
 }
 
-export async function unregisterBackgroundFetch() {
+export async function unregisterBackgroundBleTask() {
   try {
-    await BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK)
-    console.log('Background fetch unregistered')
+    await TaskManager.unregisterTaskAsync(BACKGROUND_BLE_TASK)
+    console.log('Background BLE task unregistered')
   } catch (err) {
-    console.error('Background fetch failed to unregister:', err)
+    console.error('Background BLE task failed to unregister:', err)
   }
 }
 
-// Function to check if the background fetch is registered
-export async function isBackgroundFetchRegistered() {
-  const status = await BackgroundFetch.getStatusAsync()
-  console.log('Background fetch status:', status)
-  return status === BackgroundFetch.BackgroundFetchStatus.Available
+export async function isBackgroundBleTaskRegistered() {
+  return await TaskManager.isTaskRegisteredAsync(BACKGROUND_BLE_TASK)
 }
 
-// Add this to your app's main component or where you initialize your app
-export function initializeBackgroundFetch() {
-  console.log('Initializing background fetch')
-  registerBackgroundFetch()
-
-  // Listen for app state changes
+export function initializeBackgroundBleTask() {
+  console.log('Initializing background BLE task')
+  const permissionsGranted = requestBLEPermissions()
+  const isEnabled = true // JSON.parse((await storage.getString(proximityDetectionEnabledKey)) || 'true')
+  if (!isEnabled) return
+  if (!permissionsGranted) {
+    alert('Bluetooth permissions are required to use this feature')
+  }
+  registerBackgroundBleTask()
   AppState.addEventListener('change', async (nextAppState) => {
     console.log('App state changed:', nextAppState)
     if (nextAppState === 'active') {
-      // App has come to the foreground
-      const isRegistered = await isBackgroundFetchRegistered()
-      console.log('Background fetch is registered:', isRegistered)
+      const isRegistered = await isBackgroundBleTaskRegistered()
+      console.log('Background BLE task is registered:', isRegistered)
       if (!isRegistered) {
-        await registerBackgroundFetch()
+        await registerBackgroundBleTask()
       }
     }
   })
+}
+
+export const startAdvertisingHelper = async (UUID: string, MAJOR: number, MINOR: number, COMPANY_ID: number) => {
+  setCompanyId(COMPANY_ID);
+  console.info('Starting advertising with UUID:', UUID);
+  broadcast(UUID, MAJOR, MINOR).catch((error) => {
+    console.error('Error starting advertising:', error);
+    console.info('Error starting advertising:', error);
+    console.log(error);
+  });
+  console.info('stopping advertising with UUID:', UUID);
+  // await stopAdvertising();
+};
+
+export const stopAdvertising = async () => {
+  await stopBroadcast();
+};
+
+export async function getDeviceId() {
+  const deviceId = Platform.OS === 'android' ? getAndroidId() : await getIosIdForVendorAsync()
+  return deviceId ?? 'unknown'
 }
