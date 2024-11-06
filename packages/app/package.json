@@ -38,6 +38,7 @@
     "expo-network": "~6.0.1",
     "expo-task-manager": "~11.8.2",
     "jotai": "^2.8.0",
+    "react-native-ble-advertise": "file:../custom-modules/react-native-ble-advertise",
     "react-native-ble-plx": "^3.2.1",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.19.0",
