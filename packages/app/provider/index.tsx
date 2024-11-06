@@ -8,8 +8,10 @@ import { TamaguiThemeProvider } from './theme'
 import { BottomSheetModalProvider } from './bottom-sheet-modal'
 import { BackendProvider } from './backend';
 import React from 'react';
+import { BLEProvider } from './BLE';
 
 export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
+
   return (
     <TamaguiThemeProvider>
       <TamaguiProvider>
@@ -18,7 +20,9 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
             <GestureHandlerRootView style={{ flex: 1 }}>
               <BackendProvider>
                 <BottomSheetModalProvider>
-                  {children}
+                  <BLEProvider>
+                    {children}
+                  </BLEProvider>
                 </BottomSheetModalProvider>
               </BackendProvider>
               <CustomToast />
