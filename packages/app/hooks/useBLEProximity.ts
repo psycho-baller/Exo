@@ -3,15 +3,8 @@ import { BleManager, type Device, State, type BleError, DeviceId } from 'react-n
 import * as ExpoDevice from 'expo-device'
 import { requestPermissions } from '../utils/permissions'
 import { sendLocalNotification } from './usePushNotifications'
-import { getDeviceId, startAdvertisingHelper, unregisterBackgroundBleTask } from '../utils/backgroundBle'
-
-const SCAN_TIMEOUT = 10000 // 10 seconds
-const RETRY_INTERVAL = 60000 // 1 minute
-const COMPANY_ID = 0x12D
-
-const MAJOR = 1234;
-const MINOR = 4321;
-const SHOULD_ADVERTISE = true;
+import { filterDevices, getDeviceId, startAdvertisingHelper, unregisterBackgroundBleTask } from '../utils/backgroundBle'
+import { SCAN_TIMEOUT, RETRY_INTERVAL, SHOULD_ADVERTISE, MAJOR, MINOR, COMPANY_ID } from '../utils/constants'
 
 
 const useBLEProximity = () => {
@@ -28,6 +21,32 @@ const useBLEProximity = () => {
     (arr: Device[], device: Device) => arr.find((d) => d.id === device.id),
     [],
   )
+  const bytesToHex = (bytes: number[]): string => {
+    return bytes.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+  const extractManufacturerData = (manufacturerData: number[]): { major: number; minor: number, uuid: string } | null => {
+    // Assuming the manufacturer data structure is as follows:
+    // [0x02, 0x15, ...UUID..., majorByte1, majorByte2, minorByte1, minorByte2, 0xC7]
+    if (manufacturerData.length === 0 || manufacturerData.length < 8) return null; // Ensure there's enough data
+
+    // get the UUID
+    const uuid = manufacturerData.slice(2, 18).map((byte) => byte.toString(16)).join('');
+    console.log('UUID:', uuid);
+
+    // last 4 bytes are major and minor
+    const majorByte1 = manufacturerData[manufacturerData.length - 4];
+    const majorByte2 = manufacturerData[manufacturerData.length - 3];
+    const minorByte1 = manufacturerData[manufacturerData.length - 2];
+    const minorByte2 = manufacturerData[manufacturerData.length - 1];
+    if (!majorByte1 || !majorByte2 || !minorByte1 || !minorByte2) return null;
+
+    // const companyId = firstByte << 8 | manufacturerData[1];
+
+    const major = (majorByte1 << 8) | majorByte2;
+    const minor = (minorByte1 << 8) | minorByte2;
+
+    return { major, minor, uuid };
+  };
   const scanForPeripherals = useCallback(async () => {
     const devices: Device[] = []
     let isScanning = false
@@ -67,8 +86,6 @@ const useBLEProximity = () => {
             // }
           },
         )
-
-        // Stop scan after SCAN_TIMEOUT
         setTimeout(() => {
           if (isScanning) {
             bleManager.stopDeviceScan()
@@ -138,25 +155,51 @@ const useBLEProximity = () => {
         await startAdvertising() // Start advertising if enabled
         const deviceScanResults = await scanForPeripherals()
         const devices = deviceScanResults.filter((d) => d.id)
-        // const devicesWithNames = devices.filter((d) => d.name || d.localName)
+        const filteredDevices = filterDevices(devices)
 
-        // for (const d of devices) {
-        //   console.error(
-        //     'Device:',
-        //     `Found device: ${d.id}
-        //   name: ${d.name}
-        //   localName: ${d.localName}
-        //   rssi: ${d.rssi}
-        //   serviceUUIDs: ${d.serviceUUIDs}
-        //   manufacturerData: ${d.manufacturerData}
-        //   serviceData: ${d.serviceData}
-        //   mtu: ${d.mtu}
-        //   txPowerLevel: ${d.txPowerLevel}
-        //   isConnectable: ${d.isConnectable}
-        //   solicitedServiceUUIDs: ${d.solicitedServiceUUIDs}
-        //   overflowServiceUUIDs: ${d.overflowServiceUUIDs}`,
-        //   )
-        // }
+
+        for (const d of deviceScanResults) {
+          // Decode manufacturer data for each scanned device
+          console.error(
+            'Device:',
+            `Found device: ${d.id}
+          name: ${d.name}
+          localName: ${d.localName}
+          rssi: ${d.rssi}
+          serviceUUIDs: ${d.serviceUUIDs}
+          manufacturerData: ${d.manufacturerData}
+          serviceData: ${d.serviceData}
+          mtu: ${d.mtu}
+          txPowerLevel: ${d.txPowerLevel}
+          isConnectable: ${d.isConnectable}
+          solicitedServiceUUIDs: ${d.solicitedServiceUUIDs}
+          overflowServiceUUIDs: ${d.overflowServiceUUIDs}`,
+          )
+          if (d.manufacturerData) {
+            // convert encoded string to number[]:
+            // eg: 4AACFUTBPkMJepyfU39WZqaEDAgEOhDhxwA=
+            console.log("unencoded manufacturer data:", d.manufacturerData)
+            if (d.manufacturerData === '4AACFUTBPkMJepyfU39WZqaEDAgEOhDhxwA=') {
+              sendLocalNotification('BRO', "Found the device")
+            }
+            const decodedManufacturerData = atob(d.manufacturerData)
+            console.log("decoded manufacturer data:", decodedManufacturerData)
+            const manufacturerDataBytes = Array.from(decodedManufacturerData).map((byte) => byte.charCodeAt(0));
+            const manufacturerData = bytesToHex(manufacturerDataBytes);
+            const decodedData = extractManufacturerData(manufacturerData);
+            if (decodedData) {
+              console.log("Decoded data from manufacturerData:", decodedData);
+              console.log(`Device ID: ${d.id}, Major: ${decodedData.major}, Minor: ${decodedData.minor}`, decodedData.uuid);
+              console.log(`same device id: ${"44C13E43097A9C9F537F5666A6840C08" === decodedData.uuid}`)
+              if ("44C13E43097A9C9F537F5666A6840C08" === decodedData.uuid) {
+                // 021544C13E43097A9C9F537F5666A684
+                sendLocalNotification('AYO', "Found the device")
+              }
+            } else {
+              console.warn('Failed to decode manufacturer data:', manufacturerData);
+            }
+          }
+        }
         sendLocalNotification('BLE Scan result', `Found ${deviceScanResults.length} devices`)
       } else {
         await unregisterBackgroundBleTask()
