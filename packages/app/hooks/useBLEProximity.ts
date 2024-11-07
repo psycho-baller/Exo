@@ -24,29 +24,34 @@ const useBLEProximity = () => {
   const bytesToHex = (bytes: number[]): string => {
     return bytes.map((byte) => byte.toString(16).padStart(2, '0')).join('');
   }
-  const extractManufacturerData = (manufacturerData: number[]): { major: number; minor: number, uuid: string } | null => {
-    // Assuming the manufacturer data structure is as follows:
-    // [0x02, 0x15, ...UUID..., majorByte1, majorByte2, minorByte1, minorByte2, 0xC7]
-    if (manufacturerData.length === 0 || manufacturerData.length < 8) return null; // Ensure there's enough data
+  const extractManufacturerData = (data: number[]): { major: number; minor: number, uuid: string } | null => {
 
-    // get the UUID
-    const uuid = manufacturerData.slice(2, 18).map((byte) => byte.toString(16)).join('');
-    console.log('UUID:', uuid);
+    // Extract companyId (first 2 byte)
+    const companyId = data[0] & 0xFF | (data[1] & 0xFF) << 8;
 
-    // last 4 bytes are major and minor
-    const majorByte1 = manufacturerData[manufacturerData.length - 4];
-    const majorByte2 = manufacturerData[manufacturerData.length - 3];
-    const minorByte1 = manufacturerData[manufacturerData.length - 2];
-    const minorByte2 = manufacturerData[manufacturerData.length - 1];
-    if (!majorByte1 || !majorByte2 || !minorByte1 || !minorByte2) return null;
+    // Extract beacon identifier (next 2 bytes)
+    const beaconIdentifier1 = data[2] & 0xFF;
+    const beaconIdentifier2 = data[3] & 0xFF;
 
-    // const companyId = firstByte << 8 | manufacturerData[1];
+    // Extract UUID (next 16 bytes)
+    const uuidBytes = data.slice(4, 20);
+    const uuid = bytesToHex(uuidBytes);
 
-    const major = (majorByte1 << 8) | majorByte2;
-    const minor = (minorByte1 << 8) | minorByte2;
+    // Extract major (next 2 bytes)
+    const major = ((data[20] & 0xFF) << 8) | (data[21] & 0xFF);
+
+    // Extract minor (next 2 bytes)
+    const minor = ((data[22] & 0xFF) << 8) | (data[23] & 0xFF);
+
+    // Print extracted values
+    console.log("Company ID: " + `0x${companyId.toString(16).padStart(2, '0').toUpperCase()}`);
+    console.log("Beacon Identifiers: " + beaconIdentifier1 + " " + beaconIdentifier2);
+    console.log("UUID: " + uuid);
+    console.log("Major: " + major);
+    console.log("Minor: " + minor);
 
     return { major, minor, uuid };
-  };
+  }
   const scanForPeripherals = useCallback(async () => {
     const devices: Device[] = []
     let isScanning = false
@@ -186,13 +191,12 @@ const useBLEProximity = () => {
             console.log("decoded manufacturer data:", decodedManufacturerData)
             const manufacturerDataBytes = Array.from(decodedManufacturerData).map((byte) => byte.charCodeAt(0));
             const manufacturerData = bytesToHex(manufacturerDataBytes);
-            const decodedData = extractManufacturerData(manufacturerData);
+            const decodedData = extractManufacturerData(manufacturerDataBytes);
             if (decodedData) {
               console.log("Decoded data from manufacturerData:", decodedData);
               console.log(`Device ID: ${d.id}, Major: ${decodedData.major}, Minor: ${decodedData.minor}`, decodedData.uuid);
               console.log(`same device id: ${"44C13E43097A9C9F537F5666A6840C08" === decodedData.uuid}`)
               if ("44C13E43097A9C9F537F5666A6840C08" === decodedData.uuid) {
-                // 021544C13E43097A9C9F537F5666A684
                 sendLocalNotification('AYO', "Found the device")
               }
             } else {
