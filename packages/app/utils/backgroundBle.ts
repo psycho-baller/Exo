@@ -8,10 +8,8 @@ import { sendLocalNotification } from '../hooks/usePushNotifications'
 import { AppState, Platform } from 'react-native'
 import { broadcast, setCompanyId, stopBroadcast } from 'react-native-ble-advertise';
 import { getAndroidId, getIosIdForVendorAsync } from 'expo-application'
+import { BACKGROUND_BLE_TASK, RETRY_INTERVAL, SCAN_TIMEOUT } from './constants'
 
-const SCAN_TIMEOUT = 10000 // 10 seconds
-const RETRY_INTERVAL = 60000 // 1 minute
-const BACKGROUND_BLE_TASK = 'background-ble-scan'
 const bleManager = new BleManager()
 
 const isDuplicateDevice = (devices: Device[], nextDevice: Device) =>
@@ -56,7 +54,7 @@ TaskManager.defineTask(BACKGROUND_BLE_TASK, async () => {
     const devicesWithNames = devices.filter((d) => d.name || d.localName)
 
     for (const d of devicesWithNames) {
-      console.error(
+      console.info(
         'Device:',
         `Found device: ${d.id}
       name: ${d.name}
@@ -73,24 +71,7 @@ TaskManager.defineTask(BACKGROUND_BLE_TASK, async () => {
       )
     }
 
-    // Uncomment and modify if you want to send notifications for each device
-    // for (const d of devicesWithNames) {
-    //   sendLocalNotification(
-    //     d.name || 'Unknown Device',
-    //     `Found device: ${d.id}
-    //     name: ${d.name}
-    //   localName: ${d?.localName}
-    //   rssi: ${d?.rssi}
-    //   serviceUUIDs: ${d?.serviceUUIDs}
-    //   manufacturerData: ${d?.manufacturerData}
-    //   serviceData: ${d?.serviceData}
-    //   mtu: ${d?.mtu}
-    //   txPowerLevel: ${d?.txPowerLevel}
-    //   isConnectable: ${d?.isConnectable}
-    //   solicitedServiceUUIDs: ${d?.solicitedServiceUUIDs}
-    //   overflowServiceUUIDs: ${d?.overflowServiceUUIDs}
-    //   isConnectable: ${d?.isConnectable}`,
-    // )
+
     // Process the found devices (e.g., store in local storage, send to server, etc.)
     return BackgroundFetch.BackgroundFetchResult.NewData
   } catch (error) {
@@ -217,15 +198,22 @@ export const startAdvertisingHelper = async (UUID: string, MAJOR: number, MINOR:
     console.info('Error starting advertising:', error);
     console.log(error);
   });
-  console.info('stopping advertising with UUID:', UUID);
-  // await stopAdvertising();
 };
 
 export const stopAdvertising = async () => {
-  await stopBroadcast();
+  try {
+    await stopBroadcast()
+    console.info('Stopped advertising')
+  } catch (error) {
+    console.error('Error stopping advertising:', error)
+  }
 };
 
 export async function getDeviceId() {
   const deviceId = Platform.OS === 'android' ? getAndroidId() : await getIosIdForVendorAsync()
   return deviceId ?? 'unknown'
+}
+
+export const filterDevices = (devices: Device[]) => {
+  return devices.filter((d) => d.id && d.manufacturerData && d.manufacturerData.length > 0)
 }
