@@ -80,7 +80,7 @@ public class BleAdvertiseModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void broadcast(String uid, int major, int minor, Promise promise) {
+    public void broadcast(String uid, int major, int minor, String name, String localName, Promise promise) {
         try {
             if (mBluetoothAdapter == null) {
                 Log.w("BleAdvertiseModule", "Device does not support Bluetooth. Adapter is Null");
@@ -109,6 +109,8 @@ public class BleAdvertiseModule extends ReactContextBaseJavaModule {
             Log.w("BleAdvertiseModule", "UID: " + uid);
             Log.w("BleAdvertiseModule", "Major: " + major);
             Log.w("BleAdvertiseModule", "Minor: " + minor);
+            Log.w("BleAdvertiseModule", "Name: " + name);
+            Log.w("BleAdvertiseModule", "Local Name: " + localName);
 
             BluetoothLeAdvertiser tempAdvertiser;
             AdvertiseCallback tempCallback;
@@ -162,7 +164,7 @@ public class BleAdvertiseModule extends ReactContextBaseJavaModule {
 
             // Build advertising settings and data
             AdvertiseSettings settings = buildAdvertiseSettings();
-            AdvertiseData data = buildAdvertiseData(uid, payload);
+            AdvertiseData data = buildAdvertiseData(uid, payload, name, localName);
 
             // Start advertising
             Log.i("BleAdvertiseModule", "Starting advertising with settings: " + settings.toString());
@@ -204,7 +206,7 @@ public class BleAdvertiseModule extends ReactContextBaseJavaModule {
         return settingsBuilder.build();
     }
 
-    private AdvertiseData buildAdvertiseData(String sUUID, byte[] payload) {
+    private AdvertiseData buildAdvertiseData(String sUUID, byte[] payload, String name, String localName) {
         Log.i(NAME, "Building advertisement data for UUID: " + sUUID);
 
         // Convert the UUID to a byte array
@@ -238,12 +240,25 @@ public class BleAdvertiseModule extends ReactContextBaseJavaModule {
         mManufacturerData.put(18 + payload.length, (byte)0xC7); // Tx power
         Log.i(NAME, "Added Tx power to manufacturer data: 0xC7");
 
+        // Add name and local name
+        mManufacturerData.put(19 + payload.length, (byte)0x09); // Name
+        mManufacturerData.put(20 + payload.length, (byte)name.length()); // Name length
+        for (int k = 0; k < name.length(); k++) {
+            mManufacturerData.put(21 + payload.length + k, (byte)name.charAt(k));  // Name
+        }
+        mManufacturerData.put(21 + payload.length + name.length(), (byte)0x0A); // Local Name
+        mManufacturerData.put(22 + payload.length + name.length(), (byte)localName.length()); // Local Name length
+        for (int l = 0; l < localName.length(); l++) {
+            mManufacturerData.put(23 + payload.length + name.length() + l, (byte)localName.charAt(l));  // Local Name
+        }
+
         // Add manufacturer data to the data builder
         dataBuilder.addManufacturerData(companyId, mManufacturerData.array());
         Log.i(NAME, "Added manufacturer data to AdvertiseData with company ID: " + companyId);
 
         // Log the complete advertisement data
         Log.i(NAME, "Complete Advertisement Data: " + bytesToHex(mManufacturerData.array()));
+        // 02 15 44 C1 3E 43 09 7A 9C 9F 53 7F 56 66 A6 84 0C 08 04 D2 10 E1 C7 00
 
         return dataBuilder.build();
     }
