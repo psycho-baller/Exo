@@ -24,7 +24,7 @@
   "dependencies": {
     "drizzle-orm": "^0.29.4",
     "drizzle-zod": "^0.5.1",
-    "expo-sqlite": "~14.0.3"
+    "expo-sqlite": "~15.0.3"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",

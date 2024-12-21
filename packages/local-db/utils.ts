@@ -4,7 +4,7 @@ import migrations from './drizzle/migrations'
 import * as schema from './schema'
 import type { Database } from './schema/_table'
 import { drizzle } from 'drizzle-orm/expo-sqlite'
-import { openDatabaseSync } from 'expo-sqlite/next'
+import { openDatabaseSync } from 'expo-sqlite'
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
 
 interface ConnectionResult {
