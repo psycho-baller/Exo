@@ -35,7 +35,6 @@
     "expo-font": "^11.10.3",
     "expo-haptics": "~13.0.1",
     "expo-linking": "^6.3.1",
-    "expo-network": "~6.0.1",
     "expo-task-manager": "~11.8.2",
     "jotai": "^2.8.0",
     "react-native-ble-advertise": "file:../custom-modules/react-native-ble-advertise",
