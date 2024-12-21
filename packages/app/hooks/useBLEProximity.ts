@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
-import { BleManager, type Device, State, type BleError, DeviceId } from 'react-native-ble-plx'
-import * as ExpoDevice from 'expo-device'
+import { BleManager, type Device, State, type BleError } from 'react-native-ble-plx'
 import { requestPermissions } from '../utils/permissions'
 import { sendLocalNotification } from './usePushNotifications'
-import { filterDevices, getDeviceId, startAdvertisingHelper, unregisterBackgroundBleTask } from '../utils/backgroundBle'
+import { filterDevices, startAdvertisingHelper, unregisterBackgroundBleTask } from '../utils/backgroundBle'
 import { SCAN_TIMEOUT, RETRY_INTERVAL, SHOULD_ADVERTISE, MAJOR, MINOR, COMPANY_ID } from '../utils/constants'
-
 
 const useBLEProximity = () => {
   const [scannedDevices, setScannedDevices] = useState<Device[]>([])
