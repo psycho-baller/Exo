@@ -6,34 +6,34 @@ class BleAdvertise {
   constructor() {
   }
 
-  broadcast(uuid, myMajor, myMinor) {
+  broadcast(uuid, myMajor, myMinor, localName) {
     return new Promise((fulfill, reject) => {
-        bleAdvertise.broadcast(uuid, myMajor, myMinor)
-                .then(success => {
-                    fulfill(success);
-                }).catch(error => {
-                    reject(error);
-                 });
+      bleAdvertise.broadcast(uuid, myMajor, myMinor, localName)
+        .then(success => {
+          fulfill(success);
+        }).catch(error => {
+          reject(error);
+        });
     });
   }
 
   stopBroadcast() {
     return new Promise((fulfill, reject) => {
-        bleAdvertise.stopBroadcast().then(success => { 
-            fulfill(success);
-        }).catch(error => {
-            reject(error);
-         });
+      bleAdvertise.stopBroadcast().then(success => {
+        fulfill(success);
+      }).catch(error => {
+        reject(error);
+      });
     });
   }
 
   checkIfBLESupported() {
     return new Promise((fulfill, reject) => {
-        bleAdvertise.checkIfBLESupported().then((code) => {
-            fulfill(code);
-        }).catch((ex) => {
-            reject(ex);
-        });
+      bleAdvertise.checkIfBLESupported().then((code) => {
+        fulfill(code);
+      }).catch((ex) => {
+        reject(ex);
+      });
     });
   }
 
