@@ -31,18 +31,18 @@ export const QuestionCard: FC<Props> = (props) => {
 
   return (
     <SwipeableRow
-      rightActions={[
+      rightAction={
         {
           color: 'red',
           icon: <Trash2 size={30} color='white' strokeWidth={2.5} />,
           onPress: () => withHaptics(() => deleteQuestionMutation.mutate({ id: question.id })),
-        },
+        }
         // {
         //   color: 'green',
         //   icon: <CalendarDays size={20} color='white' strokeWidth={2.5} />,
         //   onPress: () => withHaptics(() => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)),
         // }
-      ]}
+      }
     // renderRightActions={swipeRight}
     // enabled={true}
     // overshootRight={false}

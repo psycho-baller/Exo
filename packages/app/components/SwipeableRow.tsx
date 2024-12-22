@@ -2,11 +2,20 @@ import { useTheme } from '@acme/ui';
 import { useRef, useCallback } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import ReanimatedSwipeable, {
+  type SwipeableMethods,
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
+  runOnJS,
   type SharedValue,
-  useAnimatedStyle
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
 } from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics'
 import type { ReactNode } from 'react';
 
 type SwipeableAction = {
@@ -17,9 +26,15 @@ type SwipeableAction = {
 
 type SwipeableRowProps = {
   children: React.ReactNode;
-  rightActions?: SwipeableAction[];
-  leftActions?: SwipeableAction[];
+  rightAction?: SwipeableAction;
+  leftAction?: SwipeableAction;
 };
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false, // Reanimated runs in strict mode by default
+});
+
 
 const renderAction =
   (action: SwipeableAction, prog: SharedValue<number>, drag: SharedValue<number>, index: number) => {
@@ -70,28 +85,86 @@ const renderLeftActions =
     );
   }
 
+function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, rightAction: SwipeableAction) {
+  const hasReachedThresholdUp = useSharedValue(false);
+  const hasReachedThresholdDown = useSharedValue(false);
 
-export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightActions = [], leftActions = [] }) => {
-  // const swipeableRowRef = useRef<typeof Swipeable>(null);
+  useAnimatedReaction(
+    () => {
+      return drag.value;
+    },
+    (dragValue) => {
+      if (Math.abs(dragValue) > 100 && !hasReachedThresholdUp.value) {
+        runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Medium);
+        hasReachedThresholdUp.value = true;
+        hasReachedThresholdDown.value = false;
+      } else if (Math.abs(dragValue) < 100 && !hasReachedThresholdDown.value) {
+        runOnJS(Haptics.impactAsync)(Haptics.ImpactFeedbackStyle.Medium);
+        hasReachedThresholdDown.value = true;
+        hasReachedThresholdUp.value = false;
+      }
+    }
+  );
+
+  const derivedDragValue = useDerivedValue(() => {
+    return drag.value;
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (Math.abs(derivedDragValue.value) > 100) {
+      return {
+        backgroundColor: '#ff0000',
+      };
+    }
+    return {
+      backgroundColor: '#8b8a8a',
+    };
+  });
+
+
+  const pressHandler = () => {
+    rightAction.onPress();
+  };
+
+  return (
+    <Reanimated.View style={[{ flex: 1 }]}>
+      <Reanimated.View style={[styles.rightAction, animatedStyle]}>
+
+        {/* <RectButton style={[styles.action, { backgroundColor: action.color }]}> */}
+        {rightAction.icon}
+        {/* </RectButton> */}
+      </Reanimated.View>
+
+    </Reanimated.View>
+  );
+}
+
+
+export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightAction, leftAction }) => {
+  const swipeableRowRef = useRef<SwipeableMethods>(null);
 
   // const onSwipeableOpen = useCallback(() => {
   //   close();
   // }, [close]);
 
-  return (
-    <Swipeable
-      // ref={swipeableRowRef}
-      enableTrackpadTwoFingerGesture
-      friction={2}
-      // overshootRight={false}
-      // rightThreshold={50}
 
-      renderRightActions={(progress, drag, swipeable) => renderRightActions(progress, drag, swipeable, rightActions)}
-      renderLeftActions={(progress, drag, swipeable) => renderLeftActions(progress, drag, swipeable, leftActions)}
-      onSwipeableOpen={() => rightActions.at(-1)?.onPress()}
-    >
-      {children}
-    </Swipeable>
+  return (
+    <Reanimated.View>
+      <ReanimatedSwipeable
+        ref={swipeableRowRef}
+        enableTrackpadTwoFingerGesture
+        friction={2}
+        // overshootRight={false}
+        rightThreshold={40}
+
+        renderRightActions={(prog, drag) => rightAction && RightAction(prog, drag, rightAction)}
+        // renderLeftActions={(progress, drag, swipeable) => renderLeftActions(progress, drag, swipeable, leftActions)}
+        onSwipeableOpen={() => rightAction?.onPress()}
+        onSwipeableWillOpen={() => rightAction?.onPress()}
+      >
+        {children}
+      </ReanimatedSwipeable>
+    </Reanimated.View>
   );
 };
 
@@ -110,5 +183,13 @@ const styles = StyleSheet.create({
     // height: '100%',
     // width: '100%',
     // flexDirection: 'row',
+  },
+  rightAction: {
+    height: 90,
+    backgroundColor: '#8b8a8a',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingHorizontal: 16,
+    flex: 1,
   },
 });

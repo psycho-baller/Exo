@@ -27,13 +27,13 @@ export const GroupCard: FC<Props> = (props) => {
 
   return (
     <SwipeableRow
-      rightActions={[
+      rightAction={
         {
           color: 'red',
           icon: <Trash2 size={30} color='white' strokeWidth={2.5} />,
           onPress: () => withHaptics(() => deleteMutation({ id: group.id })),
         }
-      ]}
+      }
     // renderRightActions={swipeRight}
     // enabled={true}
     // overshootRight={false}

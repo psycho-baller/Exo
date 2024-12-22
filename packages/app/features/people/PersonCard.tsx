@@ -26,13 +26,11 @@ export const PersonCard: FC<Props> = (props) => {
 
   return (
     <SwipeableRow
-      rightActions={[
-        {
-          color: 'red',
-          icon: <Trash2 size={20} color='white' strokeWidth={2.5} />,
-          onPress: () => withHaptics(() => deletePersonMutation.mutate({ id: person.id })),
-        },
-      ]}
+      rightAction={{
+        color: 'red',
+        icon: <Trash2 size={20} color='white' strokeWidth={2.5} />,
+        onPress: () => withHaptics(() => deletePersonMutation.mutate({ id: person.id })),
+      }}
     >
       <Link href={`/people/${String(person.id)}`}>
         <XStack
@@ -50,7 +48,7 @@ export const PersonCard: FC<Props> = (props) => {
           {/* topics */}
         </XStack>
       </Link>
-    </SwipeableRow>
+    </SwipeableRow >
   )
 }
 
