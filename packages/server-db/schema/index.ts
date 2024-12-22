@@ -210,6 +210,7 @@ export const follows = sqliteTable(
 export const questions = sqliteTable('Question', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
   question: text('question').notNull(),
+  note: text('note'),
   createdDatetime: integer('created_datetime', {
     mode: 'timestamp',
   }).defaultNow(),

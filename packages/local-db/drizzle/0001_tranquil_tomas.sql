@@ -1,0 +1,1 @@
+ALTER TABLE `Question` ADD `note` text;
