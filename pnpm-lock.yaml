@@ -85,7 +85,7 @@ importers:
         specifier: 1.7.1
         version: 1.7.1(@babel/runtime@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@tamagui/lucide-icons':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native-svg@15.8.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@tanstack/query-async-storage-persister':
         specifier: ^5.28.6
@@ -233,7 +233,7 @@ importers:
         specifier: ^4.1.3
         version: 4.1.3
       '@tamagui/babel-plugin':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(@swc/helpers@0.5.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/babel__core':
         specifier: ^7.20.5
@@ -351,10 +351,10 @@ importers:
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.7.2)(zod@3.24.1)
       '@tamagui/config':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@tamagui/next-theme':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.39.0
@@ -406,7 +406,7 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       '@tamagui/next-plugin':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(@babel/core@7.26.0)(@swc/helpers@0.5.15)(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15)))
       '@types/node':
         specifier: ^20.11.20
@@ -445,22 +445,22 @@ importers:
         specifier: ^2.0.19
         version: 2.1.1
       '@tamagui/animations-react-native':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tamagui/colors':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2
       '@tamagui/font-inter':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tamagui/lucide-icons':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native-svg@15.10.1(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@tamagui/shorthands':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2
       '@tamagui/themes':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.39.0
@@ -526,7 +526,7 @@ importers:
         specifier: ^4.2.1
         version: 4.3.0
       tamagui:
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       zustand:
         specifier: ^4.5.1
@@ -809,22 +809,22 @@ importers:
         specifier: 1.7.1
         version: 1.7.1(@babel/runtime@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@tamagui/animations-moti':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native-reanimated@3.16.6(@babel/core@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@tamagui/font-inter':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tamagui/react-native-media-driver':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@tamagui/shorthands':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2
       '@tamagui/themes':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tamagui/toast':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-virtual':
         specifier: ^3.4.0
@@ -833,7 +833,7 @@ importers:
         specifier: ~14.0.1
         version: 14.0.1(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       tamagui:
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@acme/eslint-config':
@@ -846,7 +846,7 @@ importers:
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       '@tamagui/build':
-        specifier: ^1.90.6
+        specifier: ^1.120.2
         version: 1.120.2(@swc/helpers@0.5.15)
       eslint:
         specifier: ^8.57.0
