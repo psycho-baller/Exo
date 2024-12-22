@@ -1,7 +1,6 @@
-import { useTheme } from '@acme/ui';
-import { useRef, useCallback } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
+import { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import ReanimatedSwipeable, {
   type SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -34,7 +33,6 @@ configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: false, // Reanimated runs in strict mode by default
 });
-
 
 const renderAction =
   (action: SwipeableAction, prog: SharedValue<number>, drag: SharedValue<number>, index: number) => {
