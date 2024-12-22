@@ -9,6 +9,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
+  newArchEnabled: true,
   splash: {
     image: './assets/icon.png',
     resizeMode: 'contain',
