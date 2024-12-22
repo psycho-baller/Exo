@@ -6,7 +6,7 @@ import { proximityDetectionEnabledKey } from '../atoms/ble'
 import { requestPermissions } from './permissions'
 import { sendLocalNotification } from '../hooks/usePushNotifications'
 import { AppState, Platform } from 'react-native'
-import { broadcast, setCompanyId, stopBroadcast } from 'react-native-ble-advertise';
+// import { broadcast, setCompanyId, stopBroadcast } from 'react-native-ble-advertise';
 import { getAndroidId, getIosIdForVendorAsync } from 'expo-application'
 import { BACKGROUND_BLE_TASK, RETRY_INTERVAL, SCAN_TIMEOUT } from './constants'
 
@@ -191,18 +191,18 @@ export function initializeBackgroundBleTask() {
 }
 
 export const startAdvertisingHelper = async (UUID: string, MAJOR: number, MINOR: number, COMPANY_ID: number) => {
-  setCompanyId(COMPANY_ID);
+  // setCompanyId(COMPANY_ID);
   console.info('Starting advertising with UUID:', UUID);
-  broadcast(UUID, MAJOR, MINOR).catch((error) => {
-    console.error('Error starting advertising:', error);
-    console.info('Error starting advertising:', error);
-    console.log(error);
-  });
+  // broadcast(UUID, MAJOR, MINOR).catch((error) => {
+    // console.error('Error starting advertising:', error);
+    // console.info('Error starting advertising:', error);
+    // console.log(error);
+  // });
 };
 
 export const stopAdvertising = async () => {
   try {
-    await stopBroadcast()
+    // await stopBroadcast()
     console.info('Stopped advertising')
   } catch (error) {
     console.error('Error stopping advertising:', error)

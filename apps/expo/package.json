@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "expo start --dev-client --android",
+    "dev": "expo start --dev-client",
     "clean": "git clean -xdf .expo .turbo node_modules .tamagui",
     "upgrade": "pnpm upgrade --latest",
     "dev:android": "expo start --android",
@@ -23,7 +23,6 @@
   "dependencies": {
     "@acme/app": "workspace:^0.0.0",
     "@acme/ui": "workspace:*",
-    "@config-plugins/react-native-ble-plx": "^7.0.0",
     "@gorhom/bottom-sheet": "^5.0.0-alpha.11",
     "@orama/orama": "^2.0.19",
     "@react-native-async-storage/async-storage": "^1.23.1",
