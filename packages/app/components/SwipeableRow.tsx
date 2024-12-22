@@ -16,6 +16,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics'
 import type { ReactNode } from 'react';
+import { useTheme } from '@acme/ui';
 
 type SwipeableAction = {
   color: string;
@@ -86,6 +87,7 @@ const renderLeftActions =
 function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, rightAction: SwipeableAction) {
   const hasReachedThresholdUp = useSharedValue(false);
   const hasReachedThresholdDown = useSharedValue(false);
+  const theme = useTheme();
 
   useAnimatedReaction(
     () => {
@@ -111,14 +113,14 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, right
   const animatedStyle = useAnimatedStyle(() => {
     if (Math.abs(derivedDragValue.value) > 100) {
       return {
-        backgroundColor: '#ff0000',
+        backgroundColor: theme.accent?.val,
       };
     }
+    console.log('theme.background?.get()', theme.background);
     return {
-      backgroundColor: '#8b8a8a',
+      backgroundColor: theme.secondaryBackground?.val,
     };
   });
-
 
   const pressHandler = () => {
     rightAction.onPress();
@@ -151,6 +153,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightActio
       <ReanimatedSwipeable
         ref={swipeableRowRef}
         enableTrackpadTwoFingerGesture
+        containerStyle={{ backgroundColor: 'transparent' }}
         friction={2}
         // overshootRight={false}
         rightThreshold={40}
