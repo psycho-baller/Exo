@@ -48,10 +48,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     trigger();
   }, [trigger]);
   // Sync Input Words with Local Text Value
-  useEffect(() => {
-    const text = inputWords.map(({ word }) => word).join('');
-    setValue('question', text); // Sync with form
-  }, [inputWords, setValue]);
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
     const newSelection = e.nativeEvent.selection;
     setSelection(newSelection);
@@ -222,7 +218,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
         </YStack>
 
         <XStack columnGap='$2' alignItems='center'>
-          <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} />
+          <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} setFormValue={setValue} />
           <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={handleSubmit(onSubmit)} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
             {/* <CheckCircle2 /> */}
             <ArrowUp />

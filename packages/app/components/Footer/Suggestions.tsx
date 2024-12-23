@@ -6,12 +6,15 @@ import { ScrollView, MyDateTimePicker, TagButton, XStack } from "@acme/ui";
 import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
+import type { UseFormSetValue } from "react-hook-form";
+import type { SuperchargedFormData } from "./SuperchargedInput";
 
 type SuggestionDropdownProps = {
   currentActiveWordIndex: number;
+  setFormValue: UseFormSetValue<SuperchargedFormData>;
 }
 
-export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex }) => {
+export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex, setFormValue }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
 
   const currentActiveWord = inputWords[currentActiveWordIndex];
@@ -29,6 +32,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}
+            setFormValue={setFormValue}
           />
         ) : (
           <PropertiesSuggestions />
@@ -40,8 +44,9 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
 
 type AutocompleteSuggestionsProps = {
   currentActiveWordIndex: number;
+  setFormValue: UseFormSetValue<SuperchargedFormData>;
 }
-const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActiveWordIndex }) => {
+const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActiveWordIndex, setFormValue }) => {
   const { data: people } = api.person.all.useQuery();
   const { data: topics } = api.topic.all.useQuery();
   const { data: groups } = api.group.all.useQuery();
@@ -81,8 +86,10 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
       const newInputWords = prevInputWords.map((word, index) =>
         index === currentActiveWordIndex ? { ...word, word: `${getSymbolFromReference(currentActiveWord?.reference)}${name}` } : word
       );
+      const newInputWordsWithSpace = [...newInputWords, { word: ' ', reference: null, enabled: false }]
+      setFormValue('question', newInputWordsWithSpace.map((word) => word.word).join(''));
       // TODo: Bug: update selection index
-      return [...newInputWords, { word: ' ', reference: null, enabled: false }];
+      return newInputWordsWithSpace;
     });
   }
 
