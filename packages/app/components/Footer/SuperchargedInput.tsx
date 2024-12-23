@@ -27,9 +27,8 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
   const [justDisabledWord, setJustDisabledWord] = useState(false);
   const [autoCapitalize, setAutoCapitalize] = useState<'none' | 'sentences' | 'words' | 'characters'>('sentences');
-  // Local State for Text Value
-  // const textValueRef = useRef(inputWords.map(({ word }) => word).join(''));
   const theme = useTheme();
+
   // React Hook Form
   const {
     control,
@@ -40,7 +39,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     formState: { errors },
   } = useForm<SuperchargedFormData>({
     defaultValues: {
-      question: '',// textValueRef.current,
+      question: '',
       note: '',
     },
     mode: 'onChange',
@@ -51,7 +50,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   // Sync Input Words with Local Text Value
   useEffect(() => {
     const text = inputWords.map(({ word }) => word).join('');
-    // textValueRef.current = text;
     setValue('question', text); // Sync with form
   }, [inputWords, setValue]);
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
@@ -70,8 +68,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   const handleChangeText = (text: string) => {
     const updatedWords = addTextProperties(text);
     setInputWords(updatedWords);
-    // textValueRef.current = text;
-
     setValue('question', text);
   };
 
@@ -185,7 +181,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
                 width='100%'
                 color='transparent'
                 onSelectionChange={handleSelectionChange}
-                // value={inputWords.map(({ word }) => word).join('')}
                 value={value}
                 onChangeText={(text) => {
                   handleChangeText(text);
