@@ -201,7 +201,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
           <Controller
             control={control}
             name="note"
-            rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <BottomSheetInput
                 fontSize={18}
