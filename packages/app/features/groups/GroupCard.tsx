@@ -30,7 +30,7 @@ export const GroupCard: FC<Props> = (props) => {
       rightAction={
         {
           color: 'red',
-          icon: <Trash2 size={25} color='white' strokeWidth={2.5} />,
+          icon: <Trash2 size={27.5} color='white' strokeWidth={2.5} />,
           onPress: () => withHaptics(() => deleteMutation({ id: group.id })),
         }
       }
@@ -44,14 +44,12 @@ export const GroupCard: FC<Props> = (props) => {
     >
       <Link href={`/groups/${group.id.toString()}`}>
         <XStack
-          paddingHorizontal='$4'
           paddingVertical='$4'
+          paddingHorizontal='$2.5'
           alignItems='center'
           justifyContent='space-between'
-          hoverStyle={{
-            backgroundColor: '$secondaryBackground',
-            borderRadius: 10,
-          }}
+          backgroundColor='$background'
+          animation='bouncy'
         >
           <YStack gap={6}>
             {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
