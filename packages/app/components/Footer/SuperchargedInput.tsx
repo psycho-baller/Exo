@@ -1,7 +1,7 @@
 import { api } from '@acme/api/utils/trpc';
 import { Text, View, XStack, YStack, Button, BottomSheetInput, useTheme } from '@acme/ui';
 import type { UnstyledInputProps } from '@acme/ui';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
@@ -27,6 +27,8 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
   const [justDisabledWord, setJustDisabledWord] = useState(false);
   const [autoCapitalize, setAutoCapitalize] = useState<'none' | 'sentences' | 'words' | 'characters'>('sentences');
+  // Local State for Text Value
+  // const textValueRef = useRef(inputWords.map(({ word }) => word).join(''));
   const theme = useTheme();
   // React Hook Form
   const {
@@ -38,7 +40,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     formState: { errors },
   } = useForm<SuperchargedFormData>({
     defaultValues: {
-      question: inputWords.map(({ word }) => word).join(''),
+      question: '',// textValueRef.current,
       note: '',
     },
     mode: 'onChange',
@@ -46,6 +48,12 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   useEffect(() => {
     trigger();
   }, [trigger]);
+  // Sync Input Words with Local Text Value
+  useEffect(() => {
+    const text = inputWords.map(({ word }) => word).join('');
+    // textValueRef.current = text;
+    setValue('question', text); // Sync with form
+  }, [inputWords, setValue]);
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
     const newSelection = e.nativeEvent.selection;
     setSelection(newSelection);
@@ -62,6 +70,8 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   const handleChangeText = (text: string) => {
     const updatedWords = addTextProperties(text);
     setInputWords(updatedWords);
+    // textValueRef.current = text;
+
     setValue('question', text);
   };
 
@@ -175,7 +185,8 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
                 width='100%'
                 color='transparent'
                 onSelectionChange={handleSelectionChange}
-                value={inputWords.map(({ word }) => word).join('')}
+                // value={inputWords.map(({ word }) => word).join('')}
+                value={value}
                 onChangeText={(text) => {
                   handleChangeText(text);
                   onChange(text);
