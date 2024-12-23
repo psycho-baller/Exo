@@ -1,7 +1,7 @@
 import { api } from '@acme/api/utils/trpc';
 import { Text, View, XStack, YStack, Button, BottomSheetInput, useTheme } from '@acme/ui';
 import type { UnstyledInputProps } from '@acme/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
@@ -10,15 +10,42 @@ import { useAtom } from 'jotai';
 import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
 // import { parse } from 'chrono-node';
 import { Suggestions } from './Suggestions';
-import { CheckCircle2 } from '@tamagui/lucide-icons';
+import { ArrowUp, CheckCircle2 } from '@tamagui/lucide-icons';
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 
-type Props = UnstyledInputProps;
-export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
+// Form Data Types
+export type SuperchargedFormData = {
+  question: string;
+  note: string;
+};
+
+type Props = UnstyledInputProps & {
+  onSubmit: SubmitHandler<SuperchargedFormData>;
+};
+export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
   const [justDisabledWord, setJustDisabledWord] = useState(false);
   const [autoCapitalize, setAutoCapitalize] = useState<'none' | 'sentences' | 'words' | 'characters'>('sentences');
-
+  const theme = useTheme();
+  // React Hook Form
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm<SuperchargedFormData>({
+    defaultValues: {
+      question: inputWords.map(({ word }) => word).join(''),
+      note: '',
+    },
+    mode: 'onChange',
+  });
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
     const newSelection = e.nativeEvent.selection;
     setSelection(newSelection);
@@ -31,16 +58,11 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
     // setInputWords(newInputWords);
   };
 
-  const handleChangeText = (newInput: string) => {
-    // const indexOfActiveWord = before.split(/(\s+)/).length - 1;
-    // const indexOfCursorInActiveWord = selection.start - before.split(/(\s+)/).slice(0, indexOfActiveWord).join('').length;
-    const before = inputWords.map(({ word }) => word).join('').slice(0, selection.start);
-    const after = inputWords.map(({ word }) => word).join('').slice(selection.start);
-    console.log('before', before);
-    console.log('after', after);
-    const updatedText = before + newInput + after;
-
-    setInputWords(addTextProperties(updatedText));
+  // Text Change Handler
+  const handleChangeText = (text: string) => {
+    const updatedWords = addTextProperties(text);
+    setInputWords(updatedWords);
+    setValue('question', text);
   };
 
 
@@ -136,37 +158,68 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
         >
           <ConnectAndStyleText inputWords={inputWords} />
         </XStack>
-        <BottomSheetInput
-          ref={null}
-          returnKeyType='done'
-          returnKeyLabel='Add'
-          submitBehavior='blurAndSubmit'
-          fontSize={25}
-          // whiteSpace='pre-wrap'
-          lineHeight={30}
-          width='100%'
-          onSelectionChange={handleSelectionChange}
-          color='transparent'
-          value={inputWords.map(({ word }) => word).join('')}
-          onChangeText={(newText) => {
-            setInputWords(addTextProperties(newText));
-          }}
-          autoCapitalize={autoCapitalize}
-          // numberOfLines={4}
-          multiline
-          onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-            //   if (e.nativeEvent.key === 'Backspace') {
-            // handleBackspace();
-            // } else {
-            // handleChangeText(e.nativeEvent.key);
-            // }
-          }}
-          {...rest}
-        />
+        <YStack gap='$2'>
+          <Controller
+            control={control}
+            name="question"
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <BottomSheetInput
+                ref={null}
+                returnKeyType='done'
+                returnKeyLabel='Add'
+                submitBehavior='blurAndSubmit'
+                fontSize={25}
+                // whiteSpace='pre-wrap'
+                lineHeight={30}
+                width='100%'
+                color='transparent'
+                onSelectionChange={handleSelectionChange}
+                value={inputWords.map(({ word }) => word).join('')}
+                onChangeText={(text) => {
+                  handleChangeText(text);
+                  onChange(text);
+                }}
+                onSubmitEditing={handleSubmit(onSubmit)}
+                autoCapitalize={autoCapitalize}
+                // numberOfLines={4}
+                multiline
+                // onKeyPress={(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+                //   if (e.nativeEvent.key === 'Backspace') {
+                // handleBackspace();
+                // } else {
+                // handleChangeText(e.nativeEvent.key);
+                // }
+                // }}
+                {...rest}
+              />
+            )}
+          />
+          {/* Description Input Field */}
+          <Controller
+            control={control}
+            name="note"
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <BottomSheetInput
+                fontSize={18}
+                // whiteSpace='pre-wrap'
+                // lineHeight={30}
+                width='100%'
+                placeholder="Add a note for this question"
+                value={value}
+                onChangeText={onChange}
+                multiline
+              />
+            )}
+          />
+        </YStack>
+
         <XStack columnGap='$2' alignItems='center'>
           <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} />
-          <Button unstyled>
-            <CheckCircle2 />
+          <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={handleSubmit(onSubmit)} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
+            {/* <CheckCircle2 /> */}
+            <ArrowUp />
           </Button>
         </XStack>
       </View>
@@ -252,5 +305,9 @@ const styles = StyleSheet.create({
   },
   unselectedWord: {
     fontSize: 25,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
   },
 });

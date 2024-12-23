@@ -6,7 +6,7 @@ import { BottomSheet } from '../BottomSheet'
 
 import { sheetRefAtom, superchargedInputDateAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
-import { SuperchargedInput } from './SuperchargedInput'
+import { type SuperchargedFormData, SuperchargedInput } from './SuperchargedInput'
 import { superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
 
 export const AddQuestion: FC = () => {
@@ -47,8 +47,10 @@ export const AddQuestion: FC = () => {
     },
   })
 
-  function addQuestion() {
+  function addQuestion(data: SuperchargedFormData) {
     // find the person id from the selected person
+    console.log('inputWords', inputWords)
+    console.log('data', data)
     const personWord = inputWords.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
     const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
 
@@ -65,6 +67,7 @@ export const AddQuestion: FC = () => {
       groupId: group?.id,
       personId: person?.id,
       question: questionText,
+      note: data.note,
       reminderDatetime: inputDate,
     });
   }
@@ -80,7 +83,7 @@ export const AddQuestion: FC = () => {
         // paddingVertical={'$2'}
         // marginBottom={'$4'}
         placeholder='Add Question'
-        onSubmitEditing={addQuestion}
+        onSubmit={addQuestion}
         autoFocus
       />
       {/* TODO find a way to make it work for both tRPC and vanilla react-query */}
