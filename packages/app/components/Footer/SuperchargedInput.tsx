@@ -1,5 +1,5 @@
 import { api } from '@acme/api/utils/trpc';
-import { Text, View, XStack, YStack, Button, BottomSheetInput } from '@acme/ui';
+import { Text, View, XStack, YStack, Button, BottomSheetInput, useTheme } from '@acme/ui';
 import type { UnstyledInputProps } from '@acme/ui';
 import { useState } from 'react';
 import type { FC } from 'react';
@@ -140,7 +140,7 @@ export const SuperchargedInput: FC<Props> = ({ ...rest }) => {
           ref={null}
           returnKeyType='done'
           returnKeyLabel='Add'
-          blurOnSubmit
+          submitBehavior='blurAndSubmit'
           fontSize={25}
           // whiteSpace='pre-wrap'
           lineHeight={30}
@@ -183,13 +183,18 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
   const { data: topics } = api.topic.all.useQuery();
   const { data: groups } = api.group.all.useQuery();
 
+  const theme = useTheme();
+
+  const selectedWordBgStyle = [styles.selectedWordBg, {
+    backgroundColor: theme.accent?.val,
+  }]
   return inputWords.map(({ word, reference, enabled }, index) => {
     if (reference === 'person') {
       console.log('word', word);
       const person = people?.find((person) => person.firstName.toLowerCase() === word.slice(1).toLowerCase());
       const personIsSelected = person && enabled;
       return (
-        <View key={index.toString() + word} style={personIsSelected ? styles.selectedWordBg : undefined}>
+        <View key={index.toString() + word} style={personIsSelected ? selectedWordBgStyle : undefined}>
           <Text
             style={personIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
@@ -202,7 +207,7 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       const group = groups?.find((group) => group.name.toLowerCase() === word.slice(2).toLowerCase());
       const groupIsSelected = group && enabled;
       return (
-        <View key={index.toString() + word} style={groupIsSelected ? styles.selectedWordBg : styles.unselectedWordBg}>
+        <View key={index.toString() + word} style={groupIsSelected ? selectedWordBgStyle : styles.unselectedWordBg}>
           <Text
             style={groupIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
@@ -215,7 +220,7 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
       const topic = topics?.find((topic) => topic.name.toLowerCase() === word.slice(1).toLowerCase());
       const topicIsSelected = topic && enabled;
       return (
-        <View key={index.toString() + word} style={topicIsSelected ? styles.selectedWordBg : styles.unselectedWordBg}>
+        <View key={index.toString() + word} style={topicIsSelected ? selectedWordBgStyle : styles.unselectedWordBg}>
           <Text
             style={topicIsSelected ? styles.selectedWord : styles.unselectedWord}
           >
@@ -234,7 +239,6 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
 
 const styles = StyleSheet.create({
   selectedWordBg: {
-    backgroundColor: 'rgba(0, 150, 255, .3)',
     borderRadius: 10,
     paddingHorizontal: 3,
     marginHorizontal: -3,
