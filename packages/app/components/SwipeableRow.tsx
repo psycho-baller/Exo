@@ -116,7 +116,6 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, right
         backgroundColor: theme.accent?.val,
       };
     }
-    console.log('theme.background?.get()', theme.background);
     return {
       backgroundColor: theme.secondaryBackground?.val,
     };
@@ -142,6 +141,7 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, right
 
 export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightAction, leftAction }) => {
   const swipeableRowRef = useRef<SwipeableMethods>(null);
+  const theme = useTheme();
 
   // const onSwipeableOpen = useCallback(() => {
   //   close();
@@ -153,7 +153,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightActio
       <ReanimatedSwipeable
         ref={swipeableRowRef}
         enableTrackpadTwoFingerGesture
-        containerStyle={{ backgroundColor: 'transparent' }}
+        containerStyle={{ backgroundColor: theme.background?.val }}
         friction={2}
         // overshootRight={false}
         rightThreshold={40}
