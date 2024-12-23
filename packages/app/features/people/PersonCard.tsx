@@ -28,19 +28,22 @@ export const PersonCard: FC<Props> = (props) => {
     <SwipeableRow
       rightAction={{
         color: 'red',
-        icon: <Trash2 size={20} color='white' strokeWidth={2.5} />,
+        icon: <Trash2 size={25} color='white' strokeWidth={2.5} />,
         onPress: () => withHaptics(() => deletePersonMutation.mutate({ id: person.id })),
       }}
     >
       <Link href={`/people/${String(person.id)}`}>
         <XStack
+          minHeight='$6'
           paddingHorizontal='$4'
           paddingVertical='$4'
           alignItems='center'
           justifyContent='space-between'
+          backgroundColor='$background'
+          animation='bouncy'
         >
           <YStack gap={6}>
-            <Text fontSize={20} fontWeight='bold'>
+            <Text fontSize={20} fontWeight='700'>
               {person.firstName}
             </Text>
             <QuestionMetadata person={person} />

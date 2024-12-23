@@ -34,7 +34,7 @@ export const QuestionCard: FC<Props> = (props) => {
       rightAction={
         {
           color: 'red',
-          icon: <Trash2 size={30} color='white' strokeWidth={2.5} />,
+          icon: <Trash2 size={25} color='white' strokeWidth={2.5} />,
           onPress: () => withHaptics(() => deleteQuestionMutation.mutate({ id: question.id })),
         }
         // {
@@ -66,7 +66,7 @@ export const QuestionCard: FC<Props> = (props) => {
         >
           <YStack gap={6}>
             {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
-            <Text fontSize={18} fontWeight='bold'>
+            <Text fontSize={18} fontWeight='700'>
               {question.question}
             </Text>
             <XStack gap={18}>
