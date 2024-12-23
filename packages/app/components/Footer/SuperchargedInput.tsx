@@ -39,7 +39,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     formState: { errors },
   } = useForm<SuperchargedFormData>({
     defaultValues: {
-      question: '',
+      question: inputWords.map(({ word }) => word).join(''),
       note: '',
     },
     mode: 'onChange',
