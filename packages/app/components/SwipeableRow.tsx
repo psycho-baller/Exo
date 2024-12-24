@@ -153,7 +153,7 @@ export const SwipeableRow: React.FC<SwipeableRowProps> = ({ children, rightActio
       <ReanimatedSwipeable
         ref={swipeableRowRef}
         enableTrackpadTwoFingerGesture
-        containerStyle={{ backgroundColor: theme.background?.val }}
+        childrenContainerStyle={{ backgroundColor: theme.background?.val }}
         friction={2}
         // overshootRight={false}
         rightThreshold={40}

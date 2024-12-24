@@ -38,7 +38,6 @@ export const PersonCard: FC<Props> = (props) => {
           paddingHorizontal='$2.5'
           alignItems='center'
           justifyContent='space-between'
-          backgroundColor='$background'
           animation='bouncy'
         >
           <YStack gap={6}>
