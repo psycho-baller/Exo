@@ -12,6 +12,8 @@ import { Text, XStack, YStack } from '@acme/ui'
 import { formatDate } from '../../utils/date'
 import { SwipeableRow } from '../../components/SwipeableRow'
 import { withHaptics } from '../../utils/haptics'
+import { questionDataAtom, sheetRefAtom } from '../../atoms/addQuestion'
+import { useAtom } from 'jotai'
 
 interface Props {
   question: RouterOutputs['question']['all'][number]
@@ -28,6 +30,15 @@ export const QuestionCard: FC<Props> = (props) => {
       await utils.question.forPerson.invalidate({ id: question.personId })
     }
   })
+
+  const [, setQuestionData] = useAtom(questionDataAtom)
+  const [sheetRef] = useAtom(sheetRefAtom)
+
+
+  function openBottomSheetWithQuestionData() {
+    setQuestionData(question)
+    sheetRef?.current?.present()
+  }
 
   return (
     <SwipeableRow
@@ -51,32 +62,31 @@ export const QuestionCard: FC<Props> = (props) => {
     // leftThreshold={40}
     // rightThreshold={40}
     >
-      <Link href={`/questions/${question.id.toString()}`}>
-        <XStack
-          paddingVertical='$4'
-          paddingHorizontal='$2.5'
-          alignItems='center'
-          justifyContent='space-between'
-          animation='bouncy'
-        >
-          <YStack gap={6}>
-            {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
-            <Text fontSize={18} fontWeight='700'>
-              {question.question}
-            </Text>
-            <XStack gap={18}>
-              <PersonForQuestion question={question} />
-              <GroupForQuestion question={question} />
-              {date && (
-                <XStack gap={6} alignItems='center'>
-                  <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
-                  <Text color='$secondaryColor'>{formatDate(date)}</Text>
-                </XStack>
-              )}
-            </XStack>
-          </YStack>
-        </XStack>
-      </Link>
+      <XStack
+        onPress={openBottomSheetWithQuestionData}
+        paddingVertical='$4'
+        paddingHorizontal='$2.5'
+        alignItems='center'
+        justifyContent='space-between'
+        animation='bouncy'
+      >
+        <YStack gap={6}>
+          {/* <Checkbox borderColor='$secondaryBackground' onPress={onDelete} /> */}
+          <Text fontSize={18} fontWeight='700'>
+            {question.question}
+          </Text>
+          <XStack gap={18}>
+            <PersonForQuestion question={question} />
+            <GroupForQuestion question={question} />
+            {date && (
+              <XStack gap={6} alignItems='center'>
+                <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
+                <Text color='$secondaryColor'>{formatDate(date)}</Text>
+              </XStack>
+            )}
+          </XStack>
+        </YStack>
+      </XStack>
     </SwipeableRow >
   )
 }

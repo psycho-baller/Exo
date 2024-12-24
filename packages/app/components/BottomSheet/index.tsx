@@ -1,14 +1,14 @@
 import { useRef, useMemo, useEffect, forwardRef, useCallback } from 'react';
 import type { FC, RefObject } from 'react';
 import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
+import type { BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import { Button, View, Text, useThemeName } from 'tamagui';
 import { useAtom } from 'jotai';
 import type { PrimitiveAtom } from 'jotai';
 import { BlurView } from 'expo-blur';
 export type BottomSheetModalRef = BottomSheetModal;
 
-interface Props extends Omit<BottomSheetProps, ''> {
+interface Props extends Omit<BottomSheetModalProps, ''> {
 	sheetRefAtom: PrimitiveAtom<RefObject<BottomSheetModalRef> | null>
 }
 

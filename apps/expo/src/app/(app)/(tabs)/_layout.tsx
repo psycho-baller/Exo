@@ -3,7 +3,7 @@ import { BlurView } from 'expo-blur'
 import { Tabs, useSegments } from 'expo-router'
 
 import { useThemeName } from '@acme/ui'
-import { sheetRefAtom } from '@acme/app/atoms/addQuestion'
+import { sheetRefAtom, questionDataAtom } from '@acme/app/atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { StyleSheet } from 'react-native'
 
@@ -11,6 +11,7 @@ export default function TabLayout() {
   const themeName = useThemeName()
   const segments = useSegments()
   const [sheetRef] = useAtom(sheetRefAtom)
+  const [, setQuestionData] = useAtom(questionDataAtom)
 
   return (
     <Tabs
@@ -84,6 +85,7 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault()
+            setQuestionData(null)
             sheetRef?.current?.present()
           },
         }}

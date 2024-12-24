@@ -7,7 +7,7 @@ import { TextInput, StyleSheet } from 'react-native';
 import type { NativeSyntheticEvent, TextInputKeyPressEventData, TextInputSelectionChangeEventData } from 'react-native';
 import { getActiveWordIndexFromSuperchargedWords } from '../../utils/strings';
 import { useAtom } from 'jotai';
-import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
+import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, superchargedInputSelectionAtom, questionDataAtom } from '../../atoms/addQuestion';
 // import { parse } from 'chrono-node';
 import { Suggestions } from './Suggestions';
 import { ArrowUp, CheckCircle2 } from '@tamagui/lucide-icons';
@@ -20,11 +20,14 @@ export type SuperchargedFormData = {
 };
 
 type Props = UnstyledInputProps & {
-  onSubmit: SubmitHandler<SuperchargedFormData>;
+  addQuestion: SubmitHandler<SuperchargedFormData>;
+  updateQuestion: (data: SuperchargedFormData, id: number) => void;
 };
-export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
+export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...rest }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [selection, setSelection] = useAtom(superchargedInputSelectionAtom)
+  const [questionData, setQuestionData] = useAtom(questionDataAtom)
+
   const [justDisabledWord, setJustDisabledWord] = useState(false);
   const [autoCapitalize, setAutoCapitalize] = useState<'none' | 'sentences' | 'words' | 'characters'>('sentences');
   const theme = useTheme();
@@ -39,14 +42,22 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     formState: { errors },
   } = useForm<SuperchargedFormData>({
     defaultValues: {
-      question: inputWords.map(({ word }) => word).join(''),
-      note: '',
+      question: questionData?.question || inputWords.map(({ word }) => word).join(''),
+      note: questionData?.note || '',
     },
     mode: 'onChange',
   });
   useEffect(() => {
     trigger();
   }, [trigger]);
+  useEffect(() => {
+    if (questionData) {
+      // ! Is there any use for 'addTextProperties' here? There isn't any special characters in questionData.question
+      setInputWords(addTextProperties(questionData.question));
+      // TODO: show in the UI what properties are already connected (person, topic, group) and make them editable
+
+    }
+  }, [questionData, setInputWords]);
   // Sync Input Words with Local Text Value
   const handleSelectionChange = (e: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
     const newSelection = e.nativeEvent.selection;
@@ -66,7 +77,6 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     setInputWords(updatedWords);
     setValue('question', text);
   };
-
 
   const handleBackspace = () => {
     if (selection.start <= 0) return; // No action if cursor is at the start
@@ -150,6 +160,10 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
     });
   }
 
+  const submit = () => {
+    questionData ? updateQuestion(watch(), questionData.id) : handleSubmit(addQuestion);
+  }
+
   return (
     <YStack width='100%' >
       <View position='relative'>
@@ -182,7 +196,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
                   handleChangeText(text);
                   onChange(text);
                 }}
-                onSubmitEditing={handleSubmit(onSubmit)}
+                onSubmitEditing={submit}
                 autoCapitalize={autoCapitalize}
                 // numberOfLines={4}
                 multiline
@@ -218,7 +232,7 @@ export const SuperchargedInput: FC<Props> = ({ onSubmit, ...rest }) => {
 
         <XStack columnGap='$2' alignItems='center'>
           <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} setFormValue={setValue} />
-          <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={handleSubmit(onSubmit)} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
+          <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={submit} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
             {/* <CheckCircle2 /> */}
             <ArrowUp />
           </Button>
