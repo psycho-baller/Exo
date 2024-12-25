@@ -174,7 +174,9 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       return;
     }
     setInputWords((prevInputWords) => {
-      const newInputWords = [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
+      const newInputWords = prevInputWords[prevInputWords.length - 1]?.word !== ' '
+        ? [...prevInputWords, { word: ' ', reference: null, enabled: false }, { word: getSymbolFromReference(name), reference: name, enabled: true }]
+        : [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
       setFormValue('question', newInputWords.map((word) => word.word).join(''));
       return newInputWords
     });
