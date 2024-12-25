@@ -27,15 +27,6 @@ export const questionTopicRouter = {
       useQuery({ ...options, queryKey: all, queryFn: getQuestionTopics }),
   },
 
-  byQuestionId: {
-    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Topic[]>) =>
-      useQuery({
-        ...options,
-        queryKey: [...byQuestionId, id],
-        queryFn: () => getTopicsFromQuestionId(id),
-      }),
-  },
-
   getTopicsFromQuestionId: {
     useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Topic[]>) =>
       useQuery({
@@ -53,7 +44,7 @@ export const questionTopicRouter = {
 
   // DELETE
   delete: {
-    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, WithId>) => {
+    useMutation: (options?: MyUseMutationOptions<SQLiteRunResult, NewQuestionTopics>) => {
       return useMutation({
         ...options,
         mutationKey: ['questionTopics', 'delete'],
@@ -69,7 +60,7 @@ export const questionTopicInvalidators = (queryClient: QueryClient) => ({
       await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-  byQuestionId: {
+  getTopicsFromQuestionId: {
     invalidate: async ({ id }: WithId) => {
       await queryClient.invalidateQueries({ queryKey: [...byQuestionId, id] })
     },

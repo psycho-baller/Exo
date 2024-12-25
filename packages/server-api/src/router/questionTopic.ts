@@ -23,6 +23,7 @@ export const questionTopicRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => createQuestionTopic(input)),
 
   // DELETE
+  // ! This is wrong
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(({ ctx, input }) => deleteQuestionTopic({ id: input.id })),
