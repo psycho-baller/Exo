@@ -35,7 +35,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
             setFormValue={setFormValue}
           />
         ) : (
-          <PropertiesSuggestions />
+          <PropertiesSuggestions setFormValue={setFormValue} />
         )}
       </XStack>
     </ScrollView>
@@ -148,14 +148,14 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
         </TagButton>
       )) : (
         <TagButton onPress={handleAddNew}>
-          Add new {currentActiveReference}
+          Add new{currentActiveReference}
         </TagButton>
       )}
     </>
   );
 }
 
-const PropertiesSuggestions: FC = () => {
+const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedFormData>; }> = ({ setFormValue }) => {
   const properties = [
     { name: 'date', icon: Calendar },
     { name: 'person', icon: User },
@@ -168,13 +168,15 @@ const PropertiesSuggestions: FC = () => {
   const [date, setDate] = useAtom(superchargedInputDateAtom)
 
   const handlePress = (name: typeof properties[number]['name']) => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     if (name === 'date') {
       setDate(new Date());
       return;
     }
     setInputWords((prevInputWords) => {
-      return [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
+      const newInputWords = [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
+      setFormValue('question', newInputWords.map((word) => word.word).join(''));
+      return newInputWords
     });
   }
 
