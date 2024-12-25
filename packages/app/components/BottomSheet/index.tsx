@@ -12,7 +12,7 @@ interface Props extends Omit<BottomSheetModalProps, ''> {
 	sheetRefAtom: PrimitiveAtom<RefObject<BottomSheetModalRef> | null>
 }
 
-export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, sheetRefAtom, snapPoints = ['50%'], ...props }, ref) => {
+export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, sheetRefAtom, snapPoints, ...props }, ref) => {
 	const themeName = useThemeName() as 'light' | 'dark'
 	const [_, setSheetRef] = useAtom(sheetRefAtom)
 	const refIfNotProvided = useRef<BottomSheetModalRef>(null);
@@ -27,8 +27,8 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 		(props: any) => (
 			<BottomSheetBackdrop
 				{...props}
-			// disappearsOnIndex={-1}
-			// appearsOnIndex={0}
+				disappearsOnIndex={-1}
+				appearsOnIndex={0}
 			/>
 		),
 		[]

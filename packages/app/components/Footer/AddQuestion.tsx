@@ -123,7 +123,7 @@ export const AddQuestion: FC = () => {
   }
 
   return (
-    <BottomSheet sheetRefAtom={sheetRefAtom} snapPoints={['25%']} onDismiss={clearData}>
+    <BottomSheet sheetRefAtom={sheetRefAtom} onDismiss={clearData}>
       <XStack justifyContent='space-between'>
         <Label fontSize={'$1'} unstyled color='$secondaryColor' htmlFor='question'>
           QUESTION
