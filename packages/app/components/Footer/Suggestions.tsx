@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
 import { ScrollView, MyDateTimePicker, TagButton, XStack } from "@acme/ui";
-import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom } from "../../atoms/addQuestion";
+import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom, questionDataAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
 import type { UseFormSetValue } from "react-hook-form";
@@ -18,7 +18,6 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
 
   const currentActiveWord = inputWords[currentActiveWordIndex];
-
 
   return (
     <ScrollView
@@ -163,11 +162,12 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
     { name: 'topic', icon: Tag },
 
   ] as const;
-  const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
+  const [, setInputWords] = useAtom(superchargedInputWordsAtom);
   // const [showDateTimePicker, setShowDateTimePicker] = useState(false);
   const [date, setDate] = useAtom(superchargedInputDateAtom)
-
-  const handlePress = (name: typeof properties[number]['name']) => {
+  //react query get the person, group, topic from questionData
+  const [questionData] = useAtom(questionDataAtom);
+  const handlePropertyPress = (name: typeof properties[number]['name']) => {
     // Keyboard.dismiss();
     if (name === 'date') {
       setDate(new Date());
@@ -180,6 +180,13 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
     });
   }
 
+  const handleSelectedPersonPress = () => {
+    // setInputWords((prevInputWords) => {
+    //   const newInputWords = [...prevInputWords, { word: getSymbolFromReference('person'), reference: 'person', enabled: true }];
+    //   setFormValue('question', newInputWords.map((word) => word.word).join(''));
+    //   return newInputWords
+    // });
+  }
   return (
     <>
 
@@ -190,16 +197,76 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
         // showOnMount
         />
       ) : (
-        <TagButton icon={properties[0].icon} onPress={() => handlePress(properties[0].name)} >
+        <TagButton icon={properties[0].icon} onPress={() => handlePropertyPress(properties[0].name)} >
           {properties[0].name}
         </TagButton>
       )}
-      {properties.slice(1).map(({ name, icon }) => (
-        // TODO: Show selected person, group, topic
-        <TagButton key={name} icon={icon} onPress={() => handlePress(name)} >
-          {name}
+      {questionData?.personId ? (
+        <SelectedPersonProperty personId={questionData.personId} />
+      ) : (
+        <TagButton icon={User} onPress={() => handlePropertyPress('person')} >
+          person
         </TagButton>
-      ))}
+      )}
+      {questionData?.groupId ? (
+        <SelectedGroupProperty groupId={questionData.groupId} />
+      ) : (
+        <TagButton icon={Users} onPress={() => handlePropertyPress('group')} >
+          group
+        </TagButton>
+      )}
+
     </>
   );
 }
+
+const SelectedPersonProperty: FC<{ personId: number }> = ({ personId }) => {
+  const { data: person } = api.person.byId.useQuery({ id: personId });
+  const [prevQuestionData, setQuestionData] = useAtom(questionDataAtom);
+
+  const handleSelectedPersonPress = () => {
+    // unset person
+    prevQuestionData && setQuestionData({ ...prevQuestionData, personId: null });
+  }
+  return (
+    <>
+      <TagButton icon={User} onPress={handleSelectedPersonPress} borderColor='$textAccent' color='$textAccent'>
+        {person?.firstName}
+      </TagButton>
+    </>
+  );
+}
+
+const SelectedGroupProperty: FC<{ groupId: number }> = ({ groupId }) => {
+  const { data: group } = api.group.byId.useQuery({ id: groupId });
+  const [prevQuestionData, setQuestionData] = useAtom(questionDataAtom);
+
+  const handleSelectedGroupPress = () => {
+    // unset group
+    prevQuestionData && setQuestionData({ ...prevQuestionData, groupId: null });
+  }
+  return (
+    <>
+      <TagButton icon={Users} onPress={handleSelectedGroupPress} borderColor='$textAccent' color='$textAccent'>
+        {group?.name}
+      </TagButton>
+    </>
+  );
+}
+
+// const SelectedTopicProperty: FC<{ topicId: number }> = ({ topicId }) => {
+//   const { data: topic } = api.topic.byId.useQuery({ id: topicId });
+//   const [prevQuestionData, setQuestionData] = useAtom(questionDataAtom);
+
+//   const handleSelectedTopicPress = () => {
+//     // unset topic
+//     prevQuestionData && setQuestionData({ ...prevQuestionData, topicId: null });
+//   }
+//   return (
+//     <>
+//       <TagButton icon={Tag} onPress={handleSelectedTopicPress} borderColor='$textAccent' color='$textAccent'>
+//         {topic?.name}
+//       </TagButton>
+//     </>
+//   );
+// }

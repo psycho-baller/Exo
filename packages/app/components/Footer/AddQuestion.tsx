@@ -93,10 +93,11 @@ export const AddQuestion: FC = () => {
     });
   }
 
-  function updateQuestion(data: SuperchargedFormData, questionId: number) {
+  function updateQuestion(questionId: number) {
     // find the person id from the selected person
+    // ensure that questionData is not null and it contains the personId
+    if (questionData?.id !== questionId) return;
     console.log('inputWords', inputWords)
-    console.log('data', data)
     const personWord = inputWords.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
     const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
 
@@ -110,16 +111,19 @@ export const AddQuestion: FC = () => {
       .trim();
 
     updateMutation.mutateAsync({
-      id: questionId,
-      groupId: group?.id,
-      personId: person?.id,
+      id: questionData.id,
+      groupId: group?.id || questionData.groupId,
+      personId: person?.id || questionData.personId,
       question: questionText,
-      note: data.note,
+      note: questionData.note,
       reminderDatetime: inputDate,
     });
   }
   function clearData() {
-    questionData && setInputWords([])
+    if (questionData) { // only if we are updating a question
+      updateQuestion(questionData.id)
+      setInputWords([])
+    }
   }
 
   return (

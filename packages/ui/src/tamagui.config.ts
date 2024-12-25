@@ -72,7 +72,8 @@ export const config = createTamagui({
       secondaryBackground: '#444',
       color: '#fff',
       secondaryColor: '#999',
-      accent: '#2C3E50',
+      accent: '#4A7F88',
+      textAccent: '#96CBD4',
     },
     light: {
       ...themes.light,
@@ -81,6 +82,7 @@ export const config = createTamagui({
       color: '#111',
       secondaryColor: '#999',
       accent: '#96CBD4',
+      textAccent: '#4A7F88',
     },
   },
   media: createMedia({

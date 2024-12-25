@@ -21,7 +21,7 @@ export type SuperchargedFormData = {
 
 type Props = UnstyledInputProps & {
   addQuestion: SubmitHandler<SuperchargedFormData>;
-  updateQuestion: (data: SuperchargedFormData, id: number) => void;
+  updateQuestion: (id: number) => void;
 };
 export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...rest }) => {
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
@@ -161,7 +161,7 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
   }
 
   const submit = () => {
-    questionData ? updateQuestion(watch(), questionData.id) : handleSubmit(addQuestion);
+    questionData ? updateQuestion(questionData.id) : handleSubmit(addQuestion);
   }
 
   return (
