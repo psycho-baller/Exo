@@ -161,7 +161,7 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
   }
 
   const submit = () => {
-    questionData ? updateQuestion(questionData.id) : handleSubmit(addQuestion);
+    questionData ? updateQuestion(questionData.id) : handleSubmit(addQuestion, console.log)();
   }
 
   return (
@@ -229,6 +229,11 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
             )}
           />
         </YStack>
+        {errors.question && <Text style={styles.errorText}>This field is required</Text>}
+        {errors.root ?
+          <Text style={styles.errorText}>{errors.note}s</Text>
+          : null
+        }
 
         <XStack columnGap='$2' alignItems='center'>
           <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} setFormValue={setValue} />
