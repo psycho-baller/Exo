@@ -52,15 +52,15 @@ export const AddQuestion: FC = () => {
       sheetRef?.current?.close()
       const topicWord = inputWords.find((word) => word.reference === 'topic')?.word.slice(1).toLowerCase();
       const selectedTopic = allTopics?.find((topic) => topic.name.toLowerCase() === topicWord);
-      const createdQuestion = data[0]
-      if (createdQuestion && selectedTopic) {
+      const updateQuestion = questionData
+      if (updateQuestion && selectedTopic) {
         createQuestionTopicRelation.mutate({
-          questionId: createdQuestion.id,
+          questionId: updateQuestion.id,
           topicId: selectedTopic.id,
         })
       }
-      if (createdQuestion?.personId) {
-        await utils.question.forPerson.invalidate({ id: createdQuestion.personId })
+      if (updateQuestion?.personId) {
+        await utils.question.forPerson.invalidate({ id: updateQuestion.personId })
       }
       await utils.question.all.invalidate()
       // reset form
@@ -83,6 +83,7 @@ export const AddQuestion: FC = () => {
       .map((word) => word.word)
       .join('')
       .trim();
+    console.log('questionText', questionText)
 
     createMutation.mutateAsync({
       groupId: group?.id,
@@ -122,7 +123,7 @@ export const AddQuestion: FC = () => {
   function clearData() {
     if (questionData) { // only if we are updating a question
       updateQuestion(questionData.id)
-      setInputWords([])
+      // setInputWords([])
     }
   }
 
