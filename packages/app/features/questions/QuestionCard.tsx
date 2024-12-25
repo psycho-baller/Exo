@@ -1,4 +1,4 @@
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
+import { CalendarDays, CircleUser, Tag, Trash2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
@@ -78,6 +78,7 @@ export const QuestionCard: FC<Props> = (props) => {
           <XStack gap={18}>
             <PersonForQuestion question={question} />
             <GroupForQuestion question={question} />
+            <TopicsForQuestion question={question} />
             {date && (
               <XStack gap={6} alignItems='center'>
                 <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
@@ -144,6 +145,36 @@ function GroupForQuestion(props: {
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
       <Text color='$secondaryColor'>{group.name}</Text>
     </XStack>
+  )
+}
+
+function TopicsForQuestion(props: {
+  question: RouterOutputs['question']['all'][number]
+}) {
+  const { question } = props
+  const topicsQuery = api.questionTopic.getTopicsFromQuestionId.useQuery({
+    id: question.id,
+  })
+  if (topicsQuery.isLoading) {
+    return <Text>Loading...</Text>
+  }
+  if (topicsQuery.error) {
+    return <Text>Error: {topicsQuery.error.message}</Text>
+  }
+  const { data: topics } = topicsQuery
+  if (!topics) {
+    return null
+  }
+  console.log('topics', topics)
+  return (
+    <>
+      {topics.map((topic) => (
+        <XStack key={topic.id} gap={5} alignItems='center'>
+          <Tag size={14} color='$secondaryColor' strokeWidth={2.5} marginTop={1} />
+          <Text color='$secondaryColor'>{topic.name}</Text>
+        </XStack>
+      ))}
+    </>
   )
 }
 

@@ -2,7 +2,7 @@ import { api } from "@acme/api/utils/trpc";
 import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
-import { ScrollView, MyDateTimePicker, TagButton, XStack } from "@acme/ui";
+import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@acme/ui";
 import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom, questionDataAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
@@ -174,20 +174,13 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       return;
     }
     setInputWords((prevInputWords) => {
-      const newInputWords = prevInputWords[prevInputWords.length - 1]?.word !== ' '
+      const lastWord = prevInputWords.at(-1)?.word
+      const newInputWords = lastWord && lastWord !== ' '
         ? [...prevInputWords, { word: ' ', reference: null, enabled: false }, { word: getSymbolFromReference(name), reference: name, enabled: true }]
         : [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
       setFormValue('question', newInputWords.map((word) => word.word).join(''));
       return newInputWords
     });
-  }
-
-  const handleSelectedPersonPress = () => {
-    // setInputWords((prevInputWords) => {
-    //   const newInputWords = [...prevInputWords, { word: getSymbolFromReference('person'), reference: 'person', enabled: true }];
-    //   setFormValue('question', newInputWords.map((word) => word.word).join(''));
-    //   return newInputWords
-    // });
   }
   return (
     <>
@@ -215,6 +208,15 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       ) : (
         <TagButton icon={Users} onPress={() => handlePropertyPress('group')} >
           group
+        </TagButton>
+      )}
+      {questionData?.id ? (
+        // update or create the topics
+        <TopicsSuggestions questionId={questionData?.id} onNewTopicPress={() => handlePropertyPress('topic')} />
+      ) : (
+        // only create a new topic
+        <TagButton icon={Tag} onPress={() => handlePropertyPress('topic')} >
+          topic
         </TagButton>
       )}
 
@@ -256,19 +258,52 @@ const SelectedGroupProperty: FC<{ groupId: number }> = ({ groupId }) => {
   );
 }
 
-// const SelectedTopicProperty: FC<{ topicId: number }> = ({ topicId }) => {
-//   const { data: topic } = api.topic.byId.useQuery({ id: topicId });
-//   const [prevQuestionData, setQuestionData] = useAtom(questionDataAtom);
+const SelectedTopicProperty: FC<{ questionId: number; topicId: number }> = ({ questionId, topicId }) => {
+  const utils = api.useUtils();
+  const { data: topic } = api.topic.byId.useQuery({ id: topicId });
+  const { mutateAsync } = api.questionTopic.delete.useMutation({
+    async onSuccess() {
+      await utils.questionTopic.getTopicsFromQuestionId.invalidate({ id: questionId });
+    },
+  });
 
-//   const handleSelectedTopicPress = () => {
-//     // unset topic
-//     prevQuestionData && setQuestionData({ ...prevQuestionData, topicId: null });
-//   }
-//   return (
-//     <>
-//       <TagButton icon={Tag} onPress={handleSelectedTopicPress} borderColor='$textAccent' color='$textAccent'>
-//         {topic?.name}
-//       </TagButton>
-//     </>
-//   );
-// }
+  const handleSelectedTopicPress = () => {
+    // unset topic
+    mutateAsync({ questionId: questionId, topicId: topicId });
+  }
+  return (
+    <>
+      <TagButton icon={Tag} onPress={handleSelectedTopicPress} borderColor='$textAccent' color='$textAccent'>
+        {topic?.name}
+      </TagButton>
+    </>
+  );
+}
+
+const TopicsSuggestions: FC<{ questionId: number; onNewTopicPress: () => void }> = ({ questionId, onNewTopicPress }) => {
+  const topicsQuery = api.questionTopic.getTopicsFromQuestionId.useQuery({
+    id: questionId,
+  })
+  if (topicsQuery.isLoading) {
+    return <Text>Loading...</Text>
+  }
+  if (topicsQuery.error) {
+    return <Text>Error: {topicsQuery.error.message}</Text>
+  }
+  const { data: topics } = topicsQuery
+  if (!topics) {
+    return null
+  }
+  return (
+    <>
+      {topics.map((topic) => (
+        <SelectedTopicProperty key={topic.id} questionId={questionId} topicId={topic.id} />
+      ))}
+      {topics.length < 3 && (
+        <TagButton icon={Tag} onPress={onNewTopicPress}>
+          Add topic
+        </TagButton>
+      )}
+    </>
+  );
+}

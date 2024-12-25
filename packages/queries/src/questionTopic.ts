@@ -33,7 +33,7 @@ export async function createQuestionTopic(input: NewQuestionTopics) {
 }
 
 // DELETE
-export async function deleteQuestionTopic(input: WithId) {
+export async function deleteQuestionTopic(input: NewQuestionTopics) {
   const { questionId, topicId } = z
     .object({ questionId: z.number(), topicId: z.number() })
     .parse(input)

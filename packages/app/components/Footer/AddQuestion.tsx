@@ -18,7 +18,13 @@ export const AddQuestion: FC = () => {
       return data
     },
   })
-  const createQuestionTopicRelation = api.questionTopic.create.useMutation()
+  const createQuestionTopicRelation = api.questionTopic.create.useMutation({
+    async onSuccess(data) {
+      const lastAddedQuestionTopic = data.at(-1);
+      console.log('lastAddedQuestionTopic', lastAddedQuestionTopic)
+      lastAddedQuestionTopic && await utils.questionTopic.getTopicsFromQuestionId.invalidate({ id: lastAddedQuestionTopic.questionId });
+    },
+  })
   const { data: people } = api.person.all.useQuery();
   const { data: groups } = api.group.all.useQuery();
 
@@ -30,17 +36,25 @@ export const AddQuestion: FC = () => {
   const createMutation = api.question.create.useMutation({
     async onSuccess(data) {
       sheetRef?.current?.close()
-      const topicWord = inputWords.find((word) => word.reference === 'topic')?.word.slice(1).toLowerCase();
-      const selectedTopic = allTopics?.find((topic) => topic.name.toLowerCase() === topicWord);
-      const createdQuestion = data[0]
-      if (createdQuestion && selectedTopic) {
-        createQuestionTopicRelation.mutate({
-          questionId: createdQuestion.id,
-          topicId: selectedTopic.id,
-        })
+      const topicWords = inputWords
+        .filter((word) => word.reference === 'topic')
+        .map((word) => word.word.slice(1).toLowerCase());
+
+      const selectedTopics = allTopics?.filter((topic) =>
+        topicWords.includes(topic.name.toLowerCase())
+      );
+
+      const createdQuestion = data[0];
+      if (createdQuestion && selectedTopics) {
+        for (const selectedTopic of selectedTopics) {
+          createQuestionTopicRelation.mutate({
+            questionId: createdQuestion.id,
+            topicId: selectedTopic.id,
+          });
+        }
       }
       if (createdQuestion?.personId) {
-        await utils.question.forPerson.invalidate({ id: createdQuestion.personId })
+        await utils.question.forPerson.invalidate({ id: createdQuestion.personId });
       }
       await utils.question.all.invalidate()
       // reset form
@@ -50,14 +64,21 @@ export const AddQuestion: FC = () => {
   const updateMutation = api.question.update.useMutation({
     async onSuccess(data) {
       sheetRef?.current?.close()
-      const topicWord = inputWords.find((word) => word.reference === 'topic')?.word.slice(1).toLowerCase();
-      const selectedTopic = allTopics?.find((topic) => topic.name.toLowerCase() === topicWord);
+      const topicWords = inputWords
+        .filter((word) => word.reference === 'topic')
+        .map((word) => word.word.slice(1).toLowerCase());
+
+      const selectedTopics = allTopics?.filter((topic) =>
+        topicWords.includes(topic.name.toLowerCase())
+      );
       const updateQuestion = questionData
-      if (updateQuestion && selectedTopic) {
-        createQuestionTopicRelation.mutate({
-          questionId: updateQuestion.id,
-          topicId: selectedTopic.id,
-        })
+      if (updateQuestion && selectedTopics) {
+        for (const selectedTopic of selectedTopics) {
+          createQuestionTopicRelation.mutate({
+            questionId: updateQuestion.id,
+            topicId: selectedTopic.id,
+          });
+        }
       }
       if (updateQuestion?.personId) {
         await utils.question.forPerson.invalidate({ id: updateQuestion.personId })
