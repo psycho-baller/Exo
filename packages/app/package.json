@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@acme/ui": "workspace:*",
-    "@gorhom/bottom-sheet": "^5.0.0-alpha.11",
+    "@gorhom/bottom-sheet": "^5.0.6",
     "@orama/orama": "^2.0.19",
     "@tamagui/animations-react-native": "^1.120.2",
     "@tamagui/colors": "^1.120.2",
@@ -39,6 +39,7 @@
     "jotai": "^2.8.0",
     "react-hook-form": "^7.54.2",
     "react-native-ble-plx": "^3.2.1",
+    "react-native-calendars": "^1.1307.0",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-mmkv": "^2.12.2",

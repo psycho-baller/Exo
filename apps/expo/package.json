@@ -59,6 +59,7 @@
     "react-hook-form": "^7.54.2",
     "react-native": "0.76.5",
     "react-native-ble-plx": "^3.2.1",
+    "react-native-calendars": "^1.1307.0",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-mmkv": "^2.12.2",
     "react-native-reanimated": "~3.16.6",
