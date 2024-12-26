@@ -8,7 +8,7 @@ import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
 import type { UseFormSetValue } from "react-hook-form";
 import type { SuperchargedFormData } from "./SuperchargedInput";
-import { format } from "date-fns";
+import { formatDate } from "../../utils/date";
 type SuggestionDropdownProps = {
   currentActiveWordIndex: number;
   setFormValue: UseFormSetValue<SuperchargedFormData>;
@@ -27,7 +27,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       marginHorizontal='$-2.5'
       keyboardShouldPersistTaps='always'
     >
-      <XStack columnGap='$2.5' paddingRight='$3'>
+      <XStack columnGap='$2' paddingRight='$3.5'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}
@@ -194,8 +194,8 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
 // showOnMount
 /> */}
       {selectedDateForThisQuestion ? (
-        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} >
-          {format(selectedDateForThisQuestion, 'EEE')}
+        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} borderColor='$textAccent' color='$textAccent'>
+          {formatDate(selectedDateForThisQuestion)}
         </TagButton>
       ) : (
         <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} >

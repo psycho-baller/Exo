@@ -1,47 +1,58 @@
-export function formatDate(inputDate: Date): string {
-  const getYear = (date: Date): string => {
-    const currentYear: number = new Date().getFullYear()
-    return date.getFullYear() !== currentYear ? `, ${date.getFullYear()}` : ''
+import { format, isSameDay, isTomorrow } from "date-fns";
+export const formatDate = (date: Date) => {
+  if (isSameDay(date, new Date())) {
+    return 'Today'
   }
-
-  const getMonthAndDay = (date: Date): string => {
-    const dateOptions: Intl.DateTimeFormatOptions = {
-      month: 'short',
-      day: 'numeric',
-    }
-    return date.toLocaleString('default', dateOptions)
+  if (isTomorrow(new Date(date))) {
+    return 'Tomorrow'
   }
+  return format(new Date(date), 'd MMM')
 
-  const isToday = (date: Date): boolean => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const dateWithoutTime = new Date(date.getTime())
-    dateWithoutTime.setHours(0, 0, 0, 0)
-    return dateWithoutTime.getTime() === today.getTime()
-  }
+};
+// export function formatDate(inputDate: Date): string {
+//   const getYear = (date: Date): string => {
+//     const currentYear: number = new Date().getFullYear()
+//     return date.getFullYear() !== currentYear ? `, ${date.getFullYear()}` : ''
+//   }
 
-  const getTimeString = (date: Date): string => {
-    const timeOptions: Intl.DateTimeFormatOptions = {
-      hour: 'numeric',
-      minute: 'numeric',
-    }
-    return date.toLocaleString('default', timeOptions)
-  }
+//   const getMonthAndDay = (date: Date): string => {
+//     const dateOptions: Intl.DateTimeFormatOptions = {
+//       month: 'short',
+//       day: 'numeric',
+//     }
+//     return date.toLocaleString('default', dateOptions)
+//   }
 
-  // Check if the input date is today
-  if (isToday(inputDate)) {
-    // If the input date is today, format the time and return it
-    return getTimeString(inputDate)
-  }
+//   const isToday = (date: Date): boolean => {
+//     const today = new Date()
+//     today.setHours(0, 0, 0, 0)
+//     const dateWithoutTime = new Date(date.getTime())
+//     dateWithoutTime.setHours(0, 0, 0, 0)
+//     return dateWithoutTime.getTime() === today.getTime()
+//   }
 
-  // Get month abbreviation and day
-  const monthAndDay: string = getMonthAndDay(inputDate)
+//   const getTimeString = (date: Date): string => {
+//     const timeOptions: Intl.DateTimeFormatOptions = {
+//       hour: 'numeric',
+//       minute: 'numeric',
+//     }
+//     return date.toLocaleString('default', timeOptions)
+//   }
 
-  // Get year if it's different from the current year
-  const year: string = getYear(inputDate)
+//   // Check if the input date is today
+//   if (isToday(inputDate)) {
+//     // If the input date is today, format the time and return it
+//     return getTimeString(inputDate)
+//   }
 
-  // Concatenate the results
-  const formattedDate = `${monthAndDay}${year}`
+//   // Get month abbreviation and day
+//   const monthAndDay: string = getMonthAndDay(inputDate)
 
-  return formattedDate
-}
+//   // Get year if it's different from the current year
+//   const year: string = getYear(inputDate)
+
+//   // Concatenate the results
+//   const formattedDate = `${monthAndDay}${year}`
+
+//   return formattedDate
+// }
