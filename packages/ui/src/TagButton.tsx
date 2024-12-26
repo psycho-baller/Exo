@@ -8,6 +8,10 @@ export const TagButton = styled(ButtonOG, {
   fontSize: '$5',
   scaleIcon: 1.4,
   borderColor: '$gray7',
+  scaleSpace: 0.5,
+  textProps: {
+    textTransform: 'capitalize',
+  },
 })
 
 export type TagButtonProps = GetProps<typeof TagButton>
