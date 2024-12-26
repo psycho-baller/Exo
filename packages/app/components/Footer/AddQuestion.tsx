@@ -4,10 +4,10 @@ import { api } from '@acme/api/utils/trpc'
 import { Label, XStack } from '@acme/ui'
 import { BottomSheet } from '../BottomSheet'
 
-import { questionDataAtom, sheetRefAtom, superchargedInputDateAtom } from '../../atoms/addQuestion'
+import { questionDataAtom, sheetRefAtom, superchargedInputSelectedDateAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { type SuperchargedFormData, SuperchargedInput } from './SuperchargedInput'
-import { superchargedInputWordsAtom, superchargedInputSelectionAtom } from '../../atoms/addQuestion';
+import { superchargedInputWordsAtom } from '../../atoms/addQuestion';
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -30,7 +30,7 @@ export const AddQuestion: FC = () => {
 
   const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
   const [sheetRef] = useAtom(sheetRefAtom)
-  const [inputDate] = useAtom(superchargedInputDateAtom)
+  const [selectedDate, setSelectedDate] = useAtom(superchargedInputSelectedDateAtom)
   const [questionData, setQuestionData] = useAtom(questionDataAtom)
 
   const createMutation = api.question.create.useMutation({
@@ -111,7 +111,7 @@ export const AddQuestion: FC = () => {
       personId: person?.id,
       question: questionText,
       note: data.note,
-      reminderDatetime: inputDate,
+      reminderDatetime: selectedDate,
     });
   }
 
@@ -138,10 +138,11 @@ export const AddQuestion: FC = () => {
       personId: person?.id || questionData.personId,
       question: questionText,
       note: questionData.note,
-      reminderDatetime: inputDate,
+      reminderDatetime: selectedDate,
     });
   }
   function clearData() {
+    setSelectedDate(null)
     if (questionData) { // only if we are updating a question
       updateQuestion(questionData.id)
       // setInputWords([])

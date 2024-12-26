@@ -24,5 +24,5 @@ export type SuperchargedWord = {
 }
 export const questionDataAtom = atom<RouterOutputs['question']['all'][number] | null>(null)
 export const superchargedInputWordsAtom = atom<SuperchargedWord[]>([])
-export const superchargedInputDateAtom = atom<Date | null>(null)
+export const superchargedInputSelectedDateAtom = atom<Date | null>(null)
 export const superchargedInputSelectionAtom = atom({ start: 0, end: 0 })
