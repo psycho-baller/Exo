@@ -9,6 +9,7 @@ import { Button, FloatingFooter, Page } from '@acme/ui'
 import { AddQuestion } from './AddQuestion'
 import { useAtom } from 'jotai'
 import { sheetRefAtom } from '../../atoms/addQuestion'
+import { AddDateForQuestion } from './AddDateForQuestion'
 
 type Props = PageProps
 
@@ -55,7 +56,9 @@ export const MainPage: FC<Props> = ({ children, ...props }) => {
         cursor='pointer'
         icon={<Plus size={'$3'} />}
       /> */}
+      {/* Bottom sheets */}
       <AddQuestion />
+      <AddDateForQuestion />
     </Page>
   )
 }

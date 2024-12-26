@@ -3,12 +3,12 @@ import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
 import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@acme/ui";
-import { type ReferenceType, superchargedInputWordsAtom, superchargedInputDateAtom, questionDataAtom } from "../../atoms/addQuestion";
+import { type ReferenceType, superchargedInputWordsAtom, superchargedInputSelectedDateAtom, questionDataAtom, dateSheetRefAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
 import type { UseFormSetValue } from "react-hook-form";
 import type { SuperchargedFormData } from "./SuperchargedInput";
-
+import { format } from "date-fns";
 type SuggestionDropdownProps = {
   currentActiveWordIndex: number;
   setFormValue: UseFormSetValue<SuperchargedFormData>;
@@ -160,17 +160,19 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
     { name: 'person', icon: User },
     { name: 'group', icon: Users },
     { name: 'topic', icon: Tag },
-
   ] as const;
   const [, setInputWords] = useAtom(superchargedInputWordsAtom);
+  const [datePickerSheetRef] = useAtom(dateSheetRefAtom)
+
   // const [showDateTimePicker, setShowDateTimePicker] = useState(false);
-  const [date, setDate] = useAtom(superchargedInputDateAtom)
+  const [selectedDate, setSelectedDate] = useAtom(superchargedInputSelectedDateAtom)
   //react query get the person, group, topic from questionData
   const [questionData] = useAtom(questionDataAtom);
   const handlePropertyPress = (name: typeof properties[number]['name']) => {
-    // Keyboard.dismiss();
     if (name === 'date') {
-      setDate(new Date());
+      Keyboard.dismiss();
+      datePickerSheetRef?.current?.present()
+      // setDate(new Date());
       return;
     }
     setInputWords((prevInputWords) => {
@@ -182,18 +184,22 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       return newInputWords
     });
   }
+  const selectedDateForThisQuestion = questionData?.reminderDatetime || selectedDate;
   return (
     <>
 
-      {date ? (
-        <MyDateTimePicker
-          value={date}
-          onChange={setDate as () => Promise<void>}
-        // showOnMount
-        />
+      {/* <MyDateTimePicker
+  value={selectedDate}
+  onChange={setSelectedDate as () => Promise<void>}
+// showOnMount
+/> */}
+      {selectedDateForThisQuestion ? (
+        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} >
+          {format(selectedDateForThisQuestion, 'EEE')}
+        </TagButton>
       ) : (
-        <TagButton icon={properties[0].icon} onPress={() => handlePropertyPress(properties[0].name)} >
-          {properties[0].name}
+        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} >
+          date
         </TagButton>
       )}
       {questionData?.personId ? (
