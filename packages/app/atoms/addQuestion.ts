@@ -14,8 +14,7 @@ export const personSearchAtom = atom('')
 export const selectedPersonAtom = atom<PersonStore | null>(null)
 
 export const sheetRefAtom = atom<RefObject<BottomSheetModalRef> | null>(null)
-export const questionDataAtom = atom<RouterOutputs['question']['all'][number] | null>(null)
-
+export const dateSheetRefAtom = atom<RefObject<BottomSheetModalRef> | null>(null)
 export type ReferenceType = 'person' | 'group' | 'topic' | null
 export type SuperchargedWord = {
   word: string
@@ -23,6 +22,7 @@ export type SuperchargedWord = {
   reference: ReferenceType
   // active: boolean;
 }
+export const questionDataAtom = atom<RouterOutputs['question']['all'][number] | null>(null)
 export const superchargedInputWordsAtom = atom<SuperchargedWord[]>([])
 export const superchargedInputDateAtom = atom<Date | null>(null)
 export const superchargedInputSelectionAtom = atom({ start: 0, end: 0 })
