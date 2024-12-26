@@ -223,7 +223,10 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
                 width='100%'
                 placeholder="Add a note for this question"
                 value={value}
-                onChangeText={onChange}
+                onChangeText={(text) => {
+                  onChange(text)
+                  questionData && setQuestionData({ ...questionData, note: text })
+                }}
                 multiline
               />
             )}
@@ -243,6 +246,7 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
           </Button>
         </XStack>
       </View>
+
     </YStack>
   );
 };
