@@ -57,7 +57,6 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
   const { data: questions } = api.question.getQuestionsForPerson.useQuery({ id: person.id })
   if (!questions) return null
   const questionCount = questions.length
-  const mostRecentQuestionWithAReminder = questions.find((q) => q.reminderDatetime)
 
   return (
     <XStack gap={18}>
@@ -65,11 +64,11 @@ function QuestionMetadata({ person }: { person: RouterOutputs['person']['all'][n
         <MessageCircleQuestion size={15} color='$secondaryColor' strokeWidth={2.5} />
         <Text color='$secondaryColor'>{questionCount}</Text>
       </XStack>
-      {mostRecentQuestionWithAReminder?.reminderDatetime && (
+      {person.reminderDatetime && (
         <XStack gap={6} alignItems='center'>
           <CalendarDays size={15} color='$secondaryColor' strokeWidth={2.5} />
           <Text color='$secondaryColor'>
-            {formatDate(mostRecentQuestionWithAReminder.reminderDatetime)}
+            {formatDate(person.reminderDatetime)}
           </Text>
         </XStack>
       )}
