@@ -9,6 +9,7 @@ export const TagButton = styled(ButtonOG, {
   scaleIcon: 1.4,
   borderColor: '$gray7',
   scaleSpace: 0.5,
+  backgroundColor: '$gray3',
   textProps: {
     textTransform: 'capitalize',
   },
