@@ -24,8 +24,7 @@ export const PeopleSearchInput: FC = () => {
           data: people,
         }
       ]}
-      labelText='Search for a person'
-      focusOnMount={true}
+      placeholder='Search for a person'
       query={query}
       onChangeText={setQuery}
     />
@@ -46,10 +45,10 @@ export const GroupSearchInput: FC = () => {
           data: groups,
         }
       ]}
-      labelText='Search for a group'
-      focusOnMount={true}
+      placeholder='Search for a group'
       query={query}
       onChangeText={setQuery}
+      insideBottomSheet
     />
   );
 };
@@ -69,8 +68,7 @@ export const TopicsSearchInput: FC = () => {
           data: groups,
         }
       ]}
-      labelText='Search for a topic'
-      focusOnMount={true}
+      placeholder='Search for a topic'
       query={query}
       onChangeText={setQuery}
     />

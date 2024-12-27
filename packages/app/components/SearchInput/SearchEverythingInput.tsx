@@ -39,8 +39,7 @@ export const SearchEverythingInput: FC = () => {
           data: groups,
         }
       ]}
-      labelText='Search'
-      focusOnMount={true}
+      placeholder='Search'
       query={query}
       onChangeText={setQuery}
     />
