@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { InputProps } from '@acme/ui';
-import { UnstyledInput } from '@acme/ui';
+import { BottomSheetInput, UnstyledInput } from '@acme/ui';
 import { create, insertMultiple, search } from '@orama/orama'
 import { useQueries } from '@tanstack/react-query';
 interface Props extends Omit<InputProps, 'value'> {
@@ -9,6 +9,7 @@ interface Props extends Omit<InputProps, 'value'> {
     schema: Record<string, unknown>;
   }[];
   query: string;
+  insideBottomSheet?: boolean;
 }
 
 const insertData = async (data: any, schema: Record<string, unknown>) => {
@@ -33,6 +34,7 @@ export const SearchInput: FC<Props> = ({
   query,
   datasets,
   size = '$4',
+  insideBottomSheet = false,
   ...rest
 }) => {
   // const queryClient = useQueryClient();
@@ -65,13 +67,16 @@ export const SearchInput: FC<Props> = ({
     return null
   }
 
+  const Input = insideBottomSheet ? BottomSheetInput : UnstyledInput;
+
   return (
-    <UnstyledInput
+    <Input
       size={size}
       minWidth="100%"
       placeholderTextColor={'$secondaryColor'}
       placeholder='Search'
       value={query}
+      autoFocus
       {...rest}
     />
   );
