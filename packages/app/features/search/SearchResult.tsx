@@ -22,8 +22,9 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   const { data: queryData, isLoading } = useQueryResult()
   const queryClient = useQueryClient();
 
+  console.log("queryData", queryData)
   const filteredData = queryData ? filterDataFromSchema(queryData as Record<string, unknown>[], filterSchema) : []
-  console.log("data:", queryData)
+  console.log("data:", query)
   // queryClient.clear()
   console.log("db", ['db', filteredData, filterSchema])
   const db = queryClient.getQueryData<S[]>(['db', filteredData, filterSchema])
@@ -31,6 +32,9 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
     queryKey: ['search', db, query],
     enabled: false,
   })
+  // const searchResult = filteredData.map((data) => {
+  //   return { document: data }
+  // })
   console.log("searchResult", searchResult)
   if (isLoading) {
     return <Text>loading...</Text>
@@ -38,10 +42,12 @@ export function SearchResult<T, S>({ filterSchema, useQueryResult, resultKey, re
   return (
     <>
       {
-        searchResult.data?.map((hit) => renderHit(hit))
+        searchResult.data?.map((hit) => renderHit(hit as T))
       }
       {/* Gotta handle the case where that's null */}
-      {RenderOnEmpty && searchResult.data?.length === 0 && RenderOnEmpty}
+      {RenderOnEmpty && (!searchResult.data || searchResult.data?.length === 0) && (
+        RenderOnEmpty
+      )}
     </>
   )
 }
