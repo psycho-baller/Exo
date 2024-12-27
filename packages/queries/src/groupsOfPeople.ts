@@ -1,5 +1,5 @@
 import { db, eq } from '@acme/db'
-import { groupsOfPeople, people } from '@acme/db/schema'
+import { groups, groupsOfPeople, people } from '@acme/db/schema'
 import type { NewGroupsOfPeople } from '@acme/db/schema/types'
 
 // READ
@@ -15,6 +15,17 @@ export async function getPeopleFromGroupId(id: number) {
     .where(eq(groupsOfPeople.groupId, id))
   return peopleFromGroup.map((person) => ({
     ...person.people,
+  }))
+}
+
+export async function getGroupsFromPersonId(id: number) {
+  const groupsFromPerson = await db
+    .select({ groups })
+    .from(groupsOfPeople)
+    .innerJoin(groups, eq(groups.id, groupsOfPeople.groupId))
+    .where(eq(groupsOfPeople.personId, id))
+  return groupsFromPerson.map((group) => ({
+    ...group.groups,
   }))
 }
 

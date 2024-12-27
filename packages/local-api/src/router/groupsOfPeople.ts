@@ -13,11 +13,12 @@ import type {
   WithId,
 } from '@acme/db/schema/types'
 
-import { getGroupsOfPeople, getPeopleFromGroupId, createGroupsOfPeople } from '@acme/queries'
+import { getGroupsOfPeople, getPeopleFromGroupId, createGroupsOfPeople, getGroupsFromPersonId } from '@acme/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['groupsOfPeople', 'all'] as const
-const byId = ['groupsOfPeople', 'byId'] as const
+const byGroupId = ['groupsOfPeople', 'byGroupId'] as const
+const byPersonId = ['groupsOfPeople', 'byPersonId'] as const
 const create = ['groupsOfPeople', 'create'] as const
 export const groupsOfPeopleRouter = {
   // READ
@@ -30,8 +31,17 @@ export const groupsOfPeopleRouter = {
     useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Person[]>) =>
       useQuery({
         ...options,
-        queryKey: [...byId, id],
+        queryKey: [...byGroupId, id],
         queryFn: () => getPeopleFromGroupId(id),
+      }),
+  },
+
+  getGroupsFromPersonId: {
+    useQuery: ({ id, ...options }: WithId & MyUseQueryOptions<Group[]>) =>
+      useQuery({
+        ...options,
+        queryKey: [...byPersonId, id],
+        queryFn: () => getGroupsFromPersonId(id),
       }),
   },
 
@@ -48,9 +58,14 @@ export const groupsOfPeopleInvalidators = (queryClient: QueryClient) => ({
       await queryClient.invalidateQueries({ queryKey: all })
     },
   },
-  byId: {
+  byPersonId: {
     invalidate: async ({ id }: WithId) => {
-      await queryClient.invalidateQueries({ queryKey: [...byId, id] })
+      await queryClient.invalidateQueries({ queryKey: [...byPersonId, id] })
+    },
+  },
+  byGroupId: {
+    invalidate: async ({ id }: WithId) => {
+      await queryClient.invalidateQueries({ queryKey: [...byGroupId, id] })
     },
   },
 })
