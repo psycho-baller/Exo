@@ -46,7 +46,7 @@ export default function TabLayout() {
           // borderTopWidth: 0,
           position: 'absolute',
           borderColor: 'transparent',
-          bottom: 10,
+          bottom: 7.5,
           left: 0,
           right: 0,
           // top: 0,
@@ -144,6 +144,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBarIcon: {
-    marginTop: 14, // Adjust this value to lower the icon
+    marginTop: 18, // Adjust this value to lower the icon
   },
 })
