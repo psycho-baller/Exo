@@ -108,7 +108,7 @@ export const AddQuestion: FC = () => {
 
     createMutation.mutateAsync({
       groupId: group?.id,
-      personId: person?.id,
+      personId: person?.id || questionData?.personId,
       question: questionText,
       note: data.note,
       reminderDatetime: selectedDate,
@@ -143,7 +143,7 @@ export const AddQuestion: FC = () => {
   }
   function clearData() {
     setSelectedDate(null)
-    if (questionData) { // only if we are updating a question
+    if (questionData && questionData.createdByUserId.length > 0) { // only if we are updating a question
       updateQuestion(questionData.id)
       // setInputWords([])
     }

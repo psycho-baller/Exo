@@ -161,7 +161,9 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
   }
 
   const submit = () => {
-    questionData ? handleSubmit(() => updateQuestion(questionData.id), console.log)() : handleSubmit(addQuestion, console.log)();
+    (questionData && questionData.createdByUserId.length > 0)
+      ? handleSubmit(() => updateQuestion(questionData.id), console.log)()
+      : handleSubmit(addQuestion, console.log)();
   }
 
   return (

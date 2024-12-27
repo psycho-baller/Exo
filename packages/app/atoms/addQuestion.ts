@@ -22,6 +22,17 @@ export type SuperchargedWord = {
   reference: ReferenceType
   // active: boolean;
 }
+export const sampleQuestion: RouterOutputs['question']['all'][number] = {
+  id: 1,
+  question: '',
+  createdByUserId: '',
+  personId: null,
+  createdDatetime: null,
+  reminderDatetime: null,
+  note: null,
+  groupId: null,
+  postId: null,
+}
 export const questionDataAtom = atom<RouterOutputs['question']['all'][number] | null>(null)
 export const superchargedInputWordsAtom = atom<SuperchargedWord[]>([])
 export const superchargedInputSelectedDateAtom = atom<Date | null>(null)
