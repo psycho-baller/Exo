@@ -1,10 +1,14 @@
-import { CalendarDays, Tag, User } from '@tamagui/lucide-icons'
+import { CalendarDays, Tag, User, Users, X } from '@tamagui/lucide-icons'
 
 import type { RouterOutputs } from '@acme/api'
 import { api } from '@acme/api/utils/trpc'
-import { MyDateTimePicker, Text, View, XStack, YStack } from '@acme/ui'
+import { Button, MyDateTimePicker, TagButton, Text, View, XStack, YStack } from '@acme/ui'
 
 import { getFullName } from '../../utils/strings'
+import { groupSheetRefAtom, personSheetRefAtom, topicsSheetRefAtom } from '../../atoms/propertiesSheet'
+import { useAtom } from 'jotai'
+import { BottomSheet } from '../../components/BottomSheet'
+import { SearchGroupSheet } from './SearchGroupSheet'
 
 type Props = RouterOutputs['person']['all'][number]
 
@@ -13,61 +17,126 @@ export function PersonProperties({ id, reminderDatetime, firstName, createdByUse
   const utils = api.useUtils()
   const { mutate: update } = api.person.update.useMutation({
     async onSuccess() {
-      await utils.question.all.invalidate()
+      await utils.person.byId.invalidate({ id: id })
+      // await utils.question.all.invalidate()
     },
   })
-
-  const onChange = async (date: Date) => {
+  const [groupSheetRef] = useAtom(groupSheetRefAtom)
+  const showGroupSheet = () => groupSheetRef?.current?.present()
+  const onChange = async (date: Date | null) => {
     update({
       id,
       reminderDatetime: date,
       // createdByUserId,
       firstName,
     })
-    await utils.question.byId.invalidate({ id: id })
+    // await utils.question.byId.invalidate({ id: id })
   }
 
   return (
     <YStack gap='$3' padding='$2.5'>
       <XStack alignItems='center' columnGap='$5'>
         <CalendarDays size={20} />
-        <MyDateTimePicker
-          value={reminderDatetime ? reminderDatetime : new Date()}
-          onChange={onChange}
-        />
+        {reminderDatetime ? (
+          <XStack
+            flex={1}
+            alignItems='center'
+            justifyContent='space-between'
+            marginLeft={-10}
+          >
+            <MyDateTimePicker
+              mode='date'
+              value={reminderDatetime}
+              onChange={onChange}
+            />
+            <X
+              color='$red9'
+              size='$2'
+              onPress={() => {
+                onChange(null)
+              }}
+            />
+          </XStack>
+        ) : (
+          <TagButton
+            size='$2.5'
+            borderColor='transparent'
+            onPress={() => {
+              onChange(new Date())
+            }}
+          >
+            Add date
+          </TagButton>
+        )}
       </XStack>
-      <XStack columnGap='$5' />
-      <XStack columnGap='$5'>
-        <Tag size={20} />
-        <View>
-          <TopicsProperty questionId={id} />
-        </View>
+      {/* <XStack columnGap='$5' /> */}
+      <XStack columnGap='$5' onPress={showGroupSheet} alignItems='center'>
+        <Users size={20} />
+        {/* <Button unstyled> */}
+        <GroupProperty personId={id} />
+        {/* </Button> */}
       </XStack>
+      <Sheets personId={id} />
     </YStack>
   )
 }
 
-const PersonProperty = ({ id }: { id: number }) => {
-  const person = api.person.byId.useQuery({ id })
-  return <Text>{getFullName(person.data?.firstName ?? '', person.data?.lastName)}</Text>
-}
-
 // TODO: After we turn all createdByUsername to createdByUserId
-const GroupProperty = ({ id }: { id: number }) => {
-  const group = api.group.byId.useQuery({ id })
-  return <Text>{group.data?.name}</Text>
-}
-
-const TopicsProperty = ({ questionId }: { questionId: number }) => {
-  const topics = api.questionTopic.getTopicsFromQuestionId.useQuery({
-    id: questionId,
+const GroupProperty = ({ personId }: { personId: number }) => {
+  const { data } = api.groupsOfPeople.getGroupsFromPersonId.useQuery({
+    id: personId,
   })
 
   return (
-    <YStack>
-      {topics.data?.map((topic) => (
-        <Text key={topic.id}>{topic.name}</Text>
-      ))}
-    </YStack>
+    <XStack columnGap='$2.5'>
+      {!data?.length && (
+        // send button clicks to the parent component
+        <Text fontSize='$6' color='$secondaryColor'>
+          Click to connnect to a group
+        </Text>
+      )}
+      {data?.map((group) => (
+        <TagButton key={group.id} size='$2.5'
+          borderColor='transparent'
+          textProps={{
+            textTransform: 'none'
+          }}
+        >{group.name}</TagButton>
+      ))
+      }
+    </XStack >
+  )
+}
+
+
+const Sheets = ({ personId }: { personId: number }) => {
+  // const personRef = useRef<BottomSheetModalRef>(null)
+  // const groupRef = useRef<BottomSheetModalRef>(null)
+  return (
+    <>
+      {/* <BottomSheet
+        // ref={personRef}
+        sheetRefAtom={personSheetRefAtom}
+      >
+        <SearchPeopleSheet personId={personId} />
+      </BottomSheet> */}
+      <BottomSheet
+        // ref={groupRef}
+        footerComponent={() => (
+          <Button onPress={() => console.log('add group')}>Add group</Button>
+        )}
+        sheetRefAtom={groupSheetRefAtom}
+        snapPoints={['25%']}
+        enableDynamicSizing={true}
+      >
+        <SearchGroupSheet personId={personId} />
+      </BottomSheet>
+      {/* <BottomSheet
+        // ref={groupRef}
+        sheetRefAtom={topicsSheetRefAtom}
+      >
+        <Text>Topics</Text>
+      </BottomSheet> */}
+    </>
   )
 }

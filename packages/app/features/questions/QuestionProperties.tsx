@@ -15,6 +15,7 @@ import { groupSchema, personSchema } from '../../utils/search'
 import type { PersonSearchResult, GroupSearchResult } from '../../utils/search'
 import { peopleQueryAtom, groupsQueryAtom } from '../../atoms/search'
 import type { UseQueryResult } from '@tanstack/react-query'
+import { SearchGroupSheet } from '../people/SearchGroupSheet'
 
 type Props = RouterOutputs['question']['all'][number]
 
@@ -231,7 +232,7 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
     if (person) {
       assignToPerson(person.id)
     } else {
-      // add user-facing error handling here                                                                        
+      // add user-facing error handling here
       console.error('Failed to create person')
     }
   }
@@ -251,63 +252,6 @@ const SearchPeopleSheet = ({ questionId }: { questionId: number }) => {
           </Button>
         )}
         RenderOnEmpty={<Button disabled={!personQuery} style={{}} onPress={() => createNewPerson(personQuery)}>Create new person</Button>}
-      />
-    </YStack>
-  )
-}
-
-const SearchGroupSheet = ({ questionId }: { questionId: number }) => {
-  const [groupSheetRef] = useAtom(groupSheetRefAtom)
-  const [groupQuery, setGroupQuery] = useAtom(groupsQueryAtom)
-  const utils = api.useUtils()
-  const { mutate: assignQuestionToGroup } = api.question.assignToGroup.useMutation({
-    async onSuccess() {
-      await utils.question.byId.invalidate({ id: questionId })
-      setGroupQuery('')
-    },
-  })
-  const { mutateAsync: createGroup } = api.group.create.useMutation({
-    async onSuccess() {
-      await utils.group.all.invalidate()
-    },
-  })
-
-  const assignToGroup = (groupId: number) => {
-    assignQuestionToGroup({
-      questionId,
-      groupId,
-    })
-    groupSheetRef?.current?.close()
-  }
-
-  const createNewGroup = async (input: string) => {
-
-    const [group] = await createGroup({
-      name: input,
-    })
-    if (group) {
-      assignToGroup(group.id)
-    } else {
-      // add user-facing error handling here                                                                        
-      console.error('Failed to create group')
-    }
-  }
-
-  return (
-    <YStack>
-      <GroupSearchInput />
-      <SearchResult<GroupSearchResult, RouterOutputs['group']['all'][number]>
-        useQueryResult={api.group.all.useQuery as () => UseQueryResult<RouterOutputs['group']['all']>}
-        filterSchema={groupSchema}
-        resultKey="groups"
-        queryAtom={groupsQueryAtom}
-        renderHit={(hit: GroupSearchResult) => (
-          // shared component
-          <Button key={hit.document.id} onPress={() => assignToGroup(Number.parseInt(hit.document.id))}>
-            {hit.document.name}
-          </Button>
-        )}
-        RenderOnEmpty={<Button onPress={() => createNewGroup(groupQuery)}>Create new group</Button>}
       />
     </YStack>
   )

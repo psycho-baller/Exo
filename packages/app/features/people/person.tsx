@@ -1,17 +1,20 @@
 import { FlashList } from '@shopify/flash-list'
-import { ArrowLeft } from '@tamagui/lucide-icons'
+import { ArrowLeft, Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 import type { ReactNode } from 'react'
 import { Platform } from 'react-native'
 import { useLink, useParams } from 'solito/navigation'
+import { Link } from 'solito/link'
 
 import { api } from '@acme/api/utils/trpc'
-import { Button, Page, Text, VirtualList, YStack } from '@acme/ui'
+import { Button, FloatingFooter, Page, Separator, Spacer, Text, VirtualList, YStack } from '@acme/ui'
 
 import { CARD_HEIGHT } from '../../utils/constants'
 import { getFullName } from '../../utils/strings'
 import { QuestionCard } from '../questions/QuestionCard'
 import { EditPersonText } from './EditPersonText'
 import { PersonProperties } from './PersonProperties'
+import { useAtom } from 'jotai'
+import { questionDataAtom, sampleQuestion, sheetRefAtom } from '../../atoms/addQuestion'
 
 interface Params {
   id: string
@@ -20,6 +23,12 @@ interface Params {
 
 const PersonScreen = (): ReactNode => {
   const { id } = useParams<Params>()
+  const [sheetRef] = useAtom(sheetRefAtom)
+  const [questionData, setQuestionData] = useAtom(questionDataAtom)
+  const handlePresentModalPress = () => {
+    setQuestionData({ ...sampleQuestion, personId: Number.parseInt(id) })
+    sheetRef?.current?.present()
+  }
 
   const link = useLink({
     href: '/people',
@@ -40,8 +49,14 @@ const PersonScreen = (): ReactNode => {
           Back
         </Button>
       )}
+      <FloatingFooter blurIntensity={100} onPress={handlePresentModalPress}>
+        <Text fontSize='$6' >
+          Add Question for {data.firstName}
+        </Text>
+      </FloatingFooter>
       <EditPersonText id={data.id} content={getFullName(data.firstName, data.lastName)} />
       <PersonProperties {...data} />
+      <Separator marginTop='$3' />
       <QuestionsForPerson personId={data.id} />
     </Page>
   )
