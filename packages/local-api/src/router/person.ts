@@ -6,7 +6,7 @@ import type {
   Person,
   UpdateTable,
   WithId,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import {
@@ -16,7 +16,7 @@ import {
   deletePerson,
   updatePerson,
   updatePersonName,
-} from '@acme/queries'
+} from '@rooots/queries'
 import { useMutation, useQuery, type QueryClient } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

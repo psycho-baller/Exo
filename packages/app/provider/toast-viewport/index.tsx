@@ -1,6 +1,6 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { ToastViewport as ToastViewportOg } from '@acme/ui'
+import { ToastViewport as ToastViewportOg } from '@rooots/ui'
 
 export const ToastViewport = (): React.ReactNode => {
   const { top, right, left } = useSafeAreaInsets()

@@ -1,6 +1,6 @@
-import { api } from '@acme/api/utils/trpc';
-import { Text, View, XStack, YStack, Button, BottomSheetInput, useTheme } from '@acme/ui';
-import type { UnstyledInputProps } from '@acme/ui';
+import { api } from '@rooots/api/utils/trpc';
+import { Text, View, XStack, YStack, Button, BottomSheetInput, useTheme } from '@rooots/ui';
+import type { UnstyledInputProps } from '@rooots/ui';
 import { useEffect, useRef, useState } from 'react';
 import type { FC } from 'react';
 import { TextInput, StyleSheet } from 'react-native';

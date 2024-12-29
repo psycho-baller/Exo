@@ -1,9 +1,13 @@
 {
-  "name": "@acme/eslint-config",
+  "name": "@rooots/eslint-config",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
-  "files": ["./base.js", "./nextjs.js", "./react.js"],
+  "files": [
+    "./base.js",
+    "./nextjs.js",
+    "./react.js"
+  ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "upgrade": "pnpm upgrade --latest",
@@ -24,15 +28,15 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@rooots/tsconfig": "workspace:^0.1.0",
     "@types/eslint": "^8.44.7",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["./base.js"]
-  },
-  "prettier": "@acme/prettier-config"
+    "extends": [
+      "./base.js"
+    ]
+  }
 }

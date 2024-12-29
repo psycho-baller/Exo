@@ -1,8 +1,8 @@
 import { CalendarDays, Tag, User } from '@tamagui/lucide-icons'
 
-import type { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-import { MyDateTimePicker, Text, XStack, YStack } from '@acme/ui'
+import type { RouterOutputs } from '@rooots/api'
+import { api } from '@rooots/api/utils/trpc'
+import { MyDateTimePicker, Text, XStack, YStack } from '@rooots/ui'
 
 import { getFullName } from '../../utils/strings'
 

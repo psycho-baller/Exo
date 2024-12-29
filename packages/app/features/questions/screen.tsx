@@ -1,5 +1,5 @@
-import { api } from '@acme/api/utils/trpc'
-import { Text, VirtualList } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Text, VirtualList } from '@rooots/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import { useEffect } from 'react'

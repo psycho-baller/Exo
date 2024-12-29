@@ -1,9 +1,9 @@
-import { eq } from '@acme/db'
-import { users } from '@acme/db/schema'
-import { db } from '@acme/db'
-import type { NewUser } from '@acme/db/schema/types'
+import { eq } from '@rooots/db'
+import { users } from '@rooots/db/schema'
+import { db } from '@rooots/db'
+import type { NewUser } from '@rooots/db/schema/types'
 import { deviceName } from 'expo-device'
-import { takeUnique } from '@acme/db/utils'
+import { takeUnique } from '@rooots/db/utils'
 
 export async function ensureUserExistsInDB(userId: string) {
   const user = await db.select().from(users).where(eq(users.id, userId)).then(takeUnique)

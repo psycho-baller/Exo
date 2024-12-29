@@ -1,5 +1,5 @@
 {
-  "name": "@acme/nextjs",
+  "name": "@rooots/nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,10 +15,10 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@acme/app": "workspace:*",
-    "@acme/auth": "workspace:^0.1.0",
-    "@acme/ui": "workspace:*",
     "@million/lint": "^0.0.73",
+    "@rooots/app": "workspace:*",
+    "@rooots/auth": "workspace:^0.1.0",
+    "@rooots/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tamagui/config": "^1.120.2",
     "@tamagui/next-theme": "^1.120.2",
@@ -37,26 +37,12 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
     "@tamagui/next-plugin": "^1.120.2",
     "@types/node": "^20.11.20",
     "@types/react": "^18.2.58",
     "@types/react-dom": "^18.2.19",
     "dotenv-cli": "^7.3.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
     "react-native": "0.76.5",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }

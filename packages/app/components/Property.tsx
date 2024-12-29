@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import type { ViewProps } from '@acme/ui';
-import { XStack } from '@acme/ui';
+import type { ViewProps } from '@rooots/ui';
+import { XStack } from '@rooots/ui';
 
 interface Props extends ViewProps {
 

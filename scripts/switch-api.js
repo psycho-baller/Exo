@@ -12,14 +12,14 @@ const localDbPath = path.join(ROOT_DIR, 'packages', 'local-db', 'package.json');
 const serverDbPath = path.join(ROOT_DIR, 'packages', 'server-db', 'package.json');
 
 // Define the desired package names
-const defaultLocalApiName = '@acme/local-api';
-const defaultApiName = '@acme/api';
-const localLocalApiName = '@acme/api';
-const localServerApiName = '@acme/server-api';
-const defaultLocalDbName = '@acme/local-db';
-const defaultDbName = '@acme/db';
-const localLocalDbName = '@acme/db';
-const localServerDbName = '@acme/server-db';
+const defaultLocalApiName = '@rooots/local-api';
+const defaultApiName = '@rooots/api';
+const localLocalApiName = '@rooots/api';
+const localServerApiName = '@rooots/server-api';
+const defaultLocalDbName = '@rooots/local-db';
+const defaultDbName = '@rooots/db';
+const localLocalDbName = '@rooots/db';
+const localServerDbName = '@rooots/server-db';
 
 // Get the script argument (if any)
 const scriptArg = process.argv[2];

@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { Link, Stack } from 'expo-router'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
-import { useTheme } from '@acme/ui'
+import { useTheme } from '@rooots/ui'
 
 const Layout = () => {
   const theme = useTheme()

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { eq } from '@acme/db'
-import { groupsOfPeople, people } from '@acme/db/schema'
+import { eq } from '@rooots/db'
+import { groupsOfPeople, people } from '@rooots/db/schema'
 import type {
   Group,
   GroupsOfPeople,
@@ -11,9 +11,9 @@ import type {
   NewGroupsOfPeople,
   Person,
   WithId,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 
-import { getGroupsOfPeople, getPeopleFromGroupId, createGroupsOfPeople, getGroupsFromPersonId } from '@acme/queries'
+import { getGroupsOfPeople, getPeopleFromGroupId, createGroupsOfPeople, getGroupsFromPersonId } from '@rooots/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['groupsOfPeople', 'all'] as const

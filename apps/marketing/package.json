@@ -12,8 +12,8 @@
     "build": "next build"
   },
   "dependencies": {
-    "@acme/api": "workspace:^0.1.0",
     "@formkit/auto-animate": "^0.8.0",
+    "@rooots/api": "workspace:^0.1.0",
     "@tailwindcss/typography": "^0.5.10",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

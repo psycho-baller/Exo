@@ -1,7 +1,7 @@
 import type { UseLinkProps } from 'solito/link'
 import { useLink } from 'solito/navigation'
-import { Button } from '@acme/ui'
-import type { ButtonProps } from '@acme/ui'
+import { Button } from '@rooots/ui'
+import type { ButtonProps } from '@rooots/ui'
 
 type Props = UseLinkProps & Omit<ButtonProps, keyof UseLinkProps | keyof ReturnType<typeof useLink>>
 

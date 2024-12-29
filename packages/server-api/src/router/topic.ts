@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { desc, eq, like } from '@acme/db'
-import { topics } from '@acme/db/schema'
-import { insertTopicSchema } from '@acme/db/schema/types'
+import { desc, eq, like } from '@rooots/db'
+import { topics } from '@rooots/db/schema'
+import { insertTopicSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createTopic, deleteTopic, getTopicById, getTopics } from '@acme/queries'
+import { createTopic, deleteTopic, getTopicById, getTopics } from '@rooots/queries'
 
 export const topicRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => getTopics()),

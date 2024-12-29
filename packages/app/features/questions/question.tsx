@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 import { Platform } from 'react-native'
 import { useLink, useParams } from 'solito/navigation'
 
-import { api } from '@acme/api/utils/trpc'
-import { Button, Page } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Button, Page } from '@rooots/ui'
 
 import { EditQuestionText } from './EditQuestionText'
 import { QuestionProperties } from './QuestionProperties'

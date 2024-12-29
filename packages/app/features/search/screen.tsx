@@ -1,6 +1,6 @@
-import type { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-import { Text, YStack } from '@acme/ui'
+import type { RouterOutputs } from '@rooots/api'
+import { api } from '@rooots/api/utils/trpc'
+import { Text, YStack } from '@rooots/ui'
 
 import { MainPage } from '../../components/Footer/MainPage'
 import LinkButton from '../../components/LinkButton'

@@ -1,8 +1,8 @@
 import { insertWaitlistEmailSchema } from './../../../server-db/schema/types'
-import { insertUserSchema } from '@acme/db/schema/types'
+import { insertUserSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createWaitlistEmail } from '@acme/queries'
+import { createWaitlistEmail } from '@rooots/queries'
 
 export const waitlistRouter = createTRPCRouter({
   // all: publicProcedure.query(({ ctx }) => {

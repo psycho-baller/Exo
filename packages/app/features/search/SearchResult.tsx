@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import type { PrimitiveAtom } from "jotai";
 import type { ReactElement } from "react";
 import { awaitSearch } from "../../components/SearchInput";
-import { Text } from "@acme/ui"
+import { Text } from "@rooots/ui"
 
 interface SearchProps<T, S> {
   useQueryResult: () => UseQueryResult<S[]>;

@@ -1,5 +1,5 @@
 {
-  "name": "@acme/ui",
+  "name": "@rooots/ui",
   "version": "0.1.0",
   "sideEffects": [
     "*.css"
@@ -45,18 +45,7 @@
     "tamagui": "^1.120.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
     "@tamagui/build": "^1.120.2",
-    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }

@@ -1,4 +1,4 @@
-import type { AppRouterKeys } from '@acme/api/src/root'
+import type { AppRouterKeys } from '@rooots/api/src/root'
 import type { ReferenceType, SuperchargedWord } from '../atoms/addQuestion'
 
 export const getFullName = (firstName: string, lastName: string | null | undefined) => {

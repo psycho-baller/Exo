@@ -1,7 +1,7 @@
 import { use, useEffect, type FC } from 'react'
 
-import { api } from '@acme/api/utils/trpc'
-import { Label, Stack, Text, XStack, YStack, Button, Group, Spacer, Separator } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Label, Stack, Text, XStack, YStack, Button, Group, Spacer, Separator } from '@rooots/ui'
 import { BottomSheet } from '../BottomSheet'
 
 import { questionDataAtom, dateSheetRefAtom, superchargedInputSelectedDateAtom, superchargedInputWordsAtom } from '../../atoms/addQuestion'

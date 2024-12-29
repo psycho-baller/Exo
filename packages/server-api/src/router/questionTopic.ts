@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { insertQuestionTopicSchema } from '@acme/db/schema/types'
+import { insertQuestionTopicSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import {
@@ -7,7 +7,7 @@ import {
   getQuestionTopics,
   getTopicsFromQuestionId,
   deleteQuestionTopic,
-} from '@acme/queries'
+} from '@rooots/queries'
 
 export const questionTopicRouter = createTRPCRouter({
   // READ

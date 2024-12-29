@@ -1,7 +1,7 @@
-import { insertUserSchema } from '@acme/db/schema/types'
+import { insertUserSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createUser } from '@acme/queries'
+import { createUser } from '@rooots/queries'
 
 export const userRouter = createTRPCRouter({
   // all: publicProcedure.query(({ ctx }) => {

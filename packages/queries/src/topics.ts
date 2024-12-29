@@ -1,7 +1,7 @@
-import { db, desc, eq } from '@acme/db'
-import { topics } from '@acme/db/schema'
-import type { NewTopic, Topic, UpdateTable, WithId } from '@acme/db/schema/types'
-import { insertTopicSchema } from '@acme/db/schema/types'
+import { db, desc, eq } from '@rooots/db'
+import { topics } from '@rooots/db/schema'
+import type { NewTopic, Topic, UpdateTable, WithId } from '@rooots/db/schema/types'
+import { insertTopicSchema } from '@rooots/db/schema/types'
 import { z } from 'zod'
 
 // READ

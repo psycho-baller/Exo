@@ -6,7 +6,7 @@ import type {
   UpdateTable,
   WithId,
   InsertGroupSchema,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import {
@@ -16,7 +16,7 @@ import {
   deleteGroup,
   updateGroup,
   updateGroupName,
-} from '@acme/queries'
+} from '@rooots/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

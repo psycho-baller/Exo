@@ -1,1 +1,1 @@
-export { default } from '@acme/app/features/questions/question'
+export { default } from '@rooots/app/features/questions/question'

@@ -1,6 +1,6 @@
-import { api } from '@acme/api/utils/trpc'
-import type { YStackProps } from '@acme/ui'
-import { AutocompleteInput, Button, Label, Text, YStack } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import type { YStackProps } from '@rooots/ui'
+import { AutocompleteInput, Button, Label, Text, YStack } from '@rooots/ui'
 
 import { useAddPersonStore } from '../../stores/addQuestion'
 import type { PersonStore } from '../../types/people'

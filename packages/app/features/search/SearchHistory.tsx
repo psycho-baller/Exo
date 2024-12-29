@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import { api } from '@acme/api/utils/trpc'
-import { Text, YStack } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Text, YStack } from '@rooots/ui'
 
 const SearchHistory = () => {
   // Use the TRPC query hook, with query execution dependent on the session being loaded

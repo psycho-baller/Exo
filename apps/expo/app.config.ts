@@ -2,9 +2,9 @@ import type { ConfigContext, ExpoConfig } from 'expo/config'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'expo',
-  slug: 'expo',
-  scheme: 'expo',
+  name: 'Rooots',
+  slug: 'rooots',
+  scheme: 'rooots',
   version: '0.1.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'com.convo-topics',
+    bundleIdentifier: 'com.ramimaalouf.rooots',
     supportsTablet: true,
     // needs membership to Apple Developer Program to use Push Notifications
     // infoPlist: {
@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // },
   },
   android: {
-    package: 'com.convo_topics',
+    package: 'com.ramimaalouf.rooots',
     // googleServicesFile: './android/app/google-services.json',
     adaptiveIcon: {
       foregroundImage: './assets/icon.png',
@@ -50,7 +50,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: '157198b0-9bf6-40f4-b39f-499bd1862c21',
+      projectId: '16fcb756-2f56-4297-a42b-3350974bc2ce',
     },
   },
   experiments: {

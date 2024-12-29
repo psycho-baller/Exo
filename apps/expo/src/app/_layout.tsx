@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 import { setPositionAsync, setBackgroundColorAsync, setButtonStyleAsync } from 'expo-navigation-bar';
 
-import { Provider } from '@acme/app/provider'
+import { Provider } from '@rooots/app/provider'
 
 export {
   // Catch any errors thrown by the Layout component.

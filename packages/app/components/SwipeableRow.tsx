@@ -16,7 +16,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics'
 import type { ReactNode } from 'react';
-import { useTheme } from '@acme/ui';
+import { useTheme } from '@rooots/ui';
 
 type SwipeableAction = {
   color: string;

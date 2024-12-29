@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
-import { desc, eq } from '@acme/db'
-import { users } from '@acme/db/schema'
-import { insertUserSchema } from '@acme/db/schema/types'
+import { desc, eq } from '@rooots/db'
+import { users } from '@rooots/db/schema'
+import { insertUserSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
 

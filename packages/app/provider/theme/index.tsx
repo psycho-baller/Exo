@@ -4,7 +4,7 @@ import type React from 'react'
 import { useEffect, useLayoutEffect } from 'react'
 import { Appearance } from 'react-native'
 
-import { useForceUpdate } from '@acme/ui'
+import { useForceUpdate } from '@rooots/ui'
 
 import { appThemeKey, useAppTheme, useCurrentTheme } from '../../atoms/theme'
 import { ThemeVariant } from '../../utils/theme'

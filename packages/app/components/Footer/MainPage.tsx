@@ -3,8 +3,8 @@ import type { FC } from 'react'
 import { Platform } from 'react-native'
 import { Link } from 'solito/link'
 
-import type { PageProps } from '@acme/ui'
-import { Button, FloatingFooter, Page } from '@acme/ui'
+import type { PageProps } from '@rooots/ui'
+import { Button, FloatingFooter, Page } from '@rooots/ui'
 
 import { AddQuestion } from './AddQuestion'
 import { useAtom } from 'jotai'

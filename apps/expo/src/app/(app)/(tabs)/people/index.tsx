@@ -1,1 +1,1 @@
-export { default } from '@acme/app/features/people/screen'
+export { default } from '@rooots/app/features/people/screen'

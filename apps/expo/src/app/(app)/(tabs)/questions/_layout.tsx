@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { Stack } from 'expo-router'
 import { Image, Text, TouchableOpacity } from 'react-native'
 
-import { AutocompleteInput, useTheme, useThemeName, View } from '@acme/ui'
+import { AutocompleteInput, useTheme, useThemeName, View } from '@rooots/ui'
 import { BlurView } from 'expo-blur'
 
 const Layout = () => {

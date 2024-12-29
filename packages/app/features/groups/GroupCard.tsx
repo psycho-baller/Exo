@@ -4,9 +4,9 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
 import { Link } from 'solito/link'
 
-import type { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-import { Text, XStack, YStack } from '@acme/ui'
+import type { RouterOutputs } from '@rooots/api'
+import { api } from '@rooots/api/utils/trpc'
+import { Text, XStack, YStack } from '@rooots/ui'
 
 import { formatDate } from '../../utils/date'
 import { SwipeableRow } from '../../components/SwipeableRow'

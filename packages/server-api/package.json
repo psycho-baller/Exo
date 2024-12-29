@@ -1,5 +1,5 @@
 {
-  "name": "@acme/server-api",
+  "name": "@rooots/server-api",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -13,9 +13,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/auth": "workspace:^0.1.0",
-    "@acme/db": "workspace:^0.1.0",
-    "@acme/queries": "workspace:^0.1.0",
+    "@rooots/auth": "workspace:^0.1.0",
+    "@rooots/db": "workspace:^0.1.0",
+    "@rooots/queries": "workspace:^0.1.0",
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
@@ -23,19 +23,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/drizzle"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }

@@ -5,7 +5,7 @@ import type {
   SearchHistory,
   UpdateTable,
   WithId,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import {
@@ -15,7 +15,7 @@ import {
   deleteSearchHistory,
   getSearchHistoriesForUser,
   updateSearchHistory,
-} from '@acme/queries'
+} from '@rooots/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

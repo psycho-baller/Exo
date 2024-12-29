@@ -1,4 +1,4 @@
-import { TamaguiProvider as TamaguiProviderOG } from '@acme/ui'
+import { TamaguiProvider as TamaguiProviderOG } from '@rooots/ui'
 
 import config from '../../tamagui.config'
 import { useRootTheme } from '../theme'

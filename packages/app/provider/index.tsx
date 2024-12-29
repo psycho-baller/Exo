@@ -1,5 +1,5 @@
-import type { TamaguiProviderProps } from '@acme/ui'
-import { CustomToast, ToastProvider } from '@acme/ui'
+import type { TamaguiProviderProps } from '@rooots/ui'
+import { CustomToast, ToastProvider } from '@rooots/ui'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { SafeAreaProvider } from './safe-area'

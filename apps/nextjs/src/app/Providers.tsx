@@ -11,7 +11,7 @@ import '@tamagui/polyfill-dev'
 import { useServerInsertedHTML } from 'next/navigation'
 import type React from 'react'
 
-import { Provider } from '@acme/app/provider'
+import { Provider } from '@rooots/app/provider'
 
 import Tamagui from '../../tamagui.config'
 

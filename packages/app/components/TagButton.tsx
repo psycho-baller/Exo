@@ -1,5 +1,5 @@
-import { Button } from '@acme/ui'
-import type { ButtonProps } from '@acme/ui'
+import { Button } from '@rooots/ui'
+import type { ButtonProps } from '@rooots/ui'
 
 type Props = ButtonProps
 

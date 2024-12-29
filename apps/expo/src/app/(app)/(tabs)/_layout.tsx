@@ -2,8 +2,8 @@ import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 import { BlurView } from 'expo-blur'
 import { Tabs, useSegments } from 'expo-router'
 
-import { useTheme, useThemeName } from '@acme/ui'
-import { sheetRefAtom, questionDataAtom } from '@acme/app/atoms/addQuestion'
+import { useTheme, useThemeName } from '@rooots/ui'
+import { sheetRefAtom, questionDataAtom } from '@rooots/app/atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { Platform, StyleSheet } from 'react-native'
 

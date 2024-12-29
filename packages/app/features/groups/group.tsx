@@ -4,8 +4,8 @@ import { Platform } from 'react-native'
 import { useLink, useParams } from 'solito/navigation'
 import { Button } from 'tamagui'
 
-import { api } from '@acme/api/utils/trpc'
-import { Page, VirtualList, YStack } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Page, VirtualList, YStack } from '@rooots/ui'
 
 import { CARD_HEIGHT } from '../../utils/constants'
 import { PersonCard } from '../people/PersonCard'

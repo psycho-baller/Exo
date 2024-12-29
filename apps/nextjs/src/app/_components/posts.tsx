@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 
-import { auth } from '@acme/auth'
+import { auth } from '@rooots/auth'
 
 import { api } from '~/utils/api'
 import type { RouterOutputs } from '~/utils/api'

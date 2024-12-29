@@ -1,8 +1,8 @@
-import { api } from "@acme/api/utils/trpc";
+import { api } from "@rooots/api/utils/trpc";
 import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
-import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@acme/ui";
+import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@rooots/ui";
 import { type ReferenceType, superchargedInputWordsAtom, superchargedInputSelectedDateAtom, questionDataAtom, dateSheetRefAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";

@@ -8,18 +8,12 @@ importers:
 
   .:
     devDependencies:
-      '@acme/prettier-config':
-        specifier: workspace:^
-        version: link:tooling/prettier
       '@biomejs/biome':
         specifier: 1.7.0
         version: 1.7.0
       '@turbo/gen':
         specifier: ^1.12.4
         version: 1.13.4(@swc/core@1.10.1(@swc/helpers@0.5.15))(@types/node@20.17.10)(typescript@5.7.2)
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       turbo:
         specifier: ^1.12.4
         version: 1.13.4
@@ -33,39 +27,21 @@ importers:
         specifier: ^0.18.0
         version: 0.18.6
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tailwind-config':
+      '@rooots/tailwind-config':
         specifier: workspace:^0.1.0
         version: link:../../tooling/tailwind
-      '@acme/tsconfig':
+      '@rooots/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
       nitropack:
         specifier: ^2.8.1
         version: 2.10.4(@libsql/client@0.5.6)(drizzle-orm@0.29.5(@libsql/client@0.5.6)(@types/react@18.3.18)(expo-sqlite@15.0.3(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1))(typescript@5.7.2)
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
 
   apps/expo:
     dependencies:
-      '@acme/app':
-        specifier: workspace:^0.0.0
-        version: link:../../packages/app
-      '@acme/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@gorhom/bottom-sheet':
         specifier: ^5.0.6
         version: 5.0.6(@types/react@18.3.18)(react-native-gesture-handler@2.20.2(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.6(@babel/core@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
@@ -78,6 +54,12 @@ importers:
       '@react-native-community/datetimepicker':
         specifier: 8.2.0
         version: 8.2.0(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.8.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
+      '@rooots/app':
+        specifier: workspace:^0.0.0
+        version: link:../../packages/app
+      '@rooots/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@shopify/flash-list':
         specifier: 1.7.1
         version: 1.7.1(@babel/runtime@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
@@ -95,13 +77,13 @@ importers:
         version: 5.62.8(@tanstack/react-query@5.62.8(react@18.3.1))(react@18.3.1)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
+        version: 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.666(typescript@5.7.2)
+        version: 11.0.0-rc.677(typescript@5.7.2)
       babel-plugin-inline-import:
         specifier: ^3.0.0
         version: 3.0.0
@@ -202,21 +184,6 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
-      '@acme/api':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/local-api
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tailwind-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/tailwind
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
       '@babel/core':
         specifier: ^7.23.9
         version: 7.26.0
@@ -235,6 +202,15 @@ importers:
       '@expo/ngrok':
         specifier: ^4.1.3
         version: 4.1.3
+      '@rooots/api':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/local-api
+      '@rooots/tailwind-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/tailwind
+      '@rooots/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
       '@tamagui/babel-plugin':
         specifier: ^1.120.2
         version: 1.120.2(@swc/helpers@0.5.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -247,27 +223,21 @@ importers:
       babel-preset-expo:
         specifier: ^11.0.6
         version: 11.0.15(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
       metro-minify-terser:
         specifier: ^0.80.8
         version: 0.80.12
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
 
   apps/marketing:
     dependencies:
-      '@acme/api':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/local-api
       '@formkit/auto-animate':
         specifier: ^0.8.0
         version: 0.8.2
+      '@rooots/api':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/local-api
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.15(tailwindcss@3.3.5(ts-node@10.9.2(@swc/core@1.10.1(@swc/helpers@0.5.15))(@types/node@20.17.10)(typescript@5.7.2)))
@@ -338,18 +308,18 @@ importers:
 
   apps/nextjs:
     dependencies:
-      '@acme/app':
-        specifier: workspace:*
-        version: link:../../packages/app
-      '@acme/auth':
-        specifier: workspace:^0.1.0
-        version: link:../../packages/auth
-      '@acme/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@million/lint':
         specifier: ^0.0.73
         version: 0.0.73(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(rollup@4.29.0)
+      '@rooots/app':
+        specifier: workspace:*
+        version: link:../../packages/app
+      '@rooots/auth':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/auth
+      '@rooots/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@t3-oss/env-nextjs':
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.7.2)(zod@3.24.1)
@@ -370,16 +340,16 @@ importers:
         version: 5.39.0(@tanstack/react-query@5.62.8(react@18.3.1))(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react@18.3.1)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
+        version: 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
       '@trpc/next':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/react-query@11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/react-query@11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.666(typescript@5.7.2)
+        version: 11.0.0-rc.677(typescript@5.7.2)
       next:
         specifier: ^14.1.0
         version: 14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
@@ -399,15 +369,6 @@ importers:
         specifier: ^3.23.8
         version: 3.24.1
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
       '@tamagui/next-plugin':
         specifier: ^1.120.2
         version: 1.120.2(@babel/core@7.26.0)(@swc/helpers@0.5.15)(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.97.1(@swc/core@1.10.1(@swc/helpers@0.5.15)))
@@ -423,12 +384,6 @@ importers:
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.4.4
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       react-native:
         specifier: 0.76.5
         version: 0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)
@@ -438,15 +393,15 @@ importers:
 
   packages/app:
     dependencies:
-      '@acme/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@gorhom/bottom-sheet':
         specifier: ^5.0.6
         version: 5.0.6(@types/react@18.3.18)(react-native-gesture-handler@2.20.2(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.6(@babel/core@7.26.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@orama/orama':
         specifier: ^2.0.19
         version: 2.1.1
+      '@rooots/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@tamagui/animations-react-native':
         specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -470,13 +425,13 @@ importers:
         version: 5.62.8(react@18.3.1)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
+        version: 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.666(typescript@5.7.2)
+        version: 11.0.0-rc.677(typescript@5.7.2)
       burnt:
         specifier: ^0.12.2
         version: 0.12.2(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
@@ -538,42 +493,33 @@ importers:
         specifier: ^4.5.1
         version: 4.5.5(@types/react@18.3.18)(react@18.3.1)
     devDependencies:
-      '@acme/api':
-        specifier: workspace:*
-        version: link:../local-api
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
       '@react-native-async-storage/async-storage':
         specifier: ^1.23.1
         version: 1.24.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))
+      '@rooots/api':
+        specifier: workspace:*
+        version: link:../local-api
+      '@rooots/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
       '@types/react':
         specifier: ^18.2.58
         version: 18.3.18
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
 
   packages/auth:
     dependencies:
-      '@acme/db':
-        specifier: workspace:^0.1.0
-        version: link:../local-db
       '@auth/core':
         specifier: ^0.18.0
         version: 0.18.6
       '@auth/drizzle-adapter':
         specifier: ^0.7.0
         version: 0.7.0
+      '@rooots/db':
+        specifier: workspace:^0.1.0
+        version: link:../local-db
       '@t3-oss/env-nextjs':
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.7.2)(zod@3.24.1)
@@ -593,34 +539,19 @@ importers:
         specifier: ^3.23.8
         version: 3.24.1
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
 
   packages/local-api:
     dependencies:
-      '@acme/auth':
+      '@rooots/auth':
         specifier: workspace:^0.1.0
         version: link:../auth
-      '@acme/db':
+      '@rooots/db':
         specifier: workspace:^0.1.0
         version: link:../local-db
-      '@acme/queries':
+      '@rooots/queries':
         specifier: workspace:^0.1.0
         version: link:../queries
       '@tanstack/react-query':
@@ -628,13 +559,13 @@ importers:
         version: 5.62.8(react@18.3.1)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
+        version: 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.666(typescript@5.7.2)
+        version: 11.0.0-rc.677(typescript@5.7.2)
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -642,21 +573,6 @@ importers:
         specifier: ^3.23.8
         version: 3.24.1
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
@@ -673,30 +589,15 @@ importers:
         specifier: ~15.0.3
         version: 15.0.3(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.4.4
       drizzle-kit:
         specifier: ^0.21.1
         version: 0.21.4
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
       expo-drizzle-studio-plugin:
         specifier: ^0.0.2
         version: 0.0.2(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       tsx:
         specifier: ^4.7.1
         version: 4.19.2
@@ -706,14 +607,14 @@ importers:
 
   packages/queries:
     dependencies:
-      '@acme/db':
+      '@rooots/db':
         specifier: workspace:^0.1.0
         version: link:../local-db
       zod:
         specifier: ^3.23.8
         version: 3.24.1
     devDependencies:
-      '@acme/tsconfig':
+      '@rooots/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
       typescript:
@@ -722,24 +623,24 @@ importers:
 
   packages/server-api:
     dependencies:
-      '@acme/auth':
+      '@rooots/auth':
         specifier: workspace:^0.1.0
         version: link:../auth
-      '@acme/db':
+      '@rooots/db':
         specifier: workspace:^0.1.0
         version: link:../local-db
-      '@acme/queries':
+      '@rooots/queries':
         specifier: workspace:^0.1.0
         version: link:../queries
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
+        version: 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+        version: 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.666(typescript@5.7.2)
+        version: 11.0.0-rc.677(typescript@5.7.2)
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -747,21 +648,6 @@ importers:
         specifier: ^3.23.8
         version: 3.24.1
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
@@ -778,27 +664,12 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1(drizzle-orm@0.29.5(@libsql/client@0.5.6)(@types/react@18.3.18)(expo-sqlite@15.0.3(expo@52.0.21(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1)))(graphql@15.9.0)(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1))(zod@3.24.1)
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.4.4
       drizzle-kit:
         specifier: ^0.21.1
         version: 0.21.4
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       tsx:
         specifier: ^4.7.1
         version: 4.19.2
@@ -842,21 +713,9 @@ importers:
         specifier: ^1.120.2
         version: 1.120.2(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
       '@tamagui/build':
         specifier: ^1.120.2
         version: 1.120.2(@swc/helpers@0.5.15)
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
@@ -894,10 +753,7 @@ importers:
         specifier: ^4.6.0
         version: 4.6.2(eslint@8.57.1)
     devDependencies:
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../prettier
-      '@acme/tsconfig':
+      '@rooots/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../typescript
       '@types/eslint':
@@ -924,7 +780,7 @@ importers:
         specifier: ^0.5.7
         version: 0.5.14(@ianvs/prettier-plugin-sort-imports@4.4.0(@vue/compiler-sfc@3.3.4)(prettier@3.4.2))(prettier@3.4.2)
     devDependencies:
-      '@acme/tsconfig':
+      '@rooots/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../typescript
       typescript:
@@ -940,21 +796,6 @@ importers:
         specifier: 3.3.5
         version: 3.3.5(ts-node@10.9.2(@swc/core@1.10.1(@swc/helpers@0.5.15))(@types/node@20.17.10)(typescript@5.7.2))
     devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:^0.2.0
-        version: link:../eslint
-      '@acme/prettier-config':
-        specifier: workspace:^0.1.0
-        version: link:../prettier
-      '@acme/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../typescript
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.2.5
-        version: 3.4.2
       typescript:
         specifier: ^5.3.3
         version: 5.7.2
@@ -5583,43 +5424,43 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.666':
-    resolution: {integrity: sha512-BP3H0bktY03m7haVT5QoPR4sn30DNJcvFHsA3Msj3uPRY8JLVE03MR4rVG6T7VbcglORKpyMlRxjpUgdRmJErA==}
+  '@trpc/client@11.0.0-rc.677':
+    resolution: {integrity: sha512-wmj3uTfiA66fY6bmOhptUQDn+t+ppMTKlHDSN8pzT7kpW0IbU/WJOBrZuuOLt7dOKZWxayZ1Mrj5lesn9/txMg==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.666+99556c074
-      typescript: '>=5.6.2'
+      '@trpc/server': 11.0.0-rc.677+1032f4880
+      typescript: '>=5.7.2'
 
-  '@trpc/next@11.0.0-rc.666':
-    resolution: {integrity: sha512-EiNMEY0nValoxMSvC+j68evlQqU/NoLrZXskvHnheoyaDLP8TxhTA2xUr+P4tkWPkjsRzh/Y5lxlyAb2PTA7aw==}
+  '@trpc/next@11.0.0-rc.677':
+    resolution: {integrity: sha512-3cxDXn2GBJ4XibjUkpMAi+FGRFZF+mlwn7uzDgiHs73er4GqsiuuLI+/oChgs7MVHeb5GYR2nN1G/SC/xeYTlQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.59.15
-      '@trpc/client': 11.0.0-rc.666+99556c074
-      '@trpc/react-query': 11.0.0-rc.666+99556c074
-      '@trpc/server': 11.0.0-rc.666+99556c074
+      '@trpc/client': 11.0.0-rc.677+1032f4880
+      '@trpc/react-query': 11.0.0-rc.677+1032f4880
+      '@trpc/server': 11.0.0-rc.677+1032f4880
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-      typescript: '>=5.6.2'
+      typescript: '>=5.7.2'
     peerDependenciesMeta:
       '@tanstack/react-query':
         optional: true
       '@trpc/react-query':
         optional: true
 
-  '@trpc/react-query@11.0.0-rc.666':
-    resolution: {integrity: sha512-BH0vU7g5w4IrN7xmWSKvLucZ9ZnpRwsDWCSJ0R09xdYwR7geHkna3PBbd8vQVFBSw7MpWEy6LGXVSCHSbUicLg==}
+  '@trpc/react-query@11.0.0-rc.677':
+    resolution: {integrity: sha512-So0y5Z/8a1F5LhKWqikwUuLCA2yyhO031WxtEmzAkxjzJcT/DpXLI6gjIAMyydkReMDTKXoZaALl+QUmLjfurQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.62.8
-      '@trpc/client': 11.0.0-rc.666+99556c074
-      '@trpc/server': 11.0.0-rc.666+99556c074
+      '@trpc/client': 11.0.0-rc.677+1032f4880
+      '@trpc/server': 11.0.0-rc.677+1032f4880
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
-      typescript: '>=5.6.2'
+      typescript: '>=5.7.2'
 
-  '@trpc/server@11.0.0-rc.666':
-    resolution: {integrity: sha512-k+jKrdH/owDRRXPR7oPKCQRTu0dOEnqdGh56863ym95sFY8qXE7BhOR8S4WqyZw1CiPZGjRkdFN0q/GsJhKsIA==}
+  '@trpc/server@11.0.0-rc.677':
+    resolution: {integrity: sha512-I2b1MCQb1jYxwbpjK3DcCe9eGXvJCQnfQ7dsyXO7uylUq5VoUOY8HB99HocRWMlvS7A1mTVH4qd5Ehkflfv83w==}
     peerDependencies:
-      typescript: '>=5.6.2'
+      typescript: '>=5.7.2'
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -18672,33 +18513,33 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)':
+  '@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.666(typescript@5.7.2)
+      '@trpc/server': 11.0.0-rc.677(typescript@5.7.2)
       typescript: 5.7.2
 
-  '@trpc/next@11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/react-query@11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)':
+  '@trpc/next@11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/react-query@11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(next@14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)':
     dependencies:
-      '@trpc/client': 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
-      '@trpc/server': 11.0.0-rc.666(typescript@5.7.2)
+      '@trpc/client': 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
+      '@trpc/server': 11.0.0-rc.677(typescript@5.7.2)
       next: 14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       typescript: 5.7.2
     optionalDependencies:
       '@tanstack/react-query': 5.62.8(react@18.3.1)
-      '@trpc/react-query': 11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+      '@trpc/react-query': 11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
 
-  '@trpc/react-query@11.0.0-rc.666(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)':
+  '@trpc/react-query@11.0.0-rc.677(@tanstack/react-query@5.62.8(react@18.3.1))(@trpc/client@11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2))(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)':
     dependencies:
       '@tanstack/react-query': 5.62.8(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.666(@trpc/server@11.0.0-rc.666(typescript@5.7.2))(typescript@5.7.2)
-      '@trpc/server': 11.0.0-rc.666(typescript@5.7.2)
+      '@trpc/client': 11.0.0-rc.677(@trpc/server@11.0.0-rc.677(typescript@5.7.2))(typescript@5.7.2)
+      '@trpc/server': 11.0.0-rc.677(typescript@5.7.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       typescript: 5.7.2
 
-  '@trpc/server@11.0.0-rc.666(typescript@5.7.2)':
+  '@trpc/server@11.0.0-rc.677(typescript@5.7.2)':
     dependencies:
       typescript: 5.7.2
 

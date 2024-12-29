@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
-import { api } from '@acme/api/utils/trpc'
-import { Label, XStack } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Label, XStack } from '@rooots/ui'
 import { BottomSheet } from '../BottomSheet'
 
 import { questionDataAtom, sheetRefAtom, superchargedInputSelectedDateAtom } from '../../atoms/addQuestion'

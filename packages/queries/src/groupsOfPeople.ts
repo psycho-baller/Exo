@@ -1,6 +1,6 @@
-import { db, eq } from '@acme/db'
-import { groups, groupsOfPeople, people } from '@acme/db/schema'
-import type { NewGroupsOfPeople } from '@acme/db/schema/types'
+import { db, eq } from '@rooots/db'
+import { groups, groupsOfPeople, people } from '@rooots/db/schema'
+import type { NewGroupsOfPeople } from '@rooots/db/schema/types'
 
 // READ
 export async function getGroupsOfPeople() {

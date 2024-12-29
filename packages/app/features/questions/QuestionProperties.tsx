@@ -1,8 +1,8 @@
 import { CalendarDays, Tag, User, Users } from '@tamagui/lucide-icons'
 
-import type { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-import { Button, MyDateTimePicker, ScrollView, Text, XStack, YStack, TagButton } from '@acme/ui'
+import type { RouterOutputs } from '@rooots/api'
+import { api } from '@rooots/api/utils/trpc'
+import { Button, MyDateTimePicker, ScrollView, Text, XStack, YStack, TagButton } from '@rooots/ui'
 
 import { getFullName, splitOutPersonName } from '../../utils/strings'
 import { BottomSheet } from '../../components/BottomSheet'

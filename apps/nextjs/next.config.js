@@ -1,6 +1,6 @@
 // Importing env files here to validate on build
 // require('./src/env.js');
-// require('@acme/auth/env.mjs');
+// require('@rooots/auth/env.mjs');
 // const MillionLint = require('@million/lint')
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
@@ -18,7 +18,7 @@ const enableMillionJS =
 const plugins = [
   withTamagui({
     config: './tamagui.config.ts',
-    components: ['tamagui', '@acme/ui'],
+    components: ['tamagui', '@rooots/ui'],
     appDir: true,
     importsWhitelist: ['constants.js', 'colors.js'],
     outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,

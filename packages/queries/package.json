@@ -1,5 +1,5 @@
 {
-  "name": "@acme/queries",
+  "name": "@rooots/queries",
   "private": true,
   "version": "0.1.0",
   "exports": {
@@ -20,11 +20,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@rooots/tsconfig": "workspace:^0.1.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@acme/db": "workspace:^0.1.0",
+    "@rooots/db": "workspace:^0.1.0",
     "zod": "^3.23.8"
   }
 }

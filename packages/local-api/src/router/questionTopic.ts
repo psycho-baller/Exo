@@ -5,7 +5,7 @@ import type {
   QuestionTopics,
   Topic,
   WithId,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
 import {
@@ -13,7 +13,7 @@ import {
   getQuestionTopics,
   getTopicsFromQuestionId,
   deleteQuestionTopic,
-} from '@acme/queries'
+} from '@rooots/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 
 const all = ['questionTopics', 'all'] as const

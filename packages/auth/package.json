@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth",
+  "name": "@rooots/auth",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
@@ -13,9 +13,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/db": "workspace:^0.1.0",
     "@auth/core": "^0.18.0",
     "@auth/drizzle-adapter": "^0.7.0",
+    "@rooots/db": "workspace:^0.1.0",
     "@t3-oss/env-nextjs": "^0.9.2",
     "next": "^14.1.0",
     "next-auth": "5.0.0-beta.3",
@@ -24,18 +24,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }

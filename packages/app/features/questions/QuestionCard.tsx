@@ -5,9 +5,9 @@ import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpol
 import { Link } from 'solito/link'
 import * as Haptics from 'expo-haptics';
 
-import type { RouterOutputs } from '@acme/api'
-import { api } from '@acme/api/utils/trpc'
-import { Text, XStack, YStack } from '@acme/ui'
+import type { RouterOutputs } from '@rooots/api'
+import { api } from '@rooots/api/utils/trpc'
+import { Text, XStack, YStack } from '@rooots/ui'
 
 import { formatDate } from '../../utils/date'
 import { SwipeableRow } from '../../components/SwipeableRow'

@@ -5,8 +5,8 @@ import { Platform } from 'react-native'
 import { useLink, useParams } from 'solito/navigation'
 import { Link } from 'solito/link'
 
-import { api } from '@acme/api/utils/trpc'
-import { Button, FloatingFooter, Page, Separator, Spacer, Text, VirtualList, YStack } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { Button, FloatingFooter, Page, Separator, Spacer, Text, VirtualList, YStack } from '@rooots/ui'
 
 import { CARD_HEIGHT } from '../../utils/constants'
 import { getFullName } from '../../utils/strings'

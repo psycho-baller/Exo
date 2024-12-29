@@ -1,4 +1,4 @@
-import { insertSearchHistoryhSchema } from '@acme/db/schema/types'
+import { insertSearchHistoryhSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import {
@@ -6,7 +6,7 @@ import {
   getSearchHistories,
   getSearchHistoriesForUser,
   getSearchHistoryById,
-} from '@acme/queries'
+} from '@rooots/queries'
 
 export const searchHistoryRouter = createTRPCRouter({
   all: protectedProcedure.query(({ ctx }) => getSearchHistories()),

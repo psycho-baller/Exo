@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import type { InputProps } from '@acme/ui';
-import { BottomSheetInput, UnstyledInput } from '@acme/ui';
+import type { InputProps } from '@rooots/ui';
+import { BottomSheetInput, UnstyledInput } from '@rooots/ui';
 import { create, insertMultiple, search } from '@orama/orama'
 import { useQueries } from '@tanstack/react-query';
 interface Props extends Omit<InputProps, 'value'> {

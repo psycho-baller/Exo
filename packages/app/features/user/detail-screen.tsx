@@ -5,7 +5,7 @@ import React from 'react'
 import { createParam } from 'solito'
 import { useLink } from 'solito/navigation'
 
-import { Button, Paragraph, YStack } from '@acme/ui'
+import { Button, Paragraph, YStack } from '@rooots/ui'
 
 const { useParam } = createParam<{ id: string }>()
 

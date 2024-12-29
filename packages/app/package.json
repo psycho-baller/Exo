@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "name": "@acme/app",
+  "name": "@rooots/app",
   "private": true,
   "license": "MIT",
   "main": "index.ts",
@@ -15,9 +15,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/ui": "workspace:*",
     "@gorhom/bottom-sheet": "^5.0.6",
     "@orama/orama": "^2.0.19",
+    "@rooots/ui": "workspace:*",
     "@tamagui/animations-react-native": "^1.120.2",
     "@tamagui/colors": "^1.120.2",
     "@tamagui/font-inter": "^1.120.2",
@@ -50,21 +50,10 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
-    "@acme/api": "workspace:*",
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:*",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@rooots/api": "workspace:*",
+    "@rooots/tsconfig": "workspace:*",
     "@types/react": "^18.2.58",
-    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }

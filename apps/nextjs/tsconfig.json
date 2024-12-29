@@ -1,9 +1,11 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@rooots/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": [
+        "./src/*"
+      ]
     },
     "plugins": [
       {
@@ -13,6 +15,11 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "noEmit": true
   },
-  "include": [".", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    ".",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

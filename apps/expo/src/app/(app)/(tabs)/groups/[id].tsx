@@ -1,1 +1,1 @@
-export { default } from '@acme/app/features/groups/group'
+export { default } from '@rooots/app/features/groups/group'

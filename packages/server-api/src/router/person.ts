@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { insertPersonSchema } from '@acme/db/schema/types'
+import { insertPersonSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc'
-import { createPerson, deletePerson, getPeople, getPersonById, updatePerson } from '@acme/queries'
+import { createPerson, deletePerson, getPeople, getPersonById, updatePerson } from '@rooots/queries'
 
 export const personRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => getPeople()),

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { api } from '@acme/api/utils/trpc'
-import { UnstyledInput } from '@acme/ui'
+import { api } from '@rooots/api/utils/trpc'
+import { UnstyledInput } from '@rooots/ui'
 
 export function EditGroupText({ id, content }: { id: number; content: string }) {
   const utils = api.useUtils()

@@ -1,7 +1,7 @@
 // import ErrorPage from "@/components/ErrorPage";
 import { redirect } from 'next/navigation'
 
-import { auth } from '@acme/auth'
+import { auth } from '@rooots/auth'
 
 export default async function Home() {
   const session = await auth()

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { insertGroupSchema } from '@acme/db/schema/types'
+import { insertGroupSchema } from '@rooots/db/schema/types'
 
 import { createTRPCRouter, protectedProcedure } from '../trpc'
 import {
@@ -9,7 +9,7 @@ import {
   getGroups,
   updateGroup,
   updateGroupName,
-} from '@acme/queries'
+} from '@rooots/queries'
 
 export const groupRouter = createTRPCRouter({
   all: protectedProcedure.query(({ ctx }) => getGroups()),

@@ -1,5 +1,5 @@
-import type { RouterOutputs } from "@acme/api"
-import { api } from "@acme/api/utils/trpc"
+import type { RouterOutputs } from "@rooots/api"
+import { api } from "@rooots/api/utils/trpc"
 import type { UseQueryResult } from "@tanstack/react-query"
 import { useAtom } from "jotai"
 import { YStack, Button } from "tamagui"

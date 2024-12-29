@@ -1,9 +1,9 @@
 import type { FC } from 'react';
-import type { ViewProps } from '@acme/ui';
+import type { ViewProps } from '@rooots/ui';
 import { SearchInput } from '.'
 import { useAtom } from 'jotai'
 import { groupsQueryAtom, peopleQueryAtom, topicsQueryAtom } from '../../atoms/search'
-import { api } from '@acme/api/utils/trpc'
+import { api } from '@rooots/api/utils/trpc'
 import { filterDataFromSchema, groupSchema, personSchema, questionSchema } from '../../utils/search';
 
 interface Props extends ViewProps {

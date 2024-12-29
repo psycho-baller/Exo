@@ -6,10 +6,10 @@ import type {
   Topic,
   UpdateTable,
   WithId,
-} from '@acme/db/schema/types'
+} from '@rooots/db/schema/types'
 import type { SQLiteRunResult } from 'expo-sqlite'
 
-import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '@acme/queries'
+import { createTopic, getTopics, getTopicById, deleteTopic, updateTopic } from '@rooots/queries'
 import { type QueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { getDeviceId } from '../../utils/device'
 

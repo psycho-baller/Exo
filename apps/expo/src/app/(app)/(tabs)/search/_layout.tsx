@@ -2,8 +2,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { Stack } from 'expo-router'
 import { TouchableOpacity, View } from 'react-native'
 
-import { useTheme } from '@acme/ui'
-import { SearchEverythingInput } from '@acme/app/components/SearchInput/SearchEverythingInput'
+import { useTheme } from '@rooots/ui'
+import { SearchEverythingInput } from '@rooots/app/components/SearchInput/SearchEverythingInput'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Layout = () => {

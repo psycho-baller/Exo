@@ -1,6 +1,6 @@
 'use client'
 
-import Index from '@acme/app/features/groups/group'
+import Index from '@rooots/app/features/groups/group'
 
 // export const runtime = "edge";
 

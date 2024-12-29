@@ -1,8 +1,8 @@
 import { Plus } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
 
-import { Button } from '@acme/ui'
-import type { ButtonProps } from '@acme/ui'
+import { Button } from '@rooots/ui'
+import type { ButtonProps } from '@rooots/ui'
 
 import { useAddPersonStore } from '../../stores/addQuestion'
 import { useAtom } from 'jotai'

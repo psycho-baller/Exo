@@ -1,6 +1,6 @@
 'use client'
 
-import Index from '@acme/app/features/people/screen'
+import Index from '@rooots/app/features/people/screen'
 
 // export const runtime = "edge";
 
