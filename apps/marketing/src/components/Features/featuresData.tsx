@@ -2,7 +2,7 @@ import type { Feature } from "~types/feature";
 
 const featuresData: Feature[] = [
   {
-    icon: "/images/icon/icon-03.svg",
+    icon: "/images/icon/database.svg",
     title: "Conversation Topics Library",
     description:
       "You can explore a huge collection of thought-provoking questions & topics designed to spark meaningful conversations. We call these seeds",
@@ -25,16 +25,16 @@ const featuresData: Feature[] = [
     description: "This feature helps you keep track of your interactions with friends, peers, and colleagues. Through the power of linking specific seeds to individuals or groups, it makes it easy to remember important details and follow up on past discussions",
   },
   {
-    icon: "https://img.icons8.com/pastel-glyph/64/ffffff/brain-3--v2.png",
-    title: "Daily Question Prompt",
+    icon: "/images/icon/location.svg",
+    title: "Proximity-based Notifications",
     description:
-      "Rooots sends you a daily (or any recurring frequency you prefer) notification with a thought-provoking question to encourage regular reflection and conversation",
+      "Once you are talking to someone you have seeds for, Rooots will send you a notification to remind you of the seeds you have saved for that person",
   },
   {
-    icon: "/images/icon/export.svg",
-    title: "Event Integration",
+    icon: "/images/icon/link.svg",
+    title: "Integration with other apps",
     description:
-      "You can integrate Rooots with your calendar apps to get relevant questions for upcoming events or meetings. It's perfect for preparing for social or professional interactions by selecting and reviewing questions beforehand.",
+      "Rooots can be integrated with other apps like your notes, calendar, and messaging apps to make it easier to add, store, and connect your seeds",
   },
 ];
 

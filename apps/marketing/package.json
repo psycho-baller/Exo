@@ -1,7 +1,7 @@
 {
-  "name": "roots",
+  "name": "rooots",
   "version": "0.0.0",
-  "description": "Highlight, tag, annotate, and export your favorite YouTube moments with the power of AI.",
+  "description": "",
   "author": "Rami <rami.rami@ucalgary.ca> (rami-maalouf.tech)",
   "license": "MIT",
   "contributors": [
@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "start": "next start",
+    "dev": "next dev",
     "build": "next build"
   },
   "dependencies": {
