@@ -1,4 +1,5 @@
 import type { Header } from '~types/config'
+import { siteConfig } from './site'
 
 export const headerRoutes: Header[] = [
   {
@@ -12,6 +13,12 @@ export const headerRoutes: Header[] = [
     title: 'Features',
     newTab: false,
     path: '/#features',
+  },
+  {
+    id: 3,
+    title: 'Contact',
+    newTab: false,
+    path: '/contact',
   },
   // {
   //   id: 3,
@@ -74,11 +81,16 @@ export const headerRoutes: Header[] = [
   //     },
   //   ],
   // },
-
   {
     id: 4,
-    title: 'Contact',
-    newTab: false,
-    path: '/contact',
+    title: 'GitHub',
+    newTab: true,
+    path: siteConfig.links.github,
+  },
+  {
+    id: 5,
+    title: 'Support Us',
+    newTab: true,
+    path: siteConfig.links.kofi,
   },
 ]
