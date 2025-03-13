@@ -18,7 +18,7 @@ Often, we come up with brilliant questions that can spark meaningful conversatio
 
 ### Our Solution
 
-We are developing a cross-platform web and mobile application to easily capture and organize these questions. For example, you can connect these questions to certain a certain person (a friend) or group (your co-workers).
+We are developing a local-first, cross-platform web and mobile application to easily capture and organize these questions. For example, you can connect these questions to certain a certain person (a friend) or group (your co-workers).
 
 ### Inspiration
 
@@ -31,8 +31,6 @@ Our mission is to inspire people to seek better questions by providing them with
 You know this quote from Steve Jobs, "The people who are crazy enough to think they can change the world are the ones who do."
 
 Our version of this would be, "The people who come up with revealing deep thought-provoking questions and have the courage to ask it to themselves and the people around them are the ones who change the world"
-
-
 
 ## Project structure
 
@@ -49,7 +47,7 @@ apps
   │   ├── Nitro server to proxy OAuth requests in preview deployments
   │   └── Uses Auth.js Core
   ├── expo
-  │   ├── Expo SDK 50
+  │   ├── Expo SDK 52
   │   ├── React Native using React 18
   │   ├── Navigation using Expo Router and Solito for cross-platform navigation
   │   ├── Tamagui as the UI library
@@ -89,7 +87,6 @@ turbo
 - [Relational Model](./packages/db/docs/RM.png)
 <!-- - [HIPO]() -->
 - [DFD](./packages/db/docs/DFD.md)
-
 
 ## Tech Stack
 
@@ -143,6 +140,7 @@ pnpm db:push
 ```bash
 +  "dev": "expo start --ios",
 ```
+
 3. Run `pnpm dev` at the project root folder.
 
 #### Use Android Emulator
