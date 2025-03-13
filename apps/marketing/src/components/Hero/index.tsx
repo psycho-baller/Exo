@@ -27,7 +27,7 @@ const Hero = () => {
         <div className="space-x-4">
           <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Server</SecondaryButtonLink>
           <Link
-            href="https://app.formbricks.com/s/l192p9vlmbuj2kjo673vl38s"
+            href={siteConfig.links.waitlist}
             className={cn(buttonVariants({ size: "lg" }))}
           >
             Join Waitlist
