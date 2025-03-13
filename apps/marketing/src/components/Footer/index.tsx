@@ -243,7 +243,7 @@ const Footer = () => {
           className="animate_top"
         >
           <p className="mt-10 text-center text-xs leading-5 text-text/90">
-            &copy; 2024 Rooots. All rights reserved.
+            &copy; 2025 Rooots. All rights reserved.
           </p>
         </motion.div>
       </div>
