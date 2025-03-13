@@ -67,13 +67,13 @@ importers:
         specifier: ^1.120.2
         version: 1.120.2(react-dom@18.3.1(react@18.3.1))(react-native-svg@15.8.0(react-native@0.76.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@tanstack/query-async-storage-persister':
-        specifier: ^5.28.6
+        specifier: ^5.39.0
         version: 5.62.8
       '@tanstack/react-query':
         specifier: ^5.39.0
         version: 5.62.8(react@18.3.1)
       '@tanstack/react-query-persist-client':
-        specifier: ^5.28.6
+        specifier: ^5.39.0
         version: 5.62.8(@tanstack/react-query@5.62.8(react@18.3.1))(react@18.3.1)
       '@trpc/client':
         specifier: next
