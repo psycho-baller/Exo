@@ -16,7 +16,7 @@ const Layout = () => {
           // headerLargeTitle: true,
           headerTransparent: true,
           headerBlurEffect: 'regular',
-          headerLeft: () => (
+          headerRight: () => (
             <TouchableOpacity>
               <Ionicons
                 name='ellipsis-horizontal-circle-outline'
@@ -24,22 +24,6 @@ const Layout = () => {
                 size={30}
               />
             </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View style={{ flexDirection: 'row', gap: 30 }}>
-              <TouchableOpacity>
-                <Ionicons
-                  name='camera-outline'
-                  // color={Colors.primary}
-                  size={30}
-                />
-              </TouchableOpacity>
-              {/* <Link href='/(modals)/new-chat' asChild>
-                <TouchableOpacity>
-                  <Ionicons name='add-circle' color={Colors.primary} size={30} />
-                </TouchableOpacity>
-              </Link> */}
-            </View>
           ),
           // headerStyle: {
           // backgroundColor: theme.background?.get(),
@@ -54,7 +38,7 @@ const Layout = () => {
         name='[id]'
         options={{
           title: '',
-          headerBackTitleVisible: false,
+          // headerBackTitleVisible: false,
           headerRight: () => (
             <View flexDirection='row' gap={30}>
               <TouchableOpacity>
