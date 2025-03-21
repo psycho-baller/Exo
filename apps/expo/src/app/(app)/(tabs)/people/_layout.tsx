@@ -25,7 +25,6 @@ const Layout = () => {
                   size={30}
                 />
               </TouchableOpacity>
-              ),
               {/* <Link href='/(modals)/new-chat' asChild>
                 <TouchableOpacity>
                   <Ionicons name='add-circle' color={Colors.primary} size={30} />
@@ -46,7 +45,7 @@ const Layout = () => {
         name='[id]'
         options={{
           title: 'Person',
-          headerBackTitleVisible: false,
+          // headerBackTitleVisible: false,
           headerRight: () => (
             <View flexDirection='row' gap={30}>
               <TouchableOpacity>
