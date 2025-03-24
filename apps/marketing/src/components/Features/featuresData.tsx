@@ -28,13 +28,13 @@ const featuresData: Feature[] = [
     icon: "/images/icon/location.svg",
     title: "Proximity-based Notifications",
     description:
-      "Once you are talking to someone you have seeds for, Rooots will send you a notification to remind you of the seeds you have saved for that person",
+      "Once you are talking to someone you have seeds for, Exo will send you a notification to remind you of the seeds you have saved for that person",
   },
   {
     icon: "/images/icon/link.svg",
     title: "Integration with other apps",
     description:
-      "Rooots can be integrated with other apps like your notes, calendar, and messaging apps to make it easier to add, store, and connect your seeds",
+      "Exo can be integrated with other apps like your notes, calendar, and messaging apps to make it easier to add, store, and connect your seeds",
   },
 ];
 

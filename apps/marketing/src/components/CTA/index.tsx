@@ -38,7 +38,7 @@ const CTA = () => {
               <h2 className="text-black dark:text-white text-3xl xl:text-sectiontitle4 font-bold mb-4 w-11/12">
                 Be an Early Adopter and Make a Difference!
               </h2>
-              <p>I am committed to providing you with the best experience possible, which is why I am continually updating and enhancing Rooots. I strive to make it the ultimate social companion for all users ready to help you cultivate meaningful conversations with others</p>
+              <p>I am committed to providing you with the best experience possible, which is why I am continually updating and enhancing Exo. I strive to make it the ultimate social companion for all users ready to help you cultivate meaningful conversations with others</p>
             </motion.div>
             <motion.div
               variants={{

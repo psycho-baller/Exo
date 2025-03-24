@@ -9,7 +9,7 @@ const LogoComponent = (props: SVGProps<SVGSVGElement>) => {
         className={cn("text-5xl font-bold dark:text-white", className)}
         {...restOfProps}
       >
-        Rooots
+        Exo
       </h1>
       {/* <svg
         xmlns="http://www.w3.org/2000/svg"

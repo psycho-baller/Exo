@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    'Rooots',
-    'Roots app',
-    'Roots community',
+    'Exo',
+    'Exo app',
+    'Exo community',
     'Friendship app',
     'Community app',
   ],
