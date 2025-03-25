@@ -1,7 +1,7 @@
 import type { SiteConfig } from '~types/config'
 
 export const siteConfig = {
-  name: 'Roots',
+  name: 'Exo',
   slogan: 'Build Lifelong Friendships Through Meaningful Conversations',
   hero: 'Build Lifelong Friendships Through Meaningful Conversations',
   description:
