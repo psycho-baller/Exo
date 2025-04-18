@@ -56,6 +56,9 @@ export default function TabLayout() {
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.2,
               shadowRadius: themeName === 'dark' ? 0 : 3,
+            },
+            android: {
+              elevation: 100
             }
           }),
         },
