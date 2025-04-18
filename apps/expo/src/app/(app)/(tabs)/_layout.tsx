@@ -1,11 +1,12 @@
 import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
-import { BlurView } from 'expo-blur'
+import { BlurView, type ExperimentalBlurMethod } from 'expo-blur'
 import { Tabs, useSegments } from 'expo-router'
 
 import { useTheme, useThemeName } from '@rooots/ui'
 import { sheetRefAtom, questionDataAtom } from '@rooots/app/atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { Platform, StyleSheet } from 'react-native'
+import { useState, useEffect } from 'react';
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -13,7 +14,14 @@ export default function TabLayout() {
   const segments = useSegments()
   const [sheetRef] = useAtom(sheetRefAtom)
   const [, setQuestionData] = useAtom(questionDataAtom)
+  const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+    setExperimentalBlurMethod('dimezisBlurView');
+    }, 1000);
+    return () => clearTimeout(timer);
+    }, []);
   return (
     <Tabs
       screenOptions={{
@@ -25,16 +33,18 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             intensity={60}
-            // experimentalBlurMethod="dimezisBlurView"
+            experimentalBlurMethod={experimentalBlurMethod}
             tint={themeName === 'dark' ? 'systemThinMaterialDark' : 'systemThinMaterialLight'}
             style={{
+
               overflow: 'hidden',
               borderRadius: 999,
               ...StyleSheet.absoluteFillObject,
-              bottom: 20,
+              bottom: 10,
               left: 7.5,
               right: 7.5,
-              padding: 25,
+              // padding: 20,
+              // marginBottom: 10
             }}
           />
         ),
@@ -46,16 +56,17 @@ export default function TabLayout() {
           // borderTopWidth: 0,
           position: 'absolute',
           borderColor: 'transparent',
-          paddingBottom: 20,
+          // paddingBottom: 20,
           left: 0,
           right: 0,
-          height: 80,
+          height: 70,
           ...Platform.select({
             ios: {
+              bottom: 16,
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.2,
-              shadowRadius: themeName === 'dark' ? 0 : 3,
+              shadowRadius: themeName === 'dark' ? 0 : 2,
             },
             android: {
               elevation: 100
@@ -68,11 +79,13 @@ export default function TabLayout() {
         name='questions'
         options={{
           title: 'Questions',
+          tabBarIconStyle: {
+            ...styles.tabBarIcon
+          },
           tabBarIcon: ({ color, focused }) => (
             <Home
               size='$2'
               color={focused ? color : undefined}
-              style={styles.tabBarIcon}
             />
           ),
         }}
@@ -81,11 +94,13 @@ export default function TabLayout() {
         name='people'
         options={{
           title: 'People',
+          tabBarIconStyle: {
+            ...styles.tabBarIcon
+          },
           tabBarIcon: ({ size, color, focused }) => (
             <User
               size='$2'
               color={focused ? color : undefined}
-              style={styles.tabBarIcon}
             />
           ),
         }}
@@ -94,11 +109,13 @@ export default function TabLayout() {
         name='addQuestion'
         options={{
           title: 'Add Question',
+          tabBarIconStyle: {
+            ...styles.tabBarIcon
+          },
           tabBarIcon: ({ size, color, focused }) => (
             <Plus
-              size='$2'
+              size='$2.5'
               color={focused ? color : undefined}
-              style={styles.tabBarIcon}
             />
           ),
           headerShown: false,
@@ -115,11 +132,13 @@ export default function TabLayout() {
         name='search'
         options={{
           title: 'Search',
+          tabBarIconStyle: {
+            ...styles.tabBarIcon
+          },
           tabBarIcon: ({ size, color, focused }) => (
             <Search
               size='$2'
               color={focused ? color : undefined}
-              style={styles.tabBarIcon}
             />
           ),
         }}
@@ -128,14 +147,17 @@ export default function TabLayout() {
         name='groups'
         options={{
           title: 'Groups',
+          tabBarIconStyle: {
+            ...styles.tabBarIcon
+          },
           tabBarIcon: ({ size, color, focused }) => (
             <Users
               size='$2'
               color={focused ? color : undefined}
-              style={styles.tabBarIcon}
             />
           ),
         }}
+
       />
     </Tabs>
   )
@@ -143,6 +165,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBarIcon: {
-    marginTop: 18, // Adjust this value to lower the icon
+    marginTop: 6, // Adjust this value to lower the icon
+    // paddingTop: 50
   },
 })
