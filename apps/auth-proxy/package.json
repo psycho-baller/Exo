@@ -15,8 +15,8 @@
     "@auth/core": "^0.18.0"
   },
   "devDependencies": {
-    "@rooots/tailwind-config": "workspace:^0.1.0",
-    "@rooots/tsconfig": "workspace:^0.1.0",
+    "@rooots/tailwind-config": "workspace:*",
+    "@rooots/tsconfig": "workspace:*",
     "nitropack": "^2.8.1",
     "typescript": "^5.3.3"
   }

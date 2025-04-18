@@ -59,6 +59,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'expo-router',
+    'expo-sqlite',
     // [
     //   '@config-plugins/react-native-ble-plx',
     //   {

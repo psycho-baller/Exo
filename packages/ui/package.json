@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "8.2.0",
-    "@shopify/flash-list": "1.7.1",
+    "@shopify/flash-list": "1.7.3",
     "@tamagui/animations-moti": "^1.120.2",
     "@tamagui/font-inter": "^1.120.2",
     "@tamagui/react-native-media-driver": "^1.120.2",
@@ -41,7 +41,7 @@
     "@tamagui/themes": "^1.120.2",
     "@tamagui/toast": "^1.120.2",
     "@tanstack/react-virtual": "^3.4.0",
-    "expo-blur": "~14.0.1",
+    "expo-blur": "~14.0.3",
     "tamagui": "^1.120.2"
   },
   "devDependencies": {

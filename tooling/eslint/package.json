@@ -28,7 +28,7 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "@rooots/tsconfig": "workspace:^0.1.0",
+    "@rooots/tsconfig": "workspace:*",
     "@types/eslint": "^8.44.7",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3"

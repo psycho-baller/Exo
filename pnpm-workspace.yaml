@@ -2,3 +2,42 @@ packages:
   - apps/*
   - packages/*
   - tooling/*
+
+
+catalog:
+  # Auth
+  # "@auth/core": 0.37.2
+  # "@auth/drizzle-adapter": ~1.7.4
+  # "next-auth": 5.0.0-beta.25
+
+  # Dev tooling
+  # eslint: ^9.23.0
+  # prettier: ^3.5.3
+  # tailwindcss: ^3.4.15
+  typescript: ^5.8.2
+
+  # Misc
+  zod: ^3.24.3
+  # "@shopify/flash-list": ^1.7.3
+
+  # Tanstack & tRPC
+  "@tanstack/react-query": ^5.74.4
+  "@tanstack/react-query-persist-client": ^5.74.4
+  "@tanstack/query-async-storage-persister": ^5.74.4
+  "@tanstack/react-query-devtools": ^5.74.4
+  "@tanstack/react-query-next-experimental": ^5.74.4
+  "@trpc/client": ^11.1.0
+  "@trpc/tanstack-react-query": ^11.1.0
+  "@trpc/server": ^11.1.0
+
+catalogs:
+  react19:
+    react: 19.1.0
+    react-dom: 19.1.0
+    "@types/react": ^19.1.2
+    "@types/react-dom": ^19.1.2
+  react18:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+    "@types/react": ^18.3.1
+    "@types/react-dom": ^18.3.1

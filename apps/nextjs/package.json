@@ -17,32 +17,31 @@
   "dependencies": {
     "@million/lint": "^0.0.73",
     "@rooots/app": "workspace:*",
-    "@rooots/auth": "workspace:^0.1.0",
+    "@rooots/auth": "workspace:*",
     "@rooots/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tamagui/config": "^1.120.2",
     "@tamagui/next-theme": "^1.120.2",
-    "@tanstack/react-query": "^5.39.0",
-    "@tanstack/react-query-devtools": "^5.39.0",
-    "@tanstack/react-query-next-experimental": "^5.39.0",
-    "@trpc/client": "next",
-    "@trpc/next": "next",
-    "@trpc/react-query": "next",
-    "@trpc/server": "next",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-query-devtools": "catalog:",
+    "@tanstack/react-query-next-experimental": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@trpc/tanstack-react-query": "catalog:",
     "next": "^14.1.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "react-native-web": "^0.19.10",
     "superjson": "2.2.1",
-    "zod": "^3.23.8"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tamagui/next-plugin": "^1.120.2",
     "@types/node": "^20.11.20",
-    "@types/react": "^18.2.58",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
     "dotenv-cli": "^7.3.0",
-    "react-native": "0.76.5",
-    "typescript": "^5.3.3"
+    "react-native": "0.76.9",
+    "typescript": "catalog:"
   }
 }

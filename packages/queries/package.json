@@ -20,11 +20,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rooots/tsconfig": "workspace:^0.1.0",
-    "typescript": "^5.3.3"
+    "@rooots/tsconfig": "workspace:*",
+    "typescript": "catalog:"
   },
   "dependencies": {
-    "@rooots/db": "workspace:^0.1.0",
-    "zod": "^3.23.8"
+    "@rooots/db": "workspace:*",
+    "zod": "catalog:"
   }
 }

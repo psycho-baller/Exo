@@ -13,17 +13,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rooots/auth": "workspace:^0.1.0",
-    "@rooots/db": "workspace:^0.1.0",
-    "@rooots/queries": "workspace:^0.1.0",
-    "@tanstack/react-query": "^5.39.0",
-    "@trpc/client": "next",
-    "@trpc/react-query": "next",
-    "@trpc/server": "next",
+    "@rooots/auth": "workspace:*",
+    "@rooots/db": "workspace:*",
+    "@rooots/queries": "workspace:*",
+    "@tanstack/react-query": "catalog:",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@trpc/tanstack-react-query": "catalog:",
     "superjson": "2.2.1",
-    "zod": "^3.23.8"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "typescript": "catalog:"
   }
 }
