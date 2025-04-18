@@ -65,7 +65,7 @@ export function PersonProperties({ id, reminderDatetime, firstName, createdByUse
               onChange(new Date())
             }}
           >
-            Add date
+            Add reminder
           </TagButton>
         )}
       </XStack>

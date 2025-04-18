@@ -25,7 +25,7 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             intensity={60}
-            experimentalBlurMethod="dimezisBlurView"
+            // experimentalBlurMethod="dimezisBlurView"
             tint={themeName === 'dark' ? 'systemThinMaterialDark' : 'systemThinMaterialLight'}
             style={{
               overflow: 'hidden',
@@ -46,10 +46,9 @@ export default function TabLayout() {
           // borderTopWidth: 0,
           position: 'absolute',
           borderColor: 'transparent',
-          bottom: 7.5,
+          paddingBottom: 20,
           left: 0,
           right: 0,
-          // top: 0,
           height: 80,
           ...Platform.select({
             ios: {
@@ -57,10 +56,7 @@ export default function TabLayout() {
               shadowOffset: { width: 0, height: 0 },
               shadowOpacity: 0.2,
               shadowRadius: themeName === 'dark' ? 0 : 3,
-            },
-            android: {
-              elevation: 100,
-            },
+            }
           }),
         },
       }}

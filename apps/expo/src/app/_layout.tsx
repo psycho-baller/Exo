@@ -2,7 +2,6 @@ import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
-import { setPositionAsync, setBackgroundColorAsync, setButtonStyleAsync } from 'expo-navigation-bar';
 
 import { Provider } from '@rooots/app/provider'
 
@@ -19,7 +18,8 @@ const RootLayout = () => {
 
   useEffect(() => {
     // enables edge-to-edge mode
-    setPositionAsync('absolute')
+    // setPositionAsync('absolute')
+    // setBehaviorAsync('overlay-swipe')
     // transparent backgrounds to see through
     // setBackgroundColorAsync('#000')
     // changes the color of the button icons "dark||light"
