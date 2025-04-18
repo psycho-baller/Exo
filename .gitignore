@@ -53,3 +53,9 @@ yarn-error.log*
 # my shit
 .vscode/diff
 .got
+
+# firebase
+firebase.json
+firebase-admin.json
+firebase-services.json
+.codegen

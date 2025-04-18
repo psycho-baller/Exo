@@ -14,3 +14,4 @@ credentials.json
 dist/
 web-build/
 *.app
+build-*
