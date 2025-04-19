@@ -147,7 +147,7 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
         </TagButton>
       )) : (
         <TagButton onPress={handleAddNew}>
-          Add new{currentActiveReference}
+          {`Add new ${currentActiveReference.trim()}`}
         </TagButton>
       )}
     </>

@@ -37,7 +37,7 @@ const PersonScreen = (): ReactNode => {
   if (!data) return null
 
   return (
-    <Page animation='bouncy' paddingVertical='$2' paddingTop='$4'>
+    <Page animation='bouncy' paddingVertical='$2' >
       {/* <XStack gap={18}>
         <Button iconAfter={Trash2} size='$3' width='5%' variant='outlined'>
         </Button>
@@ -49,12 +49,12 @@ const PersonScreen = (): ReactNode => {
           Back
         </Button>
       )}
+      <EditPersonText id={data.id} content={getFullName(data.firstName, data.lastName)} />
       <FloatingFooter blurIntensity={100} onPress={handlePresentModalPress}>
         <Text fontSize='$6' >
           Add Question for {data.firstName}
         </Text>
       </FloatingFooter>
-      <EditPersonText id={data.id} content={getFullName(data.firstName, data.lastName)} />
       <PersonProperties {...data} />
       <Separator marginTop='$3' />
       <QuestionsForPerson personId={data.id} />

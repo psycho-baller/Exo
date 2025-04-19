@@ -55,7 +55,6 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
       // ! Is there any use for 'addTextProperties' here? There isn't any special characters in questionData.question
       setInputWords(addTextProperties(questionData.question));
       // TODO: show in the UI what properties are already connected (person, topic, group) and make them editable
-
     }
   }, [questionData, setInputWords]);
   // Sync Input Words with Local Text Value
