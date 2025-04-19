@@ -22,7 +22,6 @@ const Layout = () => {
               </SafeAreaView>
             )
           },
-          // headerLargeTitle: true,
           headerTransparent: true,
           headerBlurEffect: 'regular',
           headerRight: () => (
