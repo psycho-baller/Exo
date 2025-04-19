@@ -19,7 +19,7 @@ export function EditPersonText({ id, content }: { id: number; content: string })
       placeholderTextColor='$secondaryColor'
       opacity={0.75}
       fontSize={'$8'}
-      padding={'$3'}
+      paddingHorizontal={'$3'}
       placeholder='Add person'
       value={person}
       onChangeText={setPerson}

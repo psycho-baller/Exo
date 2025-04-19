@@ -12,7 +12,7 @@ export const FloatingFooter = (props: Props) => {
   const themeName = useThemeName()
   // https://www.youtube.com/watch?v=w9gPW_cXWHo
   return (
-    <Footer position='absolute' l={20} r={20} b={27.5} zIndex={1} {...rest}>
+    <Footer position='absolute' l={20} r={20} b={25} zIndex={1} {...rest}>
       <BlurView
         intensity={blurIntensity}
         tint={themeName === 'dark' ? 'systemThinMaterialDark' : 'systemThinMaterialLight'}

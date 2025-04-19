@@ -65,7 +65,6 @@ const Layout = () => {
         name='[id]'
         options={{
           title: 'Person',
-          // headerBackTitleVisible: false,
           headerRight: () => (
             <View flexDirection='row' gap={30}>
               <TouchableOpacity>
