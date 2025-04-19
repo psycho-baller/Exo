@@ -14,6 +14,7 @@ import { SwipeableRow } from '../../components/SwipeableRow'
 import { withHaptics } from '../../utils/haptics'
 import { questionDataAtom, sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
+import { useTheme } from '@rooots/ui'
 
 interface Props {
   question: RouterOutputs['question']['all'][number]
@@ -23,6 +24,7 @@ export const QuestionCard: FC<Props> = (props) => {
   const { question } = props
   const date = question.reminderDatetime
 
+  const theme = useTheme()
   const utils = api.useUtils()
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: async () => {
@@ -45,7 +47,7 @@ export const QuestionCard: FC<Props> = (props) => {
       rightAction={
         {
           color: 'red',
-          icon: <Trash2 size={27.5} color='white' strokeWidth={2.5} />,
+          icon: <Trash2 size={27.5} color={theme.textAccent?.val} strokeWidth={2} />,
           onPress: () => withHaptics(() => deleteQuestionMutation.mutate({ id: question.id })),
         }
         // {

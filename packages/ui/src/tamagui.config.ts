@@ -72,8 +72,9 @@ export const config = createTamagui({
       secondaryBackground: '#444',
       color: '#fff',
       secondaryColor: '#999',
-      accent: '#4A7F88',
-      textAccent: '#96CBD4',
+      accent: '#9EF9FE',
+      secondaryAccent: '#D4FF9C',
+      textAccent: '#003239',
     },
     light: {
       ...themes.light,
@@ -81,8 +82,11 @@ export const config = createTamagui({
       secondaryBackground: '#ccc',
       color: '#111',
       secondaryColor: '#999',
-      accent: '#96CBD4',
-      textAccent: '#4A7F88',
+      accent: '#9EF9FE',
+      secondaryAccent: '#D4FF9C',
+      // accent: '#5FD8DD',         // soft but vibrant cyan
+      // secondaryAccent: '#A8D45B', // bright limey green with a fresh tone
+      textAccent: '#003239',
     },
   },
   media: createMedia({

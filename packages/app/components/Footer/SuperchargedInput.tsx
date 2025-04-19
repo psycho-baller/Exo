@@ -12,6 +12,8 @@ import { type ReferenceType, type SuperchargedWord, superchargedInputWordsAtom, 
 import { Suggestions } from './Suggestions';
 import { ArrowUp, CheckCircle2 } from '@tamagui/lucide-icons';
 import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
+import { LinearGradient } from 'expo-linear-gradient';
+import { color } from '@tamagui/themes';
 
 // Form Data Types
 export type SuperchargedFormData = {
@@ -243,7 +245,7 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
           <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} setFormValue={setValue} />
           <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={submit} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
             {/* <CheckCircle2 /> */}
-            <ArrowUp />
+            <ArrowUp color={theme.textAccent?.val} />
           </Button>
         </XStack>
       </View>
@@ -263,47 +265,65 @@ const ConnectAndStyleText: FC<ConnectAndStyleTextProps> = ({ inputWords }) => {
 
   const theme = useTheme();
 
-  const selectedWordBgStyle = [styles.selectedWordBg, {
-    backgroundColor: theme.accent?.val,
-  }]
+  const selectedWordStyle = styles.selectedWordBg;
+  const selectedWordGradientColors = [theme.secondaryAccent?.val ?? '', theme.accent?.val ?? ''];
+
   return inputWords.map(({ word, reference, enabled }, index) => {
     if (reference === 'person') {
       console.log('word', word);
       const person = people?.find((person) => person.firstName.toLowerCase() === word.slice(1).toLowerCase());
       const personIsSelected = person && enabled;
-      return (
-        <View key={index.toString() + word} style={personIsSelected ? selectedWordBgStyle : undefined}>
-          <Text
-            style={personIsSelected ? styles.selectedWord : styles.unselectedWord}
-          >
-            {word}
-          </Text>
+      return personIsSelected ? (
+        <LinearGradient
+          key={index.toString() + word}
+          colors={selectedWordGradientColors}
+          start={[0, 0.5]}
+          end={[1, 0.5]}
+          style={selectedWordStyle}
+        >
+          <Text style={{ ...styles.selectedWord, color: theme.textAccent?.val }}>{word}</Text>
+        </LinearGradient>
+      ) : (
+        <View key={index.toString() + word} style={styles.unselectedWordBg}>
+          <Text style={styles.unselectedWord}>{word}</Text>
         </View>
       );
     }
     if (reference === 'group') {
       const group = groups?.find((group) => group.name.toLowerCase() === word.slice(2).toLowerCase());
       const groupIsSelected = group && enabled;
-      return (
-        <View key={index.toString() + word} style={groupIsSelected ? selectedWordBgStyle : styles.unselectedWordBg}>
-          <Text
-            style={groupIsSelected ? styles.selectedWord : styles.unselectedWord}
-          >
-            {word}
-          </Text>
+      return groupIsSelected ? (
+        <LinearGradient
+          key={index.toString() + word}
+          colors={selectedWordGradientColors}
+          start={[0, 0.5]}
+          end={[1, 0.5]}
+          style={selectedWordStyle}
+        >
+          <Text style={{ ...styles.selectedWord, color: theme.textAccent?.val }}>{word}</Text>
+        </LinearGradient>
+      ) : (
+        <View key={index.toString() + word} style={styles.unselectedWordBg}>
+          <Text style={styles.unselectedWord}>{word}</Text>
         </View>
       );
     }
     if (reference === 'topic') {
       const topic = topics?.find((topic) => topic.name.toLowerCase() === word.slice(1).toLowerCase());
       const topicIsSelected = topic && enabled;
-      return (
-        <View key={index.toString() + word} style={topicIsSelected ? selectedWordBgStyle : styles.unselectedWordBg}>
-          <Text
-            style={topicIsSelected ? styles.selectedWord : styles.unselectedWord}
-          >
-            {word}
-          </Text>
+      return topicIsSelected ? (
+        <LinearGradient
+          key={index.toString() + word}
+          colors={selectedWordGradientColors}
+          start={[0, 0.5]}
+          end={[1, 0.5]}
+          style={selectedWordStyle}
+        >
+          <Text style={{ ...styles.selectedWord, color: theme.textAccent?.val }}>{word}</Text>
+        </LinearGradient>
+      ) : (
+        <View key={index.toString() + word} style={styles.unselectedWordBg}>
+          <Text style={styles.unselectedWord}>{word}</Text>
         </View>
       );
     }

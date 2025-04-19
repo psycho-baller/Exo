@@ -15,6 +15,7 @@ import Reanimated, {
   ReanimatedLogLevel,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics'
+import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import { useTheme } from '@rooots/ui';
 
@@ -127,13 +128,21 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>, right
 
   return (
     <Reanimated.View style={[{ flex: 1 }]}>
-      <Reanimated.View style={[styles.rightAction, animatedStyle]}>
-
-        {/* <RectButton style={[styles.action, { backgroundColor: action.color }]}> */}
+      <LinearGradient
+        colors={[
+          // theme.accent?.val ?? '',
+          // theme.accent?.val ?? '',
+          theme.secondaryAccent?.val ?? '',
+          theme.secondaryAccent?.val ?? '',
+          theme.accent?.val ?? '',
+        ]}
+        locations={[0, 0.75, 1]}
+        start={[0, 0.5]}
+        end={[1, 0.5]}
+        style={styles.rightAction}
+      >
         {rightAction.icon}
-        {/* </RectButton> */}
-      </Reanimated.View>
-
+      </LinearGradient>
     </Reanimated.View>
   );
 }
@@ -186,8 +195,8 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
   },
   rightAction: {
+    // opacity: 0.5,
     height: 90,
-    backgroundColor: '#8b8a8a',
     justifyContent: 'center',
     alignItems: 'flex-end',
     paddingHorizontal: 16,

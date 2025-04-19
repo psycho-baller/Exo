@@ -244,7 +244,7 @@ const SelectedPersonProperty: FC<{ personId: number }> = ({ personId }) => {
   }
   return (
     <>
-      <TagButton icon={User} onPress={handleSelectedPersonPress} borderColor='$textAccent' color='$textAccent'>
+      <TagButton icon={User} onPress={handleSelectedPersonPress} borderColor='$accent' color='$accent'>
         {person?.firstName}
       </TagButton>
     </>
@@ -261,7 +261,7 @@ const SelectedGroupProperty: FC<{ groupId: number }> = ({ groupId }) => {
   }
   return (
     <>
-      <TagButton icon={Users} onPress={handleSelectedGroupPress} borderColor='$textAccent' color='$textAccent'>
+      <TagButton icon={Users} onPress={handleSelectedGroupPress} borderColor='$accent' color='$accent'>
         {group?.name}
       </TagButton>
     </>
@@ -283,7 +283,7 @@ const SelectedTopicProperty: FC<{ questionId: number; topicId: number }> = ({ qu
   }
   return (
     <>
-      <TagButton icon={Tag} onPress={handleSelectedTopicPress} borderColor='$textAccent' color='$textAccent'>
+      <TagButton icon={Tag} onPress={handleSelectedTopicPress} borderColor='$accent' color='$accent'>
         {topic?.name}
       </TagButton>
     </>

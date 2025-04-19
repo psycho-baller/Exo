@@ -11,6 +11,7 @@ import { Text, XStack, YStack } from '@rooots/ui'
 import { formatDate } from '../../utils/date'
 import { SwipeableRow } from '../../components/SwipeableRow'
 import { withHaptics } from '../../utils/haptics'
+import { useTheme } from '@rooots/ui'
 
 interface Props {
   group: RouterOutputs['group']['all'][number]
@@ -20,6 +21,7 @@ export const GroupCard: FC<Props> = (props) => {
   const { group } = props
   const date = group.reminderDatetime
 
+  const theme = useTheme()
   const utils = api.useUtils()
   const { mutate: deleteMutation } = api.group.delete.useMutation({
     onSettled: () => utils.group.all.invalidate(),
@@ -30,7 +32,7 @@ export const GroupCard: FC<Props> = (props) => {
       rightAction={
         {
           color: 'red',
-          icon: <Trash2 size={27.5} color='white' strokeWidth={2.5} />,
+          icon: <Trash2 size={27.5} color={theme.textAccent?.val} strokeWidth={2} />,
           onPress: () => withHaptics(() => deleteMutation({ id: group.id })),
         }
       }
