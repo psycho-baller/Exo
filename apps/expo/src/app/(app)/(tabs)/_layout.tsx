@@ -15,10 +15,10 @@ export default function TabLayout() {
   const segments = useSegments()
   const [sheetRef] = useAtom(sheetRefAtom)
   const [, setQuestionData] = useAtom(questionDataAtom)
-  const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
   const insets = useSafeAreaInsets();
   const androidNavHeight = insets.bottom === 48 ? 48 : 12;
   const androidBottomInset = Platform.OS === 'android' ? androidNavHeight : 0;
+  const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
 
   useEffect(() => {
     const timer = setTimeout(() => {

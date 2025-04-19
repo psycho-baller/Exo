@@ -1,7 +1,7 @@
 import { useRef, useMemo, useEffect, forwardRef, useCallback } from 'react';
 import type { FC, RefObject } from 'react';
 import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
-import type { BottomSheetModalProps } from '@gorhom/bottom-sheet';
+import type { BottomSheetBackdropProps, BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import { View, useThemeName } from 'tamagui';
 import { useAtom } from 'jotai';
 import type { PrimitiveAtom } from 'jotai';
@@ -24,7 +24,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 	}, [setSheetRef, refWeUse])
 
 	const renderBackdrop = useCallback(
-		(props: any) => (
+		(props: BottomSheetBackdropProps) => (
 			<BottomSheetBackdrop
 				{...props}
 				disappearsOnIndex={-1}

@@ -1,11 +1,11 @@
-import { useFonts } from 'expo-font'
-import { SplashScreen, Stack } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
+import { Stack } from 'expo-router'
+import { setStatusBarTranslucent } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 
 import { Provider } from '@rooots/app/provider'
 import { setPositionAsync, setBackgroundColorAsync } from 'expo-navigation-bar'
 import { Platform } from 'react-native'
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -20,8 +20,12 @@ const RootLayout = () => {
 
   useEffect(() => {
     // enables edge-to-edge mode
-    Platform.OS === 'android' && setPositionAsync('absolute')
-    Platform.OS === 'android' && setBackgroundColorAsync('#ffffff00')
+    if (Platform.OS === 'android') {
+      setPositionAsync('absolute')
+      setBackgroundColorAsync('#ffffff00')
+      setStatusBarTranslucent(false)
+    }
+
     // Platform.OS === 'android' && setBehaviorAsync('overlay-swipe')
     // Platform.OS === 'android' && setVisibilityAsync('hidden')
     // changes the color of the button icons "dark||light"
@@ -60,7 +64,6 @@ const RootLayout = () => {
         <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
         <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
       </Stack>
-      <StatusBar translucent />
     </Provider>
   )
 }
