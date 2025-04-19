@@ -4,6 +4,8 @@ import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
 
 import { Provider } from '@rooots/app/provider'
+import { setPositionAsync, setBackgroundColorAsync } from 'expo-navigation-bar'
+import { Platform } from 'react-native'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -18,10 +20,10 @@ const RootLayout = () => {
 
   useEffect(() => {
     // enables edge-to-edge mode
-    // setPositionAsync('absolute')
-    // setBehaviorAsync('overlay-swipe')
-    // transparent backgrounds to see through
-    // setBackgroundColorAsync('#000')
+    Platform.OS === 'android' && setPositionAsync('absolute')
+    Platform.OS === 'android' && setBackgroundColorAsync('#ffffff00')
+    // Platform.OS === 'android' && setBehaviorAsync('overlay-swipe')
+    // Platform.OS === 'android' && setVisibilityAsync('hidden')
     // changes the color of the button icons "dark||light"
     // setButtonStyleAsync("light");
   }, [])

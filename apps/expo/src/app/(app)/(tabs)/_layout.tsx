@@ -7,6 +7,7 @@ import { sheetRefAtom, questionDataAtom } from '@rooots/app/atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { Platform, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -15,13 +16,16 @@ export default function TabLayout() {
   const [sheetRef] = useAtom(sheetRefAtom)
   const [, setQuestionData] = useAtom(questionDataAtom)
   const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
+  const insets = useSafeAreaInsets();
+  const androidNavHeight = insets.bottom === 48 ? 48 : 12;
+  const androidBottomInset = Platform.OS === 'android' ? androidNavHeight : 0;
 
   useEffect(() => {
     const timer = setTimeout(() => {
-    setExperimentalBlurMethod('dimezisBlurView');
+      setExperimentalBlurMethod('dimezisBlurView');
     }, 1000);
     return () => clearTimeout(timer);
-    }, []);
+  }, []);
   return (
     <Tabs
       screenOptions={{
@@ -40,7 +44,7 @@ export default function TabLayout() {
               overflow: 'hidden',
               borderRadius: 999,
               ...StyleSheet.absoluteFillObject,
-              bottom: 10,
+              bottom: 10 + androidBottomInset,
               left: 7.5,
               right: 7.5,
               // padding: 20,
@@ -59,7 +63,7 @@ export default function TabLayout() {
           // paddingBottom: 20,
           left: 0,
           right: 0,
-          height: 70,
+          height: 70 + androidBottomInset,
           ...Platform.select({
             ios: {
               bottom: 16,
