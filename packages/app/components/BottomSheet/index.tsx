@@ -42,6 +42,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			onChange={(index) => console.log('index', index)}
 			android_keyboardInputMode='adjustPan'
 			enablePanDownToClose={true}
+			enableDynamicSizing={true}
 			enableHandlePanningGesture
 			keyboardBehavior='interactive'
 			keyboardBlurBehavior='none'

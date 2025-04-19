@@ -127,7 +127,6 @@ const Sheets = ({ personId }: { personId: number }) => {
         )}
         sheetRefAtom={groupSheetRefAtom}
         snapPoints={['25%']}
-        enableDynamicSizing={true}
       >
         <SearchGroupSheet personId={personId} />
       </BottomSheet>
