@@ -2,12 +2,12 @@ import { useRef, useMemo, useEffect, forwardRef, useCallback } from 'react';
 import type { FC, RefObject } from 'react';
 import { BottomSheetModal, BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet';
 import type { BottomSheetModalProps } from '@gorhom/bottom-sheet';
-import { Button, View, Text, useThemeName } from 'tamagui';
+import { View, useThemeName } from 'tamagui';
 import { useAtom } from 'jotai';
 import type { PrimitiveAtom } from 'jotai';
 import { BlurView } from 'expo-blur';
 export type BottomSheetModalRef = BottomSheetModal;
-
+import { Platform } from 'react-native';
 interface Props extends Omit<BottomSheetModalProps, ''> {
 	sheetRefAtom: PrimitiveAtom<RefObject<BottomSheetModalRef> | null>
 }
@@ -59,7 +59,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			{...props}
 		>
 			<BottomSheetView>
-				<View padding='$3'>
+				<View paddingHorizontal='$3' paddingBottom={Platform.OS === 'android' ? '$4.5' : 0}>
 					{children}
 				</View>
 			</BottomSheetView>
