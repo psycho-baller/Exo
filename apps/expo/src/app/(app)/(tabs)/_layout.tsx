@@ -169,7 +169,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBarIcon: {
-    marginTop: 6, // Adjust this value to lower the icon
+    marginTop: 8, // Adjust this value to lower the icon
     // paddingTop: 50
   },
 })
