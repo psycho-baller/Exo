@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
 import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@rooots/ui";
-import { type ReferenceType, superchargedInputWordsAtom, superchargedInputSelectedDateAtom, questionDataAtom, dateSheetRefAtom } from "../../atoms/addQuestion";
+import { type ReferenceType, superchargedInputWordsAtom, superchargedInputSelectedDateAtom, questionDataAtom, dateSheetRefAtom, superchargedInputSelectionAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
 import type { UseFormSetValue } from "react-hook-form";
@@ -162,6 +162,7 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
     { name: 'topic', icon: Tag },
   ] as const;
   const [, setInputWords] = useAtom(superchargedInputWordsAtom);
+  const [, setSelection] = useAtom(superchargedInputSelectionAtom);
   const [datePickerSheetRef] = useAtom(dateSheetRefAtom)
 
   // const [showDateTimePicker, setShowDateTimePicker] = useState(false);
@@ -180,7 +181,10 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       const newInputWords = lastWord && lastWord !== ' '
         ? [...prevInputWords, { word: ' ', reference: null, enabled: false }, { word: getSymbolFromReference(name), reference: name, enabled: true }]
         : [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
-      setFormValue('question', newInputWords.map((word) => word.word).join(''));
+      const fullText = newInputWords.map(w => w.word).join('');
+      setFormValue('question', fullText);
+      // move cursor to end of text so suggestions see the new "@..." word
+      setSelection({ start: fullText.length, end: fullText.length });
       return newInputWords
     });
   }

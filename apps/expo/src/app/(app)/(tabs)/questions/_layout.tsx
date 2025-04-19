@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { Stack } from 'expo-router'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react';
-import { useTheme, useThemeName, View } from '@rooots/ui'
+import { useThemeName, View } from '@rooots/ui'
 import { BlurView, type ExperimentalBlurMethod } from 'expo-blur'
 
 const Layout = () => {
