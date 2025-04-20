@@ -1,9 +1,5 @@
 import { CalendarDays, CircleUser, Tag, Trash2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
-import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
-import { Link } from 'solito/link'
-import * as Haptics from 'expo-haptics';
 
 import type { RouterOutputs } from '@rooots/api'
 import { api } from '@rooots/api/utils/trpc'
