@@ -1,6 +1,6 @@
 import { useHeaderHeight } from '@react-navigation/elements'
 import { FlashList } from '@shopify/flash-list'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { ReactElement, ReactNode } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -21,6 +21,7 @@ export function VirtualList<T>({
 }: Props): ReactNode {
   const { bottom } = useSafeAreaInsets()
   const headerHeight = useHeaderHeight()
+  const [height, setHeight] = useState<number>(0)
 
   const render = useCallback(
     (item: { item: any }) => {
@@ -30,17 +31,21 @@ export function VirtualList<T>({
   )
 
   return (
-    <FlashList
-      data={data}
-      ListEmptyComponent={listEmptyComponent}
-      // I can make a PR for that
-      keyExtractor={(item, idx) => item?.id.toString() || idx}
-      contentContainerStyle={{
-        paddingTop: isPage ? headerHeight : 0,
-        paddingBottom: bottom + (isPage ? 50 : 0),
-      }}
-      renderItem={render}
-      estimatedItemSize={itemHeight}
-    />
+    <>
+      {data?.length === 0 ? listEmptyComponent : (
+        // @ts-ignore
+        <FlashList
+          data={data}
+          listEmptyComponent={null}
+          keyExtractor={(item, idx) => item?.id.toString() || idx}
+          contentContainerStyle={{
+            paddingTop: isPage ? headerHeight : 0,
+            paddingBottom: bottom + (isPage ? 50 : 0)
+          }}
+          renderItem={render}
+          estimatedItemSize={itemHeight}
+        />
+      )}
+    </>
   )
 }
