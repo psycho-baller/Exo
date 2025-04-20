@@ -1,6 +1,6 @@
 import { useHeaderHeight } from '@react-navigation/elements'
 import { FlashList } from '@shopify/flash-list'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { ReactElement, ReactNode } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 

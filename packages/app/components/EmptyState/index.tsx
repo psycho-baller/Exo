@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Main, YStack, XStack, Text, Button, useThemeName, useTheme, ButtonText, View } from 'tamagui'
+import { YStack, XStack, Text, Button, useThemeName, useTheme } from '@rooots/ui'
 import { Plus } from '@tamagui/lucide-icons'
-import { MainPage } from '../Footer/MainPage'
 import { useAtom } from 'jotai'
 import { questionDataAtom, sheetRefAtom } from '../../atoms/addQuestion'
 import { getRandomQuestions } from '../../utils/questions'
-import { UnstyledInput } from '@rooots/ui'
 
 export default function EmptyState() {
   const themeName = useThemeName()
@@ -25,7 +23,7 @@ export default function EmptyState() {
 
   return (
     // place at center of screen
-    <YStack flex={1} justifyContent="center" alignItems="center" gap={15} paddingTop="$5" paddingHorizontal="$1">
+    <YStack flex={1} justifyContent="center" alignItems="center" gap={15} paddingTop="$5" paddingHorizontal="$2.5">
       <Text fontSize='$9' textAlign='center' fontWeight="bold" color={textColor} paddingBottom="$5">
         Let's create your first question!
       </Text>
