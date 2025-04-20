@@ -84,8 +84,8 @@ export const config = createTamagui({
       secondaryColor: '#999',
       accent: '#9EF9FE',
       secondaryAccent: '#D4FF9C',
-      // accent: '#5FD8DD',         // soft but vibrant cyan
-      // secondaryAccent: '#A8D45B', // bright limey green with a fresh tone
+      darkerAccent: '#5FD8DD',         // soft but vibrant cyan
+      darkerSecondaryAccent: '#A8D45B', // bright limey green with a fresh tone
       textAccent: '#003239',
     },
   },

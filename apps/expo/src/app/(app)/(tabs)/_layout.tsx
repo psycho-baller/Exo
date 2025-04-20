@@ -31,7 +31,7 @@ export default function TabLayout() {
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),
-        tabBarActiveTintColor: theme.accent?.val,
+        tabBarActiveTintColor: themeName === 'dark' ? theme.accent?.val : theme.darkerAccent?.val,
         headerShown: false,
         tabBarShowLabel: false,
         tabBarBackground: () => (
