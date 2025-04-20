@@ -1,3 +1,5 @@
+// Data is from: https://enlightio.com/deep-conversation-topics
+
 import type { QuestionCategory, QuestionsJson } from '../types/question';
 import QuestionsData from '../assets/questions.json'
 /**
