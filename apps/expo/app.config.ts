@@ -2,17 +2,22 @@ import type { ConfigContext, ExpoConfig } from 'expo/config'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'Rooots',
+  name: 'Exo',
   slug: 'rooots',
   scheme: 'rooots',
   version: '0.1.0',
   orientation: 'portrait',
+  // androidNavigationBar: {
+  //   visible: 'immersive',
+  //   barStyle: 'light-content',
+  //   backgroundColor: '#000000',
+  // },
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/icon.png',
+    image: './assets/9-16-icon.jpg',
     resizeMode: 'contain',
-    backgroundColor: '#0D23FF',
+    backgroundColor: '#000617',
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -52,6 +57,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     eas: {
       projectId: '16fcb756-2f56-4297-a42b-3350974bc2ce',
     },
+    // screenDimensions: {
+    //   width: 1080,
+    //   height: 1920
+    // },
   },
   experiments: {
     tsconfigPaths: true,
