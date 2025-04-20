@@ -5,6 +5,7 @@ import { MainPage } from '../../components/Footer/MainPage'
 import { useEffect } from 'react'
 import { CARD_HEIGHT } from '../../utils/constants'
 import { QuestionCard } from './QuestionCard'
+import EmptyState from '../../components/EmptyState'
 
 const Index = () => {
   const { isLoading, error, data } = api.question.all.useQuery()
@@ -14,6 +15,7 @@ const Index = () => {
   if (error) {
     return <Text>Error: {error.message}</Text>
   }
+  const isEmpty = !data || data.length === 0;
 
   return (
     <MainPage>
@@ -21,7 +23,7 @@ const Index = () => {
         data={data}
         itemHeight={CARD_HEIGHT}
         renderItem={(q) => <QuestionCard question={q} />}
-        listEmptyComponent={<Text>No data</Text>}
+        listEmptyComponent={<EmptyState />}
         isPage
       />
     </MainPage>

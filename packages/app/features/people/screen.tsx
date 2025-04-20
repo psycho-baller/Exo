@@ -4,6 +4,7 @@ import { Text, VirtualList } from '@rooots/ui'
 import { MainPage } from '../../components/Footer/MainPage'
 import { CARD_HEIGHT } from '../../utils/constants'
 import { PersonCard } from './PersonCard'
+import EmptyState from '../../components/EmptyState'
 
 const Component = () => {
   const { isLoading, error, data } = api.person.all.useQuery()
@@ -21,7 +22,7 @@ const Component = () => {
         data={data}
         itemHeight={CARD_HEIGHT}
         renderItem={(p) => <PersonCard person={p} />}
-        listEmptyComponent={<Text>No data</Text>}
+        listEmptyComponent={<EmptyState />}
         isPage
       />
     </MainPage>
