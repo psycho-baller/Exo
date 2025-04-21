@@ -8,6 +8,7 @@ import type { PrimitiveAtom } from 'jotai';
 import { BlurView } from 'expo-blur';
 export type BottomSheetModalRef = BottomSheetModal;
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 interface Props extends Omit<BottomSheetModalProps, ''> {
 	sheetRefAtom: PrimitiveAtom<RefObject<BottomSheetModalRef> | null>
 }
@@ -17,6 +18,9 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 	const [_, setSheetRef] = useAtom(sheetRefAtom)
 	const refIfNotProvided = useRef<BottomSheetModalRef>(null);
 	const refWeUse = ref as RefObject<BottomSheetModalRef> ?? refIfNotProvided;
+	const insets = useSafeAreaInsets();
+	const isAndroidAndUsesLegacyNavigation = Platform.OS === 'android' && insets.bottom === 48
+	const bottomPadding = Platform.OS === 'android' ? (isAndroidAndUsesLegacyNavigation ? '$8' : '$4.5') : '0'
 
 	const snapPointsMemo = useMemo(() => snapPoints, [snapPoints]);
 	useEffect(() => {
@@ -59,7 +63,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 			{...props}
 		>
 			<BottomSheetView>
-				<View paddingHorizontal='$3' paddingBottom={Platform.OS === 'android' ? '$4.5' : 0}>
+				<View paddingHorizontal='$3' paddingBottom={bottomPadding}>
 					{children}
 				</View>
 			</BottomSheetView>
