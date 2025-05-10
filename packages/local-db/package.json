@@ -24,7 +24,7 @@
   "dependencies": {
     "drizzle-orm": "^0.29.4",
     "drizzle-zod": "^0.5.1",
-    "expo-sqlite": "~15.1.4"
+    "expo-sqlite": "~15.2.10"
   },
   "devDependencies": {
     "dotenv-cli": "^7.3.0",

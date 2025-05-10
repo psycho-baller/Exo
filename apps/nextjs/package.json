@@ -29,8 +29,8 @@
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
     "next": "^14.1.0",
-    "react": "catalog:react18",
-    "react-dom": "catalog:react18",
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19",
     "react-native-web": "^0.19.10",
     "superjson": "2.2.1",
     "zod": "catalog:"
@@ -38,10 +38,10 @@
   "devDependencies": {
     "@tamagui/next-plugin": "^1.120.2",
     "@types/node": "^20.11.20",
-    "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react18",
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
     "dotenv-cli": "^7.3.0",
-    "react-native": "0.76.9",
+    "react-native": "0.79.2",
     "typescript": "catalog:"
   }
 }
