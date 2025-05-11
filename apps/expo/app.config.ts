@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/9-16-icon.jpg',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     backgroundColor: '#000617',
   },
   updates: {
@@ -24,21 +24,25 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
+    buildNumber: '3',
     bundleIdentifier: 'com.ramimaalouf.rooots',
     supportsTablet: true,
     // needs membership to Apple Developer Program to use Push Notifications
-    // infoPlist: {
-    //   NSBluetoothAlwaysUsageDescription: 'This app uses Bluetooth to scan for nearby devices.',
-    //   UIBackgroundModes: ['bluetooth-central', 'location', 'fetch', 'remote-notification'],
-    // },
+    infoPlist: {
+      ITSAppUsesNonExemptEncryption: false,
+      //   NSBluetoothAlwaysUsageDescription: 'This app uses Bluetooth to scan for nearby devices.',
+      //   UIBackgroundModes: ['bluetooth-central', 'location', 'fetch', 'remote-notification'],
+    },
   },
   android: {
     package: 'com.ramimaalouf.rooots',
+    edgeToEdgeEnabled: true,
     // googleServicesFile: './android/app/google-services.json',
-    adaptiveIcon: {
-      foregroundImage: './assets/icon.png',
-      backgroundColor: '#0D23FF',
-    },
+    // adaptiveIcon: {
+    //   foregroundImage: './assets/android-icon.jpg',
+    //   backgroundColor: '#000617',
+    //   monochromeImage: './assets/android-icon.jpg',
+    // },
     // permissions: [
     //   'android.permission.BLUETOOTH',
     //   'android.permission.BLUETOOTH_ADMIN',
@@ -65,6 +69,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,
+    // reactCanary: true,
   },
   plugins: [
     'expo-router',
@@ -77,5 +82,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     //     bluetoothAlwaysPermission: 'Allow $(PRODUCT_NAME) to connect to bluetooth devices',
     //   },
     // ],
-  ],
+  ]
 })
