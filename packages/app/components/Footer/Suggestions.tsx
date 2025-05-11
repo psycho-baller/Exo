@@ -2,7 +2,8 @@ import { api } from "@rooots/api/utils/trpc";
 import { useAtom } from "jotai";
 import type { FC } from "react";
 import { Keyboard } from "react-native";
-import { ScrollView, MyDateTimePicker, TagButton, XStack, Text } from "@rooots/ui";
+import { ScrollView } from 'react-native-gesture-handler';
+import { MyDateTimePicker, TagButton, XStack, Text } from "@rooots/ui";
 import { type ReferenceType, superchargedInputWordsAtom, superchargedInputSelectedDateAtom, questionDataAtom, dateSheetRefAtom, superchargedInputSelectionAtom } from "../../atoms/addQuestion";
 import { getSymbolFromReference } from "../../utils/strings";
 import { Calendar, Tag, User, Users } from "@tamagui/lucide-icons";
@@ -23,11 +24,10 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      paddingVertical='$3'
-      marginHorizontal='$-2.5'
+      // style={{ paddingVertical: 10, marginHorizontal: -10 }}
       keyboardShouldPersistTaps='always'
     >
-      <XStack columnGap='$2' paddingRight='$3.5'>
+      <XStack columnGap='$2' paddingRight='$4' paddingVertical='$3' marginHorizontal='$-2.5'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}

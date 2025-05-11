@@ -241,7 +241,7 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
           : null
         } */}
 
-        <XStack columnGap='$2' alignItems='center'>
+        <XStack alignItems='center' backgroundColor='transparent' >
           <Suggestions currentActiveWordIndex={getActiveWordIndexFromSuperchargedWords(inputWords, selection.start)} setFormValue={setValue} />
           <Button unstyled opacity={errors.question ? 0.5 : 1} onPress={submit} backgroundColor={theme.accent?.val} borderRadius={25} padding={4}>
             {/* <CheckCircle2 /> */}
@@ -249,7 +249,6 @@ export const SuperchargedInput: FC<Props> = ({ addQuestion, updateQuestion, ...r
           </Button>
         </XStack>
       </View>
-
     </YStack>
   );
 };
