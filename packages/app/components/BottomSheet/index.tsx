@@ -20,7 +20,7 @@ export const BottomSheet = forwardRef<BottomSheetModalRef, Props>(({ children, s
 	const refWeUse = ref as RefObject<BottomSheetModalRef> ?? refIfNotProvided;
 	const insets = useSafeAreaInsets();
 	const isAndroidAndUsesLegacyNavigation = Platform.OS === 'android' && insets.bottom === 48
-	const bottomPadding = Platform.OS === 'android' ? (isAndroidAndUsesLegacyNavigation ? '$8' : '$4.5') : '0'
+	const bottomPadding = 0// Platform.OS === 'android' ? (isAndroidAndUsesLegacyNavigation ? '$8' : '$4.5') : '0'
 
 	const snapPointsMemo = useMemo(() => snapPoints, [snapPoints]);
 	useEffect(() => {

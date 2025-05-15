@@ -17,7 +17,7 @@ export default function TabLayout() {
   const [, setQuestionData] = useAtom(questionDataAtom)
   const insets = useSafeAreaInsets();
   const androidNavHeight = insets.bottom === 48 ? 48 : 12;
-  const androidBottomInset = Platform.OS === 'android' ? androidNavHeight : 0;
+  const androidBottomInset = 0// Platform.OS === 'android' ? androidNavHeight : 0;
   const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
 
   useEffect(() => {
