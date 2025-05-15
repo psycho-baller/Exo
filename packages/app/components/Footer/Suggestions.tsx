@@ -27,7 +27,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       // style={{ paddingVertical: 10, marginHorizontal: -10 }}
       keyboardShouldPersistTaps='always'
     >
-      <XStack columnGap='$2' paddingRight='$4' paddingVertical='$3' marginHorizontal='$-2.5'>
+      <XStack columnGap='$2' paddingRight='$4' paddingVertical='$3'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}
