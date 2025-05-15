@@ -27,7 +27,7 @@ export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordInde
       // style={{ paddingVertical: 10, marginHorizontal: -10 }}
       keyboardShouldPersistTaps='always'
     >
-      <XStack columnGap='$2' paddingRight='$4' paddingVertical='$3' marginHorizontal='$-2.5'>
+      <XStack columnGap='$2' paddingRight='$4' paddingVertical='$3'>
         {currentActiveWord?.word && currentActiveWord?.reference ? (
           <AutocompleteSuggestions
             currentActiveWordIndex={currentActiveWordIndex}
@@ -177,15 +177,35 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
       return;
     }
     setInputWords((prevInputWords) => {
-      const lastWord = prevInputWords.at(-1)?.word
-      const newInputWords = lastWord && lastWord !== ' '
-        ? [...prevInputWords, { word: ' ', reference: null, enabled: false }, { word: getSymbolFromReference(name), reference: name, enabled: true }]
-        : [...prevInputWords, { word: getSymbolFromReference(name), reference: name, enabled: true }];
+      const lastWordIfNoSpace = prevInputWords.at(-1)
+      const withoutLastUselessElement = prevInputWords.slice(0, -1);
+      const lastWord = withoutLastUselessElement.at(-1)?.word;
+      console.log('lastWord', lastWord);
+      // Check if input is empty by checking if there's only one word and it's empty
+      const isEmpty = withoutLastUselessElement.length === 0;
+      const endsWithSpace = lastWord === ' ';
+      console.log('isEmpty', isEmpty);
+      console.log('endsWithSpace', endsWithSpace);
+
+      if (isEmpty || endsWithSpace) {
+        const prefix = isEmpty ? [] : withoutLastUselessElement;
+        const newInputWords = [...prefix, { word: getSymbolFromReference(name), reference: name, enabled: true }];
+        const fullText = newInputWords.map(w => w.word).join('');
+        setFormValue('question', fullText);
+        setSelection({ start: fullText.length, end: fullText.length });
+        return newInputWords;
+      }
+
+      // Otherwise, add a space and then the property
+      const newInputWords = [
+        ...prevInputWords,
+        { word: ' ', reference: null, enabled: false },
+        { word: getSymbolFromReference(name), reference: name, enabled: true }
+      ];
       const fullText = newInputWords.map(w => w.word).join('');
       setFormValue('question', fullText);
-      // move cursor to end of text so suggestions see the new "@..." word
       setSelection({ start: fullText.length, end: fullText.length });
-      return newInputWords
+      return newInputWords;
     });
   }
   const selectedDateForThisQuestion = questionData?.reminderDatetime || selectedDate;
