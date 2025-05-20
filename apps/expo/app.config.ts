@@ -14,11 +14,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   // },
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
-  splash: {
-    image: './assets/9-16-icon.jpg',
-    resizeMode: 'cover',
-    backgroundColor: '#000617',
-  },
   updates: {
     fallbackToCacheTimeout: 0,
   },
@@ -38,11 +33,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: 'com.ramimaalouf.rooots',
     edgeToEdgeEnabled: true,
     // googleServicesFile: './android/app/google-services.json',
-    // adaptiveIcon: {
-    //   foregroundImage: './assets/android-icon.jpg',
-    //   backgroundColor: '#000617',
-    //   monochromeImage: './assets/android-icon.jpg',
-    // },
+    adaptiveIcon: {
+      foregroundImage: './assets/android-icon.jpg',
+      backgroundColor: '#000617',
+      // monochromeImage: './assets/android-icon.jpg',
+    },
     // permissions: [
     //   'android.permission.BLUETOOTH',
     //   'android.permission.BLUETOOTH_ADMIN',
@@ -74,13 +69,26 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     'expo-router',
     'expo-sqlite',
-    // [
-    //   '@config-plugins/react-native-ble-plx',
-    //   {
-    //     isBackgroundEnabled: true,
-    //     modes: ['peripheral', 'central'],
-    //     bluetoothAlwaysPermission: 'Allow $(PRODUCT_NAME) to connect to bluetooth devices',
-    //   },
-    // ],
-  ]
+    [
+      'expo-splash-screen',
+      {
+        image: './assets/9-16-icon.jpg',
+        resizeMode: 'cover',
+        backgroundColor: '#000617',
+        // dark: {
+        //   image: "./assets/splash-icon-dark.png",
+        //   backgroundColor: "#000000"
+        // },
+        imageWidth: 350
+      },
+      // [
+      //   '@config-plugins/react-native-ble-plx',
+      //   {
+      //     isBackgroundEnabled: true,
+      //     modes: ['peripheral', 'central'],
+      //     bluetoothAlwaysPermission: 'Allow $(PRODUCT_NAME) to connect to bluetooth devices',
+      //   },
+      // ],
+    ],
+  ],
 })
