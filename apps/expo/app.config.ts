@@ -35,8 +35,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // googleServicesFile: './android/app/google-services.json',
     adaptiveIcon: {
       foregroundImage: './assets/android-icon.jpg',
-      backgroundColor: '#000617',
-      // monochromeImage: './assets/android-icon.jpg',
+      // backgroundColor: '#5FD8DD',
+      monochromeImage: './assets/mono-icon.png',
     },
     // permissions: [
     //   'android.permission.BLUETOOTH',
@@ -72,14 +72,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        image: './assets/9-16-icon.jpg',
+        image: './assets/rounded-icon.png',
         resizeMode: 'cover',
-        backgroundColor: '#000617',
-        // dark: {
-        //   image: "./assets/splash-icon-dark.png",
-        //   backgroundColor: "#000000"
-        // },
-        imageWidth: 350
+        backgroundColor: '#05131C',
+        imageWidth: 200,
+
+
       },
       // [
       //   '@config-plugins/react-native-ble-plx',
