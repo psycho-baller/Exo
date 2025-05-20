@@ -35,7 +35,9 @@
     "build:android:dev": "cd apps/expo && pnpm build:android:dev",
     "build:ios": "cd apps/expo && pnpm build:ios",
     "switch": "./scripts/switch-api.js && pnpm reset",
-    "switch:local": "./scripts/switch-api.js local && pnpm reset"
+    "switch:local": "./scripts/switch-api.js local && pnpm reset",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",
@@ -43,5 +45,6 @@
     "turbo": "^1.12.4",
     "typescript": "^5.3.3"
   },
-  "pnpm": {}
+  "pnpm": {},
+  "version": "1.0.0"
 }
