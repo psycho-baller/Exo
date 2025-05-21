@@ -6,7 +6,7 @@ import type { ComponentPropsWithoutRef, FC } from 'react'
 interface Props extends ComponentPropsWithoutRef<'div'> { }
 const Component: FC<Props> = (props) => {
   // const { expoPushToken, notification } = usePushNotifications();
-  return <Redirect href='/(app)/(tabs)/questions' />
+  return <Redirect href='/(tabs)/questions' />
 }
 
 export default Component

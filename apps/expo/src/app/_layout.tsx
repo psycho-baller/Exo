@@ -39,6 +39,7 @@ const RootLayout = () => {
           It also allows you to configure your screens
         */}
       <Stack
+        // initialRouteName="(tabs)"
         screenOptions={{
           // headerTransparent: true,
           headerShown: false,
@@ -46,7 +47,7 @@ const RootLayout = () => {
           // navigationBarHidden: true,
         }}
       >
-        <Stack.Screen name='(app)/(tabs)' options={{ title: 'Home' }} />
+        <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
         <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
       </Stack>
     </Provider>

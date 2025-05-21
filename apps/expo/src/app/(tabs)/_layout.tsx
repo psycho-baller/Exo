@@ -1,13 +1,12 @@
 import { Home, Plus, Search, User, Users } from '@tamagui/lucide-icons'
 import { BlurView, type ExperimentalBlurMethod } from 'expo-blur'
 import { Tabs, useSegments } from 'expo-router'
-
-import { useTheme, useThemeName } from '@rooots/ui'
 import { sheetRefAtom, questionDataAtom } from '@rooots/app/atoms/addQuestion'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useAtom } from 'jotai'
 import { Platform, StyleSheet } from 'react-native'
-import { useState, useEffect } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useState, useEffect } from 'react'
+import { useTheme, useThemeName } from '@rooots/ui'
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -28,6 +27,7 @@ export default function TabLayout() {
   }, []);
   return (
     <Tabs
+      // initialRouteName='people'
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),
@@ -53,7 +53,7 @@ export default function TabLayout() {
           />
         ),
         tabBarStyle: {
-          display: segments[3] === '[id]' ? 'none' : 'flex',
+          display: segments[1] === '[id]' ? 'none' : 'flex',
           // transform: [{ translateY: segments[3] === '[id]' ? 100 : 0 }],
           // transformOrigin: 'bottom',
           backgroundColor: 'transparent',
