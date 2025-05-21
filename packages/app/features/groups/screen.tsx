@@ -4,7 +4,7 @@ import { Text, VirtualList } from '@rooots/ui'
 import { MainPage } from '../../components/Footer/MainPage'
 import { CARD_HEIGHT } from '../../utils/constants'
 import { GroupCard } from './GroupCard'
-import EmptyState from '../../components/EmptyState'
+import GroupEmptyState from '../../components/GroupEmptyState'
 
 const Index = () => {
   const { isLoading, error, data } = api.group.all.useQuery()
@@ -23,7 +23,7 @@ const Index = () => {
         data={data}
         itemHeight={CARD_HEIGHT}
         renderItem={(g) => <GroupCard group={g} />}
-        listEmptyComponent={<EmptyState />}
+        listEmptyComponent={<GroupEmptyState />}
         isPage
       />
     </MainPage>

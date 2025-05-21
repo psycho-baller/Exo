@@ -1,13 +1,14 @@
 // import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons'
 import { Stack } from 'expo-router'
-import { TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet, Linking } from 'react-native'
 import { useState, useEffect } from 'react';
 import { useThemeName, View, useTheme } from '@rooots/ui'
 import { BlurView, type ExperimentalBlurMethod } from 'expo-blur'
 import { useAtom } from 'jotai';
 import { questionDataAtom, sheetRefAtom } from '@rooots/app/atoms/addQuestion';
 import { getRandomQuestion } from '@rooots/app/utils/questions';
+import { HelpCircle } from '@tamagui/lucide-icons';
 
 const Layout = () => {
   const themeName = useThemeName()
@@ -39,7 +40,16 @@ const Layout = () => {
             />
           ),
           headerRight: () => (
-            <View style={{ flexDirection: 'row', gap: 30 }}>
+            <View style={{ flexDirection: 'row', gap: 15 }}>
+              <TouchableOpacity onPress={() => {
+                // open link: https://youtube.com/shorts/FhcSiat6ihM
+                Linking.openURL('https://youtube.com/shorts/FhcSiat6ihM')
+              }}>
+                <HelpCircle
+                  color={theme.color?.val}
+                  size={25}
+                />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => {
                 const randomQuestion = getRandomQuestion();
                 setQuestionData({

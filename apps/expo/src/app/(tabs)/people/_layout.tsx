@@ -10,6 +10,8 @@ import { StyleSheet } from 'react-native'
 import { useAtom } from 'jotai'
 import { questionDataAtom, sheetRefAtom } from '@rooots/app/atoms/addQuestion'
 import { getRandomQuestion } from '@rooots/app/utils/questions'
+import { CircleHelp, HelpCircle } from '@tamagui/lucide-icons'
+import * as Linking from 'expo-linking'
 
 const Layout = () => {
   const theme = useTheme()
@@ -41,7 +43,16 @@ const Layout = () => {
             />
           ),
           headerRight: () => (
-            <View style={{ flexDirection: 'row', gap: 30 }}>
+            <View style={{ flexDirection: 'row', gap: 15 }}>
+              <TouchableOpacity onPress={() => {
+                // open link: https://youtube.com/shorts/FhcSiat6ihM
+                Linking.openURL('https://youtube.com/shorts/FhcSiat6ihM')
+              }}>
+                <HelpCircle
+                  color={theme.color?.val}
+                  size={25}
+                />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => {
                 const randomQuestion = getRandomQuestion();
                 setQuestionData({
