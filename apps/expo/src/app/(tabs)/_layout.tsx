@@ -31,6 +31,7 @@ export default function TabLayout() {
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),
+        headerTintColor: theme.accent?.val,
         tabBarActiveTintColor: themeName === 'dark' ? theme.accent?.val : theme.darkerAccent?.val,
         headerShown: false,
         tabBarShowLabel: false,
@@ -40,7 +41,6 @@ export default function TabLayout() {
             experimentalBlurMethod={experimentalBlurMethod}
             tint={themeName === 'dark' ? 'systemThinMaterialDark' : 'systemThinMaterialLight'}
             style={{
-
               overflow: 'hidden',
               borderRadius: 999,
               ...StyleSheet.absoluteFillObject,
@@ -53,7 +53,7 @@ export default function TabLayout() {
           />
         ),
         tabBarStyle: {
-          display: segments[1] === '[id]' ? 'none' : 'flex',
+          display: segments[2] === '[id]' ? 'none' : 'flex',
           // transform: [{ translateY: segments[3] === '[id]' ? 100 : 0 }],
           // transformOrigin: 'bottom',
           backgroundColor: 'transparent',
