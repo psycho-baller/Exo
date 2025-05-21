@@ -93,8 +93,6 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
   }
 
   const handleAddNew = () => {
-    Keyboard.dismiss();
-
     if (!currentActiveWord?.word) return;
 
     switch (currentActiveReference) {
@@ -147,7 +145,7 @@ const AutocompleteSuggestions: FC<AutocompleteSuggestionsProps> = ({ currentActi
         </TagButton>
       )) : (
         <TagButton onPress={handleAddNew}>
-          {`Add new ${currentActiveReference.trim()}`}
+          {`Create ${currentActiveReference.trim()} "${currentActiveWord?.word?.slice(getSymbolFromReference(currentActiveReference).length).trim()}"`}
         </TagButton>
       )}
     </>
