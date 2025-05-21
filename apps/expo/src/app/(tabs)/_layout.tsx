@@ -27,7 +27,7 @@ export default function TabLayout() {
   }, []);
   return (
     <Tabs
-      // initialRouteName='people'
+      initialRouteName='questions'
       screenOptions={{
         // tabBarInactiveBackgroundColor: theme.background?.get(),
         // tabBarActiveBackgroundColor: theme.background?.get(),

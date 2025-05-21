@@ -35,7 +35,7 @@ const RootLayout = () => {
           It also allows you to configure your screens
         */}
       <Stack
-        // initialRouteName="(tabs)"
+        initialRouteName="(tabs)"
         screenOptions={{
           // headerTransparent: true,
           headerShown: false,
