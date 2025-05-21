@@ -1,10 +1,5 @@
 import { Stack } from 'expo-router'
-import { setStatusBarTranslucent } from 'expo-status-bar'
-import React, { useEffect } from 'react'
-
 import { Provider } from '@rooots/app/provider'
-import { Platform } from 'react-native'
-
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -12,6 +7,7 @@ export {
 } from 'expo-router'
 
 const RootLayout = () => {
+
   // const [loaded, error] = useFonts({
   //   Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
   //   InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
