@@ -1,5 +1,8 @@
 import { Stack } from 'expo-router'
 import { Provider } from '@rooots/app/provider'
+import DemoVideo from '@rooots/app/components/DemoVideo'
+import { BottomSheet } from '@rooots/app/components/BottomSheet'
+import { videoSheetRefAtom } from '@rooots/app/atoms/sheet'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,6 +49,16 @@ const RootLayout = () => {
         <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
         <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
       </Stack>
+      <BottomSheet
+        enablePanDownToClose
+        // snapPoints={['90%']}
+        // enableDynamicSizing={false}
+        // onClose={closeVideoSheet}
+        // index={0}
+        sheetRefAtom={videoSheetRefAtom}
+      >
+        <DemoVideo />
+      </BottomSheet>
     </Provider>
   )
 }
