@@ -4,7 +4,9 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import type { VideoSource } from 'expo-video';
 import { useEvent } from 'expo';
 import { useTheme } from 'tamagui';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { videoTimestampAtom } from '../../atoms/sheet';
 
 const assetId = require('../../assets/exo-onboarding.mp4');
 
@@ -17,13 +19,28 @@ const videoSource: VideoSource = {
 };
 
 export default function DemoVideo() {
-  const theme = useTheme();
   const [isVisible, setIsVisible] = useState(true);
+  const [lastTimestamp, setLastTimestamp] = useAtom(videoTimestampAtom);
+
   const player = useVideoPlayer(videoSource, player => {
     player.loop = true;
+    // If we have a saved timestamp, seek to it
+    if (lastTimestamp > 0) {
+      player.seekBy(lastTimestamp);
+    }
     player.play();
   });
+
   const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+
+  // Save timestamp when component unmounts
+  useEffect(() => {
+    return () => {
+      if (player) {
+        setLastTimestamp(player.currentTime);
+      }
+    };
+  }, [player, setLastTimestamp]);
 
   if (!isVisible) return null;
 

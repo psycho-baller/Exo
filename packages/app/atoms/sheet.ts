@@ -8,3 +8,4 @@ export function useSheetOpen() {
   return [...useAtom(sheetOpenAtom)] as const
 }
 export const videoSheetRefAtom = atom<RefObject<BottomSheetModalRef> | null>(null)
+export const videoTimestampAtom = atom<number>(0);
