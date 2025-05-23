@@ -11,6 +11,7 @@ import { useAtom } from 'jotai'
 import { questionDataAtom, sheetRefAtom } from '@rooots/app/atoms/addQuestion'
 import { getRandomQuestion } from '@rooots/app/utils/questions'
 import { HelpCircle } from '@tamagui/lucide-icons'
+import { useVideoSheetActions } from '@rooots/app/hooks/useVideoSheetActions';
 
 const Layout = () => {
   const theme = useTheme()
@@ -18,6 +19,8 @@ const Layout = () => {
   const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
   const [, setQuestionData] = useAtom(questionDataAtom)
   const [sheetRef] = useAtom(sheetRefAtom)
+  const { openVideoSheet } = useVideoSheetActions();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setExperimentalBlurMethod('dimezisBlurView');
@@ -45,7 +48,7 @@ const Layout = () => {
             <View style={{ flexDirection: 'row', gap: 15 }}>
               <TouchableOpacity onPress={() => {
                 // open link: https://youtube.com/shorts/FhcSiat6ihM
-                Linking.openURL('https://youtube.com/shorts/FhcSiat6ihM')
+                openVideoSheet()
               }}>
                 <HelpCircle
                   color={theme.color?.val}

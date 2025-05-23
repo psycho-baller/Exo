@@ -9,7 +9,7 @@ import { useAtom } from 'jotai';
 import { questionDataAtom, sheetRefAtom } from '@rooots/app/atoms/addQuestion';
 import { getRandomQuestion } from '@rooots/app/utils/questions';
 import { HelpCircle } from '@tamagui/lucide-icons';
-import { videoSheetRefAtom } from '@rooots/app/atoms/sheet';
+import { useVideoSheetActions } from '@rooots/app/hooks/useVideoSheetActions';
 
 const Layout = () => {
   const themeName = useThemeName()
@@ -17,13 +17,8 @@ const Layout = () => {
   const [experimentalBlurMethod, setExperimentalBlurMethod] = useState<ExperimentalBlurMethod>('none');
   const [, setQuestionData] = useAtom(questionDataAtom)
   const [sheetRef] = useAtom(sheetRefAtom)
-  const [videoSheetRef] = useAtom(videoSheetRefAtom)
-  function openVideoSheet() {
-    videoSheetRef?.current?.present();
-  }
-  function closeVideoSheet() {
-    videoSheetRef?.current?.close();
-  }
+  const { openVideoSheet } = useVideoSheetActions();
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
