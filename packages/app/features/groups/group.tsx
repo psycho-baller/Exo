@@ -2,7 +2,7 @@ import { ArrowLeft } from '@tamagui/lucide-icons'
 import type { ReactNode } from 'react'
 import { Platform } from 'react-native'
 import { useLink, useParams } from 'solito/navigation'
-import { Button } from 'tamagui'
+import { Button, Separator } from 'tamagui'
 
 import { api } from '@rooots/api/utils/trpc'
 import { Page, VirtualList, YStack } from '@rooots/ui'
@@ -28,7 +28,9 @@ const GroupScreen = (): ReactNode => {
   if (!data) return null
 
   return (
-    <Page animation='bouncy' paddingHorizontal='$5' paddingVertical='$2'>
+    <Page animation='bouncy'
+      paddingHorizontal='$2'
+      paddingVertical='$2'>
       {/* <XStack gap={18}>
         <Button iconAfter={Trash2} size='$3' width='5%' variant='outlined'>
         </Button>
@@ -42,7 +44,8 @@ const GroupScreen = (): ReactNode => {
       )}
       <EditGroupText id={data.id} content={data.name} />
       <GroupProperties {...data} />
-      <PeopleInGroup groupId={data.id} />
+      <Separator marginTop='$3' />
+      {/* <PeopleInGroup groupId={data.id} /> */}
       <QuestionsForGroup groupId={data.id} />
     </Page>
   )

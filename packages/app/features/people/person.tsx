@@ -37,7 +37,9 @@ const PersonScreen = (): ReactNode => {
   if (!data) return null
 
   return (
-    <Page animation='bouncy' paddingVertical='$2' >
+    <Page animation='bouncy'
+      paddingHorizontal='$2'
+      paddingVertical='$2'>
       {/* <XStack gap={18}>
         <Button iconAfter={Trash2} size='$3' width='5%' variant='outlined'>
         </Button>

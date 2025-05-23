@@ -1,4 +1,4 @@
-import { CalendarDays, CircleUser, Trash2 } from '@tamagui/lucide-icons'
+import { CalendarDays, CircleUser, MessageCircleQuestion, Trash2 } from '@tamagui/lucide-icons'
 import type { FC } from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { interpolate } from 'react-native-reanimated' // Import AnimatedInterpolation
@@ -64,6 +64,7 @@ export const GroupCard: FC<Props> = (props) => {
                   <Text color='$secondaryColor'>{formatDate(date)}</Text>
                 </XStack>
               )}
+              <QuestionMetadata group={group} />
               {/* TODO: Fix this when I care about persno n groups */}
               {/* <PersonOrGroupForGroup group={group} /> */}
             </XStack>
@@ -71,6 +72,19 @@ export const GroupCard: FC<Props> = (props) => {
         </XStack>
       </Link>
     </SwipeableRow>
+  )
+}
+
+function QuestionMetadata({ group }: { group: RouterOutputs['group']['all'][number] }) {
+  const { data: questions } = api.question.getQuestionsForGroup.useQuery({ id: group.id })
+  if (!questions) return null
+  const questionCount = questions.length
+
+  return (
+    <XStack gap={6} alignItems='center'>
+      <MessageCircleQuestion size={15} color='$secondaryColor' strokeWidth={2.5} />
+      <Text color='$secondaryColor'>{questionCount}</Text>
+    </XStack>
   )
 }
 

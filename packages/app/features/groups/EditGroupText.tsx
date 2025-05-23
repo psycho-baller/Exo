@@ -19,8 +19,8 @@ export function EditGroupText({ id, content }: { id: number; content: string }) 
       placeholderTextColor='$secondaryColor'
       opacity={0.75}
       fontSize={'$8'}
-      paddingVertical={'$2'}
-      marginBottom={'$4'}
+      paddingHorizontal={'$3'}
+      // paddingVertical={'$2'}
       placeholder='Add group'
       value={group}
       onChangeText={setGroup}

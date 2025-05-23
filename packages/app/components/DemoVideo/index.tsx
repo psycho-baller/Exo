@@ -1,5 +1,4 @@
-import { View, TouchableOpacity, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Dimensions } from 'react-native';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import type { VideoSource } from 'expo-video';
 import { useEvent } from 'expo';
@@ -17,7 +16,6 @@ const videoSource: VideoSource = {
 };
 
 export default function DemoVideo() {
-  const theme = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const player = useVideoPlayer(videoSource, player => {
     player.loop = true;
