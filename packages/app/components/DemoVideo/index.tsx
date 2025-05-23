@@ -6,7 +6,7 @@ import { useEvent } from 'expo';
 import { useTheme } from 'tamagui';
 import React, { useState } from 'react';
 
-const assetId = require('../../assets/exo-onboarding.mp4');
+const assetId = require('../../assets/exo-onboarding-optimized.mp4');
 
 const videoSource: VideoSource = {
   assetId,
