@@ -1,5 +1,5 @@
 {
-  "extends": "@rooots/tsconfig/base.json",
+  "extends": "@rooots/tsconfig/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -7,13 +7,7 @@
         "./src/*"
       ]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "noEmit": true
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [
     ".",

@@ -36,6 +36,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@rooots/tsconfig": "workspace:*",
     "@tamagui/next-plugin": "^1.120.2",
     "@types/node": "^20.11.20",
     "@types/react": "catalog:react19",
