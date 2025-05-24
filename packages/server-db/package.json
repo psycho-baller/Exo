@@ -1,5 +1,5 @@
 {
-  "name": "@rooots/server-db",
+  "name": "@rooots/db",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",

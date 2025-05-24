@@ -25,7 +25,7 @@ const plugins = [
     logTimings: true,
     disableExtraction,
     // experiment - reduced bundle size react-native-web
-    useReactNativeWebLite: false,
+    // useReactNativeWebLite: false,
     shouldExtract: (path) => {
       if (path.includes(join('packages', 'app'))) {
         return true
@@ -59,10 +59,12 @@ module.exports = () => {
       'expo-linking',
       'expo-blur',
       'react-native-gesture-handler',
-      // 'react-native-reanimated',
-      // '@gorhom/bottom-sheet',
+      'react-native-reanimated',
+      '@gorhom/bottom-sheet',
       'expo-constants',
       'expo-modules-core',
+      'expo-sqlite',
+      'drizzle-orm',
     ],
     experimental: {
       scrollRestoration: true,

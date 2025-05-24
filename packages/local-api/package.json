@@ -1,5 +1,5 @@
 {
-  "name": "@rooots/api",
+  "name": "@rooots/local-api",
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",

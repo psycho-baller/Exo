@@ -19,8 +19,8 @@ module.exports = (api) => {
       // for expo-sqlite
       ['inline-import', { extensions: ['.sql'] }],
       // if you want reanimated support
-      // '@babel/plugin-transform-export-namespace-from',
-      // 'react-native-reanimated/plugin',
+      '@babel/plugin-transform-export-namespace-from',
+      'react-native-reanimated/plugin',
     ],
   }
 }
