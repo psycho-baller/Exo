@@ -1,19 +1,19 @@
 "use client";
 import { type FC, type ComponentPropsWithoutRef, useState, type FormEvent } from "react";
-import { api } from "../../../../../packages/server-api/utils/trpc"
+// import { api } from "../../../../../packages/server-api/utils/trpc"
 import Link from "next/link";
 import { siteConfig } from "~config/site";
 
 interface Props extends ComponentPropsWithoutRef<"header"> { }
 
 export const WaitlistForm: FC<Props> = () => {
-  const { mutateAsync } = api.waitlist.create.useMutation();
+  // const { mutateAsync } = api.waitlist.create.useMutation();
 
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await mutateAsync({ email });
+    // await mutateAsync({ email });
     setEmail("");
 
 

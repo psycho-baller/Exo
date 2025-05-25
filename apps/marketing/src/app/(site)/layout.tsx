@@ -12,7 +12,7 @@ import { TailwindIndicator } from '~components/TailwindIndicator';
 // import ToasterContext from "../context/ToastContext";
 import '../globals.css';
 import Script from 'next/script';
-import { TRPCReactProvider } from '~components/TRPCProviders';
+// import { TRPCReactProvider } from '~components/TRPCProviders';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -51,10 +51,10 @@ export const metadata: Metadata = {
     },
   ],
   creator: 'Rami Maalouf',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  // themeColor: [
+  //   { media: '(prefers-color-scheme: light)', color: 'white' },
+  //   { media: '(prefers-color-scheme: dark)', color: 'black' },
+  // ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="eng">
+    <html lang="en">
       <head />
       <Script
         async
@@ -97,9 +97,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Lines />
           <Header />
           {/* <ToasterContext /> */}
-          <TRPCReactProvider>
-            {children}
-          </TRPCReactProvider>
+          {/* <TRPCReactProvider> */}
+          {children}
+          {/* </TRPCReactProvider> */}
           <Footer />
           <ScrollToTop />
           <TailwindIndicator />
