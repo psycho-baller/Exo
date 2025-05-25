@@ -113,7 +113,7 @@ function PersonForQuestion(props: {
   return (
     <XStack gap={6} alignItems='center'>
       <CircleUser size={15} color='$secondaryColor' strokeWidth={2.5} />
-      <Text color='$secondaryColor'>{person.firstName}</Text>
+      <Text key="person-name" color='$secondaryColor'>{person.firstName}</Text>
     </XStack>
   )
 }
