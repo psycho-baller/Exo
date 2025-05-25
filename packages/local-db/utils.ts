@@ -5,7 +5,7 @@ import * as schema from './schema'
 import type { Database } from './schema/_table'
 import { drizzle } from 'drizzle-orm/expo-sqlite'
 import { openDatabaseSync } from 'expo-sqlite'
-import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
+// import { useDrizzleStudio } from 'expo-drizzle-studio-plugin'
 
 interface ConnectionResult {
   db: Database
@@ -42,9 +42,9 @@ export const useMigrationHelper = () => {
   return useMigrations(db, migrations)
 }
 
-export const useDrizzleStudioHelper = () => {
-  return useDrizzleStudio(expo)
-}
+// export const useDrizzleStudioHelper = () => {
+//   return useDrizzleStudio(expo)
+// }
 
 export function generateRandomId(length: number): number {
   const id = Math.random() * 10 ** length
