@@ -74,9 +74,8 @@ const InputTag: FC<Props> = (props) => {
 				{tags.map((tag, i) => (
 					<li
 						key={tag}
-						className={`flex self-center px-2 py-1.5 text-lg rounded-3xl gap-x-2 whitespace-nowrap transition ${
-							inputVal === tag || !focused ? "bg-gray-500" : "bg-gray-700"
-						}`}
+						className={`flex self-center px-2 py-1.5 text-lg rounded-3xl gap-x-2 whitespace-nowrap transition ${inputVal === tag || !focused ? "bg-gray-500" : "bg-gray-700"
+							}`}
 					>
 						{tag}
 						<button type="button" onClick={() => removeTag(i)}>
