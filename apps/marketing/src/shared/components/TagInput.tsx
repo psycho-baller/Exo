@@ -19,7 +19,7 @@ const InputTag: FC<Props> = (props) => {
 	const [focused, setFocused] = useState<boolean>(false);
 	const [inputVal, setInputVal] = useState<string>("");
 	const input = useRef<HTMLInputElement>(null);
-	const span = useRef<HTMLSpanElement>(undefined!);
+	const span = useRef<HTMLSpanElement>(null);
 
 	const removeTag = (i: number) => {
 		setTags([...tags.slice(0, i), ...tags.slice(i + 1)]);
@@ -49,12 +49,14 @@ const InputTag: FC<Props> = (props) => {
 	useEffect(() => {
 		// set the width of the input to the width of the span(text)
 		// min width of 1 so component always shows
+		if (!span.current) return;
+
 		setWidth(
 			span.current.getBoundingClientRect().width < 1
 				? 1
 				: span.current.getBoundingClientRect().width,
 		);
-	}, [inputVal]);
+	}, [span.current, setWidth]);
 
 	return (
 		<div
