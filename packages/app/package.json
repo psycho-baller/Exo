@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@amplitude/analytics-react-native": "^1.4.13",
     "@gorhom/bottom-sheet": "^5.0.6",
     "@orama/orama": "^2.0.19",
     "@rooots/ui": "workspace:*",
