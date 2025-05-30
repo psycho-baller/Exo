@@ -38,3 +38,8 @@ export async function trackDeleteQuestion(params: TrackQuestionEventParams) {
   console.log("trackDeleteQuestion", params)
   await track('delete_question', params)
 }
+
+export async function trackTabClick(tabName: string) {
+  console.log("trackTabClick", { tabName })
+  await track('tab_click', { tabName })
+}
