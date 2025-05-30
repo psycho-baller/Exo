@@ -11,7 +11,7 @@ import { withHaptics } from '../../utils/haptics'
 import { questionDataAtom, sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { useTheme } from '@rooots/ui'
-import { trackViewQuestion } from '../../utils/amplitude'
+import { trackViewQuestion, trackDeleteQuestion } from '../../utils/amplitude'
 
 interface Props {
   question: RouterOutputs['question']['all'][number]
@@ -26,7 +26,15 @@ export const QuestionCard: FC<Props> = (props) => {
   const deleteQuestionMutation = api.question.delete.useMutation({
     onSettled: async () => {
       await utils.question.all.invalidate()
-      await utils.question.forPerson.invalidate({ id: question.personId })
+      if (question.personId !== null) {
+        await utils.question.forPerson.invalidate({ id: question.personId })
+      }
+      // Amplitude tracking
+      trackDeleteQuestion({
+        questionId: String(question.id),
+        groupIds: question.groupId ? [String(question.groupId)] : undefined,
+        date: question.reminderDatetime ? (typeof question.reminderDatetime === 'string' ? question.reminderDatetime : new Date(question.reminderDatetime).toISOString()) : undefined,
+      })
     }
   })
 

@@ -33,3 +33,8 @@ export async function trackEditQuestion(params: TrackQuestionEventParams) {
   console.log("trackEditQuestion", params)
   await track('edit_question', params)
 }
+
+export async function trackDeleteQuestion(params: TrackQuestionEventParams) {
+  console.log("trackDeleteQuestion", params)
+  await track('delete_question', params)
+}
