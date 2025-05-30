@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: 'Exo',
   slug: 'rooots',
   scheme: 'rooots',
-  version: '0.1.0',
+  version: '0.2.0',
   orientation: 'portrait',
   // androidNavigationBar: {
   //   visible: 'immersive',
@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '3',
+    // buildNumber: '3',
     bundleIdentifier: 'com.ramimaalouf.rooots',
     supportsTablet: true,
     // needs membership to Apple Developer Program to use Push Notifications
