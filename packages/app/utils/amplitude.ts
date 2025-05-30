@@ -43,3 +43,8 @@ export async function trackTabClick(tabName: string) {
   console.log("trackTabClick", { tabName })
   await track('tab_click', { tabName })
 }
+
+export async function trackPersonClick(personId: string) {
+  console.log("trackPersonClick", { personId })
+  await track('person_click', { personId })
+}

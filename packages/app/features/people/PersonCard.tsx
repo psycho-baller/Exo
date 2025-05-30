@@ -1,6 +1,6 @@
 import { CalendarDays, MessageCircleQuestion, Trash2 } from '@tamagui/lucide-icons'
 import { useMemo, type FC } from 'react'
-import { Link } from 'solito/link'
+import { Link, useLink } from 'solito/link'
 
 import type { RouterOutputs } from '@rooots/api'
 import { api } from '@rooots/api/utils/trpc'
@@ -10,6 +10,7 @@ import { formatDate } from '../../utils/date'
 import { SwipeableRow } from '../../components/SwipeableRow'
 import { withHaptics } from '../../utils/haptics'
 import { useTheme } from '@rooots/ui'
+import { trackPersonClick } from '../../utils/amplitude'
 
 interface Props {
   person: RouterOutputs['person']['all'][number]
@@ -26,6 +27,10 @@ export const PersonCard: FC<Props> = (props) => {
     },
   })
 
+  const link = useLink({
+    href: `/people/${String(person.id)}`,
+  })
+
   return (
     <SwipeableRow
       rightAction={{
@@ -34,23 +39,26 @@ export const PersonCard: FC<Props> = (props) => {
         onPress: () => withHaptics(() => deletePersonMutation.mutate({ id: person.id })),
       }}
     >
-      <Link href={`/people/${String(person.id)}`}>
-        <XStack
-          paddingVertical='$4'
-          paddingHorizontal='$2.5'
-          alignItems='center'
-          justifyContent='space-between'
-          animation='bouncy'
-        >
-          <YStack gap={6}>
-            <Text fontSize={18} fontWeight='700'>
-              {person.firstName}
-            </Text>
-            <QuestionMetadata person={person} />
-          </YStack>
-          {/* topics */}
-        </XStack>
-      </Link>
+      <XStack
+        {...link}
+        paddingVertical='$4'
+        paddingHorizontal='$2.5'
+        alignItems='center'
+        justifyContent='space-between'
+        animation='bouncy'
+        onPress={(e) => {
+          trackPersonClick(String(person.id))
+          link.onPress?.(e)
+        }}
+      >
+        <YStack gap={6}>
+          <Text fontSize={18} fontWeight='700'>
+            {person.firstName}
+          </Text>
+          <QuestionMetadata person={person} />
+        </YStack>
+        {/* topics */}
+      </XStack>
     </SwipeableRow >
   )
 }
