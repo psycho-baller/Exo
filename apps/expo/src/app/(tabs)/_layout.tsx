@@ -7,6 +7,7 @@ import { useAtom } from 'jotai'
 import { Platform, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useTheme, useThemeName } from '@rooots/ui'
+import { trackTabClick } from '@rooots/app/utils/amplitude'
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -93,6 +94,9 @@ export default function TabLayout() {
             />
           ),
         }}
+        listeners={{
+          tabPress: () => trackTabClick('questions'),
+        }}
       />
       <Tabs.Screen
         name='people'
@@ -107,6 +111,9 @@ export default function TabLayout() {
               color={focused ? color : undefined}
             />
           ),
+        }}
+        listeners={{
+          tabPress: () => trackTabClick('people'),
         }}
       />
       <Tabs.Screen
@@ -126,6 +133,7 @@ export default function TabLayout() {
         }}
         listeners={{
           tabPress: (e) => {
+            trackTabClick('addQuestion')
             e.preventDefault()
             setQuestionData(null)
             sheetRef?.current?.present()
@@ -146,6 +154,9 @@ export default function TabLayout() {
             />
           ),
         }}
+        listeners={{
+          tabPress: () => trackTabClick('search'),
+        }}
       />
       <Tabs.Screen
         name='groups'
@@ -161,7 +172,9 @@ export default function TabLayout() {
             />
           ),
         }}
-
+        listeners={{
+          tabPress: () => trackTabClick('groups'),
+        }}
       />
     </Tabs>
   )
