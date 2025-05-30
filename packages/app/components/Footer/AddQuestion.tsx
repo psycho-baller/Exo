@@ -8,6 +8,7 @@ import { questionDataAtom, sheetRefAtom, superchargedInputSelectedDateAtom } fro
 import { useAtom } from 'jotai'
 import { type SuperchargedFormData, SuperchargedInput } from './SuperchargedInput'
 import { superchargedInputWordsAtom } from '../../atoms/addQuestion';
+import { initializeAmplitude, trackCreateQuestion, trackEditQuestion } from '../../utils/amplitude'
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -57,10 +58,41 @@ export const AddQuestion: FC = () => {
         await utils.question.forPerson.invalidate({ id: createdQuestion.personId });
       }
       await utils.question.all.invalidate()
+      // Amplitude tracking
+      if (createdQuestion) {
+        await initializeAmplitude(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY || '')
+        await trackCreateQuestion({
+          questionId: String(createdQuestion.id),
+          groupIds: createdQuestion.groupId ? [String(createdQuestion.groupId)] : undefined,
+          topicIds: selectedTopics?.map(t => String(t.id)),
+          date: createdQuestion.reminderDatetime ? (typeof createdQuestion.reminderDatetime === 'string' ? createdQuestion.reminderDatetime : new Date(createdQuestion.reminderDatetime).toISOString()) : undefined,
+        })
+      }
       // reset form
       setInputWords([])
     },
   })
+
+  function isQuestionModified(original: any, form: {
+    question: string
+    groupId?: number | null
+    personId?: number | null
+    note?: string | null
+    reminderDatetime?: Date | string | null
+    topicIds?: string[]
+  }) {
+    if (!original) return false
+    if (
+      original.question !== form.question ||
+      original.groupId !== form.groupId ||
+      original.personId !== form.personId ||
+      String(original.reminderDatetime) !== String(form.reminderDatetime) ||
+      original.note !== form.note
+    ) return true
+    // If you want to compare topics, add logic here
+    return false
+  }
+
   const updateMutation = api.question.update.useMutation({
     async onSuccess(data) {
       sheetRef?.current?.close()
@@ -84,6 +116,20 @@ export const AddQuestion: FC = () => {
         await utils.question.forPerson.invalidate({ id: updateQuestion.personId })
       }
       await utils.question.all.invalidate()
+      // Amplitude tracking only if modified
+      let updated: any = data
+      if (Array.isArray(data) && typeof data[0] === 'object' && data[0] !== null) {
+        updated = data[0]
+      }
+      if (updateQuestion && updated && isQuestionModified(updateQuestion, updated)) {
+        await initializeAmplitude(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY || '')
+        await trackEditQuestion({
+          questionId: String(updateQuestion.id),
+          groupIds: updateQuestion.groupId ? [String(updateQuestion.groupId)] : undefined,
+          topicIds: selectedTopics?.map(t => String(t.id)),
+          date: updateQuestion.reminderDatetime ? (typeof updateQuestion.reminderDatetime === 'string' ? updateQuestion.reminderDatetime : new Date(updateQuestion.reminderDatetime).toISOString()) : undefined,
+        })
+      }
       // reset form
       setInputWords([])
     },
@@ -91,8 +137,6 @@ export const AddQuestion: FC = () => {
 
   function addQuestion(data: SuperchargedFormData) {
     // find the person id from the selected person
-    console.log('inputWords', inputWords)
-    console.log('data', data)
     const personWord = inputWords.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
     const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
 
@@ -104,7 +148,6 @@ export const AddQuestion: FC = () => {
       .map((word) => word.word)
       .join('')
       .trim();
-    console.log('questionText', questionText)
 
     createMutation.mutateAsync({
       groupId: group?.id,
@@ -119,7 +162,6 @@ export const AddQuestion: FC = () => {
     // find the person id from the selected person
     // ensure that questionData is not null and it contains the personId
     if (questionData?.id !== questionId) return;
-    console.log('inputWords', inputWords)
     const personWord = inputWords.find((word) => word.reference === 'person')?.word.slice(1).toLowerCase();
     const person = people?.find((person) => person.firstName.toLowerCase() === personWord);
 
@@ -132,13 +174,26 @@ export const AddQuestion: FC = () => {
       .join('')
       .trim();
 
-    updateMutation.mutateAsync({
-      id: questionData.id,
+    const formValues = {
+      question: questionText,
       groupId: group?.id || questionData.groupId,
       personId: person?.id || questionData.personId,
-      question: questionText,
       note: questionData.note,
       reminderDatetime: selectedDate,
+    }
+
+    if (!isQuestionModified(questionData, formValues)) {
+      // No change, do not call mutation or track
+      return;
+    }
+
+    updateMutation.mutateAsync({
+      id: questionData.id,
+      groupId: formValues.groupId,
+      personId: formValues.personId,
+      question: formValues.question,
+      note: formValues.note,
+      reminderDatetime: formValues.reminderDatetime,
     });
   }
   function clearData() {

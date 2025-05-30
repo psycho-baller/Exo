@@ -11,6 +11,7 @@ import { withHaptics } from '../../utils/haptics'
 import { questionDataAtom, sheetRefAtom } from '../../atoms/addQuestion'
 import { useAtom } from 'jotai'
 import { useTheme } from '@rooots/ui'
+import { trackViewQuestion } from '../../utils/amplitude'
 
 interface Props {
   question: RouterOutputs['question']['all'][number]
@@ -36,6 +37,13 @@ export const QuestionCard: FC<Props> = (props) => {
   function openBottomSheetWithQuestionData() {
     setQuestionData(question)
     sheetRef?.current?.present()
+    // Amplitude tracking
+    trackViewQuestion({
+      questionId: String(question.id),
+      groupIds: question.groupId ? [String(question.groupId)] : undefined,
+      // topics and date are not directly available here, so pass undefined for now
+      date: question.reminderDatetime ? (typeof question.reminderDatetime === 'string' ? question.reminderDatetime : new Date(question.reminderDatetime).toISOString()) : undefined,
+    })
   }
 
   return (
