@@ -48,3 +48,13 @@ export async function trackPersonClick(personId: string) {
   console.log("trackPersonClick", { personId })
   await track('person_click', { personId })
 }
+
+export async function trackGenerateQuestionClick() {
+  console.log("trackGenerateQuestionClick")
+  await track('generate_question_click', {})
+}
+
+export async function trackOnboardingClick() {
+  console.log("trackOnboardingClick")
+  await track('onboarding_click', {})
+}

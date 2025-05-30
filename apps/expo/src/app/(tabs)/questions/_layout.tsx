@@ -10,6 +10,7 @@ import { questionDataAtom, sheetRefAtom } from '@rooots/app/atoms/addQuestion';
 import { getRandomQuestion } from '@rooots/app/utils/questions';
 import { HelpCircle } from '@tamagui/lucide-icons';
 import { useVideoSheetActions } from '@rooots/app/hooks/useVideoSheetActions';
+import { trackGenerateQuestionClick, trackOnboardingClick } from '@rooots/app/utils/amplitude'
 
 const Layout = () => {
   const themeName = useThemeName()
@@ -46,13 +47,17 @@ const Layout = () => {
             ),
             headerRight: () => (
               <View style={{ flexDirection: 'row', gap: 15 }}>
-                <TouchableOpacity onPress={openVideoSheet}>
+                <TouchableOpacity onPress={() => {
+                  trackOnboardingClick()
+                  openVideoSheet()
+                }}>
                   <HelpCircle
                     color={theme.color?.val}
                     size={25}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
+                  trackGenerateQuestionClick()
                   const randomQuestion = getRandomQuestion();
                   setQuestionData({
                     createdByUserId: '',

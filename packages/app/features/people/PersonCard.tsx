@@ -1,6 +1,6 @@
 import { CalendarDays, MessageCircleQuestion, Trash2 } from '@tamagui/lucide-icons'
 import { useMemo, type FC } from 'react'
-import { Link, useLink } from 'solito/link'
+import { useLink } from 'solito/link'
 
 import type { RouterOutputs } from '@rooots/api'
 import { api } from '@rooots/api/utils/trpc'
