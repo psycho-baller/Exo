@@ -48,9 +48,9 @@ const Layout = () => {
           headerRight: () => (
             <View style={{ flexDirection: 'row', gap: 15 }}>
               <TouchableOpacity onPress={() => {
-                trackOnboardingClick()
-                // open link: https://youtube.com/shorts/FhcSiat6ihM
+                // used to open link: https://youtube.com/shorts/FhcSiat6ihM
                 openVideoSheet()
+                trackOnboardingClick()
               }}>
                 <HelpCircle
                   color={theme.color?.val}
@@ -58,7 +58,6 @@ const Layout = () => {
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                trackGenerateQuestionClick()
                 const randomQuestion = getRandomQuestion();
                 setQuestionData({
                   createdByUserId: '',
@@ -72,6 +71,7 @@ const Layout = () => {
                   createdDatetime: null,
                 })
                 sheetRef?.current?.present()
+                trackGenerateQuestionClick()
               }}>
                 <Ionicons
                   name='sparkles-sharp'
