@@ -5,10 +5,10 @@ import NavLink from "./NavLink";
 import { headerRoutes } from "~config/header";
 import { cn } from "~lib/utils";
 
-interface Props extends ComponentPropsWithoutRef<"nav"> {}
+interface Props extends ComponentPropsWithoutRef<"nav"> { }
 
 const Navigation = (props: Props) => {
-  const {} = props;
+  const { } = props;
   const pathname = usePathname();
 
   const heroTextRef = useStore((state) => state.heroTextRef);

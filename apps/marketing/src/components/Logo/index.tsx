@@ -1,10 +1,18 @@
 import * as React from "react";
 import { type SVGProps, memo } from "react";
 import { cn } from "~lib/utils";
+import Image from "next/image";
 const LogoComponent = (props: SVGProps<SVGSVGElement>) => {
   const { className, ...restOfProps } = props;
   return (
-    <>
+    <div className="flex items-center gap-2">
+      <Image
+        src="/rounded-icon.png"
+        alt="Exo Logo"
+        width={75}
+        height={75}
+        className="rounded-full"
+      />
       <h1
         className={cn("text-5xl font-bold dark:text-white", className)}
         {...restOfProps}
@@ -153,7 +161,7 @@ const LogoComponent = (props: SVGProps<SVGSVGElement>) => {
           />
         </g>
       </svg> */}
-    </>
+    </div>
   );
 };
 export const Logo = memo(LogoComponent);
