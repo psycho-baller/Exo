@@ -5,7 +5,7 @@ export const siteConfig = {
   slogan: 'Deepen Your Relationships Through Meaningful Conversations',
   hero: 'Deepen Your Relationships Through Meaningful Conversations',
   description:
-    'Overcome social barriers and connect deeply with peers through our community-based application', //Join our discord server and start making friends today!
+    'In a world of surface-level interactions, Exo gives you the tools to strengthen your relationships and connect on a deeper level',
   url: '',
   ogImage: '',
   links: {
