@@ -179,7 +179,6 @@ function TopicsForQuestion(props: {
   if (!topics) {
     return null
   }
-  console.log('topics', topics)
   return (
     <>
       {topics.map((topic) => (
