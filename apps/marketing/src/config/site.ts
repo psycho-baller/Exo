@@ -2,8 +2,8 @@ import type { SiteConfig } from '~types/config'
 
 export const siteConfig = {
   name: 'Exo',
-  slogan: 'Build Lifelong Friendships Through Meaningful Conversations',
-  hero: 'Build Lifelong Friendships Through Meaningful Conversations',
+  slogan: 'Deepen Your Relationships Through Meaningful Conversations',
+  hero: 'Deepen Your Relationships Through Meaningful Conversations',
   description:
     'Overcome social barriers and connect deeply with peers through our community-based application', //Join our discord server and start making friends today!
   url: '',
