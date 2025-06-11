@@ -68,7 +68,7 @@ const QuestionsForPerson = ({ personId }: { personId: number }) => {
   const { data } = api.question.getQuestionsForPerson.useQuery({ id: personId })
   console.log(data)
   return (
-    <YStack flex={1}>
+    <YStack flex={1} paddingBottom='$8'>
       <VirtualList
         data={data}
         itemHeight={CARD_HEIGHT}
