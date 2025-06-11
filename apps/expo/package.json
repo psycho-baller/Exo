@@ -37,6 +37,7 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
+    "@vapi-ai/react-native": "^0.2.3",
     "babel-plugin-inline-import": "^3.0.0",
     "date-fns": "^4.1.0",
     "expo": "^53.0.9",

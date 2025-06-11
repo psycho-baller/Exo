@@ -29,6 +29,7 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
+    "@vapi-ai/react-native": "^0.2.3",
     "burnt": "^0.12.2",
     "expo-background-fetch": "~13.1.5",
     "expo-bluetooth": "^0.0.0",
