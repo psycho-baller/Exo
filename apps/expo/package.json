@@ -30,7 +30,7 @@
     "@rooots/app": "workspace:*",
     "@rooots/ui": "workspace:*",
     "@shopify/flash-list": "1.7.6",
-    "@tamagui/lucide-icons": "^1.120.2",
+    "@tamagui/lucide-icons": "^1.126.14",
     "@tanstack/query-async-storage-persister": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-persist-client": "catalog:",
