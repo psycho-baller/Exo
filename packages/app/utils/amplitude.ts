@@ -4,7 +4,6 @@ import * as Device from 'expo-device'
 let isInitialized = false
 
 export async function initializeAmplitude(apiKey: string) {
-  console.log(`initialize with API key: ${apiKey}`)
   if (isInitialized) return
   init(apiKey)
   const deviceId = Device.osInternalBuildId || Device.osBuildId || Device.deviceName || 'unknown-device'

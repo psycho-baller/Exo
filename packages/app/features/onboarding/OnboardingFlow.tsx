@@ -1,6 +1,6 @@
 import type React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { OnboardingScreen1 } from '../../features/onboarding/OnboardingScreen1';
+import { OnboardingScreen1 } from './OnboardingScreen1';
 import { useState } from 'react';
 // Import other screens as they're created
 // import { OnboardingScreen2 } from './OnboardingScreen2';

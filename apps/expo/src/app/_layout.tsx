@@ -6,7 +6,7 @@ import { videoSheetRefAtom } from '@rooots/app/atoms/sheet'
 import React from 'react';
 import { Redirect, usePathname } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { OnboardingProvider, useOnboarding } from '@rooots/app/src/contexts/OnboardingContext';
+import { OnboardingProvider, useOnboarding } from '@rooots/app';
 
 export {
   // Catch any errors thrown by the Layout component.

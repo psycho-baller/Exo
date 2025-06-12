@@ -1,6 +1,5 @@
 import { Redirect } from 'expo-router';
-import { useOnboarding } from '@rooots/app/src/contexts/OnboardingContext';
-import { OnboardingFlow } from '@rooots/app/src/screens/onboarding/OnboardingFlow';
+import { useOnboarding, OnboardingFlow } from '@rooots/app';
 
 export default function OnboardingScreen() {
   const { isOnboarded, completeOnboarding } = useOnboarding();
