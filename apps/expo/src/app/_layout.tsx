@@ -7,6 +7,7 @@ import React from 'react';
 import { Redirect, usePathname } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { OnboardingProvider, useOnboarding } from '@rooots/app';
+import DevToolsButton from '@rooots/app/components/DevTools/DevToolsButton';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -91,6 +92,7 @@ const RootLayout = () => {
         >
           <DemoVideo />
         </BottomSheet>
+        <DevToolsButton />
       </Provider>
     </OnboardingProvider>
   )
