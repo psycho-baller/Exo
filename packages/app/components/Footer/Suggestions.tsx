@@ -196,7 +196,7 @@ const PropertiesSuggestions: FC<{ setFormValue: UseFormSetValue<SuperchargedForm
 // showOnMount
 /> */}
       {selectedDateForThisQuestion ? (
-        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} borderColor='$textAccent' color='$textAccent'>
+        <TagButton icon={Calendar} onPress={() => handlePropertyPress('date')} borderColor='$accent' color='$accent'>
           {formatDate(selectedDateForThisQuestion)}
         </TagButton>
       ) : (
