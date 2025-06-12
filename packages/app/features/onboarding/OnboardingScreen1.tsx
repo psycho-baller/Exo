@@ -2,6 +2,9 @@ import type React from 'react';
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { OnboardingButton } from '../../components';
 
+// Import the image
+const backgroundImage = require('../../assets/9-16-icon.jpg');
+
 interface OnboardingScreen1Props {
   onNext: () => void;
 }
@@ -10,15 +13,15 @@ export const OnboardingScreen1: React.FC<OnboardingScreen1Props> = ({ onNext }) 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={{ uri: 'https://picsum.photos/1200/2400' }} // Placeholder image
+        source={backgroundImage}
         style={styles.backgroundImage}
-        resizeMode="cover"
+        resizeMode="contain"
       >
         <View style={styles.overlay}>
           <View style={styles.content}>
-            <Text style={styles.title}>Welcome to Our App</Text>
+            <Text style={styles.title}>Deepen your relationships through meaningful conversations</Text>
             <Text style={styles.subtitle}>
-              Discover amazing features that will make your life easier and more enjoyable.
+              In a world of fleeting interactions, Exo empowers you to deepen your relationships through meaningful conversations
             </Text>
             <OnboardingButton
               title="Show me how!!"
@@ -45,23 +48,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
     padding: 24,
-    paddingBottom: 48,
+    // paddingBottom: 4,
   },
   content: {
     alignItems: 'center',
+    gap: 16,
   },
   title: {
-    fontSize: 32,
+    fontSize: 29,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 16,
+    // marginBottom: 16,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 32,
+    // marginBottom: 32,
     lineHeight: 24,
   },
   button: {
