@@ -15,3 +15,5 @@ dist/
 web-build/
 *.app
 build-*
+dev.apk
+preview.apk
