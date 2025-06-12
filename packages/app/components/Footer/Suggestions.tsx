@@ -16,7 +16,7 @@ type SuggestionDropdownProps = {
 }
 
 export const Suggestions: FC<SuggestionDropdownProps> = ({ currentActiveWordIndex, setFormValue }) => {
-  const [inputWords, setInputWords] = useAtom(superchargedInputWordsAtom);
+  const [inputWords] = useAtom(superchargedInputWordsAtom);
 
   const currentActiveWord = inputWords[currentActiveWordIndex];
 
