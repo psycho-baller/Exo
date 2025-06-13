@@ -5,11 +5,11 @@ import { OnboardingButton } from '../../components';
 // Import the GIF
 const demoGif = require('../../assets/gifs/exo-onboarding-question.gif');
 
-interface OnboardingScreen2Props {
+interface CreateQuestionDemoScreenProps {
   onNext: () => void;
 }
 
-export const OnboardingScreen2: React.FC<OnboardingScreen2Props> = ({ onNext }) => {
+export const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = ({ onNext }) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 24,
-    paddingBottom: 40,
+    paddingBottom: 30,
     // backgroundColor: '#fff',
     alignItems: 'center',
     gap: 10,
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnboardingScreen2;
+export default CreateQuestionDemoScreen;

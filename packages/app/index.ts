@@ -6,4 +6,4 @@ export * from './contexts';
 
 // Re-export features
 export * from './features/onboarding/OnboardingFlow';
-export * from './features/onboarding/OnboardingScreen1';
+export * from './features/onboarding/WelcomeOnboardingScreen';

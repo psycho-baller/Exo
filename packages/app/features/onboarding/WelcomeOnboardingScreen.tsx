@@ -9,7 +9,7 @@ interface OnboardingScreen1Props {
   onNext: () => void;
 }
 
-export const OnboardingScreen1: React.FC<OnboardingScreen1Props> = ({ onNext }) => {
+export const WelcomeOnboardingScreen: React.FC<OnboardingScreen1Props> = ({ onNext }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
     padding: 24,
-    // paddingBottom: 4,
+    paddingBottom: 30,
   },
   content: {
     alignItems: 'center',
@@ -59,17 +59,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    // marginBottom: 16,
   },
   subtitle: {
     fontSize: 16,
     color: '#fff',
     textAlign: 'center',
-    // marginBottom: 32,
     lineHeight: 24,
   },
   button: {
     width: '100%',
-
   },
 });

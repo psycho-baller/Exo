@@ -1,7 +1,7 @@
 import type React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { OnboardingScreen1 } from './OnboardingScreen1';
-import { OnboardingScreen2 } from './OnboardingScreen2';
+import { WelcomeOnboardingScreen } from './WelcomeOnboardingScreen';
+import { CreateQuestionDemoScreen } from './CreateQuestionDemoScreen';
 import { useState } from 'react';
 // Import other screens as they're created
 // import { OnboardingScreen3 } from './OnboardingScreen3';
@@ -26,9 +26,9 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete }) =>
   const renderScreen = () => {
     switch (currentScreen) {
       case 1:
-        return <OnboardingScreen1 onNext={handleNext} />;
+        return <WelcomeOnboardingScreen onNext={handleNext} />;
       case 2:
-        return <OnboardingScreen2 onNext={handleNext} />;
+        return <CreateQuestionDemoScreen onNext={handleNext} />;
       // case 3:
       //   return <OnboardingScreen3 onNext={handleNext} />;
       // case 4:
