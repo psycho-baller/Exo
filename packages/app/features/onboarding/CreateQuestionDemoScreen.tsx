@@ -1,15 +1,18 @@
 import type React from 'react';
 import { StyleSheet } from 'react-native';
 import { OnboardingLayout, OnboardingButton, OnboardingText, OnboardingGifViewer } from './components';
+import { useRouter } from 'expo-router';
 
 // Import the GIF
 const demoGif = require('../../assets/gifs/exo-onboarding-question.gif');
 
 interface CreateQuestionDemoScreenProps {
-  onNext: () => void;
+  // onNext: () => void;
 }
 
-export const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = ({ onNext }) => {
+const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = () => {
+  const router = useRouter();
+  console.log(router);
   return (
     <OnboardingLayout
       showOverlay
@@ -28,7 +31,9 @@ export const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> =
       <OnboardingLayout.ButtonContainer>
         <OnboardingButton
           title="What else can I do? 👀"
-          onPress={onNext}
+          onPress={() => {
+            router.push('/(onboarding)/create-question');
+          }}
         />
       </OnboardingLayout.ButtonContainer>
     </OnboardingLayout>

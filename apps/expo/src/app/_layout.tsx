@@ -1,13 +1,14 @@
-import { Stack } from 'expo-router'
+import { router, Stack } from 'expo-router'
 import { Provider } from '@rooots/app/provider'
 import DemoVideo from '@rooots/app/components/DemoVideo'
 import { BottomSheet } from '@rooots/app/components/BottomSheet'
 import { videoSheetRefAtom } from '@rooots/app/atoms/sheet'
 import React from 'react';
-import { Redirect, usePathname } from 'expo-router';
+import { Redirect, usePathname, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { OnboardingProvider, useOnboarding } from '@rooots/app';
 import DevToolsButton from '@rooots/app/components/DevTools/DevToolsButton';
+import { View } from 'react-native'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,29 +16,50 @@ export {
 } from 'expo-router'
 
 const RootLayoutNav = () => {
-  const { isOnboarded } = useOnboarding();
+  const router = useRouter();
+  const { isOnboarded, resetOnboarding } = useOnboarding();
   const pathname = usePathname();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  // If not onboarded and not on the onboarding screen, redirect to onboarding
-  if (!isOnboarded && pathname !== '/onboarding') {
-    // @ts-ignore
-    return <Redirect href="/onboarding" />;
-  }
+  // useEffect(() => {
+  //   console.log('Onboarding not completed!!!!!!!!!!', isOnboarded, pathname);
+  //   resetOnboarding();
+  //   // Handle initial navigation based on onboarding status
+  //   // If not onboarded and not on an onboarding screen, redirect to welcome
+  //   if (!isOnboarded && !pathname.startsWith('/(onboarding)')) {
+  //     router.replace('/(onboarding)/welcome');
+  //   }
+  //   // If onboarded and on an onboarding screen, redirect to questions
+  //   else if (isOnboarded && pathname.startsWith('/(onboarding)')) {
+  //     router.replace('/(tabs)/questions');
+  //   }
+
+  //   // Mark that we've finished the initial auth check
+  //   setIsCheckingAuth(false);
+  // }, [isOnboarded, pathname, router]);
+
+  // // Show nothing while checking auth state to prevent flash of wrong screen
+  // if (isOnboarded === undefined || isCheckingAuth) {
+  //   return <View style={{ flex: 1, backgroundColor: '#000' }} />;
+  // }
+
 
   return (
-    <Stack
-      initialRouteName="(tabs)"
-      screenOptions={{
-        // headerTransparent: true,
-        headerShown: false,
-        // navigationBarColor: 'transparent',
-        // navigationBarHidden: true,
-      }}
-    >
-      <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
-      <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
-      <Stack.Screen name="onboarding" options={{ title: 'Onboarding' }} />
-    </Stack>
+    <OnboardingProvider>
+      <Stack
+        initialRouteName="(onboarding)"
+        screenOptions={{
+          // headerTransparent: true,
+          headerShown: false,
+          // navigationBarColor: 'transparent',
+          // navigationBarHidden: true,
+        }}
+      >
+        <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
+        <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
+        <Stack.Screen name='(onboarding)' options={{ title: 'Onboarding' }} />
+      </Stack>
+    </OnboardingProvider>
   );
 }
 
