@@ -1,15 +1,18 @@
 import type React from 'react';
 import { ImageBackground, type ImageSourcePropType, StyleSheet, View } from 'react-native';
 import { OnboardingLayout, OnboardingButton, OnboardingText } from './components';
+import { useRouter } from 'expo-router';
 
 // Import the image
 const backgroundImage = require('../../assets/9-16-icon-zoomed-out.jpg') as ImageSourcePropType;
 
 interface WelcomeOnboardingScreenProps {
-  onNext: () => void;
+  // onNext: () => void;
 }
 
-export const WelcomeOnboardingScreen: React.FC<WelcomeOnboardingScreenProps> = ({ onNext }) => {
+const WelcomeOnboardingScreen: React.FC<WelcomeOnboardingScreenProps> = () => {
+  console.log('Onboarding not completed!!!!!!!!!!');
+  const router = useRouter();
   return (
     <OnboardingLayout
       backgroundImage={
@@ -31,7 +34,9 @@ export const WelcomeOnboardingScreen: React.FC<WelcomeOnboardingScreenProps> = (
       <OnboardingLayout.ButtonContainer>
         <OnboardingButton
           title="Show me how!!"
-          onPress={onNext}
+          onPress={() => {
+            router.push('/(onboarding)/create-question');
+          }}
           style={styles.button}
         />
       </OnboardingLayout.ButtonContainer>
@@ -49,3 +54,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default WelcomeOnboardingScreen;
