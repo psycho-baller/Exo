@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { OnboardingButton } from '../../components';
 
 // Import the image
-const backgroundImage = require('../../assets/9-16-icon.jpg');
+const backgroundImage = require('../../assets/9-16-icon-zoomed-out.jpg');
 
 interface OnboardingScreen1Props {
   onNext: () => void;
@@ -15,13 +15,13 @@ export const OnboardingScreen1: React.FC<OnboardingScreen1Props> = ({ onNext }) 
       <ImageBackground
         source={backgroundImage}
         style={styles.backgroundImage}
-        resizeMode="contain"
+        resizeMode="cover"
       >
         <View style={styles.overlay}>
           <View style={styles.content}>
             <Text style={styles.title}>Deepen your relationships through meaningful conversations</Text>
             <Text style={styles.subtitle}>
-              In a world of fleeting interactions, Exo empowers you to deepen your relationships through meaningful conversations
+              In a world of fleeting interactions, Exo empowers you to store meaningful conversations topics you'd like to have with your loved ones
             </Text>
             <OnboardingButton
               title="Show me how!!"
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     // marginBottom: 16,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#fff',
     textAlign: 'center',
     // marginBottom: 32,
@@ -70,5 +70,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+
   },
 });
