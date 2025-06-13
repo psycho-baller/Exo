@@ -11,7 +11,6 @@ interface CreateQuestionDemoScreenProps {
 
 const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = () => {
   const router = useRouter();
-  console.log(router);
   return (
     <OnboardingLayout
       showOverlay
