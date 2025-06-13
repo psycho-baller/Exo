@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: 'Exo',
   slug: 'rooots',
   scheme: 'rooots',
-  version: '0.2.0',
+  version: '0.3.0',
   orientation: 'portrait',
   // androidNavigationBar: {
   //   visible: 'immersive',
