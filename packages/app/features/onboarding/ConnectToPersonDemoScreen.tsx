@@ -3,15 +3,15 @@ import { StyleSheet } from 'react-native';
 import { OnboardingLayout, OnboardingButton, OnboardingText, OnboardingGifViewer } from './components';
 import { useRouter } from 'expo-router';
 
-// Import the GIF
-const demoGif = require('../../assets/gifs/exo-onboarding-question.gif');
+// Import the GIF - you'll need to add the actual GIF file to your assets
+const demoGif = require('../../assets/gifs/exo-onboarding-person-no-border.gif');
 
-interface CreateQuestionDemoScreenProps {
+interface ConnectToPersonDemoScreenProps {
 }
 
-const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = () => {
+const ConnectToPersonDemoScreen: React.FC<ConnectToPersonDemoScreenProps> = () => {
   const router = useRouter();
-  console.log(router);
+
   return (
     <OnboardingLayout
       showOverlay
@@ -23,15 +23,15 @@ const CreateQuestionDemoScreen: React.FC<CreateQuestionDemoScreenProps> = () => 
         containerStyle={styles.gifContainer}
         resizeMode="contain"
       />
-      <OnboardingText variant="title">Create Questions Easily</OnboardingText>
+      <OnboardingText variant="title">Connect any question with any person!</OnboardingText>
       <OnboardingText variant="subtitle">
-        It couldn't be easier to create questions. Just type your question and add relevant details which we'll look at in the final 2 steps
+        Simply type @ and select or create the person you want to connect that question to
       </OnboardingText>
       <OnboardingLayout.ButtonContainer>
         <OnboardingButton
-          title="What else can I do? 👀"
+          title="What about groups? 👥"
           onPress={() => {
-            router.push('/(onboarding)/connect-to-person');
+            router.push('/(onboarding)/connect-to-group');
           }}
         />
       </OnboardingLayout.ButtonContainer>
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   gifContainer: {
-    flex: 1,
-    paddingBottom: 24,
+    width: '100%',
+    height: 300,
+    marginBottom: 20,
   },
-
 });
 
-export default CreateQuestionDemoScreen;
+export default ConnectToPersonDemoScreen;

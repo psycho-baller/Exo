@@ -7,11 +7,9 @@ import { useRouter } from 'expo-router';
 const backgroundImage = require('../../assets/9-16-icon-zoomed-out.jpg') as ImageSourcePropType;
 
 interface WelcomeOnboardingScreenProps {
-  // onNext: () => void;
 }
 
 const WelcomeOnboardingScreen: React.FC<WelcomeOnboardingScreenProps> = () => {
-  console.log('Onboarding not completed!!!!!!!!!!');
   const router = useRouter();
   return (
     <OnboardingLayout
