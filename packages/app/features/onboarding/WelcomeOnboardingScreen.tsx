@@ -1,70 +1,49 @@
 import type React from 'react';
-import { View, StyleSheet, Text, ImageBackground } from 'react-native';
-import { OnboardingButton } from '../../components';
+import { ImageBackground, type ImageSourcePropType, StyleSheet, View } from 'react-native';
+import { OnboardingLayout, OnboardingButton, OnboardingText } from './components';
 
 // Import the image
-const backgroundImage = require('../../assets/9-16-icon-zoomed-out.jpg');
+const backgroundImage = require('../../assets/9-16-icon-zoomed-out.jpg') as ImageSourcePropType;
 
-interface OnboardingScreen1Props {
+interface WelcomeOnboardingScreenProps {
   onNext: () => void;
 }
 
-export const WelcomeOnboardingScreen: React.FC<OnboardingScreen1Props> = ({ onNext }) => {
+export const WelcomeOnboardingScreen: React.FC<WelcomeOnboardingScreenProps> = ({ onNext }) => {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={backgroundImage}
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      >
-        <View style={styles.overlay}>
-          <View style={styles.content}>
-            <Text style={styles.title}>Deepen your relationships through meaningful conversations</Text>
-            <Text style={styles.subtitle}>
-              In a world of fleeting interactions, Exo empowers you to store meaningful conversations topics you'd like to have with your loved ones
-            </Text>
-            <OnboardingButton
-              title="Show me how!!"
-              onPress={onNext}
-              style={styles.button}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
+    <OnboardingLayout
+      backgroundImage={
+        <ImageBackground
+          source={backgroundImage}
+          style={StyleSheet.absoluteFill}
+          resizeMode="cover"
+        />
+      }
+      showOverlay
+      contentStyle={styles.content}
+    >
+      <OnboardingText variant="title">
+        Deepen your relationships through meaningful conversations
+      </OnboardingText>
+      <OnboardingText variant="subtitle">
+        In a world of fleeting interactions, Exo empowers you to store meaningful conversations topics you'd like to have with your loved ones
+      </OnboardingText>
+      <OnboardingLayout.ButtonContainer>
+        <OnboardingButton
+          title="Show me how!!"
+          onPress={onNext}
+          style={styles.button}
+        />
+      </OnboardingLayout.ButtonContainer>
+    </OnboardingLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-    padding: 24,
-    paddingBottom: 30,
-  },
   content: {
-    alignItems: 'center',
-    gap: 16,
-  },
-  title: {
-    fontSize: 29,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
-    lineHeight: 24,
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 12,
   },
   button: {
     width: '100%',
