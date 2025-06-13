@@ -12,11 +12,8 @@ interface ConnectToGroupDemoScreenProps {
 
 const ConnectToGroupDemoScreen: React.FC<ConnectToGroupDemoScreenProps> = () => {
   const router = useRouter();
-  const { completeOnboarding } = useOnboarding();
-
   const handleComplete = () => {
-    completeOnboarding();
-    router.replace('/(tabs)/questions');
+    router.push('/(onboarding)/thanks');
   };
 
   return (
