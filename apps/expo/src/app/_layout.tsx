@@ -16,34 +16,6 @@ export {
 } from 'expo-router'
 
 const RootLayoutNav = () => {
-  const router = useRouter();
-  const { isOnboarded, resetOnboarding } = useOnboarding();
-  const pathname = usePathname();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-
-  // useEffect(() => {
-  //   console.log('Onboarding not completed!!!!!!!!!!', isOnboarded, pathname);
-  //   resetOnboarding();
-  //   // Handle initial navigation based on onboarding status
-  //   // If not onboarded and not on an onboarding screen, redirect to welcome
-  //   if (!isOnboarded && !pathname.startsWith('/(onboarding)')) {
-  //     router.replace('/(onboarding)/welcome');
-  //   }
-  //   // If onboarded and on an onboarding screen, redirect to questions
-  //   else if (isOnboarded && pathname.startsWith('/(onboarding)')) {
-  //     router.replace('/(tabs)/questions');
-  //   }
-
-  //   // Mark that we've finished the initial auth check
-  //   setIsCheckingAuth(false);
-  // }, [isOnboarded, pathname, router]);
-
-  // // Show nothing while checking auth state to prevent flash of wrong screen
-  // if (isOnboarded === undefined || isCheckingAuth) {
-  //   return <View style={{ flex: 1, backgroundColor: '#000' }} />;
-  // }
-
-
   return (
     <OnboardingProvider>
       <Stack

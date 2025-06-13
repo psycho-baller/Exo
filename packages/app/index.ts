@@ -5,5 +5,4 @@ export * from './components';
 export * from './contexts';
 
 // Re-export features
-export * from './features/onboarding/OnboardingFlow';
 export * from './features/onboarding/WelcomeOnboardingScreen';

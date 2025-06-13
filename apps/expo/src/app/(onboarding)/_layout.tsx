@@ -14,6 +14,8 @@ export default function OnboardingLayout() {
     >
       <Stack.Screen name="welcome" options={{ title: 'Onboarding' }} />
       <Stack.Screen name="create-question" options={{ title: 'Create Question' }} />
+      <Stack.Screen name="connect-to-person" options={{ title: 'Connect to Person' }} />
+      <Stack.Screen name="connect-to-group" options={{ title: 'Connect to Group' }} />
     </Stack>
   );
 }
