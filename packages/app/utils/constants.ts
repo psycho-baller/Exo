@@ -9,3 +9,10 @@ export const MINOR = 4321;
 export const SHOULD_ADVERTISE = true;
 
 export const BACKGROUND_BLE_TASK = 'background-ble-scan'
+
+// External links
+export const LINKS = {
+  FEEDBACK_FORM: 'https://app.formbricks.com/s/cmbgfzsx80ut7sm01an3v7bz3',
+  GITHUB_REPO: 'https://github.com/psycho-baller/exo',
+  KOFI_DONATION: 'https://ko-fi.com/ramimaalouf'
+} as const

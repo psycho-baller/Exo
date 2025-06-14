@@ -3,6 +3,7 @@ import { StyleSheet, Linking, type ViewStyle } from 'react-native';
 import { OnboardingLayout, OnboardingButton, OnboardingText } from './components';
 import { useRouter } from 'expo-router';
 import { useOnboarding } from '../../contexts';
+import { LINKS } from '../../utils/constants';
 
 interface ThanksOnboardingScreenProps { }
 
@@ -56,17 +57,17 @@ const ThanksOnboardingScreen: React.FC<ThanksOnboardingScreenProps> = () => {
       <OnboardingLayout.ButtonContainer style={styles.buttonContainer as ViewStyle}>
         <OnboardingButton
           title="Shape the future of Exo 💥"
-          onPress={() => openLink('https://app.formbricks.com/s/cmbgfzsx80ut7sm01an3v7bz3')}
+          onPress={() => openLink(LINKS.FEEDBACK_FORM)}
           style={styles.button as ViewStyle}
         />
         <OnboardingButton
           title="Star Exo on GitHub 🌟"
-          onPress={() => openLink('https://github.com/psycho-baller/exo')}
+          onPress={() => openLink(LINKS.GITHUB_REPO)}
           style={styles.button as ViewStyle}
         />
         <OnboardingButton
           title="Buy me a coffee ☕"
-          onPress={() => openLink('https://ko-fi.com/ramimaalouf')}
+          onPress={() => openLink(LINKS.KOFI_DONATION)}
           style={styles.button as ViewStyle}
         />
       </OnboardingLayout.ButtonContainer>
