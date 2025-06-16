@@ -2,7 +2,7 @@
 
 Time spent coding this up: [![wakatime](https://wakatime.com/badge/user/33addb7e-f5e6-470b-a55b-0a8babc62ebb/project/018c177e-bd65-49da-8571-8a45352f6953.svg)](https://wakatime.com/badge/user/33addb7e-f5e6-470b-a55b-0a8babc62ebb/project/018c177e-bd65-49da-8571-8a45352f6953.svg)
 
-This project is not yet open for public use. If you are just as excited as I am for that, you can sign up for the waitlist [here](https://survey.typeform.com/to/erptGdCr)
+I just dropped the app on the [app store](https://apps.apple.com/app/exo-have-better-conversations/id6740080383) and google play store (email me @ <ramim66809@gmail.com> and I can give you access). You can download it from there or from the marketing website [here](https://exo.app)
 
 ## About
 
