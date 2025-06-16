@@ -18,5 +18,7 @@ export const siteConfig = {
     youtube: 'https://youtube.com/@ramimaalouf',
     instagram: 'https://www.instagram.com/psycho.baller/',
     portfolio: 'https://rami-maalouf.tech',
+    iOS: 'https://apps.apple.com/app/exo-have-better-conversations/id6740080383',
+    android: 'https://play.google.com/store/apps/details?id=com.ramimaalouf.rooots',
   },
 } as const

@@ -27,10 +27,10 @@ const Hero = () => {
         <div className="space-x-4">
           <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Community</SecondaryButtonLink>
           <Link
-            href={siteConfig.links.waitlist}
+            href={siteConfig.links.iOS}
             className={cn(buttonVariants({ size: "lg" }))}
           >
-            Join App Waitlist
+            Download App
           </Link>
         </div>
       </div>
