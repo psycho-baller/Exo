@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: 'Exo',
   slug: 'rooots',
   scheme: 'rooots',
-  version: '0.3.0',
+  version: '0.4.0',
   orientation: 'portrait',
   // androidNavigationBar: {
   //   visible: 'immersive',
@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '2',
+    buildNumber: '1',
     bundleIdentifier: 'com.ramimaalouf.rooots',
     supportsTablet: true,
     // needs membership to Apple Developer Program to use Push Notifications
@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
-    versionCode: 2,
+    versionCode: 1,
     package: 'com.ramimaalouf.rooots',
     edgeToEdgeEnabled: true,
     // googleServicesFile: './android/app/google-services.json',
