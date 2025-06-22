@@ -1,18 +1,14 @@
-import { router, Stack } from 'expo-router'
 import { Provider } from '@rooots/app/provider'
 import DemoVideo from '@rooots/app/components/DemoVideo'
 import { BottomSheet } from '@rooots/app/components/BottomSheet'
 import { videoSheetRefAtom } from '@rooots/app/atoms/sheet'
 import React from 'react';
-import { Redirect, usePathname, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { OnboardingProvider, useOnboarding } from '@rooots/app';
+import { OnboardingProvider } from '@rooots/app';
 import DevToolsButton from '@rooots/app/components/DevTools/DevToolsButton';
-import { View } from 'react-native';
-import { useTheme } from '@tamagui/core';
-import { useFonts } from 'expo-font';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CustomDrawer from '../components/CustomDrawer';
+import { Drawer } from 'expo-router/drawer';
+import type { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { AppDrawerContent } from '@rooots/app/components/AppDrawerContent';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -22,8 +18,11 @@ export {
 const RootLayoutNav = () => {
   return (
     <OnboardingProvider>
-      <Stack
-        initialRouteName="(onboarding)"
+      <Drawer
+        initialRouteName="(tabs)"
+        drawerContent={(props: DrawerContentComponentProps) => (
+          <AppDrawerContent />
+        )}
         screenOptions={{
           // headerTransparent: true,
           headerShown: false,
@@ -31,18 +30,15 @@ const RootLayoutNav = () => {
           // navigationBarHidden: true,
         }}
       >
-        <Stack.Screen name='(tabs)' options={{ title: 'Home' }} />
-        <Stack.Screen name='(auth)' options={{ title: 'Authorization' }} />
-        <Stack.Screen name='(onboarding)' options={{ title: 'Onboarding' }} />
-      </Stack>
+        <Drawer.Screen name='(tabs)' options={{ title: 'Home' }} />
+        <Drawer.Screen name='(auth)' options={{ title: 'Authorization' }} />
+        <Drawer.Screen name='(onboarding)' options={{ title: 'Onboarding' }} />
+      </Drawer>
     </OnboardingProvider>
   );
 }
 
 export default function RootLayout() {
-  const theme = useTheme();
-  const router = useRouter();
-
   // const [loaded, error] = useFonts({
   //   Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
   //   InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
@@ -82,7 +78,6 @@ export default function RootLayout() {
     <OnboardingProvider>
       <Provider>
         <RootLayoutNav />
-        {/* <CustomDrawer /> */}
         <BottomSheet
           enablePanDownToClose
           // snapPoints={['90%']}
