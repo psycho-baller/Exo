@@ -34,18 +34,18 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "8.3.0",
     "@shopify/flash-list": "1.7.6",
-    "@tamagui/animations-moti": "^1.120.2",
-    "@tamagui/font-inter": "^1.120.2",
-    "@tamagui/react-native-media-driver": "^1.120.2",
-    "@tamagui/shorthands": "^1.120.2",
-    "@tamagui/themes": "^1.120.2",
-    "@tamagui/toast": "^1.120.2",
+    "@tamagui/animations-moti": "^1.128.1",
+    "@tamagui/font-inter": "^1.128.1",
+    "@tamagui/react-native-media-driver": "^1.128.1",
+    "@tamagui/shorthands": "^1.128.1",
+    "@tamagui/themes": "^1.128.1",
+    "@tamagui/toast": "^1.128.1",
     "@tanstack/react-virtual": "^3.4.0",
     "expo-blur": "~14.1.4",
-    "tamagui": "^1.120.2"
+    "tamagui": "^1.128.1"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.120.2",
+    "@tamagui/build": "^1.128.1",
     "typescript": "^5.3.3"
   }
 }
