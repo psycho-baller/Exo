@@ -8,7 +8,11 @@ import { Redirect, usePathname, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { OnboardingProvider, useOnboarding } from '@rooots/app';
 import DevToolsButton from '@rooots/app/components/DevTools/DevToolsButton';
-import { View } from 'react-native'
+import { View } from 'react-native';
+import { useTheme } from '@tamagui/core';
+import { useFonts } from 'expo-font';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import CustomDrawer from '../components/CustomDrawer';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -35,7 +39,9 @@ const RootLayoutNav = () => {
   );
 }
 
-const RootLayout = () => {
+export default function RootLayout() {
+  const theme = useTheme();
+  const router = useRouter();
 
   // const [loaded, error] = useFonts({
   //   Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
@@ -76,6 +82,7 @@ const RootLayout = () => {
     <OnboardingProvider>
       <Provider>
         <RootLayoutNav />
+        {/* <CustomDrawer /> */}
         <BottomSheet
           enablePanDownToClose
           // snapPoints={['90%']}
@@ -91,5 +98,3 @@ const RootLayout = () => {
     </OnboardingProvider>
   )
 }
-
-export default RootLayout

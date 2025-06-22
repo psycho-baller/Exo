@@ -6,12 +6,9 @@
       "~/*": [
         "./src/*"
       ],
-      // "@rooots/app": [
-      //   "../../../packages/app/index.ts"
-      // ],
-      // "@rooots/app/*": [
-      //   "../../../packages/app/*"
-      // ]
+      "@roo/*": [
+        "../../packages/*"
+      ]
     },
     "jsx": "react-native",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
