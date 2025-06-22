@@ -8,7 +8,6 @@ import { Platform, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useTheme, useThemeName } from '@rooots/ui'
 import { trackTabClick } from '@rooots/app/utils/amplitude'
-// import Drawer from 'expo-router/drawer'
 
 export default function TabLayout() {
   const themeName = useThemeName()

@@ -20,8 +20,8 @@
     "@rooots/auth": "workspace:*",
     "@rooots/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.9.2",
-    "@tamagui/config": "^1.120.2",
-    "@tamagui/next-theme": "^1.120.2",
+    "@tamagui/config": "^1.128.1",
+    "@tamagui/next-theme": "^1.128.1",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-devtools": "catalog:",
     "@tanstack/react-query-next-experimental": "catalog:",
@@ -36,7 +36,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "^1.120.2",
+    "@tamagui/next-plugin": "^1.128.1",
     "@types/node": "^20.11.20",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
