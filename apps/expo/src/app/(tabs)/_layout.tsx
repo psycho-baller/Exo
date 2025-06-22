@@ -8,7 +8,7 @@ import { Platform, StyleSheet } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useTheme, useThemeName } from '@rooots/ui'
 import { trackTabClick } from '@rooots/app/utils/amplitude'
-import Drawer from 'expo-router/drawer'
+// import Drawer from 'expo-router/drawer'
 
 export default function TabLayout() {
   const themeName = useThemeName()
@@ -80,17 +80,7 @@ export default function TabLayout() {
           }),
         },
       }}
-    ><Drawer
-      screenOptions={{
-        headerShown: false,
-      }}
     >
-        <Drawer.Screen name='questions' options={{ title: 'Questions' }} />
-        <Drawer.Screen name='people' options={{ title: 'People' }} />
-        <Drawer.Screen name='addQuestion' options={{ title: 'Add Question' }} />
-        <Drawer.Screen name='search' options={{ title: 'Search' }} />
-        <Drawer.Screen name='groups' options={{ title: 'Groups' }} />
-      </Drawer>
 
       <Tabs.Screen
         name='questions'
