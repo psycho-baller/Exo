@@ -14,5 +14,7 @@ export const BACKGROUND_BLE_TASK = 'background-ble-scan'
 export const LINKS = {
   FEEDBACK_FORM: 'https://app.formbricks.com/s/cmbgfzsx80ut7sm01an3v7bz3',
   GITHUB_REPO: 'https://github.com/psycho-baller/exo',
+  GITHUB_ISSUES: 'https://github.com/psycho-baller/exo/issues',
+  YOUTUBE_TUTORIAL: 'https://youtube.com/shorts/FhcSiat6ihM', // TODO: Replace with actual YouTube tutorial link
   KOFI_DONATION: 'https://ko-fi.com/ramimaalouf'
 } as const
