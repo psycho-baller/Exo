@@ -75,7 +75,7 @@ export function AppDrawerContent() {
           size="small"
         />
         <OnboardingButton
-          title="✉️ Contact me for help"
+          title="✉️ Contact Exo Support"
           onPress={handleContactPress}
           size="small"
         />
@@ -99,7 +99,7 @@ export function AppDrawerContent() {
           size="small"
         />
         <OnboardingButton
-          title="⭐ Star us on GitHub"
+          title="⭐ Star Exo on GitHub"
           onPress={() => openLink(LINKS.GITHUB_REPO)}
           size="small"
         />

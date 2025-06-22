@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    buildNumber: '1',
+    buildNumber: '4',
     bundleIdentifier: 'com.ramimaalouf.rooots',
     supportsTablet: true,
     // needs membership to Apple Developer Program to use Push Notifications
@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
-    versionCode: 1,
+    versionCode: 4,
     package: 'com.ramimaalouf.rooots',
     edgeToEdgeEnabled: true,
     // googleServicesFile: './android/app/google-services.json',
