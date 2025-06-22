@@ -4,7 +4,7 @@ import { BottomSheet } from '@rooots/app/components/BottomSheet'
 import { videoSheetRefAtom } from '@rooots/app/atoms/sheet'
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { OnboardingProvider } from '@rooots/app';
+import { OnboardingProvider, useOnboarding } from '@rooots/app';
 import DevToolsButton from '@rooots/app/components/DevTools/DevToolsButton';
 import { Drawer } from 'expo-router/drawer';
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
@@ -16,10 +16,12 @@ export {
 } from 'expo-router'
 
 const RootLayoutNav = () => {
+  const { isOnboarded, resetOnboarding } = useOnboarding();
+
   return (
     <OnboardingProvider>
       <Drawer
-        initialRouteName="(tabs)"
+        initialRouteName={isOnboarded ? '(tabs)' : '(onboarding)'}
         drawerContent={(props: DrawerContentComponentProps) => (
           <AppDrawerContent />
         )}
@@ -30,9 +32,9 @@ const RootLayoutNav = () => {
           // navigationBarHidden: true,
         }}
       >
+        <Drawer.Screen name='(onboarding)' options={{ title: 'Onboarding' }} />
         <Drawer.Screen name='(tabs)' options={{ title: 'Home' }} />
         <Drawer.Screen name='(auth)' options={{ title: 'Authorization' }} />
-        <Drawer.Screen name='(onboarding)' options={{ title: 'Onboarding' }} />
       </Drawer>
     </OnboardingProvider>
   );
