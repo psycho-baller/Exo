@@ -11,6 +11,7 @@ import { getRandomQuestion } from '@rooots/app/utils/questions';
 import { HelpCircle } from '@tamagui/lucide-icons';
 import { useVideoSheetActions } from '@rooots/app/hooks/useVideoSheetActions';
 import { trackGenerateQuestionClick, trackOnboardingClick } from '@rooots/app/utils/amplitude'
+import { DrawerToggleButton } from '@react-navigation/drawer';
 
 const Layout = () => {
   const themeName = useThemeName()
@@ -44,6 +45,11 @@ const Layout = () => {
                 intensity={60}
                 experimentalBlurMethod={experimentalBlurMethod}
               />
+            ),
+            headerLeft: (props) => (
+              <View marginStart={-20}>
+                <DrawerToggleButton {...props} tintColor={theme.color?.val} />
+              </View>
             ),
             headerRight: () => (
               <View style={{ flexDirection: 'row', gap: 15 }}>
