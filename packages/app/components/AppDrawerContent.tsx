@@ -1,22 +1,25 @@
 import React from 'react';
-import { StyleSheet, ViewStyle } from 'react-native';
-import { H3, H4, Paragraph, YStack, XStack } from 'tamagui';
+import { Linking } from 'react-native';
+import { H3, Paragraph, YStack } from 'tamagui';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import { LINKS } from '../utils/constants';
 import { OnboardingButton } from '../features/onboarding/components/OnboardingButton';
 
 const openLink = (url: string) => {
-  window.open(url, '_blank');
+  Linking.openURL(url).catch(err =>
+    console.error('Failed to open URL:', err)
+  );
 };
 
 export function AppDrawerContent() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  // const { resetOnboarding } = useOnboarding();
 
-  const navigateAndClose = (path: string) => {
-    router.push(path);
+  const redoOnboarding = () => {
+    // resetOnboarding();
+    router.replace('/(onboarding)/welcome');
   };
 
   return (
@@ -35,10 +38,10 @@ export function AppDrawerContent() {
       </YStack>
 
       <YStack gap="$2" paddingBottom="$4">
-        <H4 color="$color" paddingBottom="$2">Help & Support</H4>
+        <H3 color="$color" paddingBottom="$2">Help & Support</H3>
         <OnboardingButton
           title="🔄 Go through onboarding again"
-          onPress={() => navigateAndClose('/onboarding')}
+          onPress={() => redoOnboarding()}
           size="small"
         />
         <OnboardingButton
@@ -48,7 +51,7 @@ export function AppDrawerContent() {
         />
         <OnboardingButton
           title="✉️ Contact me for help"
-          onPress={() => window.open('mailto:ramim6809@gmail.com', '_blank')}
+          onPress={() => openLink('mailto:ramim6809@gmail.com?subject=Exo App Support')}
           size="small"
         />
         <OnboardingButton
@@ -64,7 +67,7 @@ export function AppDrawerContent() {
       </YStack>
 
       <YStack gap="$2" paddingBottom="$4">
-        <H4 color="$color" paddingBottom="$2">Support This Project</H4>
+        <H3 color="$color" paddingBottom="$2">Support This Project</H3>
         <OnboardingButton
           title="💬 Share Feedback"
           onPress={() => openLink(LINKS.FEEDBACK_FORM)}
