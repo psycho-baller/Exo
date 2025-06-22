@@ -32,6 +32,7 @@
     "burnt": "^0.12.2",
     "expo-background-fetch": "~13.1.5",
     "expo-bluetooth": "^0.0.0",
+    "expo-clipboard": "^7.1.4",
     "expo-constants": "^17.1.6",
     "expo-font": "^11.10.3",
     "expo-haptics": "~14.1.4",
