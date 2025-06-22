@@ -4,7 +4,7 @@
   "private": true,
   "main": "./index.ts",
   "types": "./index.ts",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "scripts": {
     "dev": "pnpm with-env turso dev --db-file local.db",
     "dev:backend": "pnpm with-env turso dev --db-file local.db",

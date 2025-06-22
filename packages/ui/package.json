@@ -22,7 +22,7 @@
       ]
     }
   },
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "upgrade": "pnpm upgrade --latest",
