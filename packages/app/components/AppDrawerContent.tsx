@@ -1,8 +1,10 @@
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, Alert, Platform } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import { H3, Paragraph, YStack } from 'tamagui';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Burnt from 'burnt';
 import { LINKS } from '../utils/constants';
 import { OnboardingButton } from '../features/onboarding/components/OnboardingButton';
 
@@ -20,6 +22,29 @@ export function AppDrawerContent() {
   const redoOnboarding = () => {
     // resetOnboarding();
     router.replace('/(onboarding)/welcome');
+  };
+
+  const handleContactPress = async () => {
+    const email = 'rami.pb8@gmail.com';
+    const subject = 'Exo App Support';
+    const body = 'Hi Rami,\n\nI wanted to reach out about...';
+
+    const url = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    try {
+      Linking.openURL(url);
+    } catch (err) {
+      console.log('Error handling email action:', err);
+      await Clipboard.setStringAsync(email);
+      Burnt.toast({
+        title: 'Email copied to clipboard!',
+        preset: 'custom',
+        icon: {
+          ios: { name: 'envelope.fill', color: '' },
+        },
+        duration: 3,
+      });
+    }
   };
 
   return (
@@ -51,7 +76,7 @@ export function AppDrawerContent() {
         />
         <OnboardingButton
           title="✉️ Contact me for help"
-          onPress={() => openLink('mailto:ramim6809@gmail.com?subject=Exo App Support')}
+          onPress={handleContactPress}
           size="small"
         />
         <OnboardingButton
