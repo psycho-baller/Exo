@@ -1,12 +1,14 @@
 import React from 'react';
 import { Linking, Alert, Platform } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import { H3, Paragraph, YStack } from 'tamagui';
+import { H3, Paragraph, YStack, Button } from 'tamagui';
+import { exportQuestionsToMarkdown } from '../utils/exportQuestions';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Burnt from 'burnt';
 import { LINKS } from '../utils/constants';
 import { OnboardingButton } from '../features/onboarding/components/OnboardingButton';
+import { api } from '@rooots/api/utils/trpc';
 
 const openLink = (url: string) => {
   Linking.openURL(url).catch(err =>
@@ -17,6 +19,8 @@ const openLink = (url: string) => {
 export function AppDrawerContent() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { data: people } = api.person.all.useQuery();
+  const { data: questions } = api.question.all.useQuery();
   // const { resetOnboarding } = useOnboarding();
 
   const redoOnboarding = () => {
@@ -45,6 +49,19 @@ export function AppDrawerContent() {
         duration: 3,
       });
     }
+  };
+
+  const handleExport = async () => {
+    if (!people || !questions) {
+      Alert.alert('Error', 'Failed to load data. Please try again.');
+      return;
+    }
+
+    console.log('Exporting questions...');
+    console.log('People:', people);
+    console.log('Questions:', questions);
+
+    await exportQuestionsToMarkdown({ people, questions });
   };
 
   return (
@@ -89,7 +106,16 @@ export function AppDrawerContent() {
           onPress={() => openLink('https://getexo.vercel.app/terms')}
           size="small"
         />
+        <OnboardingButton
+          title="📤 Export All Questions"
+          onPress={handleExport}
+          size="small"
+        />
       </YStack>
+
+      {/* <YStack gap="$2" paddingBottom="$4">
+        <H3 color="$color" paddingBottom="$2">Data</H3> */}
+      {/* </YStack> */}
 
       <YStack gap="$2" paddingBottom="$4">
         <H3 color="$color" paddingBottom="$2">Support This Project</H3>

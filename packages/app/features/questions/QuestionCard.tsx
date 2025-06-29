@@ -102,7 +102,7 @@ export const QuestionCard: FC<Props> = (props) => {
           </XStack>
         </YStack>
       </XStack>
-    </SwipeableRow >
+    </SwipeableRow>
   )
 }
 
