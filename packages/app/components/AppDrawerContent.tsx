@@ -56,11 +56,6 @@ export function AppDrawerContent() {
       Alert.alert('Error', 'Failed to load data. Please try again.');
       return;
     }
-
-    console.log('Exporting questions...');
-    console.log('People:', people);
-    console.log('Questions:', questions);
-
     await exportQuestionsToMarkdown({ people, questions });
   };
 
