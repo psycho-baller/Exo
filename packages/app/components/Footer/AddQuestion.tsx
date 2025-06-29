@@ -9,6 +9,7 @@ import { useAtom } from 'jotai'
 import { type SuperchargedFormData, SuperchargedInput } from './SuperchargedInput'
 import { superchargedInputWordsAtom } from '../../atoms/addQuestion';
 import { initializeAmplitude, trackCreateQuestion, trackEditQuestion } from '../../utils/amplitude'
+import Constants from 'expo-constants';
 
 export const AddQuestion: FC = () => {
   const utils = api.useUtils()
@@ -60,7 +61,7 @@ export const AddQuestion: FC = () => {
       await utils.question.all.invalidate()
       // Amplitude tracking
       if (createdQuestion) {
-        await initializeAmplitude(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY || '')
+        await initializeAmplitude(Constants.expoConfig?.extra?.amplitudeApiKey || '')
         await trackCreateQuestion({
           questionId: String(createdQuestion.id),
           groupIds: createdQuestion.groupId ? [String(createdQuestion.groupId)] : undefined,
@@ -122,7 +123,7 @@ export const AddQuestion: FC = () => {
         updated = data[0]
       }
       if (updateQuestion && updated && isQuestionModified(updateQuestion, updated)) {
-        await initializeAmplitude(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY || '')
+        await initializeAmplitude(process.env.AMPLITUDE_API_KEY || '')
         await trackEditQuestion({
           questionId: String(updateQuestion.id),
           groupIds: updateQuestion.groupId ? [String(updateQuestion.groupId)] : undefined,

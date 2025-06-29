@@ -17,3 +17,4 @@ web-build/
 build-*
 dev.apk
 preview.apk
+eas.json

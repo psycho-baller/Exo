@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { initializeAmplitude } from '../../utils/amplitude'
-
+import Constants from 'expo-constants';
 interface AnalyticsContextValue {
   // Add analytics methods here if needed
 }
@@ -10,7 +10,7 @@ const AnalyticsContext = createContext<AnalyticsContextValue>({})
 
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    initializeAmplitude(process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY || '')
+    initializeAmplitude(Constants.expoConfig?.extra?.amplitudeApiKey || '')
   }, [])
 
   return (
