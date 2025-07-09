@@ -66,7 +66,7 @@ const CTA = () => {
                   alt="Saly"
                   className="hidden xl:block"
                 />
-                <WaitlistForm />
+                {/* <WaitlistForm /> */}
               </div>
             </motion.div>
           </div>
