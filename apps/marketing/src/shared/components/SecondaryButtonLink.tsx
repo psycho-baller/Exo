@@ -21,7 +21,7 @@ function Component({
       className={cn(buttonVariants({ variant: "secondary" }), className)}
       {...props}
     >
-      <span>Join Discord Server</span>
+      <span>{props.children}</span>
     </Link>
   );
 }

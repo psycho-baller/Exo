@@ -26,20 +26,26 @@ const Hero = () => {
         <p className="max-w-[42rem] !text-manatee leading-normal sm:text-xl sm:leading-8">{siteConfig.description}</p>
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
           <SecondaryButtonLink
-            href={siteConfig.links.discord}
+            href={siteConfig.links.iOS}
             className={`${styles.cta} w-full max-w-xs sm:w-auto`}
           >
-            Join Discord Community
+            Download iOS App
           </SecondaryButtonLink>
           <Link
-            href={siteConfig.links.iOS}
+            href={siteConfig.links.discord}
             className={cn(
               buttonVariants({ size: "lg" }),
               "w-full max-w-xs sm:w-auto text-center"
             )}
           >
-            Download App
+            Join Discord Community
           </Link>
+          <SecondaryButtonLink
+            href={siteConfig.links.waitlist}
+            className={`${styles.cta} w-full max-w-xs sm:w-auto`}
+          >
+            Download Android App
+          </SecondaryButtonLink>
         </div>
       </div>
     </section>
