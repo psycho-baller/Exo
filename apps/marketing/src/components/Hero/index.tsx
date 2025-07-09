@@ -24,11 +24,19 @@ const Hero = () => {
           </Link> */}
         <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl">{siteConfig.hero}</h1>
         <p className="max-w-[42rem] !text-manatee leading-normal sm:text-xl sm:leading-8">{siteConfig.description}</p>
-        <div className="space-x-4">
-          <SecondaryButtonLink href={siteConfig.links.discord} className={styles.cta}>Join Discord Community</SecondaryButtonLink>
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
+          <SecondaryButtonLink
+            href={siteConfig.links.discord}
+            className={`${styles.cta} w-full max-w-xs sm:w-auto`}
+          >
+            Join Discord Community
+          </SecondaryButtonLink>
           <Link
             href={siteConfig.links.iOS}
-            className={cn(buttonVariants({ size: "lg" }))}
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "w-full max-w-xs sm:w-auto text-center"
+            )}
           >
             Download App
           </Link>
