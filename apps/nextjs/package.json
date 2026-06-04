@@ -28,7 +28,7 @@
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
     "@trpc/tanstack-react-query": "catalog:",
-    "next": "^15.3.2",
+    "next": "^15.5.19",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "react-native-web": "^0.19.10",
