@@ -10,7 +10,7 @@ export const siteConfig = {
   ogImage: '',
   links: {
     twitter: 'https://x.com/rami__maalouf',
-    github: 'https://github.com/psycho-baller/exo',
+    github: 'https://github.com/rami-maalouf/exo',
     waitlist: 'https://survey.typeform.com/to/erptGdCr',
     discord: 'https://discord.gg/m9mWXcrstw',
     kofi: 'https://ko-fi.com/ramimaalouf',
